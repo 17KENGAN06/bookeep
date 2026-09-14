@@ -12,8 +12,8 @@
   },
   "seo": {
     "title": "BookKeep — adapted books in English and Finnish",
-    "description": "A catalog of adapted books in English and Finnish. Titles are rewritten for A2–C2 readers while the story stays intact.",
-    "keywords": "BookKeep, adapted books, English, Finnish, A2, B1, B2, C2, language reading"
+    "description": "A catalog of adapted books in English and Finnish. Titles are rewritten for A2–B1 readers while the story stays intact.",
+    "keywords": "BookKeep, adapted books, English, Finnish, A2, B1, language reading"
   },
   "nav": {
     "primary": "Primary navigation",
@@ -41,7 +41,7 @@
         "text": "The catalog is English and Finnish only — two sections in one place."
       },
       "levels": {
-        "title": "Levels A2–C2",
+        "title": "Levels A2–B1",
         "text": "Pick the language density that matches where you are now."
       }
     }
@@ -71,6 +71,8 @@
     "backToCatalog": "Back to catalog",
     "startReading": "Read",
     "continueReading": "Continue",
+    "download": "Download PDF",
+    "downloading": "Downloading…",
     "continueFrom": "from page {{page}}",
     "pages": "{{current}} / {{total}} pages",
     "completed": "{{percent}}% completed",
@@ -102,8 +104,8 @@
         "text": "Books in the catalog are English and Finnish only. Those are the languages of the texts. The interface can be switched to Finnish, English, Ukrainian or Russian: site labels change, the book stays in the language of the adaptation."
       },
       "levels": {
-        "title": "Levels A2, B1, B2 and C2",
-        "text": "Each title has a level. A2 is clearer and shorter. B1 and B2 sit closer to ordinary fiction. C2 is almost unadapted, but still written with a language learner in mind. Take what you can read calmly, not the highest badge."
+        "title": "Levels A2 and B1",
+        "text": "Each title has a level. A2 is clearer and shorter. B1 sits closer to ordinary fiction, but is still written with a language learner in mind. Take what you can read calmly."
       },
       "reading": {
         "title": "How reading works",

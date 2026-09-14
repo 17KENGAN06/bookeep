@@ -12,8 +12,8 @@
   },
   "seo": {
     "title": "BookKeep — mukautettuja kirjoja englanniksi ja suomeksi",
-    "description": "Luettelo mukautetuista kirjoista englanniksi ja suomeksi. Teokset on valmisteltu A2–C2-lukijoille, juoni säilyy.",
-    "keywords": "BookKeep, mukautetut kirjat, englanti, suomi, A2, B1, B2, C2, kielenoppiminen"
+    "description": "Luettelo mukautetuista kirjoista englanniksi ja suomeksi. Teokset on valmisteltu A2–B1-lukijoille, juoni säilyy.",
+    "keywords": "BookKeep, mukautetut kirjat, englanti, suomi, A2, B1, kielenoppiminen"
   },
   "nav": {
     "primary": "Päävalikko",
@@ -41,7 +41,7 @@
         "text": "Luettelossa on vain englanti ja suomi — kaksi hyllyä samassa paikassa."
       },
       "levels": {
-        "title": "Tasot A2–C2",
+        "title": "Tasot A2–B1",
         "text": "Valitse kielen tiheys, joka sopii tähän hetkeen."
       }
     }
@@ -71,6 +71,8 @@
     "backToCatalog": "Takaisin luetteloon",
     "startReading": "Lue",
     "continueReading": "Jatka",
+    "download": "Lataa PDF",
+    "downloading": "Ladataan…",
     "continueFrom": "sivulta {{page}}",
     "pages": "{{current}} / {{total}} sivua",
     "completed": "{{percent}} % luettu",
@@ -102,8 +104,8 @@
         "text": "Luettelon kirjat ovat vain englanniksi ja suomeksi. Ne ovat itse tekstien kieliä. Käyttöliittymän voi vaihtaa suomeksi, englanniksi, ukrainaksi tai venäjäksi: sivuston tekstit vaihtuvat, kirja pysyy mukautuksen kielellä."
       },
       "levels": {
-        "title": "Tasot A2, B1, B2 ja C2",
-        "text": "Jokaisella kirjalla on taso. A2 on selkeämpää ja lyhyempää. B1 ja B2 ovat lähempänä tavallista kaunokirjallisuutta. C2 on lähes mukauttamatonta, mutta silti kielenoppijalle. Kannattaa valita se, mikä luetaan rauhassa — ei korkein merkintä."
+        "title": "Tasot A2 ja B1",
+        "text": "Jokaisella kirjalla on taso. A2 on selkeämpää ja lyhyempää. B1 on lähempänä tavallista kaunokirjallisuutta, mutta silti kielenoppijalle. Kannattaa valita se, mikä luetaan rauhassa."
       },
       "reading": {
         "title": "Miten lukeminen toimii",

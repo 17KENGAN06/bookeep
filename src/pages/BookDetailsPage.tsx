@@ -1,9 +1,10 @@
+import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Download } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { BookCover } from '@/components/books/BookCover';
 import { LevelBadge } from '@/components/books/LevelBadge';
-import { ButtonLink } from '@/components/common/Button';
+import { Button, ButtonLink } from '@/components/common/Button';
 import { Container } from '@/components/common/Container';
 import { DocumentTitle } from '@/components/common/DocumentTitle';
 import { EmptyState } from '@/components/common/EmptyState';
@@ -19,6 +20,7 @@ export function BookDetailsPage() {
   const { t, i18n } = useTranslation();
   const { book, status, reload } = useBook(slug);
   const { progress } = useReadingProgress(book?.id);
+  const [downloading, setDownloading] = useState(false);
 
   if (status === 'loading') {
     return (
@@ -61,6 +63,30 @@ export function BookDetailsPage() {
   const title = getLocalizedTitle(book, i18n.resolvedLanguage ?? 'en');
   const description = getLocalizedDescription(book, i18n.resolvedLanguage ?? 'en');
   const hasProgress = Boolean(progress && progress.currentPage > 1);
+  const pdfPath = book.pdf_path;
+  const pdfFileName = `${book.slug}.pdf`;
+
+  async function downloadPdf() {
+    if (!pdfPath) return;
+    setDownloading(true);
+    try {
+      const response = await fetch(pdfPath);
+      if (!response.ok) throw new Error('download');
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = pdfFileName;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    } catch {
+      window.open(pdfPath, '_blank', 'noopener,noreferrer');
+    } finally {
+      setDownloading(false);
+    }
+  }
 
   return (
     <Container className="py-10 sm:py-14">
@@ -99,11 +125,24 @@ export function BookDetailsPage() {
 
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted">{description}</p>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <ButtonLink to={`/read/${book.slug}`} className="w-full min-w-48 sm:w-auto">
               {hasProgress ? t('book.continueReading') : t('book.startReading')}
               <ArrowRight className="h-4 w-4" aria-hidden />
             </ButtonLink>
+            {pdfPath ? (
+              <Button
+                type="button"
+                variant="secondary"
+                className="w-full min-w-48 sm:w-auto"
+                isLoading={downloading}
+                loadingText={t('book.downloading')}
+                onClick={() => void downloadPdf()}
+              >
+                <Download className="h-4 w-4" aria-hidden />
+                {t('book.download')}
+              </Button>
+            ) : null}
             {hasProgress && progress ? (
               <p className="self-center text-sm text-muted">
                 {t('book.continueFrom', { page: progress.currentPage })}

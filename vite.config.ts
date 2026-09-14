@@ -1,6 +1,6 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
-import { readFileSync, writeFileSync } from 'node:fs';
+import { copyFileSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
 import { defineConfig, loadEnv, type Plugin } from 'vite';
@@ -12,6 +12,27 @@ function applySiteUrl(source: string, origin: string) {
   return source
     .replace(/^Sitemap: __SITE_URL__\/sitemap\.xml\r?\n/m, '')
     .replaceAll('__SITE_URL__', '');
+}
+
+function copyPdfWorker(destDir: string) {
+  copyFileSync(
+    resolve(fileURLToPath(new URL('./node_modules/pdfjs-dist/legacy/build/pdf.worker.min.mjs', import.meta.url))),
+    resolve(destDir, 'pdf.worker.min.mjs'),
+  );
+}
+
+function pdfWorkerPlugin(): Plugin {
+  const publicDir = resolve(fileURLToPath(new URL('./public', import.meta.url)));
+  const outDir = resolve(fileURLToPath(new URL('./dist', import.meta.url)));
+  return {
+    name: 'bookkeep-pdf-worker',
+    buildStart() {
+      copyPdfWorker(publicDir);
+    },
+    closeBundle() {
+      copyPdfWorker(outDir);
+    },
+  };
 }
 
 function seoSiteUrlPlugin(origin: string): Plugin {
@@ -36,7 +57,7 @@ export default defineConfig(({ mode }) => {
   const siteUrl = (env.VITE_SITE_URL ?? '').trim().replace(/\/$/, '');
 
   return {
-    plugins: [react(), tailwindcss(), seoSiteUrlPlugin(siteUrl)],
+    plugins: [react(), tailwindcss(), pdfWorkerPlugin(), seoSiteUrlPlugin(siteUrl)],
     resolve: {
       alias: [
         { find: '@', replacement: fileURLToPath(new URL('./src', import.meta.url)) },

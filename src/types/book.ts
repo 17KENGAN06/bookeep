@@ -1,5 +1,5 @@
 export type BookLanguage = 'fi' | 'en';
-export type CefrLevel = 'A2' | 'B1' | 'B2' | 'C2';
+export type CefrLevel = 'A2' | 'B1';
 export type UiLanguage = 'fi' | 'en' | 'uk' | 'ru';
 
 export type Book = {
@@ -25,4 +25,4 @@ export type Book = {
 };
 
 export const BOOK_LANGUAGES: BookLanguage[] = ['fi', 'en'];
-export const CEFR_LEVELS: CefrLevel[] = ['A2', 'B1', 'B2', 'C2'];
+export const CEFR_LEVELS: CefrLevel[] = ['A2', 'B1'];

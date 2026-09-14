@@ -24,7 +24,7 @@ create table if not exists public.books (
   description_ru text,
 
   language text not null check (language in ('fi', 'en')),
-  level text not null check (level in ('A2', 'B1', 'B2', 'C2')),
+  level text not null check (level in ('A2', 'B1')),
 
   cover_path text,
   pdf_path text,
