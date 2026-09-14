@@ -78,6 +78,9 @@ export default defineConfig(({ mode }) => {
       include: ['react-pdf'],
       exclude: ['pdfjs-dist'],
     },
+    worker: {
+      format: 'es',
+    },
     preview: {
       port: 4173,
       host: true,

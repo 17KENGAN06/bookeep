@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { Document, Page, pdfjs } from 'react-pdf';
+import { Suspense, useEffect, useRef, useState } from 'react';
+import { Document, Page } from 'react-pdf';
 import { useTranslation } from 'react-i18next';
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 import { ErrorState } from '@/components/common/ErrorState';
@@ -8,15 +8,9 @@ import { Skeleton } from '@/components/common/Skeleton';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 
-const workerBase = import.meta.env.BASE_URL.endsWith('/')
-  ? import.meta.env.BASE_URL
-  : `${import.meta.env.BASE_URL}/`;
-pdfjs.GlobalWorkerOptions.workerSrc = new URL('pdf.worker.min.mjs', `${window.location.origin}${workerBase}`).href;
-
 const pdfOptions = {
   disableRange: true,
   disableStream: true,
-  isEvalSupported: false,
   isOffscreenCanvasSupported: false,
 };
 
@@ -30,14 +24,17 @@ type PdfDocumentProps = {
   onNext: () => void;
 };
 
+function LoadingPage() {
+  return <Skeleton className="h-64 w-full max-w-2xl rounded-3xl sm:h-80" />;
+}
+
 export function PdfDocument({ file, page, zoom, nightPaper = false, onLoad, onPrev, onNext }: PdfDocumentProps) {
   const { t } = useTranslation();
   const stageRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(640);
   const [pixelRatio, setPixelRatio] = useState(1);
   const [reloadKey, setReloadKey] = useState(0);
-  const [pdfData, setPdfData] = useState<ArrayBuffer | null>(null);
-  const [fetchError, setFetchError] = useState(false);
+  const [failed, setFailed] = useState(false);
   const swipeStart = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
@@ -59,34 +56,15 @@ export function PdfDocument({ file, page, zoom, nightPaper = false, onLoad, onPr
   }, []);
 
   useEffect(() => {
-    const controller = new AbortController();
-    setPdfData(null);
-    setFetchError(false);
-
-    void fetch(file, { mode: 'cors', credentials: 'omit', signal: controller.signal })
-      .then((response) => {
-        if (!response.ok) throw new Error('pdf-fetch');
-        return response.arrayBuffer();
-      })
-      .then((buffer) => {
-        setPdfData(buffer.slice(0));
-      })
-      .catch((error: unknown) => {
-        if (controller.signal.aborted) return;
-        setFetchError(true);
-        console.error(error);
-      });
-
-    return () => controller.abort();
+    setFailed(false);
   }, [file, reloadKey]);
 
-  const documentFile = useMemo(
-    () => (pdfData ? { data: new Uint8Array(pdfData) } : null),
-    [pdfData],
-  );
+  const retry = () => {
+    setFailed(false);
+    setReloadKey((value) => value + 1);
+  };
 
-  const retry = () => setReloadKey((value) => value + 1);
-  const failed = (
+  const errorState = (
     <ErrorState
       title={t('reader.error')}
       description={t('reader.errorHint')}
@@ -116,18 +94,22 @@ export function PdfDocument({ file, page, zoom, nightPaper = false, onLoad, onPr
         else onNext();
       }}
     >
-      {fetchError || !file ? (
-        failed
+      {!file || failed ? (
+        errorState
       ) : (
-        <ErrorBoundary resetKey={`${file}-${reloadKey}-${page}`} fallback={failed}>
-          {documentFile ? (
+        <ErrorBoundary resetKey={`${file}-${reloadKey}`} fallback={errorState}>
+          <Suspense fallback={<LoadingPage />}>
             <Document
               key={`${file}-${reloadKey}`}
-              file={documentFile}
+              file={file}
               options={pdfOptions}
-              loading={<Skeleton className="h-64 w-full max-w-2xl rounded-3xl sm:h-80" />}
-              error={failed}
-              onLoadError={() => undefined}
+              suspense={false}
+              loading={<LoadingPage />}
+              error={errorState}
+              onLoadError={(error) => {
+                console.error(error);
+                setFailed(true);
+              }}
               onLoadSuccess={({ numPages }) => onLoad(numPages)}
             >
               <Page
@@ -136,12 +118,11 @@ export function PdfDocument({ file, page, zoom, nightPaper = false, onLoad, onPr
                 devicePixelRatio={pixelRatio}
                 className={nightPaper ? 'reader-page is-night' : 'reader-page'}
                 renderAnnotationLayer={false}
-                loading={<Skeleton className="h-64 w-full max-w-2xl rounded-3xl sm:h-80" />}
+                suspense={false}
+                loading={<LoadingPage />}
               />
             </Document>
-          ) : (
-            <Skeleton className="h-64 w-full max-w-2xl rounded-3xl sm:h-80" />
-          )}
+          </Suspense>
         </ErrorBoundary>
       )}
     </div>
