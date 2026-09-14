@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { BrandLockup } from '@/components/brand/BrandLockup';
 import { Container } from '@/components/common/Container';
+import { scrollToPageTop } from '@/utils/scroll';
 
 const STUDIO_URL = 'http://weisezahoy.com/';
 
@@ -19,7 +20,11 @@ export function Footer() {
           </div>
 
           <nav className="flex flex-wrap gap-x-5 gap-y-3 text-sm font-semibold">
-            <Link to="/" className="focus-ring rounded-md text-ink hover:text-accent">
+            <Link
+              to="/"
+              onClick={() => scrollToPageTop()}
+              className="focus-ring rounded-md text-ink hover:text-accent"
+            >
               {t('nav.home')}
             </Link>
             <Link to="/books" className="focus-ring rounded-md text-ink hover:text-accent">

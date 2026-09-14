@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { BrandMark } from '@/components/brand/BrandMark';
 import { cn } from '@/utils/cn';
+import { scrollToPageTop } from '@/utils/scroll';
 
 type BrandLockupProps = {
   to?: string;
@@ -30,7 +31,13 @@ export function BrandLockup({ to = '/', size = 'md', className }: BrandLockupPro
 
   if (to) {
     return (
-      <Link to={to} className={cn('focus-ring inline-flex min-w-0 items-center gap-2.5 rounded-xl', className)}>
+      <Link
+        to={to}
+        onClick={() => {
+          if (to === '/') scrollToPageTop();
+        }}
+        className={cn('focus-ring inline-flex min-w-0 items-center gap-2.5 rounded-xl', className)}
+      >
         {content}
       </Link>
     );

@@ -19,7 +19,7 @@ export function BookCard({ book }: BookCardProps) {
         to={`/books/${book.slug}`}
         className="group focus-ring flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-[var(--app-shadow)] transition duration-200 hover:border-accent/30 motion-safe:hover:-translate-y-0.5"
       >
-        <div className="h-40 overflow-hidden bg-elevated sm:h-44">
+        <div className="h-52 overflow-hidden bg-elevated sm:h-56">
           <BookCover book={book} labeled={false} className="transition duration-300 motion-safe:group-hover:scale-[1.03]" />
         </div>
         <div className="flex flex-1 items-start justify-between gap-3 p-3.5 sm:p-4">

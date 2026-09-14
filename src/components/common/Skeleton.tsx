@@ -16,7 +16,7 @@ export function Skeleton({ className }: SkeletonProps) {
 export function BookCardSkeleton() {
   return (
     <div className="overflow-hidden rounded-2xl border border-line bg-surface">
-      <Skeleton className="h-40 rounded-none sm:h-44" />
+      <Skeleton className="h-52 rounded-none sm:h-56" />
       <div className="space-y-2 p-4">
         <Skeleton className="h-5 w-3/4" />
         <Skeleton className="h-3 w-1/3" />

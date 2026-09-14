@@ -7,6 +7,7 @@ import { Container } from '@/components/common/Container';
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { cn } from '@/utils/cn';
+import { scrollToPageTop } from '@/utils/scroll';
 
 const links = [
   { to: '/', key: 'nav.home' },
@@ -58,6 +59,9 @@ export function Header() {
               key={link.to}
               to={link.to}
               end={link.to === '/'}
+              onClick={() => {
+                if (link.to === '/') scrollToPageTop();
+              }}
               className={({ isActive }) =>
                 cn(
                   'focus-ring inline-flex min-h-10 items-center rounded-xl px-3 text-sm font-semibold transition',
@@ -101,7 +105,10 @@ export function Header() {
               <Link
                 key={link.to}
                 to={link.to}
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  setOpen(false);
+                  if (link.to === '/') scrollToPageTop();
+                }}
                 className="focus-ring rounded-xl px-3 py-3 text-base font-semibold text-ink hover:bg-surface-2"
               >
                 {t(link.key)}

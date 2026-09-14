@@ -9,9 +9,9 @@ export function Hero() {
   const { t } = useTranslation();
 
   return (
-    <section className="relative overflow-hidden pt-8 pb-16 sm:pt-12 sm:pb-20 lg:pt-16 lg:pb-24">
+    <section className="relative overflow-x-clip pt-8 pb-12 sm:pt-12 sm:pb-20 lg:pt-16 lg:pb-24">
       <Container>
-        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-14">
+        <div className="grid items-center gap-8 sm:gap-10 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] xl:gap-14">
           <div className="relative">
             <div
               aria-hidden
@@ -24,7 +24,7 @@ export function Hero() {
               </p>
             </Reveal>
 
-            <h1 className="font-display mt-5 text-[2.6rem] leading-[0.95] font-bold tracking-tight text-ink sm:text-6xl lg:text-[4.2rem]">
+            <h1 className="font-display mt-5 text-3xl leading-tight font-bold tracking-tight break-words text-ink sm:text-6xl lg:text-[4.2rem] lg:leading-[0.95]">
               <Reveal as="span" delay={80} className="block">
                 {t('home.line1')}
               </Reveal>
