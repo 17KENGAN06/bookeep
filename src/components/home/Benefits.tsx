@@ -1,12 +1,12 @@
-import { BookOpen, Languages, Moon } from 'lucide-react';
+import { BookOpen, Languages, Layers2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Container } from '@/components/common/Container';
 import { Reveal } from '@/components/common/Reveal';
 
 const items = [
-  { key: 'evening', icon: Moon },
-  { key: 'finnish', icon: Languages },
-  { key: 'english', icon: BookOpen },
+  { key: 'adaptation', icon: BookOpen },
+  { key: 'languages', icon: Languages },
+  { key: 'levels', icon: Layers2 },
 ] as const;
 
 export function Benefits() {

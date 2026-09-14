@@ -1,7 +1,10 @@
 import { useTranslation } from 'react-i18next';
+import { ButtonLink } from '@/components/common/Button';
 import { Container } from '@/components/common/Container';
 import { DocumentTitle } from '@/components/common/DocumentTitle';
 import { Reveal } from '@/components/common/Reveal';
+
+const SECTIONS = ['purpose', 'adaptation', 'languages', 'levels', 'reading'] as const;
 
 export function AboutPage() {
   const { t } = useTranslation();
@@ -21,11 +24,25 @@ export function AboutPage() {
         <Reveal delay={160}>
           <p className="mt-6 text-lg leading-relaxed text-muted">{t('about.lead')}</p>
         </Reveal>
-        <div className="mt-8 space-y-5 text-base leading-relaxed text-muted">
-          <Reveal delay={220} as="p">{t('about.body1')}</Reveal>
-          <Reveal delay={300} as="p">{t('about.body2')}</Reveal>
-          <Reveal delay={380} as="p">{t('about.body3')}</Reveal>
+
+        <div className="mt-12 space-y-10">
+          {SECTIONS.map((section, index) => (
+            <Reveal key={section} delay={200 + index * 60}>
+              <h2 className="font-display text-xl font-semibold tracking-tight text-ink sm:text-2xl">
+                {t(`about.sections.${section}.title`)}
+              </h2>
+              <p className="mt-3 text-base leading-relaxed text-muted">
+                {t(`about.sections.${section}.text`)}
+              </p>
+            </Reveal>
+          ))}
         </div>
+
+        <Reveal delay={520}>
+          <ButtonLink to="/books" className="mt-12 w-full min-w-44 sm:w-auto">
+            {t('about.cta')}
+          </ButtonLink>
+        </Reveal>
       </div>
     </Container>
   );

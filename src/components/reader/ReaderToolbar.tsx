@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { ChevronLeft, ChevronRight, Maximize2, Minimize2, Minus, Plus } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Contrast, Maximize2, Minimize2, Minus, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
@@ -18,6 +18,8 @@ type ReaderToolbarProps = {
   onZoomIn: () => void;
   isFullscreen: boolean;
   onToggleFullscreen: () => void;
+  isDarkPaper: boolean;
+  onTogglePaper: () => void;
 };
 
 export function ReaderToolbar({
@@ -33,6 +35,8 @@ export function ReaderToolbar({
   onZoomIn,
   isFullscreen,
   onToggleFullscreen,
+  isDarkPaper,
+  onTogglePaper,
 }: ReaderToolbarProps) {
   const { t } = useTranslation();
   const pageLabel = t('reader.page', { current: currentPage, total: totalPages || '—' });
@@ -78,6 +82,13 @@ export function ReaderToolbar({
           <IconButton label={t('reader.zoomIn')} onClick={onZoomIn}>
             <Plus className="h-4 w-4" />
           </IconButton>
+          <IconButton
+            label={isDarkPaper ? t('reader.paperLight') : t('reader.paperDark')}
+            pressed={isDarkPaper}
+            onClick={onTogglePaper}
+          >
+            <Contrast className="h-4 w-4" />
+          </IconButton>
           <div className="hidden md:block">
             <ThemeToggle />
           </div>
@@ -97,12 +108,14 @@ function IconButton({
   label,
   onClick,
   disabled,
+  pressed,
   className,
   children,
 }: {
   label: string;
   onClick: () => void;
   disabled?: boolean;
+  pressed?: boolean;
   className?: string;
   children: ReactNode;
 }) {
@@ -112,9 +125,11 @@ function IconButton({
       onClick={onClick}
       disabled={disabled}
       aria-label={label}
+      aria-pressed={pressed}
       title={label}
       className={cn(
         'focus-ring inline-flex h-11 w-11 items-center justify-center rounded-xl border border-line bg-surface text-ink transition hover:border-accent/40 hover:text-accent disabled:cursor-not-allowed disabled:opacity-40',
+        pressed && 'border-accent/50 text-accent',
         className,
       )}
     >

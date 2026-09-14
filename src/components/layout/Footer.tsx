@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { BrandLockup } from '@/components/brand/BrandLockup';
 import { Container } from '@/components/common/Container';
+
+const STUDIO_URL = 'http://weisezahoy.com/';
 
 export function Footer() {
   const { t } = useTranslation();
@@ -26,15 +28,27 @@ export function Footer() {
             <Link to="/about" className="focus-ring rounded-md text-ink hover:text-accent">
               {t('nav.about')}
             </Link>
-            <Link to="/how-it-works" className="focus-ring rounded-md text-ink hover:text-accent">
-              {t('nav.howItWorks')}
-            </Link>
           </nav>
         </div>
 
-        <p className="mt-10 text-xs leading-relaxed text-muted">
-          © {year} {t('common.appName')}. {t('footer.rights')}
-        </p>
+        <div className="mt-10 space-y-2 text-xs leading-relaxed text-muted">
+          <p>© {year} {t('common.appName')}</p>
+          <p>
+            <Trans
+              i18nKey="footer.credit"
+              components={{
+                studio: (
+                  <a
+                    className="font-semibold text-ink underline decoration-accent/50 underline-offset-4 transition hover:text-accent"
+                    href={STUDIO_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  />
+                ),
+              }}
+            />
+          </p>
+        </div>
       </Container>
     </footer>
   );

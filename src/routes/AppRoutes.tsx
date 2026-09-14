@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { PublicLayout } from '@/components/layout/PublicLayout';
 import { AboutPage } from '@/pages/AboutPage';
@@ -8,7 +8,6 @@ import { AdminLoginPage } from '@/pages/admin/AdminLoginPage';
 import { BookDetailsPage } from '@/pages/BookDetailsPage';
 import { BooksPage } from '@/pages/BooksPage';
 import { HomePage } from '@/pages/HomePage';
-import { HowItWorksPage } from '@/pages/HowItWorksPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { ReaderPage } from '@/pages/ReaderPage';
 import { ProtectedAdminRoute } from '@/routes/ProtectedAdminRoute';
@@ -32,7 +31,7 @@ export function AppRoutes() {
         <Route path="/books" element={<BooksPage />} />
         <Route path="/books/:slug" element={<BookDetailsPage />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/how-it-works" element={<HowItWorksPage />} />
+        <Route path="/how-it-works" element={<Navigate to="/about" replace />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

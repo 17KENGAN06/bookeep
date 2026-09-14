@@ -41,7 +41,7 @@ export function DocumentTitle({ title, description, image, noindex = false }: Do
     const pageTitle = title ? `${title} · ${appName}` : t('seo.title');
     const pageDescription = truncateMeta(description?.trim() || t('seo.description'));
     const canonical = absoluteUrl(pathname);
-    const shareImage = image?.startsWith('http') ? image : absoluteUrl(image || '/favicon.svg');
+    const shareImage = image?.startsWith('http') ? image : absoluteUrl(image || '/favicon.png');
     const robots = noindex ? 'noindex,nofollow' : 'index,follow';
 
     document.title = pageTitle;

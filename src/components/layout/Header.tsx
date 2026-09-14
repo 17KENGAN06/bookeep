@@ -12,7 +12,6 @@ const links = [
   { to: '/', key: 'nav.home' },
   { to: '/books', key: 'nav.books' },
   { to: '/about', key: 'nav.about' },
-  { to: '/how-it-works', key: 'nav.howItWorks' },
 ] as const;
 
 export function Header() {

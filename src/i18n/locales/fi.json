@@ -11,45 +11,44 @@
     "skipToContent": "Siirry sisältöön"
   },
   "seo": {
-    "title": "BookKeep — kirjoja, joita tekee mieli lukea",
-    "description": "Suomen- ja englanninkielisiä kirjoja ihan vain luettavaksi. Avaa kansi ja lue — ei oppitunteja, ei kiirettä.",
-    "keywords": "BookKeep, mukautetut kirjat, suomi, englanti, lukeminen, A2, B1, B2, C2"
+    "title": "BookKeep — mukautettuja kirjoja englanniksi ja suomeksi",
+    "description": "Luettelo mukautetuista kirjoista englanniksi ja suomeksi. Teokset on valmisteltu A2–C2-lukijoille, juoni säilyy.",
+    "keywords": "BookKeep, mukautetut kirjat, englanti, suomi, A2, B1, B2, C2, kielenoppiminen"
   },
   "nav": {
     "primary": "Päävalikko",
     "home": "Etusivu",
     "books": "Kirjat",
-    "about": "Tietoa",
-    "howItWorks": "Fiilis"
+    "about": "Tietoa"
   },
   "home": {
-    "eyebrow": "Kirjat · Suomi · Englanti",
-    "line1": "Lue.",
-    "line2": "Fiiliksellä.",
-    "line3": "Kiirettä ei ole.",
-    "subtitle": "Suomea ja englantia. Avaa ja lue.",
-    "ctaPrimary": "Kirjoihin",
-    "featuredTitle": "Hyllyllä",
-    "featuredSubtitle": "Mitä tekee mieli selailla tänään.",
-    "viewAll": "Koko hylly",
+    "eyebrow": "Mukautukset · English · Suomi",
+    "line1": "Mukautettuja",
+    "line2": "kirjoja",
+    "line3": "EN ja FI",
+    "subtitle": "BookKeep on luettelo englannin- ja suomenkielisistä teoksista kielenoppijoille. Juoni säilyy, kieli selkenee.",
+    "ctaPrimary": "Avaa luettelo",
+    "featuredTitle": "Luettelossa",
+    "featuredSubtitle": "Mukautettuja kirjoja englanniksi ja suomeksi. Voit suodattaa kielen ja tason.",
+    "viewAll": "Kaikki kirjat",
     "moods": {
-      "evening": {
-        "title": "Ilta",
-        "text": "Istu kirjan kanssa. Kiirettä ei ole."
+      "adaptation": {
+        "title": "Mukautus",
+        "text": "Teksti on kirjoitettu selkeämmäksi ilman, että juoni tai kirjan rakenne katoaa."
       },
-      "finnish": {
-        "title": "Suomi",
-        "text": "Tarinoita, jotka kuulostavat Suomelta."
+      "languages": {
+        "title": "Kaksi kieltä",
+        "text": "Luettelossa on vain englanti ja suomi — kaksi hyllyä samassa paikassa."
       },
-      "english": {
-        "title": "Englanti",
-        "text": "Klassikoita ja juonia — ei läksyfiilistä."
+      "levels": {
+        "title": "Tasot A2–C2",
+        "text": "Valitse kielen tiheys, joka sopii tähän hetkeen."
       }
     }
   },
   "books": {
     "title": "Kirjat",
-    "subtitle": "Suomea ja englantia. Ota se mikä vetää.",
+    "subtitle": "Mukautettuja kirjoja englanniksi ja suomeksi. Suodata kielen ja tason mukaan.",
     "all": "Kaikki",
     "allLevels": "Mikä vain",
     "language": "Kieli",
@@ -58,7 +57,7 @@
     "emptyFi": "Suomenkielisiä kirjoja ei löytynyt",
     "emptyEn": "Englanninkielisiä kirjoja ei löytynyt",
     "emptyLevel": "Tälle tasolle ei löytynyt kirjoja",
-    "showAll": "Koko hylly",
+    "showAll": "Näytä kaikki",
     "loading": "Ladataan kirjoja...",
     "error": "Jokin meni vikaan",
     "errorHint": "Luetteloa ei voitu ladata. Yritä uudelleen.",
@@ -69,7 +68,7 @@
   "book": {
     "notFound": "Kirjaa ei löytynyt",
     "notFoundHint": "Tämä teos ei ole saatavilla tai sitä ei ole vielä julkaistu.",
-    "backToCatalog": "Takaisin hyllyyn",
+    "backToCatalog": "Takaisin luetteloon",
     "startReading": "Lue",
     "continueReading": "Jatka",
     "continueFrom": "sivulta {{page}}",
@@ -86,19 +85,31 @@
   },
   "about": {
     "eyebrow": "Tietoa",
-    "title": "Paikka, jossa vain luetaan",
-    "lead": "Kirjoja suomeksi ja englanniksi. Ei kurssi. Ei treeni. Ilta kirjan kanssa.",
-    "body1": "Hyllyllä on rauhallisempaa ja tiheämpää tekstiä. Ota se, mikä tänään menee.",
-    "body2": "Luet täällä. Ilman tiliä. Suljit — avasit myöhemmin samalta sivulta.",
-    "body3": "Hiljaista, vihreää, ei ylimääräistä."
-  },
-  "how": {
-    "eyebrow": "Fiilis",
-    "title": "Valitsit. Avait. Luet.",
-    "lead": "Siinä kaikki. Ei sen kummempaa.",
-    "body1": "Voit vain painaa kantta. Tai valita kielen ensin, jos haluat.",
-    "body2": "Kirja aukeaa sivustolla. Jos lähdet, sivu jää tälle laitteelle.",
-    "cta": "Hyllylle"
+    "title": "Tietoa hankkeesta",
+    "lead": "BookKeep on luettelo mukautetuista kirjoista englanniksi ja suomeksi. Täällä ei ole oppitunteja eikä harjoituksia: avaat kirjan ja luet sen selaimessa.",
+    "cta": "Avaa luettelo",
+    "sections": {
+      "purpose": {
+        "title": "Miksi tämä on olemassa",
+        "text": "Oppikirja antaa sääntöjä ja tehtäviä. Alkuperäinen romaani on usein liian tiheä, jos kieli ei ole vielä sujuvaa. Mukautus on niiden välissä: luet yhtenäistä tarinaa tasolla, jota pystyt jo kannattelemaan, ilman sanakirjaa joka rivillä."
+      },
+      "adaptation": {
+        "title": "Mitä mukautettu kirja tarkoittaa",
+        "text": "Se ei ole lyhyt juonitiivistelmä eikä dialogikokoelma. Se on teoksen koko teksti, jossa tiheämpi kielioppi, harvinaisempi sanasto ja pitkät jaksot on tuotu valitulle CEFR-tasolle. Juoni, henkilöt ja rakenne pysyvät. Ensin muuttuu kieli."
+      },
+      "languages": {
+        "title": "Englanti ja suomi",
+        "text": "Luettelon kirjat ovat vain englanniksi ja suomeksi. Ne ovat itse tekstien kieliä. Käyttöliittymän voi vaihtaa suomeksi, englanniksi, ukrainaksi tai venäjäksi: sivuston tekstit vaihtuvat, kirja pysyy mukautuksen kielellä."
+      },
+      "levels": {
+        "title": "Tasot A2, B1, B2 ja C2",
+        "text": "Jokaisella kirjalla on taso. A2 on selkeämpää ja lyhyempää. B1 ja B2 ovat lähempänä tavallista kaunokirjallisuutta. C2 on lähes mukauttamatonta, mutta silti kielenoppijalle. Kannattaa valita se, mikä luetaan rauhassa — ei korkein merkintä."
+      },
+      "reading": {
+        "title": "Miten lukeminen toimii",
+        "text": "Luettelossa voi suodattaa kielen ja tason. Kirja avautuu sivustolla: sivut, zoom, vaalea tai tumma paperi. Tiliä ei tarvita. Viimeisin sivu tallentuu tälle laitteelle — se ei siirry toiseen selaimeen itsestään."
+      }
+    }
   },
   "reader": {
     "back": "Takaisin",
@@ -110,6 +121,8 @@
     "zoomIn": "Suurenna",
     "fullscreen": "Koko näyttö",
     "exitFullscreen": "Poistu",
+    "paperDark": "Tummat sivut",
+    "paperLight": "Vaaleat sivut",
     "skipToPage": "Siirry sivulle",
     "error": "Ei auennut",
     "errorHint": "Tiedosto ei latautunut. Yritä uudelleen.",
@@ -117,15 +130,15 @@
     "missingHint": "Tätä kirjaa ei ole vielä lukijassa."
   },
   "notFound": {
-    "eyebrow": "Kadonnut sivu",
-    "title": "Tätä sivua ei ole hyllyssä",
+    "eyebrow": "Virhe 404",
+    "title": "Sivua ei löytynyt",
     "subtitle": "Linkki voi olla vanhentunut, tai kirjaa ei ole vielä julkaistu.",
     "home": "Etusivulle",
     "catalog": "Selaa kirjoja"
   },
   "footer": {
-    "tagline": "Kirjoja, joita tekee mieli lukea. Suomeksi ja englanniksi.",
-    "rights": "Ei oppitunteja. Vain lukemista."
+    "tagline": "Mukautettuja kirjoja englanniksi ja suomeksi.",
+    "credit": "Sivuston on kehittänyt ja sitä ylläpitää studio <studio>WEISEZAHOY</studio>."
   },
   "admin": {
     "eyebrow": "Hallinta",

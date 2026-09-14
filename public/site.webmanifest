@@ -1,7 +1,7 @@
 {
   "name": "BookKeep",
   "short_name": "BookKeep",
-  "description": "Finnish and English books to read for pleasure. Open a cover and start.",
+  "description": "Adapted English and Finnish books for language learners.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#081F19",
@@ -9,10 +9,15 @@
   "lang": "en",
   "icons": [
     {
-      "src": "/favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ]
 }

@@ -13,11 +13,6 @@
   <url>
     <loc>__SITE_URL__/about</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>__SITE_URL__/how-it-works</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
 </urlset>

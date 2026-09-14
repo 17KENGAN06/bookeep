@@ -173,11 +173,20 @@ html[data-theme='dark'] {
   }
 }
 
+.reader-page {
+  border-radius: 1.25rem;
+  box-shadow: var(--app-shadow);
+  overflow: hidden;
+}
+
 .reader-page canvas {
   max-width: 100%;
   height: auto !important;
   border-radius: 1.25rem;
-  box-shadow: var(--app-shadow);
+}
+
+.reader-page.is-night canvas {
+  filter: invert(1) hue-rotate(180deg);
 }
 
 .reader-page .react-pdf__Page__textContent {

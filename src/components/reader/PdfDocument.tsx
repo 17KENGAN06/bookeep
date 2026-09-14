@@ -17,12 +17,13 @@ type PdfDocumentProps = {
   file: string;
   page: number;
   zoom: number;
+  nightPaper?: boolean;
   onLoad: (totalPages: number) => void;
   onPrev: () => void;
   onNext: () => void;
 };
 
-export function PdfDocument({ file, page, zoom, onLoad, onPrev, onNext }: PdfDocumentProps) {
+export function PdfDocument({ file, page, zoom, nightPaper = false, onLoad, onPrev, onNext }: PdfDocumentProps) {
   const { t } = useTranslation();
   const stageRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(640);
@@ -86,7 +87,7 @@ export function PdfDocument({ file, page, zoom, onLoad, onPrev, onNext }: PdfDoc
           <Page
             pageNumber={page}
             width={width * zoom}
-            className="reader-page"
+            className={nightPaper ? 'reader-page is-night' : 'reader-page'}
             renderAnnotationLayer={false}
             loading={<Skeleton className="h-64 w-full max-w-2xl rounded-3xl sm:h-80" />}
           />

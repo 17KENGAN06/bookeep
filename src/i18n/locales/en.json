@@ -11,45 +11,44 @@
     "skipToContent": "Skip to content"
   },
   "seo": {
-    "title": "BookKeep — books you actually want to read",
-    "description": "Finnish and English books to read for pleasure. Open a cover and start — no lessons, no rush.",
-    "keywords": "BookKeep, adapted books, Finnish books, English books, language reading, A2, B1, B2, C2"
+    "title": "BookKeep — adapted books in English and Finnish",
+    "description": "A catalog of adapted books in English and Finnish. Titles are rewritten for A2–C2 readers while the story stays intact.",
+    "keywords": "BookKeep, adapted books, English, Finnish, A2, B1, B2, C2, language reading"
   },
   "nav": {
     "primary": "Primary navigation",
     "home": "Home",
     "books": "Books",
-    "about": "About",
-    "howItWorks": "The vibe"
+    "about": "About"
   },
   "home": {
-    "eyebrow": "Books · Finnish · English",
-    "line1": "Read.",
-    "line2": "For the vibe.",
-    "line3": "No rush.",
-    "subtitle": "Finnish and English. Open one and just read.",
-    "ctaPrimary": "To the shelf",
-    "featuredTitle": "On the shelf",
-    "featuredSubtitle": "Whatever you feel like flipping through tonight.",
-    "viewAll": "The whole shelf",
+    "eyebrow": "Adaptations · English · Finnish",
+    "line1": "Adapted",
+    "line2": "English",
+    "line3": "& Finnish",
+    "subtitle": "BookKeep is a catalog of English and Finnish books prepared for language learners. The plot stays; the language becomes clearer.",
+    "ctaPrimary": "Open the catalog",
+    "featuredTitle": "In the catalog",
+    "featuredSubtitle": "Adapted books in English and Finnish. Filter by language and level if you want.",
+    "viewAll": "All books",
     "moods": {
-      "evening": {
-        "title": "Evening",
-        "text": "Sit down with a book. Nowhere to rush."
+      "adaptation": {
+        "title": "Adaptation",
+        "text": "The text is rewritten more simply, without dropping the plot or the book’s structure."
       },
-      "finnish": {
-        "title": "Finnish",
-        "text": "Stories that sound like Finland."
+      "languages": {
+        "title": "Two languages",
+        "text": "The catalog is English and Finnish only — two sections in one place."
       },
-      "english": {
-        "title": "English",
-        "text": "Classics and plots — not homework mode."
+      "levels": {
+        "title": "Levels A2–C2",
+        "text": "Pick the language density that matches where you are now."
       }
     }
   },
   "books": {
     "title": "Books",
-    "subtitle": "Finnish and English. Take whatever pulls you.",
+    "subtitle": "Adapted books in English and Finnish. Filter by language and level.",
     "all": "All",
     "allLevels": "Any",
     "language": "Language",
@@ -58,20 +57,20 @@
     "emptyFi": "No Finnish books found",
     "emptyEn": "No English books found",
     "emptyLevel": "No books found for this level",
-    "showAll": "Whole shelf",
+    "showAll": "Show all",
     "loading": "Loading books...",
     "error": "Something went wrong",
     "errorHint": "The catalog could not be loaded. Please try again.",
     "startReading": "Read",
-    "continueReading": "Keep going",
+    "continueReading": "Continue",
     "progress": "Progress"
   },
   "book": {
     "notFound": "Book not found",
     "notFoundHint": "This title is unavailable or has not been published yet.",
-    "backToCatalog": "Back to the shelf",
+    "backToCatalog": "Back to catalog",
     "startReading": "Read",
-    "continueReading": "Keep going",
+    "continueReading": "Continue",
     "continueFrom": "from page {{page}}",
     "pages": "{{current}} / {{total}} pages",
     "completed": "{{percent}}% completed",
@@ -86,19 +85,31 @@
   },
   "about": {
     "eyebrow": "About",
-    "title": "A place to just read",
-    "lead": "Books in Finnish and English. Not a course. Not a drill. An evening with a book.",
-    "body1": "The shelf has calmer pages and denser ones. Take whatever fits tonight.",
-    "body2": "You read here. No account. Close it, come back to the same page.",
-    "body3": "Quiet, green, nothing extra."
-  },
-  "how": {
-    "eyebrow": "The vibe",
-    "title": "Pick one. Open it. Read.",
-    "lead": "That's it. No extra ritual.",
-    "body1": "Tap a cover. Or start with a language, if you want.",
-    "body2": "The book opens on the site. Leave, and the page stays on this device.",
-    "cta": "To the shelf"
+    "title": "About the project",
+    "lead": "BookKeep is a catalog of adapted books in English and Finnish. There are no lessons or exercises here: you open a book and read it in the browser.",
+    "cta": "Open the catalog",
+    "sections": {
+      "purpose": {
+        "title": "Why it exists",
+        "text": "A textbook gives rules and drills. An original novel is often too dense if the language is not yet fluent. Adaptation sits between them: you read a continuous story at a level you can already hold, without a dictionary on every line."
+      },
+      "adaptation": {
+        "title": "What an adapted book is",
+        "text": "It is not a short retelling and not a set of dialogues. It is the full work, with denser grammar, rarer words and long periods brought to a chosen CEFR level. Plot, characters and structure stay. What changes first is the language."
+      },
+      "languages": {
+        "title": "English and Finnish",
+        "text": "Books in the catalog are English and Finnish only. Those are the languages of the texts. The interface can be switched to Finnish, English, Ukrainian or Russian: site labels change, the book stays in the language of the adaptation."
+      },
+      "levels": {
+        "title": "Levels A2, B1, B2 and C2",
+        "text": "Each title has a level. A2 is clearer and shorter. B1 and B2 sit closer to ordinary fiction. C2 is almost unadapted, but still written with a language learner in mind. Take what you can read calmly, not the highest badge."
+      },
+      "reading": {
+        "title": "How reading works",
+        "text": "In the catalog you can filter by language and level. The book opens on the site: pages, zoom, light or dark paper. No account is required. The last page is stored on this device — it will not follow you to another browser on its own."
+      }
+    }
   },
   "reader": {
     "back": "Back",
@@ -110,6 +121,8 @@
     "zoomIn": "Zoom in",
     "fullscreen": "Full screen",
     "exitFullscreen": "Exit full screen",
+    "paperDark": "Dark pages",
+    "paperLight": "Light pages",
     "skipToPage": "Skip to page",
     "error": "Could not open",
     "errorHint": "The file did not load. Try again.",
@@ -117,15 +130,15 @@
     "missingHint": "This book is not in the reader yet."
   },
   "notFound": {
-    "eyebrow": "Lost page",
-    "title": "This page is not on the shelf",
+    "eyebrow": "Error 404",
+    "title": "Page not found",
     "subtitle": "The link may be outdated, or the book has not been published yet.",
     "home": "Go home",
     "catalog": "Browse books"
   },
   "footer": {
-    "tagline": "Books you actually want to read. In Finnish and English.",
-    "rights": "No lessons. Just reading."
+    "tagline": "Adapted books in English and Finnish.",
+    "credit": "The site is developed and maintained by <studio>WEISEZAHOY</studio>."
   },
   "admin": {
     "eyebrow": "Admin",

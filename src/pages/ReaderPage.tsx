@@ -9,6 +9,7 @@ import { ReaderToolbar } from '@/components/reader/ReaderToolbar';
 import { Skeleton } from '@/components/common/Skeleton';
 import { useBook } from '@/hooks/useBooks';
 import { useDebouncedCallback } from '@/hooks/useDebouncedCallback';
+import { usePdfPaper } from '@/hooks/usePdfPaper';
 import { useReadingProgress } from '@/hooks/useReadingProgress';
 import { getLocalizedTitle } from '@/utils/bookCopy';
 import { clamp } from '@/utils/cn';
@@ -27,6 +28,7 @@ function ReaderPageInner() {
   const { t, i18n } = useTranslation();
   const { book, status } = useBook(slug);
   const { progress, saveProgress } = useReadingProgress(book?.id);
+  const { isDarkPaper, togglePaper } = usePdfPaper();
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(progress?.totalPages ?? 0);
   const [zoom, setZoom] = useState(1);
@@ -147,6 +149,8 @@ function ReaderPageInner() {
           if (document.fullscreenElement) void document.exitFullscreen();
           else void document.documentElement.requestFullscreen();
         }}
+        isDarkPaper={isDarkPaper}
+        onTogglePaper={togglePaper}
       />
       <div
         className="h-0.5 bg-elevated"
@@ -164,6 +168,7 @@ function ReaderPageInner() {
           file={book.pdf_path}
           page={page}
           zoom={zoom}
+          nightPaper={isDarkPaper}
           onLoad={onPdfLoad}
           onPrev={() => goTo((current) => current - 1)}
           onNext={() => goTo((current) => current + 1)}
