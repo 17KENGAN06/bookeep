@@ -76,12 +76,14 @@ export function ReaderToolbar({
           <IconButton label={t('reader.next')} disabled={!canNext} onClick={onNext}>
             <ChevronRight className="h-4 w-4" />
           </IconButton>
-          <IconButton label={t('reader.zoomOut')} onClick={onZoomOut}>
-            <Minus className="h-4 w-4" />
-          </IconButton>
-          <IconButton label={t('reader.zoomIn')} onClick={onZoomIn}>
-            <Plus className="h-4 w-4" />
-          </IconButton>
+          <div className="hidden xl:[@media(pointer:fine)]:contents">
+            <IconButton label={t('reader.zoomOut')} onClick={onZoomOut}>
+              <Minus className="h-4 w-4" />
+            </IconButton>
+            <IconButton label={t('reader.zoomIn')} onClick={onZoomIn}>
+              <Plus className="h-4 w-4" />
+            </IconButton>
+          </div>
           <IconButton
             label={isDarkPaper ? t('reader.paperLight') : t('reader.paperDark')}
             pressed={isDarkPaper}

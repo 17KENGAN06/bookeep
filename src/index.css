@@ -173,24 +173,41 @@ html[data-theme='dark'] {
   }
 }
 
+.reader-stage {
+  touch-action: pan-y pinch-zoom;
+}
+
 .reader-page {
+  background: #fff;
   border-radius: 1.25rem;
   box-shadow: var(--app-shadow);
   overflow: hidden;
 }
 
 .reader-page canvas {
+  display: block;
+  width: 100%;
   max-width: 100%;
   height: auto !important;
-  border-radius: 1.25rem;
+}
+
+.reader-page.is-night {
+  background: #050505 !important;
+  box-shadow: none;
+  outline: 2px solid #050505;
+  outline-offset: -1px;
 }
 
 .reader-page.is-night canvas {
+  background: #fff;
   filter: invert(1) hue-rotate(180deg);
+  transform: scale(1.012);
+  transform-origin: center;
 }
 
-.reader-page .react-pdf__Page__textContent {
-  border-radius: 1.25rem;
+.reader-page .react-pdf__Page__textContent,
+.reader-page .react-pdf__Page__annotations {
+  border-radius: inherit;
 }
 
 .ambient-orb-a {
