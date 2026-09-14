@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>BookKeep — books you actually want to read</title>
+    <meta
+      name="description"
+      content="Finnish and English books to read for pleasure. Open a cover and start — no lessons, no rush."
+    />
+    <meta
+      name="keywords"
+      content="BookKeep, adapted books, Finnish books, English books, language reading, A2, B1, B2, C2"
+    />
+    <meta name="author" content="BookKeep" />
+    <meta name="theme-color" content="#081F19" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F7FAF8" media="(prefers-color-scheme: light)" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="__SITE_URL__/" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="BookKeep" />
+    <meta property="og:title" content="BookKeep — books you actually want to read" />
+    <meta
+      property="og:description"
+      content="Finnish and English. Open one and just read."
+    />
+    <meta property="og:url" content="__SITE_URL__/" />
+    <meta property="og:image" content="__SITE_URL__/favicon.svg" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="fi_FI" />
+    <meta property="og:locale:alternate" content="uk_UA" />
+    <meta property="og:locale:alternate" content="ru_RU" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="BookKeep — books you actually want to read" />
+    <meta name="twitter:description" content="Finnish and English. Open one and just read." />
+    <meta name="twitter:image" content="__SITE_URL__/favicon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "BookKeep",
+        "url": "__SITE_URL__/",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Web",
+        "description": "Finnish and English books to read for pleasure. Open a cover and start.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR"
+        }
+      }
+    </script>
+
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('bookkeep_theme');
+          var theme =
+            saved === 'light' || saved === 'dark'
+              ? saved
+              : window.matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark'
+                : 'light';
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.style.colorScheme = theme;
+        } catch (e) {
+          document.documentElement.dataset.theme = 'light';
+        }
+
+        if (typeof Map !== 'undefined' && typeof Map.prototype.getOrInsertComputed !== 'function') {
+          Map.prototype.getOrInsertComputed = function (key, fn) {
+            if (this.has(key)) return this.get(key);
+            var value = fn(key);
+            this.set(key, value);
+            return value;
+          };
+        }
+        if (typeof Promise !== 'undefined' && typeof Promise.withResolvers !== 'function') {
+          Promise.withResolvers = function () {
+            var resolve, reject;
+            var promise = new Promise(function (res, rej) {
+              resolve = res;
+              reject = rej;
+            });
+            return { promise: promise, resolve: resolve, reject: reject };
+          };
+        }
+        if (typeof Uint8Array !== 'undefined' && typeof Uint8Array.prototype.toHex !== 'function') {
+          Uint8Array.prototype.toHex = function () {
+            var hex = '';
+            for (var i = 0; i < this.length; i += 1) hex += this[i].toString(16).padStart(2, '0');
+            return hex;
+          };
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

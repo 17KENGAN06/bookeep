@@ -1,0 +1,206 @@
+{
+  "common": {
+    "appName": "BookKeep",
+    "themeLight": "Vaihda vaaleaan teemaan",
+    "themeDark": "Vaihda tummaan teemaan",
+    "language": "Käyttöliittymän kieli",
+    "loading": "Ladataan...",
+    "retry": "Yritä uudelleen",
+    "openMenu": "Avaa valikko",
+    "closeMenu": "Sulje valikko",
+    "skipToContent": "Siirry sisältöön"
+  },
+  "seo": {
+    "title": "BookKeep — kirjoja, joita tekee mieli lukea",
+    "description": "Suomen- ja englanninkielisiä kirjoja ihan vain luettavaksi. Avaa kansi ja lue — ei oppitunteja, ei kiirettä.",
+    "keywords": "BookKeep, mukautetut kirjat, suomi, englanti, lukeminen, A2, B1, B2, C2"
+  },
+  "nav": {
+    "primary": "Päävalikko",
+    "home": "Etusivu",
+    "books": "Kirjat",
+    "about": "Tietoa",
+    "howItWorks": "Fiilis"
+  },
+  "home": {
+    "eyebrow": "Kirjat · Suomi · Englanti",
+    "line1": "Lue.",
+    "line2": "Fiiliksellä.",
+    "line3": "Kiirettä ei ole.",
+    "subtitle": "Suomea ja englantia. Avaa ja lue.",
+    "ctaPrimary": "Kirjoihin",
+    "featuredTitle": "Hyllyllä",
+    "featuredSubtitle": "Mitä tekee mieli selailla tänään.",
+    "viewAll": "Koko hylly",
+    "moods": {
+      "evening": {
+        "title": "Ilta",
+        "text": "Istu kirjan kanssa. Kiirettä ei ole."
+      },
+      "finnish": {
+        "title": "Suomi",
+        "text": "Tarinoita, jotka kuulostavat Suomelta."
+      },
+      "english": {
+        "title": "Englanti",
+        "text": "Klassikoita ja juonia — ei läksyfiilistä."
+      }
+    }
+  },
+  "books": {
+    "title": "Kirjat",
+    "subtitle": "Suomea ja englantia. Ota se mikä vetää.",
+    "all": "Kaikki",
+    "allLevels": "Mikä vain",
+    "language": "Kieli",
+    "level": "Taso",
+    "empty": "Kirjoja ei löytynyt",
+    "emptyFi": "Suomenkielisiä kirjoja ei löytynyt",
+    "emptyEn": "Englanninkielisiä kirjoja ei löytynyt",
+    "emptyLevel": "Tälle tasolle ei löytynyt kirjoja",
+    "showAll": "Koko hylly",
+    "loading": "Ladataan kirjoja...",
+    "error": "Jokin meni vikaan",
+    "errorHint": "Luetteloa ei voitu ladata. Yritä uudelleen.",
+    "startReading": "Lue",
+    "continueReading": "Jatka",
+    "progress": "Edistyminen"
+  },
+  "book": {
+    "notFound": "Kirjaa ei löytynyt",
+    "notFoundHint": "Tämä teos ei ole saatavilla tai sitä ei ole vielä julkaistu.",
+    "backToCatalog": "Takaisin hyllyyn",
+    "startReading": "Lue",
+    "continueReading": "Jatka",
+    "continueFrom": "sivulta {{page}}",
+    "pages": "{{current}} / {{total}} sivua",
+    "completed": "{{percent}} % luettu",
+    "language": "Kieli",
+    "level": "Taso",
+    "description": "Tästä kirjasta",
+    "loading": "Ladataan kirjaa..."
+  },
+  "languages": {
+    "fi": "Suomi",
+    "en": "Englanti"
+  },
+  "about": {
+    "eyebrow": "Tietoa",
+    "title": "Paikka, jossa vain luetaan",
+    "lead": "Kirjoja suomeksi ja englanniksi. Ei kurssi. Ei treeni. Ilta kirjan kanssa.",
+    "body1": "Hyllyllä on rauhallisempaa ja tiheämpää tekstiä. Ota se, mikä tänään menee.",
+    "body2": "Luet täällä. Ilman tiliä. Suljit — avasit myöhemmin samalta sivulta.",
+    "body3": "Hiljaista, vihreää, ei ylimääräistä."
+  },
+  "how": {
+    "eyebrow": "Fiilis",
+    "title": "Valitsit. Avait. Luet.",
+    "lead": "Siinä kaikki. Ei sen kummempaa.",
+    "body1": "Voit vain painaa kantta. Tai valita kielen ensin, jos haluat.",
+    "body2": "Kirja aukeaa sivustolla. Jos lähdet, sivu jää tälle laitteelle.",
+    "cta": "Hyllylle"
+  },
+  "reader": {
+    "back": "Takaisin",
+    "titleFallback": "Kirja",
+    "page": "{{current}} / {{total}}",
+    "prev": "Edellinen sivu",
+    "next": "Seuraava sivu",
+    "zoomOut": "Pienennä",
+    "zoomIn": "Suurenna",
+    "fullscreen": "Koko näyttö",
+    "exitFullscreen": "Poistu",
+    "skipToPage": "Siirry sivulle",
+    "error": "Ei auennut",
+    "errorHint": "Tiedosto ei latautunut. Yritä uudelleen.",
+    "missing": "Ei tiedostoa vielä",
+    "missingHint": "Tätä kirjaa ei ole vielä lukijassa."
+  },
+  "notFound": {
+    "eyebrow": "Kadonnut sivu",
+    "title": "Tätä sivua ei ole hyllyssä",
+    "subtitle": "Linkki voi olla vanhentunut, tai kirjaa ei ole vielä julkaistu.",
+    "home": "Etusivulle",
+    "catalog": "Selaa kirjoja"
+  },
+  "footer": {
+    "tagline": "Kirjoja, joita tekee mieli lukea. Suomeksi ja englanniksi.",
+    "rights": "Ei oppitunteja. Vain lukemista."
+  },
+  "admin": {
+    "eyebrow": "Hallinta",
+    "logout": "Kirjaudu ulos",
+    "back": "Takaisin hallintaan",
+    "login": {
+      "title": "Ylläpitäjän kirjautuminen",
+      "subtitle": "Julkista rekisteröitymistä ei ole. Vain ylläpitäjät pääsevät sisään.",
+      "email": "Sähköposti",
+      "password": "Salasana",
+      "submit": "Kirjaudu",
+      "error": "Kirjautuminen epäonnistui. Tarkista sähköposti ja salasana.",
+      "notConfigured": "Supabase ei ole vielä määritetty. Lisää VITE_SUPABASE_URL ja VITE_SUPABASE_ANON_KEY tiedostoon .env."
+    },
+    "dashboard": {
+      "title": "Kirjat",
+      "add": "Lisää kirja",
+      "total": "Kirjoja yhteensä",
+      "finnish": "Suomenkieliset",
+      "english": "Englanninkieliset",
+      "empty": "Kirjoja ei ole vielä"
+    },
+    "table": {
+      "cover": "Kansi",
+      "title": "Nimi",
+      "language": "Kieli",
+      "level": "Taso",
+      "status": "Tila",
+      "created": "Luotu",
+      "actions": "Toiminnot",
+      "edit": "Muokkaa",
+      "delete": "Poista",
+      "open": "Avaa"
+    },
+    "status": {
+      "published": "Julkaistu",
+      "draft": "Luonnos"
+    },
+    "form": {
+      "createTitle": "Lisää kirja",
+      "editTitle": "Muokkaa kirjaa",
+      "titleOriginal": "Alkuperäinen nimi",
+      "slug": "Slug",
+      "language": "Kirjan kieli",
+      "level": "Taso",
+      "published": "Julkaistu",
+      "cover": "Kansikuva",
+      "pdf": "PDF-tiedosto",
+      "fileKept": "Nykyinen tiedosto säilyy, ellet valitse uutta",
+      "localizedTitle": "Nimi",
+      "localizedDescription": "Lyhyt kuvaus",
+      "create": "Luo kirja",
+      "save": "Tallenna",
+      "created": "Kirja luotu",
+      "updated": "Kirja päivitetty",
+      "error": "Kirjaa ei voitu tallentaa",
+      "titleRequired": "Alkuperäinen nimi on pakollinen",
+      "coverRequired": "Kansikuva on pakollinen",
+      "pdfRequired": "PDF-tiedosto on pakollinen"
+    },
+    "upload": {
+      "drop": "Vedä tiedosto tähän",
+      "orBrowse": "tai valitse koneelta",
+      "uploading": "Lähetetään…",
+      "ready": "Tiedosto valmis lähetettäväksi",
+      "coverInvalid": "Kannen on oltava JPG, PNG tai WebP",
+      "pdfInvalid": "Vain PDF-tiedostot kelpaavat"
+    },
+    "delete": {
+      "title": "Poistetaanko tämä kirja?",
+      "body": "“{{title}}” poistetaan luettelosta. Toimintoa ei voi perua.",
+      "confirm": "Poista",
+      "cancel": "Peruuta",
+      "success": "Kirja poistettu",
+      "error": "Kirjaa ei voitu poistaa"
+    }
+  }
+}

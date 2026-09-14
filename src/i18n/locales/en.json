@@ -1,0 +1,206 @@
+{
+  "common": {
+    "appName": "BookKeep",
+    "themeLight": "Switch to light theme",
+    "themeDark": "Switch to dark theme",
+    "language": "Interface language",
+    "loading": "Loading...",
+    "retry": "Try again",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "skipToContent": "Skip to content"
+  },
+  "seo": {
+    "title": "BookKeep — books you actually want to read",
+    "description": "Finnish and English books to read for pleasure. Open a cover and start — no lessons, no rush.",
+    "keywords": "BookKeep, adapted books, Finnish books, English books, language reading, A2, B1, B2, C2"
+  },
+  "nav": {
+    "primary": "Primary navigation",
+    "home": "Home",
+    "books": "Books",
+    "about": "About",
+    "howItWorks": "The vibe"
+  },
+  "home": {
+    "eyebrow": "Books · Finnish · English",
+    "line1": "Read.",
+    "line2": "For the vibe.",
+    "line3": "No rush.",
+    "subtitle": "Finnish and English. Open one and just read.",
+    "ctaPrimary": "To the shelf",
+    "featuredTitle": "On the shelf",
+    "featuredSubtitle": "Whatever you feel like flipping through tonight.",
+    "viewAll": "The whole shelf",
+    "moods": {
+      "evening": {
+        "title": "Evening",
+        "text": "Sit down with a book. Nowhere to rush."
+      },
+      "finnish": {
+        "title": "Finnish",
+        "text": "Stories that sound like Finland."
+      },
+      "english": {
+        "title": "English",
+        "text": "Classics and plots — not homework mode."
+      }
+    }
+  },
+  "books": {
+    "title": "Books",
+    "subtitle": "Finnish and English. Take whatever pulls you.",
+    "all": "All",
+    "allLevels": "Any",
+    "language": "Language",
+    "level": "Level",
+    "empty": "No books found",
+    "emptyFi": "No Finnish books found",
+    "emptyEn": "No English books found",
+    "emptyLevel": "No books found for this level",
+    "showAll": "Whole shelf",
+    "loading": "Loading books...",
+    "error": "Something went wrong",
+    "errorHint": "The catalog could not be loaded. Please try again.",
+    "startReading": "Read",
+    "continueReading": "Keep going",
+    "progress": "Progress"
+  },
+  "book": {
+    "notFound": "Book not found",
+    "notFoundHint": "This title is unavailable or has not been published yet.",
+    "backToCatalog": "Back to the shelf",
+    "startReading": "Read",
+    "continueReading": "Keep going",
+    "continueFrom": "from page {{page}}",
+    "pages": "{{current}} / {{total}} pages",
+    "completed": "{{percent}}% completed",
+    "language": "Language",
+    "level": "Level",
+    "description": "About this book",
+    "loading": "Loading book..."
+  },
+  "languages": {
+    "fi": "Finnish",
+    "en": "English"
+  },
+  "about": {
+    "eyebrow": "About",
+    "title": "A place to just read",
+    "lead": "Books in Finnish and English. Not a course. Not a drill. An evening with a book.",
+    "body1": "The shelf has calmer pages and denser ones. Take whatever fits tonight.",
+    "body2": "You read here. No account. Close it, come back to the same page.",
+    "body3": "Quiet, green, nothing extra."
+  },
+  "how": {
+    "eyebrow": "The vibe",
+    "title": "Pick one. Open it. Read.",
+    "lead": "That's it. No extra ritual.",
+    "body1": "Tap a cover. Or start with a language, if you want.",
+    "body2": "The book opens on the site. Leave, and the page stays on this device.",
+    "cta": "To the shelf"
+  },
+  "reader": {
+    "back": "Back",
+    "titleFallback": "Book",
+    "page": "{{current}} / {{total}}",
+    "prev": "Previous page",
+    "next": "Next page",
+    "zoomOut": "Zoom out",
+    "zoomIn": "Zoom in",
+    "fullscreen": "Full screen",
+    "exitFullscreen": "Exit full screen",
+    "skipToPage": "Skip to page",
+    "error": "Could not open",
+    "errorHint": "The file did not load. Try again.",
+    "missing": "No file yet",
+    "missingHint": "This book is not in the reader yet."
+  },
+  "notFound": {
+    "eyebrow": "Lost page",
+    "title": "This page is not on the shelf",
+    "subtitle": "The link may be outdated, or the book has not been published yet.",
+    "home": "Go home",
+    "catalog": "Browse books"
+  },
+  "footer": {
+    "tagline": "Books you actually want to read. In Finnish and English.",
+    "rights": "No lessons. Just reading."
+  },
+  "admin": {
+    "eyebrow": "Admin",
+    "logout": "Log out",
+    "back": "Back to dashboard",
+    "login": {
+      "title": "Admin sign in",
+      "subtitle": "There is no public registration. Only administrators can enter.",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "error": "Sign in failed. Check the email and password.",
+      "notConfigured": "Supabase is not configured yet. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to .env."
+    },
+    "dashboard": {
+      "title": "Books",
+      "add": "Add book",
+      "total": "Total books",
+      "finnish": "Finnish books",
+      "english": "English books",
+      "empty": "No books yet"
+    },
+    "table": {
+      "cover": "Cover",
+      "title": "Title",
+      "language": "Language",
+      "level": "Level",
+      "status": "Status",
+      "created": "Created",
+      "actions": "Actions",
+      "edit": "Edit",
+      "delete": "Delete",
+      "open": "Open"
+    },
+    "status": {
+      "published": "Published",
+      "draft": "Draft"
+    },
+    "form": {
+      "createTitle": "Add book",
+      "editTitle": "Edit book",
+      "titleOriginal": "Original title",
+      "slug": "Slug",
+      "language": "Book language",
+      "level": "Level",
+      "published": "Published",
+      "cover": "Cover image",
+      "pdf": "PDF file",
+      "fileKept": "Current file kept unless you choose a new one",
+      "localizedTitle": "Title",
+      "localizedDescription": "Short description",
+      "create": "Create book",
+      "save": "Save changes",
+      "created": "Book created",
+      "updated": "Book updated",
+      "error": "Could not save the book",
+      "titleRequired": "Original title is required",
+      "coverRequired": "A cover image is required",
+      "pdfRequired": "A PDF file is required"
+    },
+    "upload": {
+      "drop": "Drop a file here",
+      "orBrowse": "or click to browse",
+      "uploading": "Uploading…",
+      "ready": "File ready to upload",
+      "coverInvalid": "Cover must be JPG, PNG or WebP",
+      "pdfInvalid": "Only PDF files are allowed"
+    },
+    "delete": {
+      "title": "Delete this book?",
+      "body": "“{{title}}” will be removed from the catalog. This cannot be undone.",
+      "confirm": "Delete",
+      "cancel": "Cancel",
+      "success": "Book deleted",
+      "error": "Could not delete the book"
+    }
+  }
+}

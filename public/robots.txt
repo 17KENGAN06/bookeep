@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /read/
+
+Sitemap: __SITE_URL__/sitemap.xml
