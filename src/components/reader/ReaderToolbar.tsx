@@ -83,6 +83,12 @@ export function ReaderToolbar({
             <IconButton label={t('reader.zoomIn')} onClick={onZoomIn}>
               <Plus className="h-4 w-4" />
             </IconButton>
+            <IconButton
+              label={isFullscreen ? t('reader.exitFullscreen') : t('reader.fullscreen')}
+              onClick={onToggleFullscreen}
+            >
+              {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+            </IconButton>
           </div>
           <IconButton
             label={isDarkPaper ? t('reader.paperLight') : t('reader.paperDark')}
@@ -94,12 +100,6 @@ export function ReaderToolbar({
           <div className="hidden md:block">
             <ThemeToggle />
           </div>
-          <IconButton
-            label={isFullscreen ? t('reader.exitFullscreen') : t('reader.fullscreen')}
-            onClick={onToggleFullscreen}
-          >
-            {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
-          </IconButton>
         </div>
       </div>
     </header>
