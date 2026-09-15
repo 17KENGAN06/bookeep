@@ -1,33 +1,20 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { PROGRESS_STORAGE_KEY } from '@/config/storage';
+import { useAuth } from '@/hooks/useAuth';
+import {
+  fetchCloudProgress,
+  mergeProgressMaps,
+  upsertCloudProgress,
+} from '@/services/library';
 import type { ReadingProgress, ReadingProgressMap } from '@/types/progress';
 import { clamp } from '@/utils/cn';
-
-const demoProgress: ReadingProgressMap = {
-  '11111111-1111-4111-8111-000000000001': {
-    currentPage: 3,
-    totalPages: 10,
-    percentage: 30,
-    lastReadAt: '2026-09-12T18:40:00.000Z',
-  },
-  '11111111-1111-4111-8111-000000000004': {
-    currentPage: 2,
-    totalPages: 10,
-    percentage: 20,
-    lastReadAt: '2026-09-11T21:12:00.000Z',
-  },
-};
 
 function readProgressMap(): ReadingProgressMap {
   if (typeof window === 'undefined') return {};
 
   try {
     const raw = window.localStorage.getItem(PROGRESS_STORAGE_KEY);
-    if (!raw) {
-      window.localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(demoProgress));
-      return demoProgress;
-    }
-
+    if (!raw) return {};
     const parsed = JSON.parse(raw) as ReadingProgressMap;
     return parsed && typeof parsed === 'object' ? parsed : {};
   } catch {
@@ -40,6 +27,7 @@ function writeProgressMap(map: ReadingProgressMap) {
 }
 
 export function useAllReadingProgress() {
+  const { user } = useAuth();
   const [map, setMap] = useState<ReadingProgressMap>(() => readProgressMap());
 
   useEffect(() => {
@@ -53,13 +41,43 @@ export function useAllReadingProgress() {
     return () => window.removeEventListener('storage', onStorage);
   }, []);
 
-  const updateProgress = useCallback((bookId: string, next: ReadingProgress) => {
-    setMap((current) => {
-      const updated = { ...current, [bookId]: next };
-      writeProgressMap(updated);
-      return updated;
-    });
-  }, []);
+  useEffect(() => {
+    if (!user) {
+      setMap(readProgressMap());
+      return;
+    }
+
+    let active = true;
+    void (async () => {
+      try {
+        const cloud = await fetchCloudProgress();
+        const merged = await mergeProgressMaps(readProgressMap(), cloud);
+        if (!active) return;
+        writeProgressMap(merged);
+        setMap(merged);
+      } catch {
+        if (active) setMap(readProgressMap());
+      }
+    })();
+
+    return () => {
+      active = false;
+    };
+  }, [user]);
+
+  const updateProgress = useCallback(
+    (bookId: string, next: ReadingProgress) => {
+      setMap((current) => {
+        const updated = { ...current, [bookId]: next };
+        writeProgressMap(updated);
+        return updated;
+      });
+      if (user) {
+        void upsertCloudProgress(bookId, next);
+      }
+    },
+    [user],
+  );
 
   return { map, updateProgress };
 }

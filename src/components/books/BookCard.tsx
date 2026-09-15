@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { BookCover } from '@/components/books/BookCover';
 import { LevelBadge } from '@/components/books/LevelBadge';
+import { LibraryActions } from '@/components/books/LibraryActions';
 import type { Book } from '@/types/book';
 import { getLocalizedTitle } from '@/utils/bookCopy';
 
@@ -14,7 +15,7 @@ export function BookCard({ book }: BookCardProps) {
   const title = getLocalizedTitle(book, i18n.resolvedLanguage ?? 'en');
 
   return (
-    <article className="h-full">
+    <article className="relative h-full">
       <Link
         to={`/books/${book.slug}`}
         className="group focus-ring flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-[var(--app-shadow)] transition duration-200 hover:border-accent/30 motion-safe:hover:-translate-y-0.5"
@@ -30,6 +31,9 @@ export function BookCard({ book }: BookCardProps) {
           <LevelBadge level={book.level} />
         </div>
       </Link>
+      <div className="absolute top-2 right-2 z-10">
+        <LibraryActions bookId={book.id} compact />
+      </div>
     </article>
   );
 }

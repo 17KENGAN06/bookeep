@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, Download } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { BookCover } from '@/components/books/BookCover';
 import { LevelBadge } from '@/components/books/LevelBadge';
+import { LibraryActions } from '@/components/books/LibraryActions';
 import { Button, ButtonLink } from '@/components/common/Button';
 import { Container } from '@/components/common/Container';
 import { DocumentTitle } from '@/components/common/DocumentTitle';
@@ -148,6 +149,9 @@ export function BookDetailsPage() {
                 {t('book.continueFrom', { page: progress.currentPage })}
               </p>
             ) : null}
+          </div>
+          <div className="mt-3">
+            <LibraryActions bookId={book.id} />
           </div>
           </div>
         </Reveal>

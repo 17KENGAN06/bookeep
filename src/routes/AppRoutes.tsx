@@ -5,13 +5,17 @@ import { AboutPage } from '@/pages/AboutPage';
 import { AdminBookFormPage } from '@/pages/admin/AdminBookFormPage';
 import { AdminDashboardPage } from '@/pages/admin/AdminDashboardPage';
 import { AdminLoginPage } from '@/pages/admin/AdminLoginPage';
+import { AuthCallbackPage } from '@/pages/AuthCallbackPage';
 import { BookDetailsPage } from '@/pages/BookDetailsPage';
 import { BooksPage } from '@/pages/BooksPage';
 import { ContactPage } from '@/pages/ContactPage';
 import { HomePage } from '@/pages/HomePage';
+import { LibraryPage } from '@/pages/LibraryPage';
+import { LoginPage } from '@/pages/LoginPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { PrivacyPage } from '@/pages/PrivacyPage';
 import { ReaderPage } from '@/pages/ReaderPage';
+import { RegisterPage } from '@/pages/RegisterPage';
 import { ProtectedAdminRoute } from '@/routes/ProtectedAdminRoute';
 
 export function AppRoutes() {
@@ -35,6 +39,10 @@ export function AppRoutes() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/library" element={<LibraryPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/auth/callback" element={<AuthCallbackPage />} />
         <Route path="/how-it-works" element={<Navigate to="/about" replace />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>

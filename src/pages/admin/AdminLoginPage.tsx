@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { BrandLockup } from '@/components/brand/BrandLockup';
 import { Button } from '@/components/common/Button';
@@ -12,8 +12,7 @@ import { useAuth } from '@/hooks/useAuth';
 
 export function AdminLoginPage() {
   const { t } = useTranslation();
-  const { signIn, user, isLoading, isConfigured } = useAuth();
-  const navigate = useNavigate();
+  const { signIn, signOut, user, isLoading, isConfigured, isAdmin, adminReady } = useAuth();
   const location = useLocation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,8 +20,12 @@ export function AdminLoginPage() {
   const [submitting, setSubmitting] = useState(false);
   const from = (location.state as { from?: string } | null)?.from ?? '/admin';
 
-  if (!isLoading && user) {
-    return <Navigate to="/admin" replace />;
+  if (isLoading || (user && !adminReady)) {
+    return <div className="min-h-dvh bg-bg" />;
+  }
+
+  if (user && isAdmin) {
+    return <Navigate to={from.startsWith('/admin') ? from : '/admin'} replace />;
   }
 
   async function onSubmit(event: FormEvent) {
@@ -31,7 +34,6 @@ export function AdminLoginPage() {
     setSubmitting(true);
     try {
       await signIn(email.trim(), password);
-      navigate(from, { replace: true });
     } catch {
       setError(t('admin.login.error'));
     } finally {
@@ -57,6 +59,22 @@ export function AdminLoginPage() {
           <p className="mt-6 rounded-2xl border border-line bg-bg px-4 py-3 text-sm text-muted">
             {t('admin.login.notConfigured')}
           </p>
+        ) : user && !isAdmin ? (
+          <div className="mt-6 space-y-4">
+            <p role="alert" className="rounded-2xl border border-line bg-bg px-4 py-3 text-sm text-muted">
+              {t('admin.login.forbidden')}
+            </p>
+            <Button
+              type="button"
+              variant="secondary"
+              className="w-full"
+              onClick={() => {
+                void signOut();
+              }}
+            >
+              {t('auth.signOut')}
+            </Button>
+          </div>
         ) : (
           <form className="mt-6 space-y-4" onSubmit={(event) => void onSubmit(event)}>
             <Field label={t('admin.login.email')}>

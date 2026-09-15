@@ -4,7 +4,7 @@ import { DocumentTitle } from '@/components/common/DocumentTitle';
 import { Reveal } from '@/components/common/Reveal';
 import { ADMIN_EMAIL } from '@/config/contact';
 
-const SECTIONS = ['who', 'data', 'form', 'local', 'sharing', 'rights'] as const;
+const SECTIONS = ['who', 'data', 'account', 'form', 'local', 'sharing', 'rights'] as const;
 
 export function PrivacyPage() {
   const { t } = useTranslation();

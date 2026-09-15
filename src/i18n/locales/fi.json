@@ -21,7 +21,9 @@
     "books": "Kirjat",
     "about": "Tietoa",
     "contact": "Yhteystiedot",
-    "privacy": "Tietosuoja"
+    "privacy": "Tietosuoja",
+    "library": "Omat kirjat",
+    "login": "Kirjaudu"
   },
   "home": {
     "eyebrow": "Mukautukset · English · Suomi",
@@ -111,7 +113,7 @@
       },
       "reading": {
         "title": "Miten lukeminen toimii",
-        "text": "Luettelossa voi suodattaa kielen ja tason. Kirja avautuu sivustolla: sivut, zoom, vaalea tai tumma paperi. Tiliä ei tarvita. Viimeisin sivu tallentuu tälle laitteelle — se ei siirry toiseen selaimeen itsestään."
+        "text": "Luettelossa voi suodattaa kielen ja tason. Kirja avautuu sivustolla: sivut, zoom, vaalea tai tumma paperi. Lukeminen onnistuu ilman tiliä — viimeisin sivu jää tälle laitteelle. Kirjaudu, jos haluat tykkäykset, lukulistan ja historian muihin selaimiin."
       }
     }
   },
@@ -184,7 +186,11 @@
       },
       "data": {
         "title": "Mitä käsittelemme",
-        "text": "Lukemisen eteneminen, teema ja kieli jäävät tälle laitteelle. Julkista tiliä ei ole. Ylläpitäjät kirjautuvat Supabasen kautta. Sivusto on Hostingerissa; kirjatiedostot ja luettelo ovat Supabasessa."
+        "text": "Teema ja kieli jäävät tälle laitteelle. Jos kirjaudut, tallennamme sähköpostin (ja Google-nimen, jos käytät Googlea), tykkäykset, lukulistan ja lukemisen etenemisen Supabaseen. Ylläpitäjillä on erillinen kirjautuminen. Sivusto on Hostingerissa; kirjatiedostot ja luettelo ovat Supabasessa."
+      },
+      "account": {
+        "title": "Tilit",
+        "text": "Voit luoda sähköpostitilin tai kirjautua Googlen kautta. Tykkäykset, lukulista ja historia kuuluvat tilille. Uloskirjautuminen ei poista niitä. Tilin poistamista varten kirjoita osoitteeseen <mail>{{email}}</mail>."
       },
       "form": {
         "title": "Yhteydenottolomake",
@@ -192,7 +198,7 @@
       },
       "local": {
         "title": "Tällä laitteella",
-        "text": "Kirjan viimeinen sivu, vaalea tai tumma teema ja käyttöliittymän kieli tallentuvat selaimeen. Sivuston tietojen tyhjennys poistaa ne. Ne eivät lähde meille itsestään."
+        "text": "Teema, kieli ja vieraan lukemisen eteneminen tallentuvat selaimeen. Kirjautumisen jälkeen eteneminen tallentuu myös tilille. Sivuston tietojen tyhjennys poistaa paikallisen kopion."
       },
       "sharing": {
         "title": "Luovutus",
@@ -219,7 +225,8 @@
       "password": "Salasana",
       "submit": "Kirjaudu",
       "error": "Kirjautuminen epäonnistui. Tarkista sähköposti ja salasana.",
-      "notConfigured": "Supabase ei ole vielä määritetty. Lisää VITE_SUPABASE_URL ja VITE_SUPABASE_ANON_KEY tiedostoon .env."
+      "notConfigured": "Supabase ei ole vielä määritetty. Lisää VITE_SUPABASE_URL ja VITE_SUPABASE_ANON_KEY tiedostoon .env.",
+      "forbidden": "Tämä tili ei ole ylläpitäjä."
     },
     "dashboard": {
       "title": "Kirjat",
@@ -283,5 +290,49 @@
       "success": "Kirja poistettu",
       "error": "Kirjaa ei voitu poistaa"
     }
+  },
+  "auth": {
+    "loginTitle": "Kirjaudu",
+    "loginLead": "Käytä Googlea tai BookKeep-sähköpostia, jotta tykkäykset, lukulista ja historia säilyvät.",
+    "loginSubmit": "Kirjaudu",
+    "loginError": "Kirjautuminen epäonnistui. Tarkista sähköposti ja salasana.",
+    "registerTitle": "Luo tili",
+    "registerLead": "Sähköposti tai Google riittää. Sen jälkeen voit tykätä kirjoista ja suunnitella lukemista.",
+    "registerSubmit": "Luo tili",
+    "registerError": "Tiliä ei voitu luoda. Kokeile toista sähköpostia.",
+    "registerLink": "Luo tili",
+    "loginLink": "Kirjaudu",
+    "noAccount": "Ei tiliä vielä?",
+    "hasAccount": "Onko sinulla jo tili?",
+    "email": "Sähköposti",
+    "password": "Salasana",
+    "passwordHint": "Vähintään 6 merkkiä.",
+    "google": "Jatka Googlella",
+    "googleError": "Googlen kirjautuminen ei alkanut. Yritä uudelleen.",
+    "or": "tai",
+    "checkEmail": "Tarkista sähköposti ja avaa vahvistuslinkki.",
+    "notConfigured": "Kirjautumista ei ole vielä määritetty tälle sivustolle.",
+    "signOut": "Kirjaudu ulos",
+    "callback": "Kirjaudutaan…",
+    "callbackError": "Kirjautumista ei voitu viimeistellä."
+  },
+  "library": {
+    "title": "Omat kirjat",
+    "eyebrow": "Kirjasto",
+    "hello": "Kirjautunut tilillä {{name}}.",
+    "liked": "Tykätyt",
+    "likedEmpty": "Ei tykättyjä kirjoja vielä.",
+    "planned": "Aion lukea",
+    "plannedEmpty": "Lukulista on vielä tyhjä.",
+    "history": "Lukuhistoria",
+    "historyEmpty": "Avaa kirja, niin viimeisimmät nimet näkyvät täällä.",
+    "like": "Tykkää",
+    "unlike": "Tykätty",
+    "plan": "Aion lukea",
+    "unplan": "Listalla",
+    "error": "Kirjastoa ei voitu päivittää.",
+    "guestTitle": "Kirjaudu, jotta kirjasto säilyy",
+    "guestHint": "Tykkäykset, lukulista ja historia kuuluvat tiliin.",
+    "toCatalog": "Avaa luettelo"
   }
 }

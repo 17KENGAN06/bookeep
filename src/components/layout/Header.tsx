@@ -6,12 +6,14 @@ import { BrandLockup } from '@/components/brand/BrandLockup';
 import { Container } from '@/components/common/Container';
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
+import { useAuth } from '@/hooks/useAuth';
 import { cn } from '@/utils/cn';
 import { scrollToPageTop } from '@/utils/scroll';
 
 const links = [
   { to: '/', key: 'nav.home' },
   { to: '/books', key: 'nav.books' },
+  { to: '/library', key: 'nav.library' },
   { to: '/about', key: 'nav.about' },
   { to: '/contact', key: 'nav.contact' },
 ] as const;
@@ -19,6 +21,7 @@ const links = [
 export function Header() {
   const { t } = useTranslation();
   const location = useLocation();
+  const { user, signOut, isLoading } = useAuth();
   const [open, setOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -48,6 +51,9 @@ export function Header() {
       document.removeEventListener('keydown', onKey);
     };
   }, [open]);
+
+  const accountClassName =
+    'focus-ring inline-flex min-h-10 items-center rounded-xl px-3 text-sm font-semibold text-muted transition hover:bg-surface hover:text-ink';
 
   return (
     <header className="sticky top-0 z-40 border-b border-line/80 bg-bg/80 backdrop-blur-md">
@@ -80,6 +86,17 @@ export function Header() {
           <div className="hidden lg:block">
             <LanguageSwitcher />
           </div>
+          {!isLoading ? (
+            user ? (
+              <button type="button" className={cn(accountClassName, 'hidden lg:inline-flex')} onClick={() => void signOut()}>
+                {t('auth.signOut')}
+              </button>
+            ) : (
+              <Link to="/login" className={cn(accountClassName, 'hidden lg:inline-flex')}>
+                {t('nav.login')}
+              </Link>
+            )
+          ) : null}
           <button
             ref={menuButtonRef}
             type="button"
@@ -115,6 +132,26 @@ export function Header() {
                 {t(link.key)}
               </Link>
             ))}
+            {!isLoading && user ? (
+              <button
+                type="button"
+                className="focus-ring rounded-xl px-3 py-3 text-left text-base font-semibold text-ink hover:bg-surface-2"
+                onClick={() => {
+                  setOpen(false);
+                  void signOut();
+                }}
+              >
+                {t('auth.signOut')}
+              </button>
+            ) : !isLoading ? (
+              <Link
+                to="/login"
+                onClick={() => setOpen(false)}
+                className="focus-ring rounded-xl px-3 py-3 text-base font-semibold text-ink hover:bg-surface-2"
+              >
+                {t('nav.login')}
+              </Link>
+            ) : null}
           </nav>
           <div className="mt-4">
             <LanguageSwitcher />

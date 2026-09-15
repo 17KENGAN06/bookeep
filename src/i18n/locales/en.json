@@ -21,7 +21,9 @@
     "books": "Books",
     "about": "About",
     "contact": "Contact",
-    "privacy": "Privacy"
+    "privacy": "Privacy",
+    "library": "My books",
+    "login": "Sign in"
   },
   "home": {
     "eyebrow": "Adaptations · English · Finnish",
@@ -111,7 +113,7 @@
       },
       "reading": {
         "title": "How reading works",
-        "text": "In the catalog you can filter by language and level. The book opens on the site: pages, zoom, light or dark paper. No account is required. The last page is stored on this device — it will not follow you to another browser on its own."
+        "text": "In the catalog you can filter by language and level. The book opens on the site: pages, zoom, light or dark paper. Reading works without an account; the last page stays on this device. Sign in to keep likes, a reading list and history across browsers."
       }
     }
   },
@@ -184,7 +186,11 @@
       },
       "data": {
         "title": "What we process",
-        "text": "Reading progress, theme and language stay on this device. There is no public account. Administrators sign in through Supabase. Hosting is on Hostinger; book files and the catalog sit in Supabase storage and database."
+        "text": "Theme and language stay on this device. If you sign in, we store your email (and Google name if you use Google), likes, planned books and reading progress in Supabase. Administrators have a separate catalog login. Hosting is on Hostinger; book files and the catalog sit in Supabase storage and database."
+      },
+      "account": {
+        "title": "Accounts",
+        "text": "You can create an email account or sign in with Google. Likes, the reading list and history belong to that account. Sign-out does not delete them. To delete an account, write to <mail>{{email}}</mail>."
       },
       "form": {
         "title": "Contact form",
@@ -192,7 +198,7 @@
       },
       "local": {
         "title": "On this device",
-        "text": "The last page of a book, the light/dark theme and the interface language are stored in the browser. Clearing site data removes them. They are not sent to us by themselves."
+        "text": "Theme, language and guest reading progress are stored in the browser. After you sign in, progress is also saved to your account. Clearing site data removes the local copy."
       },
       "sharing": {
         "title": "Sharing",
@@ -219,7 +225,8 @@
       "password": "Password",
       "submit": "Sign in",
       "error": "Sign in failed. Check the email and password.",
-      "notConfigured": "Supabase is not configured yet. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to .env."
+      "notConfigured": "Supabase is not configured yet. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to .env.",
+      "forbidden": "This account is not an administrator."
     },
     "dashboard": {
       "title": "Books",
@@ -283,5 +290,49 @@
       "success": "Book deleted",
       "error": "Could not delete the book"
     }
+  },
+  "auth": {
+    "loginTitle": "Sign in",
+    "loginLead": "Use Google or your BookKeep email to keep likes, a reading list and history.",
+    "loginSubmit": "Sign in",
+    "loginError": "Sign in failed. Check the email and password.",
+    "registerTitle": "Create an account",
+    "registerLead": "An email account or Google is enough. You can then like books and plan what to read.",
+    "registerSubmit": "Create account",
+    "registerError": "Could not create the account. Try another email.",
+    "registerLink": "Create an account",
+    "loginLink": "Sign in",
+    "noAccount": "No account yet?",
+    "hasAccount": "Already have an account?",
+    "email": "Email",
+    "password": "Password",
+    "passwordHint": "At least 6 characters.",
+    "google": "Continue with Google",
+    "googleError": "Google sign-in did not start. Try again.",
+    "or": "or",
+    "checkEmail": "Check your inbox and open the confirmation link.",
+    "notConfigured": "Sign-in is not configured on this site yet.",
+    "signOut": "Sign out",
+    "callback": "Signing you in…",
+    "callbackError": "Could not finish sign-in."
+  },
+  "library": {
+    "title": "My books",
+    "eyebrow": "Library",
+    "hello": "Signed in as {{name}}.",
+    "liked": "Liked",
+    "likedEmpty": "No liked books yet.",
+    "planned": "Plan to read",
+    "plannedEmpty": "Nothing on the reading list yet.",
+    "history": "Reading history",
+    "historyEmpty": "Open a book and the last titles will appear here.",
+    "like": "Like",
+    "unlike": "Liked",
+    "plan": "Plan to read",
+    "unplan": "On the list",
+    "error": "Could not update the library.",
+    "guestTitle": "Sign in to keep your library",
+    "guestHint": "Likes, the reading list and history follow your account.",
+    "toCatalog": "Open the catalog"
   }
 }
