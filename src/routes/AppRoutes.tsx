@@ -7,8 +7,10 @@ import { AdminDashboardPage } from '@/pages/admin/AdminDashboardPage';
 import { AdminLoginPage } from '@/pages/admin/AdminLoginPage';
 import { BookDetailsPage } from '@/pages/BookDetailsPage';
 import { BooksPage } from '@/pages/BooksPage';
+import { ContactPage } from '@/pages/ContactPage';
 import { HomePage } from '@/pages/HomePage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
+import { PrivacyPage } from '@/pages/PrivacyPage';
 import { ReaderPage } from '@/pages/ReaderPage';
 import { ProtectedAdminRoute } from '@/routes/ProtectedAdminRoute';
 
@@ -31,6 +33,8 @@ export function AppRoutes() {
         <Route path="/books" element={<BooksPage />} />
         <Route path="/books/:slug" element={<BookDetailsPage />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/how-it-works" element={<Navigate to="/about" replace />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>

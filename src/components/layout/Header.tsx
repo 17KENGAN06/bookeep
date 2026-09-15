@@ -13,6 +13,7 @@ const links = [
   { to: '/', key: 'nav.home' },
   { to: '/books', key: 'nav.books' },
   { to: '/about', key: 'nav.about' },
+  { to: '/contact', key: 'nav.contact' },
 ] as const;
 
 export function Header() {

@@ -19,7 +19,9 @@
     "primary": "Primary navigation",
     "home": "Home",
     "books": "Books",
-    "about": "About"
+    "about": "About",
+    "contact": "Contact",
+    "privacy": "Privacy"
   },
   "home": {
     "eyebrow": "Adaptations · English · Finnish",
@@ -137,6 +139,70 @@
     "subtitle": "The link may be outdated, or the book has not been published yet.",
     "home": "Go home",
     "catalog": "Browse books"
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Get in touch",
+    "lead": "Write about a partnership, a question, or a bug. The form sends the message to the matching inbox.",
+    "channels": {
+      "partner": {
+        "title": "Partnerships",
+        "text": "Publishing, adaptation, or other collaboration with BookKeep and WEISEZAHOY."
+      },
+      "admin": {
+        "title": "Questions and bugs",
+        "text": "If something on the site is broken, or you need help with the catalog."
+      }
+    },
+    "form": {
+      "topic": "What is this about?",
+      "topicHint": "This message will go to {{email}}.",
+      "topics": {
+        "partnership": "Partnership / collaboration",
+        "question": "A question",
+        "bug": "I found a bug"
+      },
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "consent": "I agree to the processing of this message as described in the <privacy>privacy policy</privacy>.",
+      "submit": "Send",
+      "sending": "Sending…",
+      "success": "Message sent. We will reply to the email you left.",
+      "error": "The message could not be sent. Try again, or write to the address above.",
+      "invalid": "Please fill in the name, a valid email, a message, and the consent checkbox."
+    }
+  },
+  "privacy": {
+    "eyebrow": "Legal",
+    "title": "Privacy policy",
+    "lead": "This page explains what BookKeep stores, what the contact form sends, and how to reach us about personal data.",
+    "sections": {
+      "who": {
+        "title": "Who we are",
+        "text": "BookKeep is a catalog of adapted books run by the WEISEZAHOY studio. For privacy requests write to <mail>{{email}}</mail>."
+      },
+      "data": {
+        "title": "What we process",
+        "text": "Reading progress, theme and language stay on this device. There is no public account. Administrators sign in through Supabase. Hosting is on Hostinger; book files and the catalog sit in Supabase storage and database."
+      },
+      "form": {
+        "title": "Contact form",
+        "text": "If you send the form, we receive your name, email, topic and message. Partnership notes go to partner@weisezahoy.com. Questions and bug reports go to admin@weisezahoy.com. We use them only to reply."
+      },
+      "local": {
+        "title": "On this device",
+        "text": "The last page of a book, the light/dark theme and the interface language are stored in the browser. Clearing site data removes them. They are not sent to us by themselves."
+      },
+      "sharing": {
+        "title": "Sharing",
+        "text": "We do not sell personal data. Messages may pass through the form delivery service to reach our mailboxes. Hosting and database providers process data only to run the site."
+      },
+      "rights": {
+        "title": "Your rights",
+        "text": "You can ask what we hold from a contact message, ask us to delete it, or object to further use. Write to <mail>{{email}}</mail>. We update this page if the way we handle data changes."
+      }
+    }
   },
   "footer": {
     "tagline": "Adapted books in English and Finnish.",

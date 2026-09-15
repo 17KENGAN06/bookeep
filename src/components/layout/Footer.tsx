@@ -33,6 +33,12 @@ export function Footer() {
             <Link to="/about" className="focus-ring rounded-md text-ink hover:text-accent">
               {t('nav.about')}
             </Link>
+            <Link to="/contact" className="focus-ring rounded-md text-ink hover:text-accent">
+              {t('nav.contact')}
+            </Link>
+            <Link to="/privacy" className="focus-ring rounded-md text-ink hover:text-accent">
+              {t('nav.privacy')}
+            </Link>
           </nav>
         </div>
 

@@ -19,7 +19,9 @@
     "primary": "Päävalikko",
     "home": "Etusivu",
     "books": "Kirjat",
-    "about": "Tietoa"
+    "about": "Tietoa",
+    "contact": "Yhteystiedot",
+    "privacy": "Tietosuoja"
   },
   "home": {
     "eyebrow": "Mukautukset · English · Suomi",
@@ -137,6 +139,70 @@
     "subtitle": "Linkki voi olla vanhentunut, tai kirjaa ei ole vielä julkaistu.",
     "home": "Etusivulle",
     "catalog": "Selaa kirjoja"
+  },
+  "contact": {
+    "eyebrow": "Yhteystiedot",
+    "title": "Ota yhteyttä",
+    "lead": "Kirjoita yhteistyöstä, kysymyksestä tai virheestä. Lomake lähettää viestin oikeaan postilaatikkoon.",
+    "channels": {
+      "partner": {
+        "title": "Yhteistyö",
+        "text": "Kustannus, mukautus tai muu yhteistyö BookKeepin ja WEISEZAHOYn kanssa."
+      },
+      "admin": {
+        "title": "Kysymykset ja virheet",
+        "text": "Jos sivusto ei toimi tai tarvitset apua luettelon kanssa."
+      }
+    },
+    "form": {
+      "topic": "Mistä on kyse?",
+      "topicHint": "Viesti lähetetään osoitteeseen {{email}}.",
+      "topics": {
+        "partnership": "Yhteistyö",
+        "question": "Kysymys",
+        "bug": "Löysin virheen"
+      },
+      "name": "Nimi",
+      "email": "Sähköposti",
+      "message": "Viesti",
+      "consent": "Hyväksyn tämän viestin käsittelyn <privacy>tietosuojakäytännön</privacy> mukaisesti.",
+      "submit": "Lähetä",
+      "sending": "Lähetetään…",
+      "success": "Viesti lähetettiin. Vastaamme jättämääsi sähköpostiin.",
+      "error": "Viestiä ei voitu lähettää. Yritä uudelleen tai kirjoita yllä olevaan osoitteeseen.",
+      "invalid": "Täytä nimi, kelvollinen sähköposti, viesti ja suostumus."
+    }
+  },
+  "privacy": {
+    "eyebrow": "Ehdot",
+    "title": "Tietosuoja",
+    "lead": "Tällä sivulla kerrotaan, mitä BookKeep tallentaa, mitä yhteydenottolomake lähettää ja miten meihin saa yhteyden henkilötiedoista.",
+    "sections": {
+      "who": {
+        "title": "Kuka me olemme",
+        "text": "BookKeep on WEISEZAHOY-studion mukautettujen kirjojen luettelo. Tietosuoja-asioissa kirjoita osoitteeseen <mail>{{email}}</mail>."
+      },
+      "data": {
+        "title": "Mitä käsittelemme",
+        "text": "Lukemisen eteneminen, teema ja kieli jäävät tälle laitteelle. Julkista tiliä ei ole. Ylläpitäjät kirjautuvat Supabasen kautta. Sivusto on Hostingerissa; kirjatiedostot ja luettelo ovat Supabasessa."
+      },
+      "form": {
+        "title": "Yhteydenottolomake",
+        "text": "Jos lähetät lomakkeen, saamme nimen, sähköpostin, aiheen ja viestin. Yhteistyöviestit menevät osoitteeseen partner@weisezahoy.com. Kysymykset ja virheilmoitukset osoitteeseen admin@weisezahoy.com. Käytämme niitä vain vastaamiseen."
+      },
+      "local": {
+        "title": "Tällä laitteella",
+        "text": "Kirjan viimeinen sivu, vaalea tai tumma teema ja käyttöliittymän kieli tallentuvat selaimeen. Sivuston tietojen tyhjennys poistaa ne. Ne eivät lähde meille itsestään."
+      },
+      "sharing": {
+        "title": "Luovutus",
+        "text": "Emme myy henkilötietoja. Viestit voivat kulkea lomakepalvelun kautta postilaatikoihimme. Hosting- ja tietokantapalvelut käsittelevät tietoja vain sivuston pyörittämiseksi."
+      },
+      "rights": {
+        "title": "Oikeutesi",
+        "text": "Voit kysyä, mitä lomakeviestistä on tallessa, pyytää poistoa tai kieltää jatkokäytön. Kirjoita osoitteeseen <mail>{{email}}</mail>. Päivitämme sivun, jos tietojen käsittely muuttuu."
+      }
+    }
   },
   "footer": {
     "tagline": "Mukautettuja kirjoja englanniksi ja suomeksi.",
