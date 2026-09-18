@@ -9,11 +9,12 @@ type GoalsCalendarProps = {
   year: number;
   month: number;
   today: string;
+  selectedDate?: string;
   days: DayReadingState[];
   onSelect: (day: DayReadingState) => void;
 };
 
-export function GoalsCalendar({ year, month, today, days, onSelect }: GoalsCalendarProps) {
+export function GoalsCalendar({ year, month, today, selectedDate, days, onSelect }: GoalsCalendarProps) {
   const { i18n } = useTranslation();
   const labels = weekdayLabels(i18n.resolvedLanguage ?? 'en');
   const cells = monthCellDays(year, month);
@@ -32,7 +33,15 @@ export function GoalsCalendar({ year, month, today, days, onSelect }: GoalsCalen
           const iso = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
           const state = byDate.get(iso);
           if (!state) return <div key={iso} />;
-          return <DayCard key={iso} day={state} isToday={iso === today} onSelect={() => onSelect(state)} />;
+          return (
+            <DayCard
+              key={iso}
+              day={state}
+              isToday={iso === today}
+              isSelected={iso === selectedDate}
+              onSelect={() => onSelect(state)}
+            />
+          );
         })}
       </div>
     </div>
@@ -42,10 +51,12 @@ export function GoalsCalendar({ year, month, today, days, onSelect }: GoalsCalen
 function DayCard({
   day,
   isToday,
+  isSelected,
   onSelect,
 }: {
   day: DayReadingState;
   isToday: boolean;
+  isSelected: boolean;
   onSelect: () => void;
 }) {
   const { t } = useTranslation();
@@ -64,8 +75,10 @@ function DayCard({
             ? 'border-line bg-surface hover:border-accent/30'
             : 'border-line/80 bg-surface/60 hover:border-accent/25',
         isToday && 'ring-2 ring-accent/45 ring-offset-2 ring-offset-bg',
+        isSelected && 'border-accent bg-accent-soft',
       )}
       aria-current={isToday ? 'date' : undefined}
+      aria-pressed={isSelected}
     >
       <span className="flex items-center justify-between gap-1">
         <span className="font-display text-sm font-semibold text-ink sm:text-base">{Number(day.date.slice(-2))}</span>
