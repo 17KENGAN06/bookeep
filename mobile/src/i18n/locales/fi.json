@@ -23,6 +23,7 @@
     "contact": "Yhteystiedot",
     "privacy": "Tietosuoja",
     "library": "Omat kirjat",
+    "goals": "Lukutavoitteet",
     "login": "Kirjaudu"
   },
   "home": {
@@ -363,5 +364,9 @@
     "guestTitle": "Kirjaudu, jotta kirjasto säilyy",
     "guestHint": "Tykkäykset, lukulista ja historia kuuluvat tiliin.",
     "toCatalog": "Avaa luettelo"
+  },
+  "goals": {
+    "completedToast": "Lukutavoite täyttyi",
+    "completedToastHint": "Luit tänään {{pages}} / {{target}} sivua."
   }
 }

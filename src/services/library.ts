@@ -7,6 +7,8 @@ type ProgressRow = {
   total_pages: number;
   percentage: number | string;
   last_read_at: string;
+  max_page_reached?: number | null;
+  completed_at?: string | null;
 };
 
 function rowToProgress(row: ProgressRow): ReadingProgress {
@@ -15,6 +17,8 @@ function rowToProgress(row: ProgressRow): ReadingProgress {
     totalPages: row.total_pages,
     percentage: Number(row.percentage),
     lastReadAt: row.last_read_at,
+    maxPageReached: row.max_page_reached ?? row.current_page,
+    completedAt: row.completed_at ?? null,
   };
 }
 
@@ -71,13 +75,16 @@ export async function setPlanned(bookId: string, planned: boolean) {
 export async function fetchCloudProgress(): Promise<ReadingProgressMap> {
   const supabase = getSupabaseClient();
   if (!supabase) return {};
-  const { data, error } = await supabase
+  const full = await supabase
     .from('reading_progress')
-    .select('book_id, current_page, total_pages, percentage, last_read_at');
-  if (error) throw error;
+    .select('book_id, current_page, total_pages, percentage, last_read_at, max_page_reached, completed_at');
+  const result = full.error
+    ? await supabase.from('reading_progress').select('book_id, current_page, total_pages, percentage, last_read_at')
+    : full;
+  if (result.error) throw result.error;
 
   const map: ReadingProgressMap = {};
-  for (const row of (data ?? []) as ProgressRow[]) {
+  for (const row of (result.data ?? []) as ProgressRow[]) {
     map[row.book_id] = rowToProgress(row);
   }
   return map;

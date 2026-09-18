@@ -171,6 +171,11 @@ html[data-theme='dark'] {
     transform: none;
     filter: none;
   }
+
+  .goal-toast,
+  .goal-toast.is-leaving {
+    animation: none !important;
+  }
 }
 
 .reader-stage {
@@ -210,6 +215,36 @@ html[data-theme='dark'] {
   border-radius: inherit;
 }
 
+.goal-toast {
+  animation: goal-toast-in 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.goal-toast.is-leaving {
+  animation: goal-toast-out 380ms ease both;
+}
+
+@keyframes goal-toast-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes goal-toast-out {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+}
+
 .ambient-orb-a {
   animation: drift 16s ease-in-out infinite;
 }
@@ -233,7 +268,9 @@ html[data-theme='dark'] {
   .animate-float-delayed,
   .ambient-orb-a,
   .ambient-orb-b,
-  .ambient-orb-c {
+  .ambient-orb-c,
+  .goal-toast,
+  .goal-toast.is-leaving {
     animation: none !important;
   }
 

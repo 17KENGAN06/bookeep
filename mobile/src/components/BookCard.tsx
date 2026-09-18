@@ -4,6 +4,7 @@ import { BookCover } from './BookCover';
 import { LevelBadge } from './LevelBadge';
 import { LibraryActions } from './LibraryActions';
 import { useTheme } from '../hooks/ThemeProvider';
+import { useLibrary } from '../hooks/useLibrary';
 import { useNavigation } from '../hooks/useNavigation';
 import type { Book } from '../types/book';
 import { getLocalizedTitle } from '../utils/bookCopy';
@@ -12,7 +13,9 @@ export function BookCard({ book }: { book: Book }) {
   const { t, i18n } = useTranslation();
   const { colors } = useTheme();
   const { openBook } = useNavigation();
+  const { progress } = useLibrary();
   const title = getLocalizedTitle(book, i18n.resolvedLanguage ?? i18n.language);
+  const percent = progress[book.id]?.percentage ?? 0;
 
   return (
     <View style={styles.wrap}>
@@ -33,6 +36,14 @@ export function BookCard({ book }: { book: Book }) {
               {title}
             </Text>
             <Text style={[styles.language, { color: colors.muted }]}>{t(`languages.${book.language}`)}</Text>
+            {percent > 0 ? (
+              <View style={styles.progress}>
+                <Text style={[styles.progressLabel, { color: colors.muted }]}>{t('books.progress')}</Text>
+                <View style={[styles.track, { backgroundColor: colors.surface2 }]}>
+                  <View style={[styles.fill, { width: `${Math.min(100, percent)}%`, backgroundColor: colors.accent }]} />
+                </View>
+              </View>
+            ) : null}
           </View>
           <LevelBadge level={book.level} />
         </View>
@@ -77,6 +88,23 @@ const styles = StyleSheet.create({
   language: {
     marginTop: 4,
     fontSize: 13,
+  },
+  progress: {
+    marginTop: 10,
+    gap: 6,
+  },
+  progressLabel: {
+    fontSize: 11,
+    fontWeight: '600',
+  },
+  track: {
+    height: 4,
+    borderRadius: 99,
+    overflow: 'hidden',
+  },
+  fill: {
+    height: 4,
+    borderRadius: 99,
   },
   actions: {
     position: 'absolute',

@@ -64,6 +64,9 @@ export function LibraryPage() {
         {t('library.title')}
       </h1>
       <p className="mt-3 max-w-2xl text-base text-muted">{t('library.hello', { name })}</p>
+      <Link to="/goals" className="mt-3 inline-flex text-sm font-semibold text-ink hover:text-accent">
+        {t('library.toGoals')}
+      </Link>
 
       <Shelf
         title={t('library.liked')}

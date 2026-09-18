@@ -23,6 +23,7 @@
     "contact": "Contact",
     "privacy": "Privacy",
     "library": "My books",
+    "goals": "Reading goals",
     "login": "Sign in"
   },
   "home": {
@@ -334,6 +335,40 @@
     "error": "Could not update the library.",
     "guestTitle": "Sign in to keep your library",
     "guestHint": "Likes, the reading list and history follow your account.",
-    "toCatalog": "Open the catalog"
+    "toCatalog": "Open the catalog",
+    "toGoals": "Open reading goals"
+  },
+  "goals": {
+    "title": "Reading goals",
+    "eyebrow": "Daily reading",
+    "lead": "Set how many pages you want to read each day. Pages from every book count together, and only newly reached pages are recorded.",
+    "guestTitle": "Sign in to plan your reading",
+    "guestHint": "Daily goals follow your account, together with likes and reading history.",
+    "month": "Month",
+    "year": "Year",
+    "prevMonth": "Previous month",
+    "nextMonth": "Next month",
+    "readingDays": "Reading days",
+    "pagesRead": "Pages read",
+    "goalsCompleted": "Goals completed",
+    "currentStreak": "Current streak",
+    "streakValue_one": "{{count}} day",
+    "streakValue_other": "{{count}} days",
+    "today": "Today",
+    "noGoal": "No goal",
+    "pages": "pages",
+    "readingGoal": "Reading goal",
+    "howMany": "How many pages do you want to read?",
+    "targetPages": "Page goal",
+    "setGoal": "Set goal",
+    "deleteGoal": "Remove goal",
+    "close": "Close",
+    "decrease": "Fewer pages",
+    "increase": "More pages",
+    "alreadyRead": "{{count}} pages already read this day.",
+    "goalCompleted": "Goal completed",
+    "saveError": "Could not save the reading goal.",
+    "completedToast": "Reading goal completed",
+    "completedToastHint": "You read {{pages}} of {{target}} pages today."
   }
 }

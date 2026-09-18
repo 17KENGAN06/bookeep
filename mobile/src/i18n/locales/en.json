@@ -23,6 +23,7 @@
     "contact": "Contact",
     "privacy": "Privacy",
     "library": "My books",
+    "goals": "Reading goals",
     "login": "Sign in"
   },
   "home": {
@@ -363,5 +364,9 @@
     "guestTitle": "Sign in to keep your library",
     "guestHint": "Likes, the reading list and history follow your account.",
     "toCatalog": "Open the catalog"
+  },
+  "goals": {
+    "completedToast": "Reading goal completed",
+    "completedToastHint": "You read {{pages}} of {{target}} pages today."
   }
 }

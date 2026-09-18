@@ -10,6 +10,7 @@ import { Container } from '@/components/common/Container';
 import { DocumentTitle } from '@/components/common/DocumentTitle';
 import { EmptyState } from '@/components/common/EmptyState';
 import { ErrorState } from '@/components/common/ErrorState';
+import { ProgressBar } from '@/components/common/ProgressBar';
 import { Reveal } from '@/components/common/Reveal';
 import { Skeleton } from '@/components/common/Skeleton';
 import { useBook } from '@/hooks/useBooks';
@@ -127,6 +128,15 @@ export function BookDetailsPage() {
 
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted">{description}</p>
 
+            {hasProgress && progress ? (
+              <div className="mt-6 max-w-md">
+                <ProgressBar value={progress.percentage} label={t('books.progress')} />
+                <p className="mt-2 text-sm text-muted">
+                  {t('book.continueFrom', { page: progress.currentPage })}
+                </p>
+              </div>
+            ) : null}
+
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <ButtonLink to={`/read/${book.slug}`} className="w-full min-w-48 sm:w-auto">
               {hasProgress ? t('book.continueReading') : t('book.startReading')}
@@ -149,11 +159,6 @@ export function BookDetailsPage() {
               <Smartphone className="h-4 w-4" aria-hidden />
               {t('book.openInApp')}
             </ButtonAnchor>
-            {hasProgress && progress ? (
-              <p className="self-center text-sm text-muted">
-                {t('book.continueFrom', { page: progress.currentPage })}
-              </p>
-            ) : null}
           </div>
           <div className="mt-3">
             <LibraryActions bookId={book.id} />

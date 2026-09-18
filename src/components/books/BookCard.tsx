@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { BookCover } from '@/components/books/BookCover';
 import { LevelBadge } from '@/components/books/LevelBadge';
 import { LibraryActions } from '@/components/books/LibraryActions';
+import { ProgressBar } from '@/components/common/ProgressBar';
+import { useAllReadingProgress } from '@/hooks/useReadingProgress';
 import type { Book } from '@/types/book';
 import { getLocalizedTitle } from '@/utils/bookCopy';
 
@@ -12,7 +14,10 @@ type BookCardProps = {
 
 export function BookCard({ book }: BookCardProps) {
   const { t, i18n } = useTranslation();
+  const { map } = useAllReadingProgress();
   const title = getLocalizedTitle(book, i18n.resolvedLanguage ?? 'en');
+  const progress = map[book.id];
+  const percent = progress && progress.totalPages > 0 ? progress.percentage : 0;
 
   return (
     <article className="relative h-full">
@@ -30,6 +35,11 @@ export function BookCard({ book }: BookCardProps) {
           </div>
           <LevelBadge level={book.level} />
         </div>
+        {percent > 0 ? (
+          <div className="px-3.5 pb-3.5 sm:px-4 sm:pb-4">
+            <ProgressBar value={percent} label={t('books.progress')} />
+          </div>
+        ) : null}
       </Link>
       <div className="absolute top-2 right-2 z-10">
         <LibraryActions bookId={book.id} compact />

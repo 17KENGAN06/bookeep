@@ -14,6 +14,7 @@ import { DownloadsProvider } from './src/hooks/useDownloads';
 import { LibraryProvider } from './src/hooks/useLibrary';
 import { NavigationProvider, useNavigation, type AppTab } from './src/hooks/useNavigation';
 import i18n from './src/i18n';
+import { GoalCompletedToast } from './src/components/GoalCompletedToast';
 import { AuthScreen } from './src/screens/AuthScreen';
 import { BookDetailsScreen } from './src/screens/BookDetailsScreen';
 import { CatalogScreen } from './src/screens/CatalogScreen';
@@ -119,6 +120,7 @@ export default function App() {
                   <DownloadsProvider>
                     <DeepLinkHandler />
                     <ThemedApp />
+                    <GoalCompletedToast />
                   </DownloadsProvider>
                 </LibraryProvider>
               </NavigationProvider>

@@ -23,6 +23,7 @@
     "contact": "Yhteystiedot",
     "privacy": "Tietosuoja",
     "library": "Omat kirjat",
+    "goals": "Lukutavoitteet",
     "login": "Kirjaudu"
   },
   "home": {
@@ -334,6 +335,40 @@
     "error": "Kirjastoa ei voitu päivittää.",
     "guestTitle": "Kirjaudu, jotta kirjasto säilyy",
     "guestHint": "Tykkäykset, lukulista ja historia kuuluvat tiliin.",
-    "toCatalog": "Avaa luettelo"
+    "toCatalog": "Avaa luettelo",
+    "toGoals": "Avaa lukutavoitteet"
+  },
+  "goals": {
+    "title": "Lukutavoitteet",
+    "eyebrow": "Päivittäinen lukeminen",
+    "lead": "Aseta, montako sivua haluat lukea kunkin päivän aikana. Kaikki kirjat lasketaan yhteen, ja mukaan otetaan vain uudet sivut.",
+    "guestTitle": "Kirjaudu suunnitellaksesi lukemista",
+    "guestHint": "Päivittäiset tavoitteet kuuluvat tiliin yhdessä tykkäysten ja lukuhistorian kanssa.",
+    "month": "Kuukausi",
+    "year": "Vuosi",
+    "prevMonth": "Edellinen kuukausi",
+    "nextMonth": "Seuraava kuukausi",
+    "readingDays": "Lukupäivät",
+    "pagesRead": "Luettuja sivuja",
+    "goalsCompleted": "Tavoitteet",
+    "currentStreak": "Putki",
+    "streakValue_one": "{{count}} päivä",
+    "streakValue_other": "{{count}} päivää",
+    "today": "Tänään",
+    "noGoal": "Ei tavoitetta",
+    "pages": "sivua",
+    "readingGoal": "Lukutavoite",
+    "howMany": "Montako sivua haluat lukea?",
+    "targetPages": "Sivutavoite",
+    "setGoal": "Aseta tavoite",
+    "deleteGoal": "Poista tavoite",
+    "close": "Sulje",
+    "decrease": "Vähemmän sivuja",
+    "increase": "Enemmän sivuja",
+    "alreadyRead": "Tänä päivänä luettu jo {{count}} sivua.",
+    "goalCompleted": "Tavoite täyttyi",
+    "saveError": "Lukutavoitetta ei voitu tallentaa.",
+    "completedToast": "Lukutavoite täyttyi",
+    "completedToastHint": "Luit tänään {{pages}} / {{target}} sivua."
   }
 }

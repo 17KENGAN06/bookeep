@@ -3,6 +3,8 @@ export type ReadingProgress = {
   totalPages: number;
   percentage: number;
   lastReadAt: string;
+  maxPageReached?: number;
+  completedAt?: string | null;
 };
 
 export type ReadingProgressMap = Record<string, ReadingProgress>;

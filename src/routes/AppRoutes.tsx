@@ -14,6 +14,7 @@ import { LibraryPage } from '@/pages/LibraryPage';
 import { LoginPage } from '@/pages/LoginPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { PrivacyPage } from '@/pages/PrivacyPage';
+import { ReadingGoalsPage } from '@/pages/ReadingGoalsPage';
 import { ReaderPage } from '@/pages/ReaderPage';
 import { RegisterPage } from '@/pages/RegisterPage';
 import { ProtectedAdminRoute } from '@/routes/ProtectedAdminRoute';
@@ -40,6 +41,7 @@ export function AppRoutes() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/library" element={<LibraryPage />} />
+        <Route path="/goals" element={<ReadingGoalsPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/auth/callback" element={<AuthCallbackPage />} />

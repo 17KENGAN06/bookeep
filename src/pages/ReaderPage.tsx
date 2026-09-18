@@ -38,19 +38,33 @@ function ReaderPageInner() {
   const inited = useRef(false);
   const progressRef = useRef(progress);
   progressRef.current = progress;
-  const persist = useDebouncedCallback(saveProgress, 400);
+  const { run: persistProgress, flush: flushProgress } = useDebouncedCallback(saveProgress, 450);
 
   const goTo = useCallback(
     (next: number | ((current: number) => number)) => {
       if (totalPages <= 0) return;
       setPage((current) => {
         const currentPage = clamp(typeof next === 'function' ? next(current) : next, 1, totalPages);
-        persist({ currentPage, totalPages });
+        persistProgress({ currentPage, totalPages });
         return currentPage;
       });
     },
-    [persist, totalPages],
+    [persistProgress, totalPages],
   );
+
+  useEffect(() => {
+    const flush = () => flushProgress();
+    const onVisibility = () => {
+      if (document.visibilityState === 'hidden') flush();
+    };
+    window.addEventListener('pagehide', flush);
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => {
+      window.removeEventListener('pagehide', flush);
+      document.removeEventListener('visibilitychange', onVisibility);
+      flush();
+    };
+  }, [flushProgress]);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {

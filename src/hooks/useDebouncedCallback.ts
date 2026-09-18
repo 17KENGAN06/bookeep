@@ -5,18 +5,42 @@ export function useDebouncedCallback<Args extends unknown[]>(
   delay: number,
 ) {
   const callbackRef = useRef(callback);
-  const timerRef = useRef<number>(0);
+  const timerRef = useRef(0);
+  const argsRef = useRef<Args | null>(null);
 
   useEffect(() => {
     callbackRef.current = callback;
   }, [callback]);
 
-  useEffect(() => () => window.clearTimeout(timerRef.current), []);
+  const flush = useCallback(() => {
+    const args = argsRef.current;
+    if (!args) return;
+    argsRef.current = null;
+    if (timerRef.current) {
+      window.clearTimeout(timerRef.current);
+      timerRef.current = 0;
+    }
+    callbackRef.current(...args);
+  }, []);
 
-  return useCallback((...args: Args) => {
-    window.clearTimeout(timerRef.current);
-    timerRef.current = window.setTimeout(() => {
-      callbackRef.current(...args);
-    }, delay);
-  }, [delay]);
+  useEffect(
+    () => () => {
+      flush();
+    },
+    [flush],
+  );
+
+  const run = useCallback(
+    (...args: Args) => {
+      argsRef.current = args;
+      window.clearTimeout(timerRef.current);
+      timerRef.current = window.setTimeout(() => {
+        timerRef.current = 0;
+        flush();
+      }, delay);
+    },
+    [delay, flush],
+  );
+
+  return { run, flush };
 }

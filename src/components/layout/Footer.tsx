@@ -30,6 +30,12 @@ export function Footer() {
               <Link to="/books" className={linkClass}>
                 {t('nav.books')}
               </Link>
+              <Link to="/library" className={linkClass}>
+                {t('nav.library')}
+              </Link>
+              <Link to="/goals" className={linkClass}>
+                {t('nav.goals')}
+              </Link>
               <Link to="/about" className={linkClass}>
                 {t('nav.about')}
               </Link>

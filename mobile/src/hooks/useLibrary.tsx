@@ -1,7 +1,9 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { useAuth } from './AuthProvider';
 import { fetchCloudProgress, fetchFavoriteIds, fetchPlannedIds, setFavorite, setPlanned, upsertCloudProgress } from '../services/library';
+import { recordReadingAdvance } from '../services/reading';
 import type { ReadingProgress, ReadingProgressMap } from '../types/progress';
+import { localDateISO } from '../utils/dates';
 
 type LibraryContextValue = {
   favoriteIds: string[];
@@ -116,16 +118,31 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
   const recordProgress = useCallback((bookId: string, input: { currentPage: number; totalPages: number }) => {
     if (input.totalPages <= 0) return;
     const currentPage = Math.min(input.totalPages, Math.max(1, input.currentPage));
-    const next: ReadingProgress = {
-      currentPage,
-      totalPages: input.totalPages,
-      percentage: Number(((currentPage / input.totalPages) * 100).toFixed(1)),
-      lastReadAt: new Date().toISOString(),
-    };
-    setProgress((current) => ({ ...current, [bookId]: next }));
-    if (user) {
-      void upsertCloudProgress(bookId, next);
-    }
+    setProgress((current) => {
+      const previous = current[bookId];
+      const next: ReadingProgress = {
+        currentPage,
+        totalPages: input.totalPages,
+        percentage: Number(((currentPage / input.totalPages) * 100).toFixed(1)),
+        lastReadAt: new Date().toISOString(),
+        maxPageReached: Math.max(previous?.maxPageReached ?? 0, currentPage),
+        completedAt:
+          currentPage >= input.totalPages
+            ? previous?.completedAt ?? new Date().toISOString()
+            : previous?.completedAt ?? null,
+      };
+      if (user) {
+        void recordReadingAdvance({
+          bookId,
+          currentPage,
+          totalPages: input.totalPages,
+          readDate: localDateISO(),
+        }).catch(() => {
+          void upsertCloudProgress(bookId, next);
+        });
+      }
+      return { ...current, [bookId]: next };
+    });
   }, [user]);
 
   const value = useMemo(
