@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useAuth } from '@/hooks/useAuth';
 import { deleteReadingGoal, fetchCompletedGoalDates, fetchMonthReading, upsertReadingGoal } from '@/services/reading';
 import type { DayReadingState, ReadingGoal } from '@/types/reading';
 import { addDaysISO, currentStreak, dateISO, daysInMonth, localDateISO, monthRange } from '@/utils/dates';
@@ -19,14 +20,22 @@ function dayState(
 }
 
 export function useReadingGoals(year: number, month: number) {
+  const { user } = useAuth();
   const today = localDateISO();
   const { start, end } = useMemo(() => monthRange(year, month), [month, year]);
   const [goals, setGoals] = useState<ReadingGoal[]>([]);
   const [pagesByDate, setPagesByDate] = useState<Record<string, number>>({});
   const [streak, setStreak] = useState(0);
-  const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading');
+  const [status, setStatus] = useState<'loading' | 'ready' | 'error'>(user ? 'loading' : 'ready');
 
   const load = useCallback(async (silent = false) => {
+    if (!user) {
+      setGoals([]);
+      setPagesByDate({});
+      setStreak(0);
+      setStatus('ready');
+      return;
+    }
     if (!silent) setStatus('loading');
     try {
       const [{ goals: nextGoals, pagesByDate: nextPages }, completed] = await Promise.all([
@@ -40,7 +49,7 @@ export function useReadingGoals(year: number, month: number) {
     } catch {
       setStatus('error');
     }
-  }, [end, start, today]);
+  }, [end, start, today, user]);
 
   useEffect(() => {
     void load();

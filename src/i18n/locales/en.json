@@ -33,9 +33,13 @@
     "line3": "& Finnish",
     "subtitle": "Bookeep is a catalog of English and Finnish books prepared for language learners. The plot stays; the language becomes clearer.",
     "ctaPrimary": "Open the catalog",
+    "ctaGoals": "Reading plan",
     "featuredTitle": "In the catalog",
     "featuredSubtitle": "Adapted books in English and Finnish. Filter by language and level if you want.",
     "viewAll": "All books",
+    "planTitle": "A quiet reading plan",
+    "planLead": "Set how many pages you want to read each day. The calendar keeps the count across every book, and only new pages count.",
+    "planCta": "Open the calendar",
     "moods": {
       "adaptation": {
         "title": "Adaptation",
@@ -237,6 +241,16 @@
       "finnish": "Finnish books",
       "english": "English books",
       "empty": "No books yet"
+    },
+    "hero": {
+      "title": "Homepage covers",
+      "lead": "Choose up to three published books for the stack on the home page. Leave a slot empty if you want fewer than three.",
+      "slot": "Place {{n}}",
+      "empty": "Not shown",
+      "save": "Save homepage covers",
+      "saved": "Homepage covers updated",
+      "error": "Could not save the homepage covers",
+      "duplicate": "The same book cannot sit in two places."
     },
     "table": {
       "cover": "Cover",

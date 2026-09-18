@@ -33,9 +33,13 @@
     "line3": "EN ja FI",
     "subtitle": "Bookeep on luettelo englannin- ja suomenkielisistä teoksista kielenoppijoille. Juoni säilyy, kieli selkenee.",
     "ctaPrimary": "Avaa luettelo",
+    "ctaGoals": "Lukusuunnitelma",
     "featuredTitle": "Luettelossa",
     "featuredSubtitle": "Mukautettuja kirjoja englanniksi ja suomeksi. Voit suodattaa kielen ja tason.",
     "viewAll": "Kaikki kirjat",
+    "planTitle": "Rauhallinen lukusuunnitelma",
+    "planLead": "Aseta, montako sivua haluat lukea kunkin päivän aikana. Kalenteri laskee kaikki kirjat yhteen, ja vain uudet sivut merkitään.",
+    "planCta": "Avaa kalenteri",
     "moods": {
       "adaptation": {
         "title": "Mukautus",
@@ -237,6 +241,16 @@
       "finnish": "Suomenkieliset",
       "english": "Englanninkieliset",
       "empty": "Kirjoja ei ole vielä"
+    },
+    "hero": {
+      "title": "Etusivun kannet",
+      "lead": "Valitse enintään kolme julkaistua kirjaa etusivun pinoon. Jätä paikka tyhjäksi, jos haluat vähemmän kuin kolme.",
+      "slot": "Paikka {{n}}",
+      "empty": "Ei näytetä",
+      "save": "Tallenna etusivun kannet",
+      "saved": "Etusivun kannet päivitetty",
+      "error": "Etusivun kansia ei voitu tallentaa",
+      "duplicate": "Sama kirja ei voi olla kahdessa paikassa."
     },
     "table": {
       "cover": "Kansi",

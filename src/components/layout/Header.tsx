@@ -14,7 +14,6 @@ const links = [
   { to: '/', key: 'nav.home' },
   { to: '/books', key: 'nav.books' },
   { to: '/library', key: 'nav.library' },
-  { to: '/goals', key: 'nav.goals' },
   { to: '/about', key: 'nav.about' },
   { to: '/contact', key: 'nav.contact' },
 ] as const;
@@ -83,6 +82,12 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <Link
+            to="/goals"
+            className="focus-ring inline-flex min-h-10 items-center rounded-xl bg-accent px-3 text-sm font-semibold text-on-accent transition hover:bg-accent-hover"
+          >
+            {t('nav.goals')}
+          </Link>
           <ThemeToggle />
           <div className="hidden lg:block">
             <LanguageSwitcher />
@@ -133,6 +138,13 @@ export function Header() {
                 {t(link.key)}
               </Link>
             ))}
+            <Link
+              to="/goals"
+              onClick={() => setOpen(false)}
+              className="focus-ring rounded-xl bg-accent px-3 py-3 text-base font-semibold text-on-accent"
+            >
+              {t('nav.goals')}
+            </Link>
             {!isLoading && user ? (
               <button
                 type="button"

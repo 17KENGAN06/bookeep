@@ -20,6 +20,7 @@ export type Book = {
   pdf_path: string | null;
   page_count: number | null;
   published: boolean;
+  hero_slot?: number | null;
   created_at: string;
   updated_at: string;
 };

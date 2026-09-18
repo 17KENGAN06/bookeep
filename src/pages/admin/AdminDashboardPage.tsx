@@ -11,6 +11,7 @@ import { ErrorState } from '@/components/common/ErrorState';
 import { Skeleton } from '@/components/common/Skeleton';
 import { useToast } from '@/components/common/Toast';
 import { useAdminBooks } from '@/hooks/useAdminBooks';
+import { AdminHeroBooks } from '@/components/admin/AdminHeroBooks';
 import { deleteBook } from '@/services/books';
 import type { Book } from '@/types/book';
 
@@ -43,6 +44,8 @@ export function AdminDashboardPage() {
         <Stat label={t('admin.dashboard.finnish')} value={finnish} />
         <Stat label={t('admin.dashboard.english')} value={english} />
       </div>
+
+      {status === 'success' && books.length > 0 ? <AdminHeroBooks books={books} onSaved={reload} /> : null}
 
       <div className="mt-8">
         {status === 'error' ? (

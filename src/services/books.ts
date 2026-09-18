@@ -49,7 +49,28 @@ function mapBook(row: Book): Book {
     ...row,
     cover_path: getPublicFileUrl(COVER_BUCKET, row.cover_path),
     pdf_path: getPublicFileUrl(PDF_BUCKET, row.pdf_path),
+    hero_slot: row.hero_slot ?? null,
   };
+}
+
+export function pickHeroBooks(books: Book[]): Book[] {
+  const slotted = books
+    .filter((book) => book.hero_slot === 1 || book.hero_slot === 2 || book.hero_slot === 3)
+    .sort((a, b) => (a.hero_slot ?? 0) - (b.hero_slot ?? 0));
+  if (slotted.length > 0) return slotted;
+  return books.slice(0, 3);
+}
+
+export async function setHomeHeroBooks(slotIds: [string | null, string | null, string | null]) {
+  const supabase = getSupabaseClient();
+  if (!supabase) throw new Error('Supabase is not configured');
+  const { error } = await supabase.rpc('set_home_hero_books', {
+    p_slot_1: slotIds[0],
+    p_slot_2: slotIds[1],
+    p_slot_3: slotIds[2],
+  });
+  if (error) throw error;
+  invalidateBooksCache();
 }
 
 async function fetchPublishedFromSupabase(): Promise<Book[]> {

@@ -43,10 +43,15 @@ export function Hero() {
             </Reveal>
 
             <Reveal delay={400}>
-              <ButtonLink to="/books" className="mt-8 w-full min-w-44 sm:w-auto">
-                {t('home.ctaPrimary')}
-                <ArrowRight className="h-4 w-4" aria-hidden />
-              </ButtonLink>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <ButtonLink to="/books" className="w-full min-w-44 sm:w-auto">
+                  {t('home.ctaPrimary')}
+                  <ArrowRight className="h-4 w-4" aria-hidden />
+                </ButtonLink>
+                <ButtonLink to="/goals" variant="secondary" className="w-full min-w-44 sm:w-auto">
+                  {t('home.ctaGoals')}
+                </ButtonLink>
+              </div>
             </Reveal>
           </div>
 
