@@ -28,27 +28,40 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     let active = true;
+    const userIdRef = { current: null as string | null };
 
     void supabase.auth.getSession().then(async ({ data }) => {
       if (!active) return;
+      const nextUser = data.session?.user ?? null;
+      userIdRef.current = nextUser?.id ?? null;
       setSession(data.session);
-      setUser(data.session?.user ?? null);
-      setIsAdmin(await loadIsAdmin(data.session?.user ?? null));
+      setUser(nextUser);
+      setIsAdmin(await loadIsAdmin(nextUser));
       setAdminReady(true);
       setIsLoading(false);
     });
 
     const { data } = supabase.auth.onAuthStateChange((event, nextSession) => {
+      const nextUser = nextSession?.user ?? null;
       setSession(nextSession);
-      setUser(nextSession?.user ?? null);
+      setUser(nextUser);
+
       if (event === 'TOKEN_REFRESHED' || event === 'INITIAL_SESSION') return;
-      if (!nextSession?.user) {
+
+      if (!nextUser) {
+        userIdRef.current = null;
         setIsAdmin(false);
         setAdminReady(true);
         return;
       }
+
+      // Tab focus / session recover fires SIGNED_IN for the same user.
+      // Reloading the admin flag would unmount /admin/books/new and wipe the form.
+      if (nextUser.id === userIdRef.current) return;
+
+      userIdRef.current = nextUser.id;
       setAdminReady(false);
-      void loadIsAdmin(nextSession.user).then((admin) => {
+      void loadIsAdmin(nextUser).then((admin) => {
         if (!active) return;
         setIsAdmin(admin);
         setAdminReady(true);

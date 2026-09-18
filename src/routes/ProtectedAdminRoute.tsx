@@ -9,12 +9,16 @@ export function ProtectedAdminRoute() {
     return <Navigate to="/admin/login" replace />;
   }
 
-  if (isLoading || (user && !adminReady)) {
+  if (isLoading) {
     return <div className="min-h-dvh bg-bg" />;
   }
 
   if (!user) {
     return <Navigate to="/admin/login" replace state={{ from: location.pathname }} />;
+  }
+
+  if (!adminReady && !isAdmin) {
+    return <div className="min-h-dvh bg-bg" />;
   }
 
   if (!isAdmin) {
