@@ -17,13 +17,13 @@ app.use(
 app.use(express.json({ limit: '1mb' }));
 
 app.get('/health', (_req, res) => {
-  res.json({ ok: true, service: 'bookkeep-server' });
+  res.json({ ok: true, service: 'bookeep-server' });
 });
 
 app.get('/api/health', (_req, res) => {
-  res.json({ ok: true, service: 'bookkeep-server' });
+  res.json({ ok: true, service: 'bookeep-server' });
 });
 
 app.listen(port, '0.0.0.0', () => {
-  console.log(`BookKeep server listening on ${port}`);
+  console.log(`Bookeep server listening on ${port}`);
 });

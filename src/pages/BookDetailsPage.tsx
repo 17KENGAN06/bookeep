@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Download } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Download, Smartphone } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { BookCover } from '@/components/books/BookCover';
 import { LevelBadge } from '@/components/books/LevelBadge';
 import { LibraryActions } from '@/components/books/LibraryActions';
-import { Button, ButtonLink } from '@/components/common/Button';
+import { Button, ButtonAnchor, ButtonLink } from '@/components/common/Button';
 import { Container } from '@/components/common/Container';
 import { DocumentTitle } from '@/components/common/DocumentTitle';
 import { EmptyState } from '@/components/common/EmptyState';
@@ -15,6 +15,7 @@ import { Skeleton } from '@/components/common/Skeleton';
 import { useBook } from '@/hooks/useBooks';
 import { useReadingProgress } from '@/hooks/useReadingProgress';
 import { getLocalizedDescription, getLocalizedTitle } from '@/utils/bookCopy';
+import { appBookUrl } from '@/config/site';
 
 export function BookDetailsPage() {
   const { slug } = useParams();
@@ -144,6 +145,10 @@ export function BookDetailsPage() {
                 {t('book.download')}
               </Button>
             ) : null}
+            <ButtonAnchor href={appBookUrl(book.slug)} className="w-full min-w-48 sm:w-auto">
+              <Smartphone className="h-4 w-4" aria-hidden />
+              {t('book.openInApp')}
+            </ButtonAnchor>
             {hasProgress && progress ? (
               <p className="self-center text-sm text-muted">
                 {t('book.continueFrom', { page: progress.currentPage })}

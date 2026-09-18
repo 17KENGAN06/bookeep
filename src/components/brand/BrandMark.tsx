@@ -3,7 +3,7 @@ type BrandMarkProps = {
   title?: string;
 };
 
-export function BrandMark({ className = 'h-8 w-8', title = 'BookKeep' }: BrandMarkProps) {
+export function BrandMark({ className = 'h-8 w-8', title = 'Bookeep' }: BrandMarkProps) {
   return (
     <svg
       className={className}

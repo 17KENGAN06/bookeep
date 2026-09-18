@@ -1,0 +1,367 @@
+{
+  "common": {
+    "appName": "Bookeep",
+    "themeLight": "Vaihda vaaleaan teemaan",
+    "themeDark": "Vaihda tummaan teemaan",
+    "language": "Käyttöliittymän kieli",
+    "loading": "Ladataan...",
+    "retry": "Yritä uudelleen",
+    "openMenu": "Avaa valikko",
+    "closeMenu": "Sulje valikko",
+    "skipToContent": "Siirry sisältöön"
+  },
+  "seo": {
+    "title": "Bookeep — mukautettuja kirjoja englanniksi ja suomeksi",
+    "description": "Luettelo mukautetuista kirjoista englanniksi ja suomeksi. Teokset on valmisteltu A2–B1-lukijoille, juoni säilyy.",
+    "keywords": "Bookeep, mukautetut kirjat, englanti, suomi, A2, B1, kielenoppiminen"
+  },
+  "nav": {
+    "primary": "Päävalikko",
+    "home": "Etusivu",
+    "books": "Kirjat",
+    "about": "Tietoa",
+    "contact": "Yhteystiedot",
+    "privacy": "Tietosuoja",
+    "library": "Omat kirjat",
+    "login": "Kirjaudu"
+  },
+  "home": {
+    "eyebrow": "Mukautukset · English · Suomi",
+    "line1": "Mukautettuja",
+    "line2": "kirjoja",
+    "line3": "EN ja FI",
+    "subtitle": "Bookeep on luettelo englannin- ja suomenkielisistä teoksista kielenoppijoille. Juoni säilyy, kieli selkenee.",
+    "ctaPrimary": "Avaa luettelo",
+    "featuredTitle": "Luettelossa",
+    "featuredSubtitle": "Mukautettuja kirjoja englanniksi ja suomeksi. Voit suodattaa kielen ja tason.",
+    "viewAll": "Kaikki kirjat",
+    "moods": {
+      "adaptation": {
+        "title": "Mukautus",
+        "text": "Teksti on kirjoitettu selkeämmäksi ilman, että juoni tai kirjan rakenne katoaa."
+      },
+      "languages": {
+        "title": "Kaksi kieltä",
+        "text": "Luettelossa on vain englanti ja suomi — kaksi hyllyä samassa paikassa."
+      },
+      "levels": {
+        "title": "Tasot A2–B1",
+        "text": "Valitse kielen tiheys, joka sopii tähän hetkeen."
+      }
+    }
+  },
+  "books": {
+    "title": "Kirjat",
+    "subtitle": "Mukautettuja kirjoja englanniksi ja suomeksi. Suodata kielen ja tason mukaan.",
+    "all": "Kaikki",
+    "allLevels": "Mikä vain",
+    "language": "Kieli",
+    "level": "Taso",
+    "empty": "Kirjoja ei löytynyt",
+    "emptyFi": "Suomenkielisiä kirjoja ei löytynyt",
+    "emptyEn": "Englanninkielisiä kirjoja ei löytynyt",
+    "emptyLevel": "Tälle tasolle ei löytynyt kirjoja",
+    "showAll": "Näytä kaikki",
+    "loading": "Ladataan kirjoja...",
+    "error": "Jokin meni vikaan",
+    "errorHint": "Luetteloa ei voitu ladata. Yritä uudelleen.",
+    "startReading": "Lue",
+    "continueReading": "Jatka",
+    "progress": "Edistyminen"
+  },
+  "book": {
+    "notFound": "Kirjaa ei löytynyt",
+    "notFoundHint": "Tämä teos ei ole saatavilla tai sitä ei ole vielä julkaistu.",
+    "backToCatalog": "Takaisin luetteloon",
+    "startReading": "Lue",
+    "continueReading": "Jatka",
+    "download": "Tallenna offline-tilaan",
+    "downloading": "Ladataan…",
+    "downloadDone": "Tallennettu tälle laitteelle.",
+    "downloadError": "Kirjaa ei voitu tallentaa.",
+    "downloadRemoved": "Poistettu tältä laitteelta.",
+    "downloadedRemove": "Poista lataus",
+    "offlineHint": "Tämä kirja aukeaa ilman verkkoa.",
+    "share": "Jaa",
+    "shareError": "Kirjaa ei voitu jakaa.",
+    "continueFrom": "sivulta {{page}}",
+    "pages": "{{current}} / {{total}} sivua",
+    "completed": "{{percent}} % luettu",
+    "language": "Kieli",
+    "level": "Taso",
+    "description": "Tästä kirjasta",
+    "loading": "Ladataan kirjaa..."
+  },
+  "languages": {
+    "fi": "Suomi",
+    "en": "Englanti"
+  },
+  "about": {
+    "eyebrow": "Tietoa",
+    "title": "Tietoa hankkeesta",
+    "lead": "Bookeep on luettelo mukautetuista kirjoista englanniksi ja suomeksi. Täällä ei ole oppitunteja eikä harjoituksia: avaat kirjan ja luet sen selaimessa.",
+    "cta": "Avaa luettelo",
+    "sections": {
+      "purpose": {
+        "title": "Miksi tämä on olemassa",
+        "text": "Oppikirja antaa sääntöjä ja tehtäviä. Alkuperäinen romaani on usein liian tiheä, jos kieli ei ole vielä sujuvaa. Mukautus on niiden välissä: luet yhtenäistä tarinaa tasolla, jota pystyt jo kannattelemaan, ilman sanakirjaa joka rivillä."
+      },
+      "adaptation": {
+        "title": "Mitä mukautettu kirja tarkoittaa",
+        "text": "Se ei ole lyhyt juonitiivistelmä eikä dialogikokoelma. Se on teoksen koko teksti, jossa tiheämpi kielioppi, harvinaisempi sanasto ja pitkät jaksot on tuotu valitulle CEFR-tasolle. Juoni, henkilöt ja rakenne pysyvät. Ensin muuttuu kieli."
+      },
+      "languages": {
+        "title": "Englanti ja suomi",
+        "text": "Luettelon kirjat ovat vain englanniksi ja suomeksi. Ne ovat itse tekstien kieliä. Käyttöliittymän voi vaihtaa suomeksi, englanniksi, ukrainaksi tai venäjäksi: sivuston tekstit vaihtuvat, kirja pysyy mukautuksen kielellä."
+      },
+      "levels": {
+        "title": "Tasot A2 ja B1",
+        "text": "Jokaisella kirjalla on taso. A2 on selkeämpää ja lyhyempää. B1 on lähempänä tavallista kaunokirjallisuutta, mutta silti kielenoppijalle. Kannattaa valita se, mikä luetaan rauhassa."
+      },
+      "reading": {
+        "title": "Miten lukeminen toimii",
+        "text": "Luettelossa voi suodattaa kielen ja tason. Kirja avautuu sivustolla: sivut, zoom, vaalea tai tumma paperi. Lukeminen onnistuu ilman tiliä — viimeisin sivu jää tälle laitteelle. Kirjaudu, jos haluat tykkäykset, lukulistan ja historian muihin selaimiin."
+      }
+    }
+  },
+  "reader": {
+    "back": "Takaisin",
+    "titleFallback": "Kirja",
+    "page": "{{current}} / {{total}}",
+    "prev": "Edellinen sivu",
+    "next": "Seuraava sivu",
+    "zoomOut": "Pienennä",
+    "zoomIn": "Suurenna",
+    "fullscreen": "Koko näyttö",
+    "exitFullscreen": "Poistu",
+    "paperDark": "Tummat sivut",
+    "paperLight": "Vaaleat sivut",
+    "dim": "Sivun kirkkaus",
+    "skipToPage": "Siirry sivulle",
+    "error": "Ei auennut",
+    "errorHint": "Tiedosto ei latautunut. Tallenna se offline-tilaan tai tarkista yhteys.",
+    "missing": "Ei tiedostoa vielä",
+    "missingHint": "Tätä kirjaa ei ole vielä lukijassa."
+  },
+  "notFound": {
+    "eyebrow": "Virhe 404",
+    "title": "Sivua ei löytynyt",
+    "subtitle": "Linkki voi olla vanhentunut, tai kirjaa ei ole vielä julkaistu.",
+    "home": "Etusivulle",
+    "catalog": "Selaa kirjoja"
+  },
+  "contact": {
+    "eyebrow": "Yhteystiedot",
+    "title": "Ota yhteyttä",
+    "lead": "Kirjoita yhteistyöstä, kysymyksestä tai virheestä. Lomake lähettää viestin oikeaan postilaatikkoon.",
+    "channels": {
+      "partner": {
+        "title": "Yhteistyö",
+        "text": "Kustannus, mukautus tai muu yhteistyö Bookeepin ja WEISEZAHOYn kanssa."
+      },
+      "admin": {
+        "title": "Kysymykset ja virheet",
+        "text": "Jos sivusto ei toimi tai tarvitset apua luettelon kanssa."
+      }
+    },
+    "form": {
+      "topic": "Mistä on kyse?",
+      "topicHint": "Viesti lähetetään osoitteeseen {{email}}.",
+      "topics": {
+        "partnership": "Yhteistyö",
+        "question": "Kysymys",
+        "bug": "Löysin virheen"
+      },
+      "name": "Nimi",
+      "email": "Sähköposti",
+      "message": "Viesti",
+      "consent": "Hyväksyn tämän viestin käsittelyn <privacy>tietosuojakäytännön</privacy> mukaisesti.",
+      "submit": "Lähetä",
+      "sending": "Lähetetään…",
+      "success": "Viesti lähetettiin. Vastaamme jättämääsi sähköpostiin.",
+      "error": "Viestiä ei voitu lähettää. Yritä uudelleen tai kirjoita yllä olevaan osoitteeseen.",
+      "invalid": "Täytä nimi, kelvollinen sähköposti, viesti ja suostumus."
+    }
+  },
+  "privacy": {
+    "eyebrow": "Ehdot",
+    "title": "Tietosuoja",
+    "lead": "Tällä sivulla kerrotaan, mitä Bookeep tallentaa, mitä yhteydenottolomake lähettää ja miten meihin saa yhteyden henkilötiedoista.",
+    "sections": {
+      "who": {
+        "title": "Kuka me olemme",
+        "text": "Bookeep on WEISEZAHOY-studion mukautettujen kirjojen luettelo. Tietosuoja-asioissa kirjoita osoitteeseen <mail>{{email}}</mail>."
+      },
+      "data": {
+        "title": "Mitä käsittelemme",
+        "text": "Teema ja kieli jäävät tälle laitteelle. Jos kirjaudut, tallennamme sähköpostin (ja Google-nimen, jos käytät Googlea), tykkäykset, lukulistan ja lukemisen etenemisen Supabaseen. Ylläpitäjillä on erillinen kirjautuminen. Sivusto on Hostingerissa; kirjatiedostot ja luettelo ovat Supabasessa."
+      },
+      "account": {
+        "title": "Tilit",
+        "text": "Voit luoda sähköpostitilin tai kirjautua Googlen kautta. Tykkäykset, lukulista ja historia kuuluvat tilille. Uloskirjautuminen ei poista niitä. Tilin poistamista varten kirjoita osoitteeseen <mail>{{email}}</mail>."
+      },
+      "form": {
+        "title": "Yhteydenottolomake",
+        "text": "Jos lähetät lomakkeen, saamme nimen, sähköpostin, aiheen ja viestin. Yhteistyöviestit menevät osoitteeseen partner@weisezahoy.com. Kysymykset ja virheilmoitukset osoitteeseen admin@weisezahoy.com. Käytämme niitä vain vastaamiseen."
+      },
+      "local": {
+        "title": "Tällä laitteella",
+        "text": "Teema, kieli ja vieraan lukemisen eteneminen tallentuvat selaimeen. Kirjautumisen jälkeen eteneminen tallentuu myös tilille. Sivuston tietojen tyhjennys poistaa paikallisen kopion."
+      },
+      "sharing": {
+        "title": "Luovutus",
+        "text": "Emme myy henkilötietoja. Viestit voivat kulkea lomakepalvelun kautta postilaatikoihimme. Hosting- ja tietokantapalvelut käsittelevät tietoja vain sivuston pyörittämiseksi."
+      },
+      "rights": {
+        "title": "Oikeutesi",
+        "text": "Voit kysyä, mitä lomakeviestistä on tallessa, pyytää poistoa tai kieltää jatkokäytön. Kirjoita osoitteeseen <mail>{{email}}</mail>. Päivitämme sivun, jos tietojen käsittely muuttuu."
+      }
+    }
+  },
+  "footer": {
+    "tagline": "Mukautettuja kirjoja englanniksi ja suomeksi.",
+    "credit": "Sivuston on kehittänyt ja sitä ylläpitää studio <studio>WEISEZAHOY</studio>."
+  },
+  "admin": {
+    "eyebrow": "Hallinta",
+    "logout": "Kirjaudu ulos",
+    "back": "Takaisin hallintaan",
+    "login": {
+      "title": "Ylläpitäjän kirjautuminen",
+      "subtitle": "Julkista rekisteröitymistä ei ole. Vain ylläpitäjät pääsevät sisään.",
+      "email": "Sähköposti",
+      "password": "Salasana",
+      "submit": "Kirjaudu",
+      "error": "Kirjautuminen epäonnistui. Tarkista sähköposti ja salasana.",
+      "notConfigured": "Supabase ei ole vielä määritetty. Lisää VITE_SUPABASE_URL ja VITE_SUPABASE_ANON_KEY tiedostoon .env.",
+      "forbidden": "Tämä tili ei ole ylläpitäjä."
+    },
+    "dashboard": {
+      "title": "Kirjat",
+      "add": "Lisää kirja",
+      "total": "Kirjoja yhteensä",
+      "finnish": "Suomenkieliset",
+      "english": "Englanninkieliset",
+      "empty": "Kirjoja ei ole vielä"
+    },
+    "table": {
+      "cover": "Kansi",
+      "title": "Nimi",
+      "language": "Kieli",
+      "level": "Taso",
+      "status": "Tila",
+      "created": "Luotu",
+      "actions": "Toiminnot",
+      "edit": "Muokkaa",
+      "delete": "Poista",
+      "open": "Avaa"
+    },
+    "status": {
+      "published": "Julkaistu",
+      "draft": "Luonnos"
+    },
+    "form": {
+      "createTitle": "Lisää kirja",
+      "editTitle": "Muokkaa kirjaa",
+      "titleOriginal": "Alkuperäinen nimi",
+      "slug": "Slug",
+      "language": "Kirjan kieli",
+      "level": "Taso",
+      "published": "Julkaistu",
+      "cover": "Kansikuva",
+      "pdf": "PDF-tiedosto",
+      "fileKept": "Nykyinen tiedosto säilyy, ellet valitse uutta",
+      "localizedTitle": "Nimi",
+      "localizedDescription": "Lyhyt kuvaus",
+      "create": "Luo kirja",
+      "save": "Tallenna",
+      "created": "Kirja luotu",
+      "updated": "Kirja päivitetty",
+      "error": "Kirjaa ei voitu tallentaa",
+      "titleRequired": "Alkuperäinen nimi on pakollinen",
+      "coverRequired": "Kansikuva on pakollinen",
+      "pdfRequired": "PDF-tiedosto on pakollinen"
+    },
+    "upload": {
+      "drop": "Vedä tiedosto tähän",
+      "orBrowse": "tai valitse koneelta",
+      "uploading": "Lähetetään…",
+      "ready": "Tiedosto valmis lähetettäväksi",
+      "coverInvalid": "Kannen on oltava JPG, PNG tai WebP",
+      "pdfInvalid": "Vain PDF-tiedostot kelpaavat"
+    },
+    "delete": {
+      "title": "Poistetaanko tämä kirja?",
+      "body": "“{{title}}” poistetaan luettelosta. Toimintoa ei voi perua.",
+      "confirm": "Poista",
+      "cancel": "Peruuta",
+      "success": "Kirja poistettu",
+      "error": "Kirjaa ei voitu poistaa"
+    }
+  },
+  "auth": {
+    "loginTitle": "Kirjaudu",
+    "loginLead": "Käytä Googlea tai Bookeep-sähköpostia, jotta tykkäykset, lukulista ja historia säilyvät.",
+    "loginSubmit": "Kirjaudu",
+    "loginError": "Kirjautuminen epäonnistui. Tarkista sähköposti ja salasana.",
+    "registerTitle": "Luo tili",
+    "registerLead": "Sähköposti tai Google riittää. Sen jälkeen voit tykätä kirjoista ja suunnitella lukemista.",
+    "registerSubmit": "Luo tili",
+    "registerError": "Tiliä ei voitu luoda. Kokeile toista sähköpostia.",
+    "registerLink": "Luo tili",
+    "loginLink": "Kirjaudu",
+    "noAccount": "Ei tiliä vielä?",
+    "hasAccount": "Onko sinulla jo tili?",
+    "email": "Sähköposti",
+    "password": "Salasana",
+    "passwordHint": "Vähintään 6 merkkiä.",
+    "google": "Jatka Googlella",
+    "googleError": "Googlen kirjautuminen ei alkanut. Yritä uudelleen.",
+    "or": "tai",
+    "checkEmail": "Tarkista sähköposti ja avaa vahvistuslinkki.",
+    "notConfigured": "Kirjautumista ei ole vielä määritetty tälle sivustolle.",
+    "signOut": "Kirjaudu ulos",
+    "account": "Tili",
+    "callback": "Kirjaudutaan…",
+    "callbackError": "Kirjautumista ei voitu viimeistellä.",
+    "forgotPassword": "Unohtuiko salasana?",
+    "forgotTitle": "Palauta salasana",
+    "forgotLead": "Lähetämme linkin sähköpostiisi. Avaa se tällä puhelimella ja valitse uusi salasana.",
+    "forgotSubmit": "Lähetä linkki",
+    "forgotSent": "Tarkista sähköposti ja avaa linkki tällä puhelimella.",
+    "forgotError": "Palautussähköpostia ei voitu lähettää.",
+    "forgotNeedEmail": "Kirjoita ensin sähköposti.",
+    "newPasswordTitle": "Uusi salasana",
+    "newPasswordLead": "Valitse salasana tälle tilille.",
+    "newPasswordSubmit": "Tallenna salasana",
+    "newPasswordError": "Salasanaa ei voitu tallentaa.",
+    "newPasswordDone": "Salasana päivitetty.",
+    "changePassword": "Vaihda salasana"
+  },
+  "more": {
+    "tab": "Lisää",
+    "title": "Lisää",
+    "lead": "Tietoa projektista, yhteystiedot, tietosuoja ja tilisi.",
+    "account": "Tili",
+    "accountHint": "Kirjaudu, jotta tykkäykset, lukulista ja historia säilyvät."
+  },
+  "library": {
+    "title": "Omat kirjat",
+    "eyebrow": "Kirjasto",
+    "hello": "Kirjautunut tilillä {{name}}.",
+    "liked": "Tykätyt",
+    "likedEmpty": "Ei tykättyjä kirjoja vielä.",
+    "planned": "Aion lukea",
+    "plannedEmpty": "Lukulista on vielä tyhjä.",
+    "history": "Lukuhistoria",
+    "historyEmpty": "Avaa kirja, niin viimeisimmät nimet näkyvät täällä.",
+    "like": "Tykkää",
+    "unlike": "Tykätty",
+    "plan": "Aion lukea",
+    "unplan": "Listalla",
+    "error": "Kirjastoa ei voitu päivittää.",
+    "guestTitle": "Kirjaudu, jotta kirjasto säilyy",
+    "guestHint": "Tykkäykset, lukulista ja historia kuuluvat tiliin.",
+    "toCatalog": "Avaa luettelo"
+  }
+}

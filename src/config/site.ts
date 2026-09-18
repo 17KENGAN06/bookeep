@@ -28,3 +28,7 @@ export function truncateMeta(text: string, max = 180) {
   if (compact.length <= max) return compact;
   return `${compact.slice(0, max - 1).trimEnd()}…`;
 }
+
+export function appBookUrl(slug: string) {
+  return `bookeep://books/${slug}`;
+}

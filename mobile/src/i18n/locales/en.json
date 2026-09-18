@@ -1,0 +1,367 @@
+{
+  "common": {
+    "appName": "Bookeep",
+    "themeLight": "Switch to light theme",
+    "themeDark": "Switch to dark theme",
+    "language": "Interface language",
+    "loading": "Loading...",
+    "retry": "Try again",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "skipToContent": "Skip to content"
+  },
+  "seo": {
+    "title": "Bookeep — adapted books in English and Finnish",
+    "description": "A catalog of adapted books in English and Finnish. Titles are rewritten for A2–B1 readers while the story stays intact.",
+    "keywords": "Bookeep, adapted books, English, Finnish, A2, B1, language reading"
+  },
+  "nav": {
+    "primary": "Primary navigation",
+    "home": "Home",
+    "books": "Books",
+    "about": "About",
+    "contact": "Contact",
+    "privacy": "Privacy",
+    "library": "My books",
+    "login": "Sign in"
+  },
+  "home": {
+    "eyebrow": "Adaptations · English · Finnish",
+    "line1": "Adapted",
+    "line2": "English",
+    "line3": "& Finnish",
+    "subtitle": "Bookeep is a catalog of English and Finnish books prepared for language learners. The plot stays; the language becomes clearer.",
+    "ctaPrimary": "Open the catalog",
+    "featuredTitle": "In the catalog",
+    "featuredSubtitle": "Adapted books in English and Finnish. Filter by language and level if you want.",
+    "viewAll": "All books",
+    "moods": {
+      "adaptation": {
+        "title": "Adaptation",
+        "text": "The text is rewritten more simply, without dropping the plot or the book’s structure."
+      },
+      "languages": {
+        "title": "Two languages",
+        "text": "The catalog is English and Finnish only — two sections in one place."
+      },
+      "levels": {
+        "title": "Levels A2–B1",
+        "text": "Pick the language density that matches where you are now."
+      }
+    }
+  },
+  "books": {
+    "title": "Books",
+    "subtitle": "Adapted books in English and Finnish. Filter by language and level.",
+    "all": "All",
+    "allLevels": "Any",
+    "language": "Language",
+    "level": "Level",
+    "empty": "No books found",
+    "emptyFi": "No Finnish books found",
+    "emptyEn": "No English books found",
+    "emptyLevel": "No books found for this level",
+    "showAll": "Show all",
+    "loading": "Loading books...",
+    "error": "Something went wrong",
+    "errorHint": "The catalog could not be loaded. Please try again.",
+    "startReading": "Read",
+    "continueReading": "Continue",
+    "progress": "Progress"
+  },
+  "book": {
+    "notFound": "Book not found",
+    "notFoundHint": "This title is unavailable or has not been published yet.",
+    "backToCatalog": "Back to catalog",
+    "startReading": "Read",
+    "continueReading": "Continue",
+    "download": "Save for offline",
+    "downloading": "Downloading…",
+    "downloadDone": "Saved on this device.",
+    "downloadError": "Could not save the book.",
+    "downloadRemoved": "Removed from this device.",
+    "downloadedRemove": "Remove download",
+    "offlineHint": "This book opens without internet.",
+    "share": "Share",
+    "shareError": "Could not share this book.",
+    "continueFrom": "from page {{page}}",
+    "pages": "{{current}} / {{total}} pages",
+    "completed": "{{percent}}% completed",
+    "language": "Language",
+    "level": "Level",
+    "description": "About this book",
+    "loading": "Loading book..."
+  },
+  "languages": {
+    "fi": "Finnish",
+    "en": "English"
+  },
+  "about": {
+    "eyebrow": "About",
+    "title": "About the project",
+    "lead": "Bookeep is a catalog of adapted books in English and Finnish. There are no lessons or exercises here: you open a book and read it in the browser.",
+    "cta": "Open the catalog",
+    "sections": {
+      "purpose": {
+        "title": "Why it exists",
+        "text": "A textbook gives rules and drills. An original novel is often too dense if the language is not yet fluent. Adaptation sits between them: you read a continuous story at a level you can already hold, without a dictionary on every line."
+      },
+      "adaptation": {
+        "title": "What an adapted book is",
+        "text": "It is not a short retelling and not a set of dialogues. It is the full work, with denser grammar, rarer words and long periods brought to a chosen CEFR level. Plot, characters and structure stay. What changes first is the language."
+      },
+      "languages": {
+        "title": "English and Finnish",
+        "text": "Books in the catalog are English and Finnish only. Those are the languages of the texts. The interface can be switched to Finnish, English, Ukrainian or Russian: site labels change, the book stays in the language of the adaptation."
+      },
+      "levels": {
+        "title": "Levels A2 and B1",
+        "text": "Each title has a level. A2 is clearer and shorter. B1 sits closer to ordinary fiction, but is still written with a language learner in mind. Take what you can read calmly."
+      },
+      "reading": {
+        "title": "How reading works",
+        "text": "In the catalog you can filter by language and level. The book opens on the site: pages, zoom, light or dark paper. Reading works without an account; the last page stays on this device. Sign in to keep likes, a reading list and history across browsers."
+      }
+    }
+  },
+  "reader": {
+    "back": "Back",
+    "titleFallback": "Book",
+    "page": "{{current}} / {{total}}",
+    "prev": "Previous page",
+    "next": "Next page",
+    "zoomOut": "Zoom out",
+    "zoomIn": "Zoom in",
+    "fullscreen": "Full screen",
+    "exitFullscreen": "Exit full screen",
+    "paperDark": "Dark pages",
+    "paperLight": "Light pages",
+    "dim": "Page brightness",
+    "skipToPage": "Skip to page",
+    "error": "Could not open",
+    "errorHint": "The file did not load. Save it for offline, or check the connection.",
+    "missing": "No file yet",
+    "missingHint": "This book is not in the reader yet."
+  },
+  "notFound": {
+    "eyebrow": "Error 404",
+    "title": "Page not found",
+    "subtitle": "The link may be outdated, or the book has not been published yet.",
+    "home": "Go home",
+    "catalog": "Browse books"
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Get in touch",
+    "lead": "Write about a partnership, a question, or a bug. The form sends the message to the matching inbox.",
+    "channels": {
+      "partner": {
+        "title": "Partnerships",
+        "text": "Publishing, adaptation, or other collaboration with Bookeep and WEISEZAHOY."
+      },
+      "admin": {
+        "title": "Questions and bugs",
+        "text": "If something on the site is broken, or you need help with the catalog."
+      }
+    },
+    "form": {
+      "topic": "What is this about?",
+      "topicHint": "This message will go to {{email}}.",
+      "topics": {
+        "partnership": "Partnership / collaboration",
+        "question": "A question",
+        "bug": "I found a bug"
+      },
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "consent": "I agree to the processing of this message as described in the <privacy>privacy policy</privacy>.",
+      "submit": "Send",
+      "sending": "Sending…",
+      "success": "Message sent. We will reply to the email you left.",
+      "error": "The message could not be sent. Try again, or write to the address above.",
+      "invalid": "Please fill in the name, a valid email, a message, and the consent checkbox."
+    }
+  },
+  "privacy": {
+    "eyebrow": "Legal",
+    "title": "Privacy policy",
+    "lead": "This page explains what Bookeep stores, what the contact form sends, and how to reach us about personal data.",
+    "sections": {
+      "who": {
+        "title": "Who we are",
+        "text": "Bookeep is a catalog of adapted books run by the WEISEZAHOY studio. For privacy requests write to <mail>{{email}}</mail>."
+      },
+      "data": {
+        "title": "What we process",
+        "text": "Theme and language stay on this device. If you sign in, we store your email (and Google name if you use Google), likes, planned books and reading progress in Supabase. Administrators have a separate catalog login. Hosting is on Hostinger; book files and the catalog sit in Supabase storage and database."
+      },
+      "account": {
+        "title": "Accounts",
+        "text": "You can create an email account or sign in with Google. Likes, the reading list and history belong to that account. Sign-out does not delete them. To delete an account, write to <mail>{{email}}</mail>."
+      },
+      "form": {
+        "title": "Contact form",
+        "text": "If you send the form, we receive your name, email, topic and message. Partnership notes go to partner@weisezahoy.com. Questions and bug reports go to admin@weisezahoy.com. We use them only to reply."
+      },
+      "local": {
+        "title": "On this device",
+        "text": "Theme, language and guest reading progress are stored in the browser. After you sign in, progress is also saved to your account. Clearing site data removes the local copy."
+      },
+      "sharing": {
+        "title": "Sharing",
+        "text": "We do not sell personal data. Messages may pass through the form delivery service to reach our mailboxes. Hosting and database providers process data only to run the site."
+      },
+      "rights": {
+        "title": "Your rights",
+        "text": "You can ask what we hold from a contact message, ask us to delete it, or object to further use. Write to <mail>{{email}}</mail>. We update this page if the way we handle data changes."
+      }
+    }
+  },
+  "footer": {
+    "tagline": "Adapted books in English and Finnish.",
+    "credit": "The site is developed and maintained by <studio>WEISEZAHOY</studio>."
+  },
+  "admin": {
+    "eyebrow": "Admin",
+    "logout": "Log out",
+    "back": "Back to dashboard",
+    "login": {
+      "title": "Admin sign in",
+      "subtitle": "There is no public registration. Only administrators can enter.",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "error": "Sign in failed. Check the email and password.",
+      "notConfigured": "Supabase is not configured yet. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to .env.",
+      "forbidden": "This account is not an administrator."
+    },
+    "dashboard": {
+      "title": "Books",
+      "add": "Add book",
+      "total": "Total books",
+      "finnish": "Finnish books",
+      "english": "English books",
+      "empty": "No books yet"
+    },
+    "table": {
+      "cover": "Cover",
+      "title": "Title",
+      "language": "Language",
+      "level": "Level",
+      "status": "Status",
+      "created": "Created",
+      "actions": "Actions",
+      "edit": "Edit",
+      "delete": "Delete",
+      "open": "Open"
+    },
+    "status": {
+      "published": "Published",
+      "draft": "Draft"
+    },
+    "form": {
+      "createTitle": "Add book",
+      "editTitle": "Edit book",
+      "titleOriginal": "Original title",
+      "slug": "Slug",
+      "language": "Book language",
+      "level": "Level",
+      "published": "Published",
+      "cover": "Cover image",
+      "pdf": "PDF file",
+      "fileKept": "Current file kept unless you choose a new one",
+      "localizedTitle": "Title",
+      "localizedDescription": "Short description",
+      "create": "Create book",
+      "save": "Save changes",
+      "created": "Book created",
+      "updated": "Book updated",
+      "error": "Could not save the book",
+      "titleRequired": "Original title is required",
+      "coverRequired": "A cover image is required",
+      "pdfRequired": "A PDF file is required"
+    },
+    "upload": {
+      "drop": "Drop a file here",
+      "orBrowse": "or click to browse",
+      "uploading": "Uploading…",
+      "ready": "File ready to upload",
+      "coverInvalid": "Cover must be JPG, PNG or WebP",
+      "pdfInvalid": "Only PDF files are allowed"
+    },
+    "delete": {
+      "title": "Delete this book?",
+      "body": "“{{title}}” will be removed from the catalog. This cannot be undone.",
+      "confirm": "Delete",
+      "cancel": "Cancel",
+      "success": "Book deleted",
+      "error": "Could not delete the book"
+    }
+  },
+  "auth": {
+    "loginTitle": "Sign in",
+    "loginLead": "Use Google or your Bookeep email to keep likes, a reading list and history.",
+    "loginSubmit": "Sign in",
+    "loginError": "Sign in failed. Check the email and password.",
+    "registerTitle": "Create an account",
+    "registerLead": "An email account or Google is enough. You can then like books and plan what to read.",
+    "registerSubmit": "Create account",
+    "registerError": "Could not create the account. Try another email.",
+    "registerLink": "Create an account",
+    "loginLink": "Sign in",
+    "noAccount": "No account yet?",
+    "hasAccount": "Already have an account?",
+    "email": "Email",
+    "password": "Password",
+    "passwordHint": "At least 6 characters.",
+    "google": "Continue with Google",
+    "googleError": "Google sign-in did not start. Try again.",
+    "or": "or",
+    "checkEmail": "Check your inbox and open the confirmation link.",
+    "notConfigured": "Sign-in is not configured on this site yet.",
+    "signOut": "Sign out",
+    "account": "Account",
+    "callback": "Signing you in…",
+    "callbackError": "Could not finish sign-in.",
+    "forgotPassword": "Forgot password?",
+    "forgotTitle": "Reset password",
+    "forgotLead": "We will send a link to your email. Open it on this phone to choose a new password.",
+    "forgotSubmit": "Send reset link",
+    "forgotSent": "Check your inbox and open the link on this phone.",
+    "forgotError": "Could not send the reset email.",
+    "forgotNeedEmail": "Enter your email first.",
+    "newPasswordTitle": "New password",
+    "newPasswordLead": "Choose a password for this account.",
+    "newPasswordSubmit": "Save password",
+    "newPasswordError": "Could not save the password.",
+    "newPasswordDone": "Password updated.",
+    "changePassword": "Change password"
+  },
+  "more": {
+    "tab": "More",
+    "title": "More",
+    "lead": "About the project, contacts, privacy and your account.",
+    "account": "Account",
+    "accountHint": "Sign in to keep likes, a reading list and history."
+  },
+  "library": {
+    "title": "My books",
+    "eyebrow": "Library",
+    "hello": "Signed in as {{name}}.",
+    "liked": "Liked",
+    "likedEmpty": "No liked books yet.",
+    "planned": "Plan to read",
+    "plannedEmpty": "Nothing on the reading list yet.",
+    "history": "Reading history",
+    "historyEmpty": "Open a book and the last titles will appear here.",
+    "like": "Like",
+    "unlike": "Liked",
+    "plan": "Plan to read",
+    "unplan": "On the list",
+    "error": "Could not update the library.",
+    "guestTitle": "Sign in to keep your library",
+    "guestHint": "Likes, the reading list and history follow your account.",
+    "toCatalog": "Open the catalog"
+  }
+}

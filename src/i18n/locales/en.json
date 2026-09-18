@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "BookKeep",
+    "appName": "Bookeep",
     "themeLight": "Switch to light theme",
     "themeDark": "Switch to dark theme",
     "language": "Interface language",
@@ -11,9 +11,9 @@
     "skipToContent": "Skip to content"
   },
   "seo": {
-    "title": "BookKeep — adapted books in English and Finnish",
+    "title": "Bookeep — adapted books in English and Finnish",
     "description": "A catalog of adapted books in English and Finnish. Titles are rewritten for A2–B1 readers while the story stays intact.",
-    "keywords": "BookKeep, adapted books, English, Finnish, A2, B1, language reading"
+    "keywords": "Bookeep, adapted books, English, Finnish, A2, B1, language reading"
   },
   "nav": {
     "primary": "Primary navigation",
@@ -30,7 +30,7 @@
     "line1": "Adapted",
     "line2": "English",
     "line3": "& Finnish",
-    "subtitle": "BookKeep is a catalog of English and Finnish books prepared for language learners. The plot stays; the language becomes clearer.",
+    "subtitle": "Bookeep is a catalog of English and Finnish books prepared for language learners. The plot stays; the language becomes clearer.",
     "ctaPrimary": "Open the catalog",
     "featuredTitle": "In the catalog",
     "featuredSubtitle": "Adapted books in English and Finnish. Filter by language and level if you want.",
@@ -77,6 +77,7 @@
     "continueReading": "Continue",
     "download": "Download PDF",
     "downloading": "Downloading…",
+    "openInApp": "Open in app",
     "continueFrom": "from page {{page}}",
     "pages": "{{current}} / {{total}} pages",
     "completed": "{{percent}}% completed",
@@ -92,7 +93,7 @@
   "about": {
     "eyebrow": "About",
     "title": "About the project",
-    "lead": "BookKeep is a catalog of adapted books in English and Finnish. There are no lessons or exercises here: you open a book and read it in the browser.",
+    "lead": "Bookeep is a catalog of adapted books in English and Finnish. There are no lessons or exercises here: you open a book and read it in the browser.",
     "cta": "Open the catalog",
     "sections": {
       "purpose": {
@@ -149,7 +150,7 @@
     "channels": {
       "partner": {
         "title": "Partnerships",
-        "text": "Publishing, adaptation, or other collaboration with BookKeep and WEISEZAHOY."
+        "text": "Publishing, adaptation, or other collaboration with Bookeep and WEISEZAHOY."
       },
       "admin": {
         "title": "Questions and bugs",
@@ -178,11 +179,11 @@
   "privacy": {
     "eyebrow": "Legal",
     "title": "Privacy policy",
-    "lead": "This page explains what BookKeep stores, what the contact form sends, and how to reach us about personal data.",
+    "lead": "This page explains what Bookeep stores, what the contact form sends, and how to reach us about personal data.",
     "sections": {
       "who": {
         "title": "Who we are",
-        "text": "BookKeep is a catalog of adapted books run by the WEISEZAHOY studio. For privacy requests write to <mail>{{email}}</mail>."
+        "text": "Bookeep is a catalog of adapted books run by the WEISEZAHOY studio. For privacy requests write to <mail>{{email}}</mail>."
       },
       "data": {
         "title": "What we process",
@@ -293,7 +294,7 @@
   },
   "auth": {
     "loginTitle": "Sign in",
-    "loginLead": "Use Google or your BookKeep email to keep likes, a reading list and history.",
+    "loginLead": "Use Google or your Bookeep email to keep likes, a reading list and history.",
     "loginSubmit": "Sign in",
     "loginError": "Sign in failed. Check the email and password.",
     "registerTitle": "Create an account",

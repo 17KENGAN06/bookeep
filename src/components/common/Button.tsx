@@ -68,3 +68,21 @@ export function ButtonLink({ to, variant = 'primary', className, children }: But
     </Link>
   );
 }
+
+export function ButtonAnchor({
+  href,
+  variant = 'secondary',
+  className,
+  children,
+}: {
+  href: string;
+  variant?: ButtonVariant;
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <a href={href} className={buttonClassName(variant, className)}>
+      {children}
+    </a>
+  );
+}

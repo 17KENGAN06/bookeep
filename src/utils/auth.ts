@@ -1,4 +1,4 @@
-export const AUTH_NEXT_KEY = 'bookkeep_auth_next';
+export const AUTH_NEXT_KEY = 'bookeep_auth_next';
 
 export function safeNextPath(value: string | null | undefined) {
   if (!value || !value.startsWith('/') || value.startsWith('//')) return '/library';

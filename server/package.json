@@ -1,5 +1,5 @@
 {
-  "name": "bookkeep-server",
+  "name": "bookeep-server",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -9,7 +9,7 @@
     "start": "node dist/index.js"
   },
   "dependencies": {
-    "bookkeep": "file:..",
+    "bookeep": "file:..",
     "cors": "^2.8.5",
     "express": "^5.2.1",
     "helmet": "^8.3.0"

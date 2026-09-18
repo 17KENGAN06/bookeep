@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "BookKeep",
+    "appName": "Bookeep",
     "themeLight": "Vaihda vaaleaan teemaan",
     "themeDark": "Vaihda tummaan teemaan",
     "language": "Käyttöliittymän kieli",
@@ -11,9 +11,9 @@
     "skipToContent": "Siirry sisältöön"
   },
   "seo": {
-    "title": "BookKeep — mukautettuja kirjoja englanniksi ja suomeksi",
+    "title": "Bookeep — mukautettuja kirjoja englanniksi ja suomeksi",
     "description": "Luettelo mukautetuista kirjoista englanniksi ja suomeksi. Teokset on valmisteltu A2–B1-lukijoille, juoni säilyy.",
-    "keywords": "BookKeep, mukautetut kirjat, englanti, suomi, A2, B1, kielenoppiminen"
+    "keywords": "Bookeep, mukautetut kirjat, englanti, suomi, A2, B1, kielenoppiminen"
   },
   "nav": {
     "primary": "Päävalikko",
@@ -30,7 +30,7 @@
     "line1": "Mukautettuja",
     "line2": "kirjoja",
     "line3": "EN ja FI",
-    "subtitle": "BookKeep on luettelo englannin- ja suomenkielisistä teoksista kielenoppijoille. Juoni säilyy, kieli selkenee.",
+    "subtitle": "Bookeep on luettelo englannin- ja suomenkielisistä teoksista kielenoppijoille. Juoni säilyy, kieli selkenee.",
     "ctaPrimary": "Avaa luettelo",
     "featuredTitle": "Luettelossa",
     "featuredSubtitle": "Mukautettuja kirjoja englanniksi ja suomeksi. Voit suodattaa kielen ja tason.",
@@ -77,6 +77,7 @@
     "continueReading": "Jatka",
     "download": "Lataa PDF",
     "downloading": "Ladataan…",
+    "openInApp": "Avaa sovelluksessa",
     "continueFrom": "sivulta {{page}}",
     "pages": "{{current}} / {{total}} sivua",
     "completed": "{{percent}} % luettu",
@@ -92,7 +93,7 @@
   "about": {
     "eyebrow": "Tietoa",
     "title": "Tietoa hankkeesta",
-    "lead": "BookKeep on luettelo mukautetuista kirjoista englanniksi ja suomeksi. Täällä ei ole oppitunteja eikä harjoituksia: avaat kirjan ja luet sen selaimessa.",
+    "lead": "Bookeep on luettelo mukautetuista kirjoista englanniksi ja suomeksi. Täällä ei ole oppitunteja eikä harjoituksia: avaat kirjan ja luet sen selaimessa.",
     "cta": "Avaa luettelo",
     "sections": {
       "purpose": {
@@ -149,7 +150,7 @@
     "channels": {
       "partner": {
         "title": "Yhteistyö",
-        "text": "Kustannus, mukautus tai muu yhteistyö BookKeepin ja WEISEZAHOYn kanssa."
+        "text": "Kustannus, mukautus tai muu yhteistyö Bookeepin ja WEISEZAHOYn kanssa."
       },
       "admin": {
         "title": "Kysymykset ja virheet",
@@ -178,11 +179,11 @@
   "privacy": {
     "eyebrow": "Ehdot",
     "title": "Tietosuoja",
-    "lead": "Tällä sivulla kerrotaan, mitä BookKeep tallentaa, mitä yhteydenottolomake lähettää ja miten meihin saa yhteyden henkilötiedoista.",
+    "lead": "Tällä sivulla kerrotaan, mitä Bookeep tallentaa, mitä yhteydenottolomake lähettää ja miten meihin saa yhteyden henkilötiedoista.",
     "sections": {
       "who": {
         "title": "Kuka me olemme",
-        "text": "BookKeep on WEISEZAHOY-studion mukautettujen kirjojen luettelo. Tietosuoja-asioissa kirjoita osoitteeseen <mail>{{email}}</mail>."
+        "text": "Bookeep on WEISEZAHOY-studion mukautettujen kirjojen luettelo. Tietosuoja-asioissa kirjoita osoitteeseen <mail>{{email}}</mail>."
       },
       "data": {
         "title": "Mitä käsittelemme",
@@ -293,7 +294,7 @@
   },
   "auth": {
     "loginTitle": "Kirjaudu",
-    "loginLead": "Käytä Googlea tai BookKeep-sähköpostia, jotta tykkäykset, lukulista ja historia säilyvät.",
+    "loginLead": "Käytä Googlea tai Bookeep-sähköpostia, jotta tykkäykset, lukulista ja historia säilyvät.",
     "loginSubmit": "Kirjaudu",
     "loginError": "Kirjautuminen epäonnistui. Tarkista sähköposti ja salasana.",
     "registerTitle": "Luo tili",

@@ -26,7 +26,7 @@ export async function sendContactMessage(payload: ContactPayload) {
       email: payload.email,
       message: payload.message,
       topic: payload.topic,
-      _subject: `BookKeep · ${payload.topic}`,
+      _subject: `Bookeep · ${payload.topic}`,
       _template: 'table',
       _captcha: 'false',
       _honey: payload.company ?? '',

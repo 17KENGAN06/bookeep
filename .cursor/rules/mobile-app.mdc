@@ -1,0 +1,45 @@
+---
+description: Bookeep one-repo web + Expo iOS/Android plan. Follow one step at a time.
+alwaysApply: true
+---
+
+# Bookeep: web + iOS + Android in one repo
+
+Use this when the user wants the mobile app, or says «делай», «следующий шаг», «продолжай» in the mobile context.
+
+## Product (do not reopen)
+
+- Same product as the site: adapted EN/FI books, levels A2–B1 only.
+- Same Supabase project (auth, books, favorites, planned_books, reading_progress).
+- No LMS, no How it works, no B2/C2.
+- No service-role key in any client (web or app).
+- Catalog admin stays **web-only** (`/admin`). The app is for readers.
+- Do not commit or push unless the user asks (выкладывай / делай / коммить).
+
+## Repo layout (keep Hostinger working)
+
+- Web stays at the **repo root** (`npm run build` → Vite `dist`). Do not move the site into `apps/web` until Hostinger is explicitly updated.
+- Mobile lives in **`mobile/`** (Expo, TypeScript). One app → Android + iOS.
+- Shared logic later in **`packages/shared`** (types, Supabase helpers, i18n JSON). Do not extract a monorepo on step 1.
+- Stack: Expo (React Native), not Flutter, not a Capacitor wrap of the website.
+
+## How to execute
+
+- Do **exactly one numbered step** per request, then stop and say what to check.
+- Do not skip ahead, do not “also add” the next step.
+- After each step: local verify (Expo) and confirm the **web build still works**.
+- Google OAuth for the app needs extra redirect URLs in Supabase **and** Google Cloud. Never overwrite the existing web callback `https://tgnkudihalepjobqmukr.supabase.co/auth/v1/callback`.
+
+## Steps (current = first not done)
+
+1. Scaffold `mobile/` Expo app (dev client / Expo Go), README how to run, root `package.json` scripts `dev:mobile` without breaking `npm run build`.
+2. Wire the **same** Supabase URL + anon key into the app. Catalog of published books on a simple home screen.
+3. Auth: email/password + Google (Expo PKCE / `expo-auth-session`). Reuse web account. Library empty state if logged out.
+4. Library: likes, plan-to-read, reading history — same tables as the site.
+5. Native PDF reader (pages, progress upsert). No web `react-pdf` in the app.
+6. i18n FI/EN/UK/RU from the same locale keys where possible; theme light/dark.
+7. App name, icon, splash, scheme `bookeep://`. EAS Build profiles (preview + production).
+8. Store listing prep: Privacy copy, TestFlight + Play internal testing. Only when the user asks for store submit.
+
+Current step: **8**.
+When a step is done, update this “Current step” line to the next number.

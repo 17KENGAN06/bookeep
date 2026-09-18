@@ -1,0 +1,78 @@
+{
+  "expo": {
+    "name": "Bookeep",
+    "slug": "bookeep",
+    "scheme": "bookeep",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "primaryColor": "#2E7D66",
+    "ios": {
+      "bundleIdentifier": "cloud.bookeep.app",
+      "supportsTablet": true,
+      "associatedDomains": [
+        "applinks:bookeep.cloud"
+      ]
+    },
+    "android": {
+      "package": "cloud.bookeep.app",
+      "versionCode": 1,
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": false,
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ],
+          "data": [
+            {
+              "scheme": "https",
+              "host": "bookeep.cloud",
+              "pathPrefix": "/books"
+            },
+            {
+              "scheme": "https",
+              "host": "bookeep.cloud",
+              "pathPrefix": "/read"
+            }
+          ]
+        }
+      ],
+      "adaptiveIcon": {
+        "backgroundColor": "#F7FAF8",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-web-browser",
+      "expo-localization",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 180,
+          "backgroundColor": "#F7FAF8",
+          "dark": {
+            "image": "./assets/splash-icon.png",
+            "backgroundColor": "#081F19"
+          }
+        }
+      ],
+      "expo-asset"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "1da503a2-4241-42ec-8c5f-a3dc5ec34c5d"
+      }
+    },
+    "owner": "17kengan06"
+  }
+}

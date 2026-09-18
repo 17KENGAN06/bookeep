@@ -1,6 +1,6 @@
 {
-  "name": "BookKeep",
-  "short_name": "BookKeep",
+  "name": "Bookeep",
+  "short_name": "Bookeep",
   "description": "Adapted English and Finnish books for language learners.",
   "start_url": "/",
   "display": "standalone",

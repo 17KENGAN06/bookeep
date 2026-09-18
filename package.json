@@ -1,11 +1,12 @@
 {
-  "name": "bookkeep",
+  "name": "bookeep",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host --port 5173",
     "dev:client": "vite --host --port 5173",
+    "dev:mobile": "npm start --prefix mobile",
     "dev:server": "npm run dev --prefix server",
     "dev:all": "concurrently -n client,server -c green,blue \"npm run dev:client\" \"npm run dev:server\"",
     "build": "tsc -b && vite build",

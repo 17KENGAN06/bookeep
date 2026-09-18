@@ -25,7 +25,7 @@ function pdfWorkerPlugin(): Plugin {
   const publicDir = resolve(fileURLToPath(new URL('./public', import.meta.url)));
   const outDir = resolve(fileURLToPath(new URL('./dist', import.meta.url)));
   return {
-    name: 'bookkeep-pdf-worker',
+    name: 'bookeep-pdf-worker',
     buildStart() {
       copyPdfWorker(publicDir);
     },
@@ -37,7 +37,7 @@ function pdfWorkerPlugin(): Plugin {
 
 function seoSiteUrlPlugin(origin: string): Plugin {
   return {
-    name: 'bookkeep-seo-site-url',
+    name: 'bookeep-seo-site-url',
     transformIndexHtml(html) {
       return applySiteUrl(html, origin);
     },
