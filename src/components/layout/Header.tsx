@@ -52,6 +52,7 @@ export function Header() {
     };
   }, [open]);
 
+  const goalsTo = user ? '/goals' : '/login?next=/goals';
   const accountClassName =
     'focus-ring inline-flex min-h-10 items-center rounded-xl px-3 text-sm font-semibold text-muted transition hover:bg-surface hover:text-ink';
 
@@ -83,7 +84,7 @@ export function Header() {
 
         <div className="flex items-center gap-2">
           <Link
-            to="/goals"
+            to={goalsTo}
             className="focus-ring inline-flex min-h-10 items-center rounded-xl bg-accent px-3 text-sm font-semibold text-on-accent transition hover:bg-accent-hover"
           >
             {t('nav.goals')}
@@ -139,7 +140,7 @@ export function Header() {
               </Link>
             ))}
             <Link
-              to="/goals"
+              to={goalsTo}
               onClick={() => setOpen(false)}
               className="focus-ring rounded-xl bg-accent px-3 py-3 text-base font-semibold text-on-accent"
             >

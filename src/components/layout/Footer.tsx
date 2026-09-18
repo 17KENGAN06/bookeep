@@ -3,6 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { BrandLockup } from '@/components/brand/BrandLockup';
 import { Container } from '@/components/common/Container';
 import { ADMIN_EMAIL, PARTNER_EMAIL } from '@/config/contact';
+import { useAuth } from '@/hooks/useAuth';
 import { scrollToPageTop } from '@/utils/scroll';
 
 const STUDIO_URL = 'http://weisezahoy.com/';
@@ -11,7 +12,9 @@ const linkClass = 'focus-ring rounded-md text-ink hover:text-accent';
 
 export function Footer() {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const year = new Date().getFullYear();
+  const goalsTo = user ? '/goals' : '/login?next=/goals';
 
   return (
     <footer className="relative z-10 mt-16 border-t border-line">
@@ -33,7 +36,7 @@ export function Footer() {
               <Link to="/library" className={linkClass}>
                 {t('nav.library')}
               </Link>
-              <Link to="/goals" className={linkClass}>
+              <Link to={goalsTo} className={linkClass}>
                 {t('nav.goals')}
               </Link>
               <Link to="/about" className={linkClass}>

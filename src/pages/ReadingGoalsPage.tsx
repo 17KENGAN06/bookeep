@@ -1,10 +1,9 @@
 import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { GoalEditor } from '@/components/goals/GoalEditor';
 import { GoalsCalendar } from '@/components/goals/GoalsCalendar';
-import { ButtonLink } from '@/components/common/Button';
 import { Container } from '@/components/common/Container';
 import { DocumentTitle } from '@/components/common/DocumentTitle';
 import { ErrorState } from '@/components/common/ErrorState';
@@ -16,7 +15,6 @@ import { monthTitle, shiftMonth } from '@/utils/dates';
 
 export function ReadingGoalsPage() {
   const { t, i18n } = useTranslation();
-  const navigate = useNavigate();
   const { user, isLoading } = useAuth();
   const [year, setYear] = useState(() => new Date().getFullYear());
   const [month, setMonth] = useState(() => new Date().getMonth());
@@ -34,15 +32,8 @@ export function ReadingGoalsPage() {
     setMonth(next.month);
   }
 
-  function onSelect(day: DayReadingState) {
-    if (!user) {
-      navigate('/login?next=/goals');
-      return;
-    }
-    setSelected(day);
-  }
-
   if (isLoading) return <div className="min-h-[40vh]" />;
+  if (!user) return <Navigate to="/login?next=/goals" replace />;
 
   return (
     <Container className="py-10 sm:py-14">
@@ -87,21 +78,6 @@ export function ReadingGoalsPage() {
         </div>
       </div>
 
-      {!user ? (
-        <div className="mt-8 flex flex-col gap-4 rounded-2xl border border-line bg-surface px-5 py-5 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="font-display text-base font-semibold text-ink">{t('goals.guestTitle')}</p>
-            <p className="mt-1 text-sm text-muted">{t('goals.guestHint')}</p>
-          </div>
-          <div className="flex flex-col gap-2 sm:flex-row">
-            <ButtonLink to="/login?next=/goals">{t('auth.loginSubmit')}</ButtonLink>
-            <ButtonLink to="/register?next=/goals" variant="secondary">
-              {t('auth.registerSubmit')}
-            </ButtonLink>
-          </div>
-        </div>
-      ) : null}
-
       <p className="font-display mt-8 text-lg font-semibold text-ink sm:text-xl">{monthTitle(year, month, i18n.resolvedLanguage ?? 'en')}</p>
 
       <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -117,11 +93,11 @@ export function ReadingGoalsPage() {
         ) : status === 'error' ? (
           <ErrorState onRetry={() => void reload()} />
         ) : (
-          <GoalsCalendar year={year} month={month} today={today} days={days} onSelect={onSelect} />
+          <GoalsCalendar year={year} month={month} today={today} days={days} onSelect={setSelected} />
         )}
       </div>
 
-      {user && selected ? (
+      {selected ? (
         <GoalEditor
           key={selected.date}
           date={selected.date}

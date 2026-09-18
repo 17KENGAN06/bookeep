@@ -4,9 +4,12 @@ import { ButtonLink } from '@/components/common/Button';
 import { Container } from '@/components/common/Container';
 import { Reveal } from '@/components/common/Reveal';
 import { HeroVisual } from '@/components/home/HeroVisual';
+import { useAuth } from '@/hooks/useAuth';
 
 export function Hero() {
   const { t } = useTranslation();
+  const { user } = useAuth();
+  const goalsTo = user ? '/goals' : '/login?next=/goals';
 
   return (
     <section className="relative overflow-x-clip pt-8 pb-12 sm:pt-12 sm:pb-20 lg:pt-16 lg:pb-24">
@@ -48,7 +51,7 @@ export function Hero() {
                   {t('home.ctaPrimary')}
                   <ArrowRight className="h-4 w-4" aria-hidden />
                 </ButtonLink>
-                <ButtonLink to="/goals" variant="secondary" className="w-full min-w-44 sm:w-auto">
+                <ButtonLink to={goalsTo} variant="secondary" className="w-full min-w-44 sm:w-auto">
                   {t('home.ctaGoals')}
                 </ButtonLink>
               </div>
