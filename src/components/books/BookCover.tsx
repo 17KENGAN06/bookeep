@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Book } from '@/types/book';
 import { getLocalizedTitle } from '@/utils/bookCopy';
@@ -16,6 +16,11 @@ function paletteFor(slug: string) {
   return palettes[total % palettes.length] ?? palettes[0];
 }
 
+function coverSources(book: Book, variant: 'full' | 'card') {
+  const list = variant === 'card' ? [book.thumbnail_path, book.cover_path] : [book.cover_path];
+  return list.filter((value, index): value is string => Boolean(value) && list.indexOf(value) === index);
+}
+
 type BookCoverProps = {
   book: Book;
   className?: string;
@@ -27,42 +32,12 @@ export function BookCover({ book, className, labeled = true, variant = 'full' }:
   const { i18n } = useTranslation();
   const title = getLocalizedTitle(book, i18n.resolvedLanguage ?? 'en');
   const palette = paletteFor(book.slug);
-  const preferred = variant === 'card' ? book.thumbnail_path || book.cover_path : book.cover_path;
-  const fallbackSrc = variant === 'card' && book.thumbnail_path ? book.cover_path : null;
-  const [src, setSrc] = useState<string | null>(preferred);
-  const [failed, setFailed] = useState(false);
-  const [loaded, setLoaded] = useState(false);
+  const sources = coverSources(book, variant);
 
-  useEffect(() => {
-    setSrc(preferred);
-    setFailed(false);
-    setLoaded(false);
-  }, [preferred]);
-
-  if (src && !failed) {
+  if (sources.length > 0) {
     return (
       <div className={cn('relative h-full w-full overflow-hidden bg-elevated', className)}>
-        {loaded ? null : <div className="absolute inset-0 animate-pulse bg-surface-2" />}
-        <img
-          src={src}
-          alt=""
-          loading="lazy"
-          decoding="async"
-          onLoad={() => setLoaded(true)}
-          onError={() => {
-            if (fallbackSrc && src !== fallbackSrc) {
-              setSrc(fallbackSrc);
-              setLoaded(false);
-              return;
-            }
-            setFailed(true);
-          }}
-          className={cn(
-            'h-full w-full object-cover transition-opacity duration-300',
-            variant === 'card' ? 'object-center' : 'object-top',
-            loaded ? 'opacity-100' : 'opacity-0',
-          )}
-        />
+        <CoverImage key={sources.join('|')} sources={sources} variant={variant} />
       </div>
     );
   }
@@ -81,5 +56,31 @@ export function BookCover({ book, className, labeled = true, variant = 'full' }:
         </p>
       ) : null}
     </div>
+  );
+}
+
+function CoverImage({
+  sources,
+  variant,
+}: {
+  sources: string[];
+  variant: 'full' | 'card';
+}) {
+  const [index, setIndex] = useState(0);
+  const src = sources[index];
+
+  if (!src) return null;
+
+  return (
+    <img
+      src={src}
+      alt=""
+      decoding="async"
+      onError={() => setIndex((current) => current + 1)}
+      className={cn(
+        'h-full w-full object-cover',
+        variant === 'card' ? 'object-center' : 'object-top',
+      )}
+    />
   );
 }

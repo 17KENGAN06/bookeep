@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Image, StyleSheet, Text, View, type StyleProp, type ImageStyle, type ViewStyle } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import type { Book } from '../types/book';
@@ -16,6 +16,11 @@ function paletteFor(slug: string) {
   return palettes[total % palettes.length] ?? palettes[0];
 }
 
+function coverSources(book: Book, variant: 'full' | 'card') {
+  const list = variant === 'card' ? [book.thumbnail_path, book.cover_path] : [book.cover_path];
+  return list.filter((value, index): value is string => Boolean(value) && list.indexOf(value) === index);
+}
+
 type BookCoverProps = {
   book: Book;
   style?: StyleProp<ViewStyle & ImageStyle>;
@@ -25,33 +30,12 @@ type BookCoverProps = {
 
 export function BookCover({ book, style, labeled = true, variant = 'full' }: BookCoverProps) {
   const { i18n } = useTranslation();
-  const [failed, setFailed] = useState(false);
-  const [useFallback, setUseFallback] = useState(false);
   const title = getLocalizedTitle(book, i18n.resolvedLanguage ?? i18n.language);
   const palette = paletteFor(book.slug);
-  const preferred = variant === 'card' ? book.thumbnail_path || book.cover_path : book.cover_path;
-  const src = useFallback ? book.cover_path : preferred;
+  const sources = coverSources(book, variant);
 
-  useEffect(() => {
-    setFailed(false);
-    setUseFallback(false);
-  }, [book.id, variant, preferred]);
-
-  if (src && !failed) {
-    return (
-      <Image
-        source={{ uri: src }}
-        style={[styles.cover, style as StyleProp<ImageStyle>]}
-        resizeMode="cover"
-        onError={() => {
-          if (variant === 'card' && book.thumbnail_path && !useFallback && book.cover_path) {
-            setUseFallback(true);
-            return;
-          }
-          setFailed(true);
-        }}
-      />
-    );
+  if (sources.length > 0) {
+    return <CoverImage key={sources.join('|')} sources={sources} style={style} />;
   }
 
   return (
@@ -63,6 +47,28 @@ export function BookCover({ book, style, labeled = true, variant = 'full' }: Boo
         </Text>
       ) : null}
     </View>
+  );
+}
+
+function CoverImage({
+  sources,
+  style,
+}: {
+  sources: string[];
+  style?: StyleProp<ViewStyle & ImageStyle>;
+}) {
+  const [index, setIndex] = useState(0);
+  const src = sources[index];
+
+  if (!src) return null;
+
+  return (
+    <Image
+      source={{ uri: src }}
+      style={[styles.cover, style as StyleProp<ImageStyle>]}
+      resizeMode="cover"
+      onError={() => setIndex((current) => current + 1)}
+    />
   );
 }
 
