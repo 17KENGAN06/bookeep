@@ -31,7 +31,7 @@ export function AdminBookFormPage() {
       .finally(() => setLoading(false));
   }, [id]);
 
-  async function handleSubmit(payload: { draft: BookDraft; cover: File | null; pdf: File | null }) {
+  async function handleSubmit(payload: { draft: BookDraft; cover: File | null; thumbnail: File | null; pdf: File | null }) {
     setSaving(true);
     try {
       if (isEdit && id) {
@@ -40,14 +40,21 @@ export function AdminBookFormPage() {
         await updateBook(id, {
           draft: payload.draft,
           cover: payload.cover,
+          thumbnail: payload.thumbnail,
           pdf: payload.pdf,
           currentCoverPath: book?.cover_path,
+          currentThumbnailPath: book?.thumbnail_path,
           currentPdfPath: book?.pdf_path,
         });
         notify(t('admin.form.updated'));
       } else {
         if (!payload.cover || !payload.pdf) throw new Error('files');
-        await createBook({ draft: payload.draft, cover: payload.cover, pdf: payload.pdf });
+        await createBook({
+          draft: payload.draft,
+          cover: payload.cover,
+          thumbnail: payload.thumbnail,
+          pdf: payload.pdf,
+        });
         notify(t('admin.form.created'));
       }
       navigate('/admin');

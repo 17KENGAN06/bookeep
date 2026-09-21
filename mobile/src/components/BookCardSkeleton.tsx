@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   cover: {
     width: '100%',
-    aspectRatio: 3 / 4,
+    aspectRatio: 16 / 10,
   },
   meta: {
     padding: 12,

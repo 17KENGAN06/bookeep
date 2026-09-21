@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Book } from '@/types/book';
 import { getLocalizedTitle } from '@/utils/bookCopy';
@@ -20,28 +20,46 @@ type BookCoverProps = {
   book: Book;
   className?: string;
   labeled?: boolean;
+  variant?: 'full' | 'card';
 };
 
-export function BookCover({ book, className, labeled = true }: BookCoverProps) {
+export function BookCover({ book, className, labeled = true, variant = 'full' }: BookCoverProps) {
   const { i18n } = useTranslation();
   const title = getLocalizedTitle(book, i18n.resolvedLanguage ?? 'en');
   const palette = paletteFor(book.slug);
+  const preferred = variant === 'card' ? book.thumbnail_path || book.cover_path : book.cover_path;
+  const fallbackSrc = variant === 'card' && book.thumbnail_path ? book.cover_path : null;
+  const [src, setSrc] = useState<string | null>(preferred);
   const [failed, setFailed] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
-  if (book.cover_path && !failed) {
+  useEffect(() => {
+    setSrc(preferred);
+    setFailed(false);
+    setLoaded(false);
+  }, [preferred]);
+
+  if (src && !failed) {
     return (
       <div className={cn('relative h-full w-full overflow-hidden bg-elevated', className)}>
         {loaded ? null : <div className="absolute inset-0 animate-pulse bg-surface-2" />}
         <img
-          src={book.cover_path}
+          src={src}
           alt=""
           loading="lazy"
           decoding="async"
           onLoad={() => setLoaded(true)}
-          onError={() => setFailed(true)}
+          onError={() => {
+            if (fallbackSrc && src !== fallbackSrc) {
+              setSrc(fallbackSrc);
+              setLoaded(false);
+              return;
+            }
+            setFailed(true);
+          }}
           className={cn(
-            'h-full w-full object-cover object-top transition-opacity duration-300',
+            'h-full w-full object-cover transition-opacity duration-300',
+            variant === 'card' ? 'object-center' : 'object-top',
             loaded ? 'opacity-100' : 'opacity-0',
           )}
         />

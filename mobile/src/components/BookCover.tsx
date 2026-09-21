@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View, type StyleProp, type ImageStyle, type ViewStyle } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import type { Book } from '../types/book';
@@ -20,21 +20,36 @@ type BookCoverProps = {
   book: Book;
   style?: StyleProp<ViewStyle & ImageStyle>;
   labeled?: boolean;
+  variant?: 'full' | 'card';
 };
 
-export function BookCover({ book, style, labeled = true }: BookCoverProps) {
+export function BookCover({ book, style, labeled = true, variant = 'full' }: BookCoverProps) {
   const { i18n } = useTranslation();
   const [failed, setFailed] = useState(false);
+  const [useFallback, setUseFallback] = useState(false);
   const title = getLocalizedTitle(book, i18n.resolvedLanguage ?? i18n.language);
   const palette = paletteFor(book.slug);
+  const preferred = variant === 'card' ? book.thumbnail_path || book.cover_path : book.cover_path;
+  const src = useFallback ? book.cover_path : preferred;
 
-  if (book.cover_path && !failed) {
+  useEffect(() => {
+    setFailed(false);
+    setUseFallback(false);
+  }, [book.id, variant, preferred]);
+
+  if (src && !failed) {
     return (
       <Image
-        source={{ uri: book.cover_path }}
+        source={{ uri: src }}
         style={[styles.cover, style as StyleProp<ImageStyle>]}
         resizeMode="cover"
-        onError={() => setFailed(true)}
+        onError={() => {
+          if (variant === 'card' && book.thumbnail_path && !useFallback && book.cover_path) {
+            setUseFallback(true);
+            return;
+          }
+          setFailed(true);
+        }}
       />
     );
   }

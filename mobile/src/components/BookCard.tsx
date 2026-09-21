@@ -28,7 +28,7 @@ export function BookCard({ book }: { book: Book }) {
         ]}
       >
         <View style={[styles.coverBox, { backgroundColor: colors.surface2 }]}>
-          <BookCover book={book} labeled={false} />
+          <BookCover book={book} labeled={false} variant="card" />
         </View>
         <View style={styles.meta}>
           <View style={styles.metaText}>
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   },
   coverBox: {
     width: '100%',
-    aspectRatio: 3 / 4,
+    aspectRatio: 16 / 10,
   },
   meta: {
     flexDirection: 'row',

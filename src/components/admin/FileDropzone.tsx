@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/utils/cn';
 
@@ -7,6 +7,9 @@ type FileDropzoneProps = {
   accept: string;
   file: File | null;
   currentName?: string | null;
+  hint?: string;
+  previewUrl?: string | null;
+  previewClassName?: string;
   error?: string | null;
   uploading?: boolean;
   onFile: (file: File | null) => void;
@@ -18,6 +21,9 @@ export function FileDropzone({
   accept,
   file,
   currentName,
+  hint,
+  previewUrl,
+  previewClassName,
   error,
   uploading,
   onFile,
@@ -26,7 +32,19 @@ export function FileDropzone({
   const { t } = useTranslation();
   const [dragOver, setDragOver] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
+  const [objectUrl, setObjectUrl] = useState<string | null>(null);
   const shownError = error || localError;
+  const shownPreview = objectUrl || previewUrl;
+
+  useEffect(() => {
+    if (!file || !file.type.startsWith('image/')) {
+      setObjectUrl(null);
+      return;
+    }
+    const url = URL.createObjectURL(file);
+    setObjectUrl(url);
+    return () => URL.revokeObjectURL(url);
+  }, [file]);
 
   function takeFile(next: File) {
     const validationError = onValidate(next);
@@ -42,6 +60,12 @@ export function FileDropzone({
   return (
     <div>
       <p className="mb-1.5 text-sm font-semibold text-ink">{label}</p>
+      {hint ? <p className="mb-2 text-xs text-muted">{hint}</p> : null}
+      {shownPreview ? (
+        <div className={cn('mb-3 overflow-hidden rounded-xl border border-line bg-elevated', previewClassName)}>
+          <img src={shownPreview} alt="" className="h-full w-full object-cover" />
+        </div>
+      ) : null}
       <label
         className={cn(
           'focus-within:ring-accent/70 flex min-h-32 cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed px-4 py-6 text-center transition',

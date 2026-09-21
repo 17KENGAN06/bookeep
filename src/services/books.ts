@@ -48,6 +48,7 @@ function mapBook(row: Book): Book {
   return {
     ...row,
     cover_path: getPublicFileUrl(COVER_BUCKET, row.cover_path),
+    thumbnail_path: getPublicFileUrl(COVER_BUCKET, row.thumbnail_path),
     pdf_path: getPublicFileUrl(PDF_BUCKET, row.pdf_path),
     hero_slot: row.hero_slot ?? null,
   };
@@ -193,6 +194,12 @@ export async function uploadCover(bookId: string, file: File) {
   return uploadObject(COVER_BUCKET, path, file);
 }
 
+export async function uploadThumbnail(bookId: string, file: File) {
+  if (!isCoverFile(file)) throw new Error('Invalid thumbnail file');
+  const path = `${bookId}/thumb-${crypto.randomUUID()}.${fileExtension(file, 'jpg')}`;
+  return uploadObject(COVER_BUCKET, path, file);
+}
+
 export async function uploadPdf(bookId: string, file: File) {
   if (!isPdfFile(file)) throw new Error('Invalid PDF file');
   const path = `${bookId}/${crypto.randomUUID()}.pdf`;
@@ -211,6 +218,7 @@ async function removeStoragePath(bucket: string, path: string | null) {
 export async function createBook(input: {
   draft: BookDraft;
   cover: File;
+  thumbnail?: File | null;
   pdf: File;
 }) {
   const supabase = getSupabaseClient();
@@ -219,6 +227,7 @@ export async function createBook(input: {
   const id = crypto.randomUUID();
   const slug = await uniqueSlug(input.draft.slug || input.draft.title_original);
   const coverPath = await uploadCover(id, input.cover);
+  const thumbnailPath = input.thumbnail ? await uploadThumbnail(id, input.thumbnail) : null;
   const pdfPath = await uploadPdf(id, input.pdf);
 
   const { data, error } = await supabase
@@ -228,6 +237,7 @@ export async function createBook(input: {
       ...input.draft,
       slug,
       cover_path: coverPath,
+      thumbnail_path: thumbnailPath,
       pdf_path: pdfPath,
     })
     .select('*')
@@ -235,6 +245,7 @@ export async function createBook(input: {
 
   if (error) {
     await removeStoragePath(COVER_BUCKET, coverPath);
+    await removeStoragePath(COVER_BUCKET, thumbnailPath);
     await removeStoragePath(PDF_BUCKET, pdfPath);
     throw error;
   }
@@ -248,8 +259,10 @@ export async function updateBook(
   input: {
     draft: BookDraft;
     cover?: File | null;
+    thumbnail?: File | null;
     pdf?: File | null;
     currentCoverPath?: string | null;
+    currentThumbnailPath?: string | null;
     currentPdfPath?: string | null;
   },
 ) {
@@ -258,9 +271,11 @@ export async function updateBook(
 
   const slug = await uniqueSlug(input.draft.slug || input.draft.title_original, id);
   let coverPath: string | undefined;
+  let thumbnailPath: string | undefined;
   let pdfPath: string | undefined;
 
   if (input.cover) coverPath = await uploadCover(id, input.cover);
+  if (input.thumbnail) thumbnailPath = await uploadThumbnail(id, input.thumbnail);
   if (input.pdf) pdfPath = await uploadPdf(id, input.pdf);
 
   const { data, error } = await supabase
@@ -269,6 +284,7 @@ export async function updateBook(
       ...input.draft,
       slug,
       ...(coverPath ? { cover_path: coverPath } : {}),
+      ...(thumbnailPath ? { thumbnail_path: thumbnailPath } : {}),
       ...(pdfPath ? { pdf_path: pdfPath } : {}),
     })
     .eq('id', id)
@@ -277,11 +293,15 @@ export async function updateBook(
 
   if (error) {
     if (coverPath) await removeStoragePath(COVER_BUCKET, coverPath);
+    if (thumbnailPath) await removeStoragePath(COVER_BUCKET, thumbnailPath);
     if (pdfPath) await removeStoragePath(PDF_BUCKET, pdfPath);
     throw error;
   }
 
   if (coverPath) await removeStoragePath(COVER_BUCKET, storagePathFromPublicUrl(input.currentCoverPath ?? null, COVER_BUCKET));
+  if (thumbnailPath) {
+    await removeStoragePath(COVER_BUCKET, storagePathFromPublicUrl(input.currentThumbnailPath ?? null, COVER_BUCKET));
+  }
   if (pdfPath) await removeStoragePath(PDF_BUCKET, storagePathFromPublicUrl(input.currentPdfPath ?? null, PDF_BUCKET));
 
   invalidateBooksCache();
@@ -296,8 +316,10 @@ export async function deleteBook(book: Book) {
   if (error) throw error;
 
   const coverPath = storagePathFromPublicUrl(book.cover_path, COVER_BUCKET);
+  const thumbnailPath = storagePathFromPublicUrl(book.thumbnail_path, COVER_BUCKET);
   const pdfPath = storagePathFromPublicUrl(book.pdf_path, PDF_BUCKET);
   await removeStoragePath(COVER_BUCKET, coverPath);
+  await removeStoragePath(COVER_BUCKET, thumbnailPath);
   await removeStoragePath(PDF_BUCKET, pdfPath);
   invalidateBooksCache();
 }

@@ -12,7 +12,7 @@ import { slugify } from '@/utils/slug';
 type BookFormProps = {
   book?: Book | null;
   isSaving: boolean;
-  onSubmit: (payload: { draft: BookDraft; cover: File | null; pdf: File | null }) => void;
+  onSubmit: (payload: { draft: BookDraft; cover: File | null; thumbnail: File | null; pdf: File | null }) => void;
 };
 
 const emptyDraft: BookDraft = {
@@ -57,6 +57,7 @@ export function BookForm({ book, isSaving, onSubmit }: BookFormProps) {
       : emptyDraft,
   );
   const [cover, setCover] = useState<File | null>(null);
+  const [thumbnail, setThumbnail] = useState<File | null>(null);
   const [pdf, setPdf] = useState<File | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
   const isEdit = Boolean(book);
@@ -99,6 +100,7 @@ export function BookForm({ book, isSaving, onSubmit }: BookFormProps) {
             description_ru: nullable(draft.description_ru ?? ''),
           },
           cover,
+          thumbnail,
           pdf,
         });
       }}
@@ -106,10 +108,24 @@ export function BookForm({ book, isSaving, onSubmit }: BookFormProps) {
       <div className="grid gap-6 lg:grid-cols-2">
         <FileDropzone
           label={t('admin.form.cover')}
+          hint={t('admin.form.coverHint')}
           accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
           file={cover}
           currentName={book?.cover_path ? t('admin.form.fileKept') : null}
+          previewUrl={book?.cover_path}
+          previewClassName="h-56 w-40"
           onFile={setCover}
+          onValidate={(file) => (isCoverFile(file) ? null : t('admin.upload.coverInvalid'))}
+        />
+        <FileDropzone
+          label={t('admin.form.thumbnail')}
+          hint={t('admin.form.thumbnailHint')}
+          accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
+          file={thumbnail}
+          currentName={book?.thumbnail_path ? t('admin.form.fileKept') : null}
+          previewUrl={book?.thumbnail_path}
+          previewClassName="h-28 w-full max-w-sm"
+          onFile={setThumbnail}
           onValidate={(file) => (isCoverFile(file) ? null : t('admin.upload.coverInvalid'))}
         />
         <FileDropzone

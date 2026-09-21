@@ -17,6 +17,7 @@ export type Book = {
   language: BookLanguage;
   level: CefrLevel;
   cover_path: string | null;
+  thumbnail_path: string | null;
   pdf_path: string | null;
   page_count: number | null;
   published: boolean;
