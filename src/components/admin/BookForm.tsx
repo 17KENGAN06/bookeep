@@ -107,7 +107,7 @@ export function BookForm({ book, isSaving, onSubmit }: BookFormProps) {
         });
       }}
     >
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid items-stretch gap-6 lg:grid-cols-2">
         <FileDropzone
           label={t('admin.form.cover')}
           hint={t('admin.form.coverHint')}
@@ -115,7 +115,7 @@ export function BookForm({ book, isSaving, onSubmit }: BookFormProps) {
           file={cover}
           currentName={book?.cover_path ? t('admin.form.fileKept') : null}
           previewUrl={book?.cover_path}
-          previewClassName="h-56 w-40"
+          previewFit="contain"
           onFile={setCover}
           onValidate={(file) => (isCoverFile(file) ? null : t('admin.upload.coverInvalid'))}
         />
@@ -126,18 +126,20 @@ export function BookForm({ book, isSaving, onSubmit }: BookFormProps) {
           file={thumbnail}
           currentName={book?.thumbnail_path ? t('admin.form.fileKept') : null}
           previewUrl={book?.thumbnail_path}
-          previewClassName="h-28 w-full max-w-sm"
+          previewFit="cover"
           onFile={setThumbnail}
           onValidate={(file) => (isCoverFile(file) ? null : t('admin.upload.coverInvalid'))}
         />
-        <FileDropzone
-          label={t('admin.form.pdf')}
-          accept="application/pdf,.pdf"
-          file={pdf}
-          currentName={book?.pdf_path ? t('admin.form.fileKept') : null}
-          onFile={setPdf}
-          onValidate={(file) => (isPdfFile(file) ? null : t('admin.upload.pdfInvalid'))}
-        />
+        <div className="lg:col-span-2">
+          <FileDropzone
+            label={t('admin.form.pdf')}
+            accept="application/pdf,.pdf"
+            file={pdf}
+            currentName={book?.pdf_path ? t('admin.form.fileKept') : null}
+            onFile={setPdf}
+            onValidate={(file) => (isPdfFile(file) ? null : t('admin.upload.pdfInvalid'))}
+          />
+        </div>
       </div>
 
       <div className="grid gap-5 md:grid-cols-2">

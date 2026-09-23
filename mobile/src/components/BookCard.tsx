@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { AdaptationBadge } from './AdaptationBadge';
 import { BookCover } from './BookCover';
 import { LevelBadge } from './LevelBadge';
 import { LibraryActions } from './LibraryActions';
@@ -29,6 +30,9 @@ export function BookCard({ book }: { book: Book }) {
       >
         <View style={[styles.coverBox, { backgroundColor: colors.surface2 }]}>
           <BookCover book={book} labeled={false} variant="card" />
+          <View style={styles.status}>
+            <AdaptationBadge complete={book.complete} />
+          </View>
         </View>
         <View style={styles.meta}>
           <View style={styles.metaText}>
@@ -36,9 +40,6 @@ export function BookCard({ book }: { book: Book }) {
               {title}
             </Text>
             <Text style={[styles.language, { color: colors.muted }]}>{t(`languages.${book.language}`)}</Text>
-            {book.complete ? null : (
-              <Text style={[styles.progressLabel, { color: colors.accent }]}>{t('book.adaptationInProgress')}</Text>
-            )}
             {percent > 0 ? (
               <View style={styles.progress}>
                 <Text style={[styles.progressLabel, { color: colors.muted }]}>{t('books.progress')}</Text>
@@ -72,6 +73,12 @@ const styles = StyleSheet.create({
   coverBox: {
     width: '100%',
     aspectRatio: 16 / 10,
+    overflow: 'hidden',
+  },
+  status: {
+    position: 'absolute',
+    left: 8,
+    bottom: 8,
   },
   meta: {
     flexDirection: 'row',

@@ -93,6 +93,7 @@
     "description": "Tästä kirjasta",
     "loading": "Ladataan kirjaa...",
     "adaptationComplete": "Valmis",
+    "adaptationCompleteHint": "Sovitus on valmis. Voit lukea sen alusta loppuun.",
     "adaptationInProgress": "Kesken",
     "adaptationInProgressHint": "Tätä sovitusta kirjoitetaan vielä. Lukemisen voi jo aloittaa."
   },

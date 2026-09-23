@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { AdaptationBadge } from '@/components/books/AdaptationBadge';
 import { BookCover } from '@/components/books/BookCover';
 import { LevelBadge } from '@/components/books/LevelBadge';
 import { LibraryActions } from '@/components/books/LibraryActions';
@@ -25,16 +26,16 @@ export function BookCard({ book }: BookCardProps) {
         to={`/books/${book.slug}`}
         className="group focus-ring flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-[var(--app-shadow)] transition duration-200 hover:border-accent/30 motion-safe:hover:-translate-y-0.5"
       >
-        <div className="h-52 overflow-hidden bg-elevated sm:h-56">
+        <div className="relative h-52 overflow-hidden bg-elevated sm:h-56">
           <BookCover book={book} labeled={false} variant="card" className="transition duration-300 motion-safe:group-hover:scale-[1.03]" />
+          <div className="absolute bottom-2 left-2 z-[5]">
+            <AdaptationBadge complete={book.complete} />
+          </div>
         </div>
         <div className="flex flex-1 items-start justify-between gap-3 p-3.5 sm:p-4">
           <div className="min-w-0">
             <h2 className="font-display text-base leading-snug font-semibold text-ink">{title}</h2>
             <p className="mt-1 text-sm text-muted">{t(`languages.${book.language}`)}</p>
-            {book.complete ? null : (
-              <p className="mt-1 text-xs font-semibold text-accent">{t('book.adaptationInProgress')}</p>
-            )}
           </div>
           <LevelBadge level={book.level} />
         </div>

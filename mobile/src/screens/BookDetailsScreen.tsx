@@ -59,12 +59,14 @@ export function BookDetailsScreen() {
         <View style={isWide ? styles.heroRow : undefined}>
           <View style={[styles.coverBox, { borderColor: colors.line, backgroundColor: colors.surface2 }, isWide && styles.coverWide]}>
             <BookCover book={book} />
+            <View style={styles.coverStatus}>
+              <AdaptationBadge complete={book.complete} />
+            </View>
           </View>
 
           <View style={isWide ? styles.heroCopy : undefined}>
             <View style={[styles.badges, isWide && styles.badgesWide]}>
               <LevelBadge level={book.level} />
-              <AdaptationBadge complete={book.complete} />
               <Text style={[styles.language, { color: colors.muted }]}>{t(`languages.${book.language}`)}</Text>
             </View>
 
@@ -73,10 +75,9 @@ export function BookDetailsScreen() {
               <Text style={[styles.original, { color: colors.muted }]}>{book.title_original}</Text>
             ) : null}
 
+            <AdaptationBadge complete={book.complete} variant="banner" />
+
             {description ? <Text style={[styles.description, { color: colors.muted }]}>{description}</Text> : null}
-            {book.complete ? null : (
-              <Text style={[styles.hint, { color: colors.muted }]}>{t('book.adaptationInProgressHint')}</Text>
-            )}
 
             <Pressable
               style={[styles.primary, isWide && styles.ctaWide, { backgroundColor: colors.accent }]}
@@ -168,6 +169,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
     overflow: 'hidden',
+  },
+  coverStatus: {
+    position: 'absolute',
+    left: 12,
+    bottom: 12,
   },
   heroRow: {
     flexDirection: 'row',

@@ -91,6 +91,7 @@
     "description": "About this book",
     "loading": "Loading book...",
     "adaptationComplete": "Complete",
+    "adaptationCompleteHint": "This adaptation is finished. You can read it from the first page to the last.",
     "adaptationInProgress": "In progress",
     "adaptationInProgressHint": "This adaptation is still being written. You can already start reading."
   },

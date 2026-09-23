@@ -104,9 +104,12 @@ export function BookDetailsPage() {
 
       <div className="mt-8 grid items-start gap-10 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,1fr)] lg:gap-14">
         <Reveal direction="left">
-          <div className="overflow-hidden rounded-3xl border border-line shadow-[var(--app-shadow)]">
+          <div className="relative overflow-hidden rounded-3xl border border-line shadow-[var(--app-shadow)]">
             <div className="aspect-[3/4]">
               <BookCover book={book} />
+            </div>
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-bg/90 via-bg/40 to-transparent p-4">
+              <AdaptationBadge complete={book.complete} />
             </div>
           </div>
         </Reveal>
@@ -115,7 +118,6 @@ export function BookDetailsPage() {
           <div>
           <div className="flex flex-wrap items-center gap-2">
             <LevelBadge level={book.level} />
-            <AdaptationBadge complete={book.complete} />
             <span className="text-sm text-muted">{t(`languages.${book.language}`)}</span>
           </div>
 
@@ -127,11 +129,11 @@ export function BookDetailsPage() {
             <p className="mt-2 text-sm text-muted">{book.title_original}</p>
           ) : null}
 
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted">{description}</p>
+          <div className="mt-6 max-w-2xl">
+            <AdaptationBadge complete={book.complete} variant="banner" />
+          </div>
 
-          {book.complete ? null : (
-            <p className="mt-3 max-w-2xl text-sm text-muted">{t('book.adaptationInProgressHint')}</p>
-          )}
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted">{description}</p>
 
             {hasProgress && progress ? (
               <div className="mt-6 max-w-md">

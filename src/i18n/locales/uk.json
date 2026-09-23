@@ -91,6 +91,7 @@
     "description": "Про цю книгу",
     "loading": "Завантаження книги...",
     "adaptationComplete": "Завершена",
+    "adaptationCompleteHint": "Адаптація готова. Можна читати від початку до кінця.",
     "adaptationInProgress": "У роботі",
     "adaptationInProgressHint": "Адаптацію ще пишуть. Читати вже можна."
   },
