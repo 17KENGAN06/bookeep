@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { supportedLanguages } from '@/i18n';
 import { FileDropzone } from '@/components/admin/FileDropzone';
 import { Button } from '@/components/common/Button';
 import { Field, fieldControlClass } from '@/components/common/Field';
@@ -212,15 +213,15 @@ export function BookForm({ book, isSaving, onSubmit }: BookFormProps) {
       </div>
 
       <div className="grid gap-5 md:grid-cols-2">
-        {(['en', 'fi', 'uk', 'ru'] as const).map((locale) => (
-          <div key={locale} className="space-y-4 rounded-2xl border border-line bg-surface p-4">
-            <p className="text-xs font-semibold tracking-[0.16em] text-muted uppercase">{locale}</p>
+        {supportedLanguages.map((language) => (
+          <div key={language.code} className="space-y-4 rounded-2xl border border-line bg-surface p-4">
+            <p className="text-xs font-semibold tracking-[0.16em] text-muted uppercase">{language.short}</p>
             <Field label={t('admin.form.localizedTitle')}>
               <input
                 className={fieldControlClass}
-                value={draft[`title_${locale}`] ?? ''}
+                value={draft[`title_${language.code}`] ?? ''}
                 onChange={(event) =>
-                  setDraft((current) => ({ ...current, [`title_${locale}`]: event.target.value }))
+                  setDraft((current) => ({ ...current, [`title_${language.code}`]: event.target.value }))
                 }
               />
             </Field>
@@ -228,9 +229,9 @@ export function BookForm({ book, isSaving, onSubmit }: BookFormProps) {
               <textarea
                 rows={4}
                 className={fieldControlClass}
-                value={draft[`description_${locale}`] ?? ''}
+                value={draft[`description_${language.code}`] ?? ''}
                 onChange={(event) =>
-                  setDraft((current) => ({ ...current, [`description_${locale}`]: event.target.value }))
+                  setDraft((current) => ({ ...current, [`description_${language.code}`]: event.target.value }))
                 }
               />
             </Field>
