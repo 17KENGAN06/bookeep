@@ -89,7 +89,10 @@
     "language": "Kieli",
     "level": "Taso",
     "description": "Tästä kirjasta",
-    "loading": "Ladataan kirjaa..."
+    "loading": "Ladataan kirjaa...",
+    "adaptationComplete": "Valmis",
+    "adaptationInProgress": "Kesken",
+    "adaptationInProgressHint": "Tätä sovitusta kirjoitetaan vielä. Lukemisen voi jo aloittaa."
   },
   "languages": {
     "fi": "Suomi",
@@ -266,7 +269,9 @@
     },
     "status": {
       "published": "Julkaistu",
-      "draft": "Luonnos"
+      "draft": "Luonnos",
+      "complete": "Valmis",
+      "inProgress": "Kesken"
     },
     "form": {
       "createTitle": "Lisää kirja",
@@ -276,6 +281,8 @@
       "language": "Kirjan kieli",
       "level": "Taso",
       "published": "Julkaistu",
+      "complete": "Kirja on valmis",
+      "completeHint": "Jos rasti ei ole päällä, lukija näkee että sovitus on vielä kesken. Kirjan voi silti julkaista ja antaa aloittaa lukeminen.",
       "cover": "Kansikuva",
       "coverHint": "Korkea kuva kirjan sivulle. Pystykuva sopii parhaiten.",
       "thumbnail": "Kortin pikkukuva",

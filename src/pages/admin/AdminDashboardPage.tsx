@@ -84,7 +84,10 @@ export function AdminDashboardPage() {
                     <td className="px-4 py-3 text-muted">{t(`languages.${book.language}`)}</td>
                     <td className="px-4 py-3 text-muted">{book.level}</td>
                     <td className="px-4 py-3 text-muted">
-                      {book.published ? t('admin.status.published') : t('admin.status.draft')}
+                      <div>{book.published ? t('admin.status.published') : t('admin.status.draft')}</div>
+                      <div className="text-xs">
+                        {book.complete ? t('admin.status.complete') : t('admin.status.inProgress')}
+                      </div>
                     </td>
                     <td className="px-4 py-3 text-muted">
                       {new Date(book.created_at).toLocaleDateString(i18n.resolvedLanguage)}

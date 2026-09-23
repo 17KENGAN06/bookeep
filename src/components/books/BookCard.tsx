@@ -32,6 +32,9 @@ export function BookCard({ book }: BookCardProps) {
           <div className="min-w-0">
             <h2 className="font-display text-base leading-snug font-semibold text-ink">{title}</h2>
             <p className="mt-1 text-sm text-muted">{t(`languages.${book.language}`)}</p>
+            {book.complete ? null : (
+              <p className="mt-1 text-xs font-semibold text-accent">{t('book.adaptationInProgress')}</p>
+            )}
           </div>
           <LevelBadge level={book.level} />
         </div>

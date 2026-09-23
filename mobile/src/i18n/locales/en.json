@@ -91,7 +91,10 @@
     "language": "Language",
     "level": "Level",
     "description": "About this book",
-    "loading": "Loading book..."
+    "loading": "Loading book...",
+    "adaptationComplete": "Complete",
+    "adaptationInProgress": "In progress",
+    "adaptationInProgressHint": "This adaptation is still being written. You can already start reading."
   },
   "languages": {
     "fi": "Finnish",

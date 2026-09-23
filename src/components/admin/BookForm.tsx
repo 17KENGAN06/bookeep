@@ -28,6 +28,7 @@ const emptyDraft: BookDraft = {
   language: 'fi',
   level: 'A2',
   published: true,
+  complete: false,
 };
 
 function nullable(value: string) {
@@ -52,6 +53,7 @@ export function BookForm({ book, isSaving, onSubmit }: BookFormProps) {
           language: book.language,
           level: book.level,
           published: book.published,
+          complete: book.complete ?? true,
           slug: book.slug,
         }
       : emptyDraft,
@@ -185,14 +187,27 @@ export function BookForm({ book, isSaving, onSubmit }: BookFormProps) {
         </Field>
       </div>
 
-      <label className="inline-flex items-center gap-2 text-sm font-semibold text-ink">
-        <input
-          type="checkbox"
-          checked={draft.published}
-          onChange={(event) => setDraft((current) => ({ ...current, published: event.target.checked }))}
-        />
-        {t('admin.form.published')}
-      </label>
+      <div className="space-y-3">
+        <label className="inline-flex items-center gap-2 text-sm font-semibold text-ink">
+          <input
+            type="checkbox"
+            checked={draft.published}
+            onChange={(event) => setDraft((current) => ({ ...current, published: event.target.checked }))}
+          />
+          {t('admin.form.published')}
+        </label>
+        <div>
+          <label className="inline-flex items-center gap-2 text-sm font-semibold text-ink">
+            <input
+              type="checkbox"
+              checked={draft.complete}
+              onChange={(event) => setDraft((current) => ({ ...current, complete: event.target.checked }))}
+            />
+            {t('admin.form.complete')}
+          </label>
+          <p className="mt-1 max-w-xl text-xs text-muted">{t('admin.form.completeHint')}</p>
+        </div>
+      </div>
 
       <div className="grid gap-5 md:grid-cols-2">
         {(['en', 'fi', 'uk', 'ru'] as const).map((locale) => (

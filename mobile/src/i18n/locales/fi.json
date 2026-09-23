@@ -91,7 +91,10 @@
     "language": "Kieli",
     "level": "Taso",
     "description": "Tästä kirjasta",
-    "loading": "Ladataan kirjaa..."
+    "loading": "Ladataan kirjaa...",
+    "adaptationComplete": "Valmis",
+    "adaptationInProgress": "Kesken",
+    "adaptationInProgressHint": "Tätä sovitusta kirjoitetaan vielä. Lukemisen voi jo aloittaa."
   },
   "languages": {
     "fi": "Suomi",

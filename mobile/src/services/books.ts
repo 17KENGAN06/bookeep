@@ -7,6 +7,7 @@ function mapBook(row: Book): Book {
     cover_path: getPublicFileUrl(COVER_BUCKET, row.cover_path),
     thumbnail_path: getPublicFileUrl(COVER_BUCKET, row.thumbnail_path),
     pdf_path: getPublicFileUrl(PDF_BUCKET, row.pdf_path),
+    complete: row.complete ?? true,
   };
 }
 

@@ -91,7 +91,10 @@
     "language": "Язык",
     "level": "Уровень",
     "description": "Об этой книге",
-    "loading": "Загрузка книги..."
+    "loading": "Загрузка книги...",
+    "adaptationComplete": "Закончена",
+    "adaptationInProgress": "В работе",
+    "adaptationInProgressHint": "Адаптация ещё пишется. Читать уже можно."
   },
   "languages": {
     "fi": "Финский",

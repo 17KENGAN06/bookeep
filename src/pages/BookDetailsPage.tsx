@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Download } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { AdaptationBadge } from '@/components/books/AdaptationBadge';
 import { BookCover } from '@/components/books/BookCover';
 import { LevelBadge } from '@/components/books/LevelBadge';
 import { LibraryActions } from '@/components/books/LibraryActions';
@@ -114,6 +115,7 @@ export function BookDetailsPage() {
           <div>
           <div className="flex flex-wrap items-center gap-2">
             <LevelBadge level={book.level} />
+            <AdaptationBadge complete={book.complete} />
             <span className="text-sm text-muted">{t(`languages.${book.language}`)}</span>
           </div>
 
@@ -126,6 +128,10 @@ export function BookDetailsPage() {
           ) : null}
 
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted">{description}</p>
+
+          {book.complete ? null : (
+            <p className="mt-3 max-w-2xl text-sm text-muted">{t('book.adaptationInProgressHint')}</p>
+          )}
 
             {hasProgress && progress ? (
               <div className="mt-6 max-w-md">

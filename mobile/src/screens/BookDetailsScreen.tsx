@@ -1,6 +1,7 @@
 import { ActivityIndicator, ScrollView, Share, StyleSheet, Pressable, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
+import { AdaptationBadge } from '../components/AdaptationBadge';
 import { BookCover } from '../components/BookCover';
 import { Icon } from '../components/Icon';
 import { LevelBadge } from '../components/LevelBadge';
@@ -63,6 +64,7 @@ export function BookDetailsScreen() {
           <View style={isWide ? styles.heroCopy : undefined}>
             <View style={[styles.badges, isWide && styles.badgesWide]}>
               <LevelBadge level={book.level} />
+              <AdaptationBadge complete={book.complete} />
               <Text style={[styles.language, { color: colors.muted }]}>{t(`languages.${book.language}`)}</Text>
             </View>
 
@@ -72,6 +74,9 @@ export function BookDetailsScreen() {
             ) : null}
 
             {description ? <Text style={[styles.description, { color: colors.muted }]}>{description}</Text> : null}
+            {book.complete ? null : (
+              <Text style={[styles.hint, { color: colors.muted }]}>{t('book.adaptationInProgressHint')}</Text>
+            )}
 
             <Pressable
               style={[styles.primary, isWide && styles.ctaWide, { backgroundColor: colors.accent }]}
@@ -180,6 +185,7 @@ const styles = StyleSheet.create({
   },
   badges: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     alignItems: 'center',
     gap: 10,
     marginTop: 20,

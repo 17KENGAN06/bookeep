@@ -36,6 +36,9 @@ export function BookCard({ book }: { book: Book }) {
               {title}
             </Text>
             <Text style={[styles.language, { color: colors.muted }]}>{t(`languages.${book.language}`)}</Text>
+            {book.complete ? null : (
+              <Text style={[styles.progressLabel, { color: colors.accent }]}>{t('book.adaptationInProgress')}</Text>
+            )}
             {percent > 0 ? (
               <View style={styles.progress}>
                 <Text style={[styles.progressLabel, { color: colors.muted }]}>{t('books.progress')}</Text>
