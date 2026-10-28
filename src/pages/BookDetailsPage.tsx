@@ -102,11 +102,11 @@ export function BookDetailsPage() {
         {t('book.backToCatalog')}
       </Link>
 
-      <div className="mt-8 grid items-start gap-10 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,1fr)] lg:gap-14">
+      <div className="mt-6 grid items-start gap-8 sm:mt-8 md:grid-cols-[minmax(0,0.42fr)_minmax(0,1fr)] md:gap-8 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,1fr)] lg:gap-14">
         <Reveal direction="left">
-          <div className="relative overflow-hidden rounded-3xl border border-line shadow-[var(--app-shadow)]">
+          <div className="relative mx-auto w-full max-w-[17rem] overflow-hidden rounded-3xl border border-line shadow-[var(--app-shadow)] sm:max-w-xs md:max-w-none">
             <div className="aspect-[3/4]">
-              <BookCover book={book} />
+              <BookCover book={book} labeled={false} />
             </div>
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-bg/90 via-bg/40 to-transparent p-4">
               <AdaptationBadge complete={book.complete} />
@@ -121,7 +121,7 @@ export function BookDetailsPage() {
             <span className="text-sm text-muted">{t(`languages.${book.language}`)}</span>
           </div>
 
-          <h1 className="font-display mt-4 text-3xl font-bold tracking-tight text-balance break-words text-ink sm:text-5xl">
+          <h1 className="font-display mt-4 text-3xl font-bold tracking-tight text-balance break-words text-ink sm:text-4xl lg:text-5xl">
             {title}
           </h1>
 

@@ -11,7 +11,7 @@ type BookGridProps = {
 export function BookGrid({ books, isLoading = false }: BookGridProps) {
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 gap-4 min-[420px]:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2 sm:gap-5 md:grid-cols-3 xl:grid-cols-4">
         {Array.from({ length: 8 }).map((_, index) => (
           <BookCardSkeleton key={index} />
         ))}
@@ -20,7 +20,7 @@ export function BookGrid({ books, isLoading = false }: BookGridProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-4 min-[420px]:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2 sm:gap-5 md:grid-cols-3 xl:grid-cols-4">
       {books.map((book, index) => (
         <Reveal key={book.id} className="h-full" delay={Math.min(index * 70, 420)} direction="scale">
           <BookCard book={book} />

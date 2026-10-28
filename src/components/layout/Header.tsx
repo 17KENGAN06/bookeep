@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, Target, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { BrandLockup } from '@/components/brand/BrandLockup';
 import { Container } from '@/components/common/Container';
@@ -54,14 +54,14 @@ export function Header() {
 
   const goalsTo = user ? '/goals' : '/login?next=/goals';
   const accountClassName =
-    'focus-ring inline-flex min-h-10 items-center rounded-xl px-3 text-sm font-semibold text-muted transition hover:bg-surface hover:text-ink';
+    'focus-ring hidden min-h-10 items-center rounded-xl px-3 text-sm font-semibold whitespace-nowrap text-muted transition hover:bg-surface hover:text-ink xl:inline-flex';
 
   return (
     <header className="sticky top-0 z-40 border-b border-line/80 bg-bg/80 backdrop-blur-md">
       <Container className="flex h-16 items-center justify-between gap-3 sm:h-[4.25rem]">
-        <BrandLockup size="md" className="min-w-0 max-w-[58%]" />
+        <BrandLockup size="md" className="shrink-0" />
 
-        <nav className="hidden items-center gap-1 lg:flex" aria-label={t('nav.primary')}>
+        <nav className="hidden min-w-0 items-center gap-1 xl:flex" aria-label={t('nav.primary')}>
           {links.map((link) => (
             <NavLink
               key={link.to}
@@ -72,7 +72,7 @@ export function Header() {
               }}
               className={({ isActive }) =>
                 cn(
-                  'focus-ring inline-flex min-h-10 items-center rounded-xl px-3 text-sm font-semibold transition',
+                  'focus-ring inline-flex min-h-10 items-center rounded-xl px-3 text-sm font-semibold whitespace-nowrap transition',
                   isActive ? 'bg-surface-2 text-ink' : 'text-muted hover:bg-surface hover:text-ink',
                 )
               }
@@ -82,24 +82,26 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
           <Link
             to={goalsTo}
-            className="focus-ring inline-flex min-h-10 items-center rounded-xl bg-accent px-3 text-sm font-semibold text-on-accent transition hover:bg-accent-hover"
+            aria-label={t('nav.goals')}
+            className="focus-ring inline-flex h-11 min-w-11 items-center justify-center gap-2 rounded-xl bg-accent px-3 text-sm font-semibold whitespace-nowrap text-on-accent transition hover:bg-accent-hover sm:h-10 sm:min-w-0"
           >
-            {t('nav.goals')}
+            <Target className="h-5 w-5 shrink-0 sm:h-4 sm:w-4" aria-hidden />
+            <span className="hidden sm:inline">{t('nav.goals')}</span>
           </Link>
           <ThemeToggle />
-          <div className="hidden lg:block">
+          <div className="hidden xl:block">
             <LanguageSwitcher />
           </div>
           {!isLoading ? (
             user ? (
-              <button type="button" className={cn(accountClassName, 'hidden lg:inline-flex')} onClick={() => void signOut()}>
+              <button type="button" className={accountClassName} onClick={() => void signOut()}>
                 {t('auth.signOut')}
               </button>
             ) : (
-              <Link to="/login" className={cn(accountClassName, 'hidden lg:inline-flex')}>
+              <Link to="/login" className={accountClassName}>
                 {t('nav.login')}
               </Link>
             )
@@ -107,7 +109,7 @@ export function Header() {
           <button
             ref={menuButtonRef}
             type="button"
-            className="focus-ring inline-flex h-11 w-11 items-center justify-center rounded-xl border border-line bg-surface text-ink lg:hidden"
+            className="focus-ring inline-flex h-11 w-11 items-center justify-center rounded-xl border border-line bg-surface text-ink xl:hidden"
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-haspopup="true"
@@ -123,9 +125,9 @@ export function Header() {
         <div
           ref={panelRef}
           id="mobile-nav"
-          className="border-t border-line bg-bg/95 px-4 py-4 backdrop-blur-md lg:hidden"
+          className="border-t border-line bg-bg/95 px-4 py-4 backdrop-blur-md xl:hidden"
         >
-          <nav className="flex flex-col gap-1" aria-label={t('nav.primary')}>
+          <nav className="flex flex-col gap-1 sm:grid sm:grid-cols-2 sm:gap-2" aria-label={t('nav.primary')}>
             {links.map((link) => (
               <Link
                 key={link.to}

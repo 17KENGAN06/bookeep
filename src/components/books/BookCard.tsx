@@ -26,21 +26,21 @@ export function BookCard({ book }: BookCardProps) {
         to={`/books/${book.slug}`}
         className="group focus-ring flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-[var(--app-shadow)] transition duration-200 hover:border-accent/30 motion-safe:hover:-translate-y-0.5"
       >
-        <div className="relative h-52 overflow-hidden bg-elevated sm:h-56">
+        <div className="relative aspect-[4/5] overflow-hidden bg-elevated sm:aspect-auto sm:h-56">
           <BookCover book={book} labeled={false} variant="card" className="transition duration-300 motion-safe:group-hover:scale-[1.03]" />
           <div className="absolute bottom-2 left-2 z-[5]">
             <AdaptationBadge complete={book.complete} />
           </div>
         </div>
-        <div className="flex flex-1 items-start justify-between gap-3 p-3.5 sm:p-4">
+        <div className="flex flex-1 flex-col items-start justify-between gap-2 p-3 min-[480px]:flex-row min-[480px]:gap-3 sm:p-4">
           <div className="min-w-0">
-            <h2 className="font-display text-base leading-snug font-semibold text-ink">{title}</h2>
-            <p className="mt-1 text-sm text-muted">{t(`languages.${book.language}`)}</p>
+            <h2 className="font-display text-sm leading-snug font-semibold break-words text-ink sm:text-base">{title}</h2>
+            <p className="mt-1 text-xs text-muted sm:text-sm">{t(`languages.${book.language}`)}</p>
           </div>
           <LevelBadge level={book.level} />
         </div>
         {percent > 0 ? (
-          <div className="px-3.5 pb-3.5 sm:px-4 sm:pb-4">
+          <div className="px-3 pb-3 sm:px-4 sm:pb-4">
             <ProgressBar value={percent} label={t('books.progress')} />
           </div>
         ) : null}

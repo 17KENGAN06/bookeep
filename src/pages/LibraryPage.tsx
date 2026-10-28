@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Target } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { BookGrid } from '@/components/books/BookGrid';
 import { ButtonLink } from '@/components/common/Button';
@@ -64,9 +65,10 @@ export function LibraryPage() {
         {t('library.title')}
       </h1>
       <p className="mt-3 max-w-2xl text-base text-muted">{t('library.hello', { name })}</p>
-      <Link to="/goals" className="mt-3 inline-flex text-sm font-semibold text-ink hover:text-accent">
+      <ButtonLink to="/goals" variant="secondary" className="mt-5 w-full sm:w-auto">
+        <Target className="h-4 w-4 shrink-0 text-accent" aria-hidden />
         {t('library.toGoals')}
-      </Link>
+      </ButtonLink>
 
       <Shelf
         title={t('library.liked')}

@@ -25,8 +25,8 @@ export function Footer() {
             <p className="mt-4 text-sm leading-relaxed text-muted">{t('footer.tagline')}</p>
           </div>
 
-          <div className="flex flex-col gap-10 sm:flex-row sm:gap-16">
-            <nav className="flex flex-wrap gap-x-5 gap-y-3 text-sm font-semibold lg:flex-col lg:gap-2">
+          <div className="flex flex-col gap-10 md:flex-row md:gap-12 lg:gap-16">
+            <nav className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm font-semibold sm:grid-cols-3 md:grid-cols-2 lg:flex lg:flex-col lg:gap-2">
               <Link to="/" onClick={() => scrollToPageTop()} className={linkClass}>
                 {t('nav.home')}
               </Link>

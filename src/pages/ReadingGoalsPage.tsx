@@ -4,7 +4,6 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { GoalComposer } from '@/components/goals/GoalComposer';
 import { GoalsCalendar } from '@/components/goals/GoalsCalendar';
-import { Button } from '@/components/common/Button';
 import { Container } from '@/components/common/Container';
 import { DocumentTitle } from '@/components/common/DocumentTitle';
 import { ErrorState } from '@/components/common/ErrorState';
@@ -77,12 +76,12 @@ export function ReadingGoalsPage() {
           <h1 className="font-display text-3xl font-bold tracking-tight text-ink sm:text-5xl">{t('goals.title')}</h1>
           <p className="mt-3 max-w-2xl text-sm text-muted sm:text-base">{t('goals.lead')}</p>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <button type="button" className="focus-ring rounded-xl border border-line bg-surface p-2 text-ink" onClick={() => move(-1)} aria-label={t('goals.prevMonth')}>
+        <div className="flex w-full items-center gap-2 sm:w-auto lg:shrink-0">
+          <button type="button" className="focus-ring inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-line bg-surface text-ink" onClick={() => move(-1)} aria-label={t('goals.prevMonth')}>
             <ChevronLeft className="h-5 w-5" />
           </button>
           <select
-            className="focus-ring rounded-xl border border-line bg-surface px-3 py-2 text-sm font-semibold text-ink"
+            className="focus-ring h-11 min-w-0 flex-1 rounded-xl border border-line bg-surface px-3 text-sm font-semibold text-ink capitalize sm:w-40 sm:flex-none"
             value={month}
             aria-label={t('goals.month')}
             onChange={(event) => setMonth(Number(event.target.value))}
@@ -94,7 +93,7 @@ export function ReadingGoalsPage() {
             ))}
           </select>
           <select
-            className="focus-ring rounded-xl border border-line bg-surface px-3 py-2 text-sm font-semibold text-ink"
+            className="focus-ring h-11 w-24 shrink-0 rounded-xl border border-line bg-surface px-3 text-sm font-semibold text-ink"
             value={year}
             aria-label={t('goals.year')}
             onChange={(event) => setYear(Number(event.target.value))}
@@ -105,7 +104,7 @@ export function ReadingGoalsPage() {
               </option>
             ))}
           </select>
-          <button type="button" className="focus-ring rounded-xl border border-line bg-surface p-2 text-ink" onClick={() => move(1)} aria-label={t('goals.nextMonth')}>
+          <button type="button" className="focus-ring inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-line bg-surface text-ink" onClick={() => move(1)} aria-label={t('goals.nextMonth')}>
             <ChevronRight className="h-5 w-5" />
           </button>
         </div>
@@ -113,11 +112,7 @@ export function ReadingGoalsPage() {
 
       <p className="font-display mt-8 text-lg font-semibold text-ink sm:text-xl">{monthTitle(year, month, i18n.resolvedLanguage ?? 'en')}</p>
       <p className="mt-2 text-sm text-muted">{t('goals.calendarHint')}</p>
-      <Button type="button" className="mt-4 lg:hidden" onClick={scrollToComposer}>
-        {t('goals.openComposer')}
-      </Button>
-
-      <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-4">
         <SummaryCard label={t('goals.readingDays')} value={String(summary.readingDays)} />
         <SummaryCard label={t('goals.pagesRead')} value={String(summary.pagesRead)} />
         <SummaryCard label={t('goals.goalsCompleted')} value={`${summary.goalsCompleted} / ${summary.goalsSet}`} />
@@ -164,9 +159,9 @@ export function ReadingGoalsPage() {
 
 function SummaryCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-line bg-surface px-4 py-4">
-      <p className="text-xs font-semibold tracking-wide text-muted uppercase">{label}</p>
-      <p className="font-display mt-2 text-2xl font-semibold text-ink">{value}</p>
+    <div className="flex flex-col justify-between rounded-2xl border border-line bg-surface px-3.5 py-3.5 sm:px-4 sm:py-4">
+      <p className="text-[11px] leading-snug font-semibold tracking-wide break-words text-muted uppercase sm:text-xs">{label}</p>
+      <p className="font-display mt-2 text-xl font-semibold text-ink sm:text-2xl">{value}</p>
     </div>
   );
 }

@@ -22,7 +22,7 @@ export function GoalsCalendar({ year, month, today, selectedDate, days, onSelect
 
   return (
     <div>
-      <div className="grid grid-cols-7 gap-1.5 sm:gap-2">
+      <div className="grid grid-cols-7 gap-1 min-[400px]:gap-1.5 sm:gap-2">
         {labels.map((label) => (
           <p key={label} className="px-1 pb-2 text-center text-[11px] font-semibold tracking-wide text-muted uppercase sm:text-xs">
             {label}
@@ -68,13 +68,13 @@ function DayCard({
       type="button"
       onClick={onSelect}
       className={cn(
-        'focus-ring flex min-h-[4.6rem] flex-col rounded-2xl border px-1.5 py-1.5 text-left transition sm:min-h-[6.5rem] sm:px-2.5 sm:py-2.5',
+        'focus-ring flex min-h-[3.4rem] min-w-0 flex-col rounded-xl border px-1.5 py-1.5 text-left transition sm:min-h-[6.5rem] sm:rounded-2xl lg:min-h-[5.25rem] xl:min-h-[6.5rem] sm:px-2.5 sm:py-2.5',
         day.completed
           ? 'border-accent/40 bg-accent-soft'
           : hasGoal
             ? 'border-line bg-surface hover:border-accent/30'
             : 'border-line/80 bg-surface/60 hover:border-accent/25',
-        isToday && 'ring-2 ring-accent/45 ring-offset-2 ring-offset-bg',
+        isToday && 'ring-2 ring-accent/45 ring-offset-1 ring-offset-bg sm:ring-offset-2',
         isSelected && 'border-accent bg-accent-soft',
       )}
       aria-current={isToday ? 'date' : undefined}
@@ -89,7 +89,7 @@ function DayCard({
         ) : null}
       {hasGoal ? (
         <>
-          <p className="mt-auto font-display text-[11px] font-semibold tabular-nums text-ink sm:text-sm">
+          <p className="mt-auto truncate font-display text-[10px] font-semibold tabular-nums text-ink sm:text-sm">
             {day.pagesRead} / {day.targetPages}
           </p>
           <p className="hidden text-[10px] text-muted sm:block">
@@ -103,7 +103,7 @@ function DayCard({
           </div>
         </>
       ) : (
-        <p className="mt-auto text-[10px] text-muted sm:text-xs">{t('goals.noGoal')}</p>
+        <p className="mt-auto hidden text-xs text-muted sm:block lg:hidden xl:block">{t('goals.noGoal')}</p>
       )}
     </button>
   );

@@ -25,13 +25,13 @@ export function HeroVisual() {
   const pile = pickHeroBooks(books);
 
   if (pile.length === 0) {
-    return <div className="mx-auto hidden h-[26rem] w-full max-w-lg xl:block" />;
+    return <div className="mx-auto hidden h-[26rem] w-full max-w-lg md:block" />;
   }
 
   const poses = pilePoses[Math.min(pile.length, 3) as 1 | 2 | 3];
 
   return (
-    <div className="relative isolate mx-auto h-[28rem] w-full max-w-md sm:h-[30rem] lg:h-[34rem] lg:max-w-lg">
+    <div className="relative isolate mx-auto h-[24rem] w-full max-w-md min-[420px]:h-[28rem] sm:h-[30rem] md:h-[26rem] lg:h-[32rem] lg:max-w-lg xl:h-[34rem]">
       <div className="absolute inset-0 rounded-[2rem] border border-line bg-surface/55 shadow-[var(--app-shadow)] backdrop-blur-sm" />
       <div
         aria-hidden
@@ -56,7 +56,7 @@ export function HeroVisual() {
             )}
           >
             <div className="aspect-[2/3]">
-              <BookCover book={book} />
+              <BookCover book={book} labeled={false} />
             </div>
             <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-bg/80 to-transparent px-2.5 pt-8 pb-2.5">
               <span className="font-display line-clamp-2 text-[11px] leading-tight font-semibold text-ink sm:text-xs">

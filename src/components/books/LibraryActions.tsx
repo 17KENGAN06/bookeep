@@ -83,12 +83,12 @@ export function LibraryActions({ bookId, compact = false }: LibraryActionsProps)
   }
 
   return (
-    <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-      <Button type="button" variant="secondary" className="w-full min-w-48 sm:w-auto" onClick={() => void onFavorite()}>
+    <div className="grid w-full grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:flex sm:w-auto sm:flex-row">
+      <Button type="button" variant="secondary" className="w-full min-w-0 px-3 sm:w-auto sm:min-w-48 sm:px-5" onClick={() => void onFavorite()}>
         <Heart className={cn('h-4 w-4', liked && 'fill-current text-accent')} />
         {liked ? t('library.unlike') : t('library.like')}
       </Button>
-      <Button type="button" variant="secondary" className="w-full min-w-48 sm:w-auto" onClick={() => void onPlanned()}>
+      <Button type="button" variant="secondary" className="w-full min-w-0 px-3 sm:w-auto sm:min-w-48 sm:px-5" onClick={() => void onPlanned()}>
         <Bookmark className={cn('h-4 w-4', planned && 'fill-current text-accent')} />
         {planned ? t('library.unplan') : t('library.plan')}
       </Button>
