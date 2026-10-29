@@ -14,13 +14,14 @@ export function EmptyState({ title, description, action, className, role = 'stat
     <div
       role={role}
       className={cn(
-        'rounded-2xl border border-dashed border-line bg-surface/70 px-5 py-12 text-center',
+        'lux-card rounded-[1.75rem] px-6 py-14 text-center sm:py-16',
         className,
       )}
     >
-      <h2 className="font-display text-lg font-semibold text-ink">{title}</h2>
-      {description ? <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted">{description}</p> : null}
-      {action ? <div className="mt-5 flex justify-center">{action}</div> : null}
+      <span aria-hidden className="mx-auto mb-5 block h-px w-10 bg-gold/70" />
+      <h2 className="font-display text-xl font-medium tracking-tight text-ink sm:text-2xl">{title}</h2>
+      {description ? <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted sm:text-[0.9375rem]">{description}</p> : null}
+      {action ? <div className="mt-7 flex justify-center">{action}</div> : null}
     </div>
   );
 }

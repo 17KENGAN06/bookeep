@@ -53,6 +53,11 @@
         "title": "Levels A2–B1",
         "text": "Pick the language density that matches where you are now."
       }
+    },
+    "stats": {
+      "levels": "levels",
+      "languages": "two languages",
+      "reader": "reader in the browser"
     }
   },
   "books": {
@@ -143,7 +148,14 @@
     "error": "Could not open",
     "errorHint": "The file did not load. Try again.",
     "missing": "No file yet",
-    "missingHint": "This book is not in the reader yet."
+    "missingHint": "This book is not in the reader yet.",
+    "paperMode": "Page colour",
+    "pages": "Pages",
+    "paper": {
+      "light": "Paper",
+      "sepia": "Sepia",
+      "night": "Night"
+    }
   },
   "notFound": {
     "eyebrow": "Error 404",

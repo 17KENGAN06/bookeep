@@ -5,6 +5,7 @@ import { ButtonLink } from '@/components/common/Button';
 import { DocumentTitle } from '@/components/common/DocumentTitle';
 import { EmptyState } from '@/components/common/EmptyState';
 import { PdfDocument } from '@/components/reader/PdfDocument';
+import { ReaderPaperFilters } from '@/components/reader/ReaderPaperFilters';
 import { ReaderToolbar } from '@/components/reader/ReaderToolbar';
 import { Skeleton } from '@/components/common/Skeleton';
 import { useBook } from '@/hooks/useBooks';
@@ -28,7 +29,7 @@ function ReaderPageInner() {
   const { t, i18n } = useTranslation();
   const { book, status } = useBook(slug);
   const { progress, saveProgress } = useReadingProgress(book?.id);
-  const { isDarkPaper, togglePaper } = usePdfPaper();
+  const { paper, setPaper } = usePdfPaper();
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(progress?.totalPages ?? 0);
   const [zoom, setZoom] = useState(1);
@@ -142,8 +143,9 @@ function ReaderPageInner() {
   const percent = totalPages > 0 ? (page / totalPages) * 100 : 0;
 
   return (
-    <div className="flex min-h-dvh flex-col bg-bg">
+    <div className="reader-shell flex min-h-dvh flex-col" data-paper={paper}>
       <DocumentTitle title={title} noindex />
+      <ReaderPaperFilters />
       <a href="#reader-stage" className="skip-link">
         {t('reader.skipToPage')}
       </a>
@@ -163,18 +165,18 @@ function ReaderPageInner() {
           if (document.fullscreenElement) void document.exitFullscreen();
           else void document.documentElement.requestFullscreen();
         }}
-        isDarkPaper={isDarkPaper}
-        onTogglePaper={togglePaper}
+        paper={paper}
+        onPaperChange={setPaper}
       />
       <div
-        className="h-0.5 bg-elevated"
+        className="h-[2px] bg-line"
         role="progressbar"
         aria-valuemin={1}
         aria-valuemax={totalPages || 1}
         aria-valuenow={page}
         aria-label={t('reader.page', { current: page, total: totalPages || '—' })}
       >
-        <div className="h-full bg-accent transition-[width] duration-300 motion-reduce:transition-none" style={{ width: `${percent}%` }} />
+        <div className="h-full bg-gradient-to-r from-accent to-gold transition-[width] duration-500 ease-[var(--ease-lux)] motion-reduce:transition-none" style={{ width: `${percent}%` }} />
       </div>
       <main className="flex flex-1 flex-col">
         <PdfDocument
@@ -182,7 +184,6 @@ function ReaderPageInner() {
           file={book.pdf_path}
           page={page}
           zoom={zoom}
-          nightPaper={isDarkPaper}
           onLoad={onPdfLoad}
           onPrev={() => goTo((current) => current - 1)}
           onNext={() => goTo((current) => current + 1)}

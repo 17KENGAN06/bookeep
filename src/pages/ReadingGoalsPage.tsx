@@ -70,18 +70,18 @@ export function ReadingGoalsPage() {
   return (
     <Container className="py-10 sm:py-14">
       <DocumentTitle title={t('goals.title')} noindex />
-      <p className="font-display text-xs tracking-[0.24em] text-accent uppercase">{t('goals.eyebrow')}</p>
+      <p className="eyebrow">{t('goals.eyebrow')}</p>
       <div className="mt-4 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <h1 className="font-display text-3xl font-bold tracking-tight text-ink sm:text-5xl">{t('goals.title')}</h1>
+          <h1 className="display-title">{t('goals.title')}</h1>
           <p className="mt-3 max-w-2xl text-sm text-muted sm:text-base">{t('goals.lead')}</p>
         </div>
         <div className="flex w-full items-center gap-2 sm:w-auto lg:shrink-0">
-          <button type="button" className="focus-ring inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-line bg-surface text-ink" onClick={() => move(-1)} aria-label={t('goals.prevMonth')}>
+          <button type="button" className="icon-btn" onClick={() => move(-1)} aria-label={t('goals.prevMonth')}>
             <ChevronLeft className="h-5 w-5" />
           </button>
           <select
-            className="focus-ring h-11 min-w-0 flex-1 rounded-xl border border-line bg-surface px-3 text-sm font-semibold text-ink capitalize sm:w-40 sm:flex-none"
+            className="field-control !min-h-11 min-w-0 flex-1 !rounded-full !py-0 font-semibold capitalize sm:w-44 sm:flex-none"
             value={month}
             aria-label={t('goals.month')}
             onChange={(event) => setMonth(Number(event.target.value))}
@@ -93,7 +93,7 @@ export function ReadingGoalsPage() {
             ))}
           </select>
           <select
-            className="focus-ring h-11 w-24 shrink-0 rounded-xl border border-line bg-surface px-3 text-sm font-semibold text-ink"
+            className="field-control !min-h-11 !w-28 shrink-0 !rounded-full !py-0 font-semibold"
             value={year}
             aria-label={t('goals.year')}
             onChange={(event) => setYear(Number(event.target.value))}
@@ -104,13 +104,13 @@ export function ReadingGoalsPage() {
               </option>
             ))}
           </select>
-          <button type="button" className="focus-ring inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-line bg-surface text-ink" onClick={() => move(1)} aria-label={t('goals.nextMonth')}>
+          <button type="button" className="icon-btn" onClick={() => move(1)} aria-label={t('goals.nextMonth')}>
             <ChevronRight className="h-5 w-5" />
           </button>
         </div>
       </div>
 
-      <p className="font-display mt-8 text-lg font-semibold text-ink sm:text-xl">{monthTitle(year, month, i18n.resolvedLanguage ?? 'en')}</p>
+      <p className="mt-10 font-display text-xl font-medium tracking-tight text-ink capitalize sm:text-2xl">{monthTitle(year, month, i18n.resolvedLanguage ?? 'en')}</p>
       <p className="mt-2 text-sm text-muted">{t('goals.calendarHint')}</p>
       <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-4">
         <SummaryCard label={t('goals.readingDays')} value={String(summary.readingDays)} />
@@ -120,7 +120,7 @@ export function ReadingGoalsPage() {
       </div>
 
       <div className="mt-8 grid items-start gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(18rem,0.75fr)]">
-        <div className="order-2 rounded-3xl border border-line bg-surface p-3 sm:p-5 lg:order-1">
+        <div className="lux-card order-2 rounded-[1.75rem] p-2.5 sm:p-5 lg:order-1">
           {status === 'loading' ? (
             <Skeleton className="h-[28rem] w-full rounded-3xl" />
           ) : status === 'error' ? (
@@ -159,9 +159,9 @@ export function ReadingGoalsPage() {
 
 function SummaryCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex flex-col justify-between rounded-2xl border border-line bg-surface px-3.5 py-3.5 sm:px-4 sm:py-4">
-      <p className="text-[11px] leading-snug font-semibold tracking-wide break-words text-muted uppercase sm:text-xs">{label}</p>
-      <p className="font-display mt-2 text-xl font-semibold text-ink sm:text-2xl">{value}</p>
+    <div className="lux-card flex flex-col justify-between rounded-[1.25rem] px-4 py-4 sm:px-5 sm:py-5">
+      <p className="text-[10px] leading-snug font-bold tracking-[0.18em] break-words text-muted uppercase sm:text-[11px]">{label}</p>
+      <p className="mt-3 font-display text-2xl font-medium tracking-tight text-ink tabular-nums sm:text-3xl">{value}</p>
     </div>
   );
 }

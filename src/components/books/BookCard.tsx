@@ -24,28 +24,30 @@ export function BookCard({ book }: BookCardProps) {
     <article className="relative h-full">
       <Link
         to={`/books/${book.slug}`}
-        className="group focus-ring flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-[var(--app-shadow)] transition duration-200 hover:border-accent/30 motion-safe:hover:-translate-y-0.5"
+        className="group focus-ring lux-card flex h-full flex-col overflow-hidden rounded-[1.25rem] transition duration-500 ease-[var(--ease-lux)] motion-safe:hover:-translate-y-1 hover:shadow-[var(--app-shadow-lg)] sm:rounded-[1.5rem]"
       >
-        <div className="relative aspect-[4/5] overflow-hidden bg-elevated sm:aspect-auto sm:h-56">
-          <BookCover book={book} labeled={false} variant="card" className="transition duration-300 motion-safe:group-hover:scale-[1.03]" />
-          <div className="absolute bottom-2 left-2 z-[5]">
-            <AdaptationBadge complete={book.complete} />
+        <div className="book-stage relative flex aspect-[4/5] items-center justify-center overflow-hidden px-[18%] pt-[12%] pb-[14%]">
+          <div className="book-object aspect-[2/3] h-full max-w-full transition duration-500 ease-[var(--ease-lux)] motion-safe:group-hover:-translate-y-1.5 motion-safe:group-hover:scale-[1.02]">
+            <BookCover book={book} labeled variant="card" compact />
           </div>
+          <LevelBadge level={book.level} className="absolute top-3 left-3 z-[5] bg-surface/70 backdrop-blur-md sm:top-4 sm:left-4" />
+          {!book.complete ? (
+            <div className="absolute bottom-2.5 left-2.5 z-[5]">
+              <AdaptationBadge complete={book.complete} />
+            </div>
+          ) : null}
         </div>
-        <div className="flex flex-1 flex-col items-start justify-between gap-2 p-3 min-[480px]:flex-row min-[480px]:gap-3 sm:p-4">
+        <div className="flex flex-1 flex-col gap-3 p-3.5 sm:p-5">
           <div className="min-w-0">
-            <h2 className="font-display text-sm leading-snug font-semibold break-words text-ink sm:text-base">{title}</h2>
-            <p className="mt-1 text-xs text-muted sm:text-sm">{t(`languages.${book.language}`)}</p>
+            <h2 className="font-display text-[0.9375rem] leading-snug font-medium tracking-tight break-words hyphens-auto text-ink sm:text-lg">
+              {title}
+            </h2>
+            <p className="mt-1 text-xs text-muted sm:text-[0.8125rem]">{t(`languages.${book.language}`)}</p>
           </div>
-          <LevelBadge level={book.level} />
+          {percent > 0 ? <ProgressBar value={percent} label={t('books.progress')} className="mt-auto" /> : null}
         </div>
-        {percent > 0 ? (
-          <div className="px-3 pb-3 sm:px-4 sm:pb-4">
-            <ProgressBar value={percent} label={t('books.progress')} />
-          </div>
-        ) : null}
       </Link>
-      <div className="absolute top-2 right-2 z-10">
+      <div className="absolute top-2 right-2 z-10 sm:top-3 sm:right-3">
         <LibraryActions bookId={book.id} compact />
       </div>
     </article>

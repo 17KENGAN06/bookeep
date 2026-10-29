@@ -11,12 +11,13 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggleTheme}
-      className="focus-ring inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-line bg-surface text-ink transition hover:border-accent/40 hover:text-accent"
+      className="icon-btn"
+      data-plain
       aria-label={isDark ? t('common.themeLight') : t('common.themeDark')}
       aria-pressed={isDark}
       title={isDark ? t('common.themeLight') : t('common.themeDark')}
     >
-      {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+      {isDark ? <Sun className="h-[18px] w-[18px]" /> : <Moon className="h-[18px] w-[18px]" />}
     </button>
   );
 }

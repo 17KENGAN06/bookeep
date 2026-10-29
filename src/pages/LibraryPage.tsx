@@ -60,8 +60,8 @@ export function LibraryPage() {
   return (
     <Container className="py-12 sm:py-16">
       <DocumentTitle title={t('library.title')} noindex />
-      <p className="font-display text-xs tracking-[0.24em] text-accent uppercase">{t('library.eyebrow')}</p>
-      <h1 className="font-display mt-4 text-3xl font-bold tracking-tight text-ink sm:text-5xl">
+      <p className="eyebrow">{t('library.eyebrow')}</p>
+      <h1 className="display-title mt-5">
         {t('library.title')}
       </h1>
       <p className="mt-3 max-w-2xl text-base text-muted">{t('library.hello', { name })}</p>

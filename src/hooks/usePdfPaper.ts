@@ -1,18 +1,23 @@
 import { useCallback, useEffect, useState } from 'react';
 import { PDF_PAPER_STORAGE_KEY } from '@/config/storage';
 
-export type PdfPaper = 'light' | 'dark';
+export const PDF_PAPERS = ['light', 'sepia', 'night'] as const;
+export type PdfPaper = (typeof PDF_PAPERS)[number];
 
 function readStoredPaper(): PdfPaper {
   try {
-    return window.localStorage.getItem(PDF_PAPER_STORAGE_KEY) === 'dark' ? 'dark' : 'light';
+    const saved = window.localStorage.getItem(PDF_PAPER_STORAGE_KEY);
+    // 'dark' is what older versions stored for the night page.
+    if (saved === 'dark' || saved === 'night') return 'night';
+    if (saved === 'sepia') return 'sepia';
+    return 'light';
   } catch {
     return 'light';
   }
 }
 
 export function usePdfPaper() {
-  const [paper, setPaper] = useState<PdfPaper>(readStoredPaper);
+  const [paper, setPaperState] = useState<PdfPaper>(readStoredPaper);
 
   useEffect(() => {
     try {
@@ -22,9 +27,7 @@ export function usePdfPaper() {
     }
   }, [paper]);
 
-  const togglePaper = useCallback(() => {
-    setPaper((current) => (current === 'dark' ? 'light' : 'dark'));
-  }, []);
+  const setPaper = useCallback((next: PdfPaper) => setPaperState(next), []);
 
-  return { paper, isDarkPaper: paper === 'dark', togglePaper };
+  return { paper, setPaper };
 }

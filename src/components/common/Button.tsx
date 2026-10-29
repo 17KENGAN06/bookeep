@@ -1,22 +1,27 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { LoaderCircle } from 'lucide-react';
+import { ArrowRight, LoaderCircle } from 'lucide-react';
 import { cn } from '@/utils/cn';
 
-type ButtonVariant = 'primary' | 'secondary' | 'ghost';
+type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'quiet';
 
 const variants: Record<ButtonVariant, string> = {
-  primary: 'bg-accent text-on-accent hover:bg-accent-hover disabled:opacity-50',
-  secondary:
-    'bg-surface text-ink ring-1 ring-line hover:ring-accent/50 disabled:opacity-50',
-  ghost: 'bg-transparent text-muted hover:bg-surface-2 hover:text-ink disabled:opacity-50',
+  primary: 'btn-primary',
+  secondary: 'btn-secondary',
+  ghost: 'btn-ghost',
+  quiet: 'btn-quiet',
 };
 
 export function buttonClassName(variant: ButtonVariant = 'primary', className = '') {
-  return cn(
-        'focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition motion-safe:active:scale-[0.98] disabled:cursor-not-allowed',
-    variants[variant],
-    className,
+  return cn('btn', variants[variant], className);
+}
+
+/** Arrow in a small round knob that slides on hover; pairs with the primary button. */
+export function ButtonArrow() {
+  return (
+    <span className="btn-knob" aria-hidden>
+      <ArrowRight className="h-4 w-4" />
+    </span>
   );
 }
 

@@ -8,7 +8,7 @@ import { scrollToPageTop } from '@/utils/scroll';
 
 const STUDIO_URL = 'http://weisezahoy.com/';
 
-const linkClass = 'focus-ring rounded-md text-ink hover:text-accent';
+const linkClass = 'focus-ring rounded-md text-ink/85 transition hover:text-gold';
 
 export function Footer() {
   const { t } = useTranslation();
@@ -17,16 +17,19 @@ export function Footer() {
   const goalsTo = user ? '/goals' : '/login?next=/goals';
 
   return (
-    <footer className="relative z-10 mt-16 border-t border-line">
-      <Container className="py-12 sm:py-16">
-        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
+    <footer className="relative z-10 mt-20 pb-[env(safe-area-inset-bottom)]">
+      <Container className="pt-4 pb-10 sm:pb-14">
+        <div className="hairline mb-12 sm:mb-16" />
+        <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-md">
             <BrandLockup to="/" size="md" />
-            <p className="mt-4 text-sm leading-relaxed text-muted">{t('footer.tagline')}</p>
+            <p className="mt-5 font-display text-2xl leading-snug font-normal tracking-tight text-ink/90 italic sm:text-[1.75rem]">
+              {t('footer.tagline')}
+            </p>
           </div>
 
           <div className="flex flex-col gap-10 md:flex-row md:gap-12 lg:gap-16">
-            <nav className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm font-semibold sm:grid-cols-3 md:grid-cols-2 lg:flex lg:flex-col lg:gap-2">
+            <nav className="grid grid-cols-2 gap-x-6 gap-y-3.5 text-sm font-medium sm:grid-cols-3 md:grid-cols-2 lg:flex lg:flex-col lg:gap-2.5">
               <Link to="/" onClick={() => scrollToPageTop()} className={linkClass}>
                 {t('nav.home')}
               </Link>
@@ -51,8 +54,8 @@ export function Footer() {
             </nav>
 
             <div>
-              <p className="text-sm font-semibold text-ink">{t('nav.contact')}</p>
-              <ul className="mt-3 space-y-3 text-sm">
+              <p className="text-[11px] font-bold tracking-[0.22em] text-gold uppercase">{t('nav.contact')}</p>
+              <ul className="mt-4 space-y-4 text-sm">
                 <li>
                   <p className="text-xs text-muted">{t('contact.channels.partner.title')}</p>
                   <a className={`${linkClass} mt-0.5 inline-flex font-semibold`} href={`mailto:${PARTNER_EMAIL}`}>
@@ -70,7 +73,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 space-y-2 text-xs leading-relaxed text-muted">
+        <div className="mt-14 flex flex-col gap-2 border-t border-line pt-6 text-xs leading-relaxed text-muted sm:flex-row sm:items-center sm:justify-between">
           <p>© {year} {t('common.appName')}</p>
           <p>
             <Trans
@@ -78,7 +81,7 @@ export function Footer() {
               components={{
                 studio: (
                   <a
-                    className="font-semibold text-ink underline decoration-accent/50 underline-offset-4 transition hover:text-accent"
+                    className="font-semibold text-ink underline decoration-gold/50 underline-offset-4 transition hover:text-gold"
                     href={STUDIO_URL}
                     target="_blank"
                     rel="noopener noreferrer"

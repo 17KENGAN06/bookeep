@@ -14,10 +14,10 @@ export function AboutPage() {
       <DocumentTitle title={t('about.title')} description={t('about.lead')} />
       <div className="max-w-3xl">
         <Reveal>
-          <p className="font-display text-xs tracking-[0.24em] text-accent uppercase">{t('about.eyebrow')}</p>
+          <p className="eyebrow">{t('about.eyebrow')}</p>
         </Reveal>
         <Reveal delay={80}>
-          <h1 className="font-display mt-4 text-3xl font-bold tracking-tight text-ink sm:text-5xl">
+          <h1 className="display-title mt-5">
             {t('about.title')}
           </h1>
         </Reveal>

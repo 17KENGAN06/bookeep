@@ -57,17 +57,19 @@ export function RegisterPage() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-md px-4 py-12 sm:py-16">
+    <div className="mx-auto w-full max-w-[30rem] px-4 py-10 sm:py-16">
+      <div className="lux-panel rounded-[2rem] px-5 py-8 sm:px-9 sm:py-10">
       <DocumentTitle title={t('auth.registerTitle')} noindex />
-      <h1 className="font-display text-3xl font-semibold text-ink">{t('auth.registerTitle')}</h1>
-      <p className="mt-2 text-sm leading-relaxed text-muted">{t('auth.registerLead')}</p>
+      <span aria-hidden className="mb-6 block h-px w-10 bg-gold/70" />
+      <h1 className="font-display text-[2rem] leading-tight font-medium tracking-tight text-ink sm:text-[2.4rem]">{t('auth.registerTitle')}</h1>
+      <p className="mt-3 text-sm leading-relaxed text-muted sm:text-[0.9375rem]">{t('auth.registerLead')}</p>
 
       {!isConfigured ? (
-        <p className="mt-6 rounded-2xl border border-line bg-surface px-4 py-3 text-sm text-muted">
+        <p className="mt-6 rounded-2xl border border-line bg-surface-2/60 px-4 py-3 text-sm text-muted">
           {t('auth.notConfigured')}
         </p>
       ) : checkEmail ? (
-        <p className="mt-8 rounded-2xl border border-line bg-surface px-4 py-3 text-sm leading-relaxed text-ink">
+        <p className="mt-8 rounded-2xl border border-line bg-surface-2/60 px-4 py-3 text-sm leading-relaxed text-ink">
           {t('auth.checkEmail')}
         </p>
       ) : (
@@ -96,19 +98,20 @@ export function RegisterPage() {
                 onChange={(event) => setPassword(event.target.value)}
               />
             </Field>
-            {error ? <p role="alert" className="text-sm text-accent">{error}</p> : null}
+            {error ? <p role="alert" className="text-sm font-medium text-[#c4674f] dark:text-[#e79a84]">{error}</p> : null}
             <Button type="submit" className="w-full" isLoading={submitting}>
               {t('auth.registerSubmit')}
             </Button>
           </form>
           <p className="text-sm text-muted">
             {t('auth.hasAccount')}{' '}
-            <Link to={`/login${next ? `?next=${encodeURIComponent(next)}` : ''}`} className="font-semibold text-ink hover:text-accent">
+            <Link to={`/login${next ? `?next=${encodeURIComponent(next)}` : ''}`} className="font-semibold text-ink underline decoration-gold/50 underline-offset-4 hover:text-gold">
               {t('auth.loginLink')}
             </Link>
           </p>
         </div>
       )}
+      </div>
     </div>
   );
 }

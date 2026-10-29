@@ -59,10 +59,10 @@ export function ContactPage() {
       <DocumentTitle title={t('contact.title')} description={t('contact.lead')} />
       <div className="max-w-3xl">
         <Reveal>
-          <p className="font-display text-xs tracking-[0.24em] text-accent uppercase">{t('contact.eyebrow')}</p>
+          <p className="eyebrow">{t('contact.eyebrow')}</p>
         </Reveal>
         <Reveal delay={80}>
-          <h1 className="font-display mt-4 text-3xl font-bold tracking-tight text-ink sm:text-5xl">
+          <h1 className="display-title mt-5">
             {t('contact.title')}
           </h1>
         </Reveal>

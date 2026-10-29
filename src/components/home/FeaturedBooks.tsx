@@ -13,25 +13,21 @@ export function FeaturedBooks() {
   const featured = books.slice(0, 8);
 
   return (
-    <section className="relative py-10 sm:py-16">
+    <section className="relative py-12 sm:py-20">
       <Container>
-        <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
+        <div className="mb-8 flex flex-col gap-4 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
           <Reveal>
             <div>
-              <h2 className="font-display text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-                {t('home.featuredTitle')}
-              </h2>
-              <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted sm:text-base">
+              <p className="eyebrow">{t('nav.books')}</p>
+              <h2 className="section-title mt-4">{t('home.featuredTitle')}</h2>
+              <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted sm:text-base">
                 {t('home.featuredSubtitle')}
               </p>
             </div>
           </Reveal>
           <Reveal delay={80}>
-            <Link
-              to="/books"
-              className="focus-ring inline-flex items-center gap-2 rounded-xl text-sm font-semibold text-accent hover:text-accent-hover"
-            >
-              {t('home.viewAll')}
+            <Link to="/books" className="btn btn-quiet">
+              <span className="btn-label">{t('home.viewAll')}</span>
               <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
           </Reveal>

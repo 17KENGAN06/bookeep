@@ -53,6 +53,11 @@
         "title": "Tasot A2–B1",
         "text": "Valitse kielen tiheys, joka sopii tähän hetkeen."
       }
+    },
+    "stats": {
+      "levels": "tasot",
+      "languages": "kaksi kieltä",
+      "reader": "lukija selaimessa"
     }
   },
   "books": {
@@ -143,7 +148,14 @@
     "error": "Ei auennut",
     "errorHint": "Tiedosto ei latautunut. Yritä uudelleen.",
     "missing": "Ei tiedostoa vielä",
-    "missingHint": "Tätä kirjaa ei ole vielä lukijassa."
+    "missingHint": "Tätä kirjaa ei ole vielä lukijassa.",
+    "paperMode": "Sivun väri",
+    "pages": "Sivut",
+    "paper": {
+      "light": "Paperi",
+      "sepia": "Seepia",
+      "night": "Yö"
+    }
   },
   "notFound": {
     "eyebrow": "Virhe 404",

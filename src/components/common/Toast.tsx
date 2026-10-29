@@ -34,13 +34,13 @@ export function ToastProvider({ children }: { children: ReactNode }) {
         {toasts.map((toast) => (
           <p
             key={toast.id}
-            className={`pointer-events-auto rounded-2xl border px-4 py-3 text-sm shadow-[var(--app-shadow)] ${
-              toast.tone === 'error'
-                ? 'border-line bg-surface text-ink'
-                : 'border-accent/30 bg-surface text-ink'
-            }`}
+            className="glass-card pointer-events-auto flex items-center gap-3 rounded-full px-5 py-3 text-sm font-medium text-ink"
             role="status"
           >
+            <span
+              aria-hidden
+              className={`h-1.5 w-1.5 shrink-0 rounded-full ${toast.tone === 'error' ? 'bg-[#d9775f]' : 'bg-gold'}`}
+            />
             {toast.message}
           </p>
         ))}

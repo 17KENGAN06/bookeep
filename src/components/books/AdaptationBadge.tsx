@@ -18,17 +18,17 @@ export function AdaptationBadge({ complete, variant = 'badge', className }: Adap
     return (
       <div
         className={cn(
-          'flex items-start gap-3 rounded-2xl border px-4 py-3.5 sm:px-5 sm:py-4',
-          complete ? 'border-accent/40 bg-accent/12' : 'border-line bg-elevated',
+          'flex items-start gap-3.5 rounded-2xl border px-4 py-4 sm:px-5',
+          complete ? 'border-accent/25 bg-accent-soft' : 'border-gold/30 bg-gold-soft',
           className,
         )}
       >
         <Icon
-          className={cn('mt-0.5 h-5 w-5 shrink-0', complete ? 'text-accent' : 'text-ink')}
+          className={cn('mt-0.5 h-5 w-5 shrink-0', complete ? 'text-accent' : 'text-gold')}
           aria-hidden
         />
         <div>
-          <p className={cn('font-display text-sm font-semibold sm:text-base', complete ? 'text-accent' : 'text-ink')}>
+          <p className="font-display text-[0.9375rem] font-medium text-ink sm:text-base">
             {title}
           </p>
           <p className="mt-1 text-sm leading-relaxed text-muted">{hint}</p>
@@ -40,8 +40,7 @@ export function AdaptationBadge({ complete, variant = 'badge', className }: Adap
   return (
     <span
       className={cn(
-        'inline-flex min-h-7 items-center gap-1.5 rounded-lg px-2.5 text-xs font-semibold',
-        complete ? 'bg-accent text-on-accent' : 'bg-ink text-bg',
+        'inline-flex min-h-7 items-center gap-1.5 rounded-full bg-black/55 px-2.5 text-[11px] font-semibold text-white backdrop-blur-md',
         className,
       )}
     >

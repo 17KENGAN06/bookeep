@@ -82,9 +82,9 @@ export function ConfirmDialog({
         aria-modal="true"
         aria-labelledby="confirm-title"
         aria-describedby="confirm-desc"
-        className="relative w-full max-w-md rounded-3xl border border-line bg-surface p-6 shadow-[var(--app-shadow)]"
+        className="lux-panel relative w-full max-w-md rounded-[1.75rem] p-6 sm:p-7"
       >
-        <h2 id="confirm-title" className="font-display text-xl font-semibold text-ink">
+        <h2 id="confirm-title" className="font-display text-2xl font-medium tracking-tight text-ink">
           {title}
         </h2>
         <p id="confirm-desc" className="mt-3 text-sm leading-relaxed text-muted">
@@ -112,12 +112,11 @@ type FieldProps = {
 export function Field({ label, children, hint }: FieldProps) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-sm font-semibold text-ink">{label}</span>
+      <span className="mb-2 block text-[0.8125rem] font-semibold text-ink">{label}</span>
       {children}
       {hint ? <span className="mt-1.5 block text-xs text-muted">{hint}</span> : null}
     </label>
   );
 }
 
-export const fieldControlClass =
-  'focus-ring w-full rounded-xl border border-line bg-bg px-3 py-2.5 text-sm text-ink placeholder:text-muted';
+export const fieldControlClass = 'field-control';

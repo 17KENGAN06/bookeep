@@ -32,14 +32,11 @@ export function HeroVisual() {
 
   return (
     <div className="relative isolate mx-auto h-[24rem] w-full max-w-md min-[420px]:h-[28rem] sm:h-[30rem] md:h-[26rem] lg:h-[32rem] lg:max-w-lg xl:h-[34rem]">
-      <div className="absolute inset-0 rounded-[2rem] border border-line bg-surface/55 shadow-[var(--app-shadow)] backdrop-blur-sm" />
+      <div className="lux-panel absolute inset-0 rounded-[2.25rem]" />
+      <div aria-hidden className="absolute inset-3 rounded-[1.75rem] border border-gold/20 sm:inset-4" />
       <div
         aria-hidden
-        className="absolute inset-x-8 top-6 h-[58%] rounded-[2.5rem] bg-[radial-gradient(circle_at_50%_20%,var(--app-accent-soft),transparent_68%)]"
-      />
-      <div
-        aria-hidden
-        className="absolute inset-x-[12%] bottom-[18%] h-10 rounded-full bg-accent/15 blur-2xl"
+        className="absolute inset-x-[14%] bottom-[14%] h-12 rounded-full bg-black/30 blur-2xl dark:bg-black/60"
       />
 
       {pile.map((book, index) => {
@@ -50,19 +47,19 @@ export function HeroVisual() {
             to={`/books/${book.slug}`}
             aria-label={title}
             className={cn(
-              'group focus-ring absolute overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_18px_40px_-24px_rgba(31,61,50,0.55)] transition duration-300',
-              'motion-safe:hover:-translate-y-1.5 motion-safe:hover:rotate-0',
+              'group focus-ring book-object absolute bg-surface transition duration-500 ease-[var(--ease-lux)]',
+              'motion-safe:hover:-translate-y-2 motion-safe:hover:rotate-0',
               poses[index] ?? poses[0],
             )}
           >
             <div className="aspect-[2/3]">
               <BookCover book={book} labeled={false} />
             </div>
-            <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-bg/80 to-transparent px-2.5 pt-8 pb-2.5">
-              <span className="font-display line-clamp-2 text-[11px] leading-tight font-semibold text-ink sm:text-xs">
+            <span className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] bg-gradient-to-t from-black/75 via-black/35 to-transparent px-3 pt-10 pb-3 opacity-0 transition duration-500 group-hover:opacity-100 group-focus-visible:opacity-100">
+              <span className="font-display line-clamp-2 text-xs leading-tight font-medium text-white sm:text-sm">
                 {title}
               </span>
-              <span className="mt-0.5 block text-[10px] text-muted">
+              <span className="mt-0.5 block text-[10px] font-semibold tracking-[0.14em] text-white/70 uppercase">
                 {t(`languages.${book.language}`)} · {book.level}
               </span>
             </span>

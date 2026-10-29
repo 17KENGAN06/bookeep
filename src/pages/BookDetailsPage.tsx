@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Download } from 'lucide-react';
+import { ArrowLeft, Download } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { AdaptationBadge } from '@/components/books/AdaptationBadge';
 import { BookCover } from '@/components/books/BookCover';
 import { LevelBadge } from '@/components/books/LevelBadge';
 import { LibraryActions } from '@/components/books/LibraryActions';
-import { Button, ButtonLink } from '@/components/common/Button';
+import { Button, ButtonArrow, ButtonLink } from '@/components/common/Button';
 import { Container } from '@/components/common/Container';
 import { DocumentTitle } from '@/components/common/DocumentTitle';
 import { EmptyState } from '@/components/common/EmptyState';
@@ -30,7 +30,7 @@ export function BookDetailsPage() {
       <Container className="py-10 sm:py-14">
         <DocumentTitle title={t('book.loading')} />
         <div className="grid gap-8 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,1fr)] lg:gap-14">
-          <Skeleton className="aspect-[3/4] w-full max-w-md rounded-3xl" />
+          <Skeleton className="aspect-[4/5] w-full max-w-md rounded-[2rem]" />
           <div className="space-y-4">
             <Skeleton className="h-5 w-24" />
             <Skeleton className="h-12 w-3/4" />
@@ -94,46 +94,41 @@ export function BookDetailsPage() {
   return (
     <Container className="py-10 sm:py-14">
       <DocumentTitle title={title} description={description} image={book.cover_path} />
-      <Link
-        to="/books"
-        className="focus-ring inline-flex items-center gap-2 rounded-xl text-sm font-semibold text-muted hover:text-ink"
-      >
+      <Link to="/books" className="btn btn-quiet -ml-1 text-muted hover:text-ink">
         <ArrowLeft className="h-4 w-4" aria-hidden />
-        {t('book.backToCatalog')}
+        <span className="btn-label">{t('book.backToCatalog')}</span>
       </Link>
 
-      <div className="mt-6 grid items-start gap-8 sm:mt-8 md:grid-cols-[minmax(0,0.42fr)_minmax(0,1fr)] md:gap-8 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,1fr)] lg:gap-14">
+      <div className="mt-6 grid items-start gap-8 sm:mt-8 md:grid-cols-[minmax(0,0.44fr)_minmax(0,1fr)] md:gap-10 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,1fr)] lg:gap-16">
         <Reveal direction="left">
-          <div className="relative mx-auto w-full max-w-[17rem] overflow-hidden rounded-3xl border border-line shadow-[var(--app-shadow)] sm:max-w-xs md:max-w-none">
-            <div className="aspect-[3/4]">
-              <BookCover book={book} labeled={false} />
-            </div>
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-bg/90 via-bg/40 to-transparent p-4">
-              <AdaptationBadge complete={book.complete} />
+          <div className="lux-panel book-stage relative mx-auto flex w-full max-w-sm items-center justify-center rounded-[2rem] px-[16%] py-[13%] md:max-w-none">
+            <div aria-hidden className="absolute inset-3 rounded-[1.5rem] border border-gold/15" />
+            <div className="book-object aspect-[2/3] w-full">
+              <BookCover book={book} />
             </div>
           </div>
         </Reveal>
 
         <Reveal delay={120} direction="right">
           <div>
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-3">
             <LevelBadge level={book.level} />
-            <span className="text-sm text-muted">{t(`languages.${book.language}`)}</span>
+            <span className="text-[11px] font-bold tracking-[0.22em] text-muted uppercase">{t(`languages.${book.language}`)}</span>
           </div>
 
-          <h1 className="font-display mt-4 text-3xl font-bold tracking-tight text-balance break-words text-ink sm:text-4xl lg:text-5xl">
+          <h1 className="display-title mt-5 break-words">
             {title}
           </h1>
 
           {book.title_original !== title ? (
-            <p className="mt-2 text-sm text-muted">{book.title_original}</p>
+            <p className="mt-3 font-display text-lg text-muted italic">{book.title_original}</p>
           ) : null}
 
           <div className="mt-6 max-w-2xl">
             <AdaptationBadge complete={book.complete} variant="banner" />
           </div>
 
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted">{description}</p>
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted sm:text-[1.0625rem]">{description}</p>
 
             {hasProgress && progress ? (
               <div className="mt-6 max-w-md">
@@ -144,26 +139,26 @@ export function BookDetailsPage() {
               </div>
             ) : null}
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-            <ButtonLink to={`/read/${book.slug}`} className="w-full min-w-48 sm:w-auto">
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            <ButtonLink to={`/read/${book.slug}`} className="w-full sm:w-auto">
               {hasProgress ? t('book.continueReading') : t('book.startReading')}
-              <ArrowRight className="h-4 w-4" aria-hidden />
+              <ButtonArrow />
             </ButtonLink>
             {pdfPath ? (
               <Button
                 type="button"
                 variant="secondary"
-                className="w-full min-w-48 sm:w-auto"
+                className="w-full sm:w-auto"
                 isLoading={downloading}
                 loadingText={t('book.downloading')}
                 onClick={() => void downloadPdf()}
               >
-                <Download className="h-4 w-4" aria-hidden />
+                <Download className="h-4 w-4 text-gold" aria-hidden />
                 {t('book.download')}
               </Button>
             ) : null}
           </div>
-          <div className="mt-3">
+          <div className="mt-3 sm:mt-4">
             <LibraryActions bookId={book.id} />
           </div>
           </div>

@@ -60,23 +60,23 @@ export function GoalComposer({
   return (
     <section
       id="goal-composer"
-      className="scroll-mt-24 rounded-3xl border-2 border-accent/35 bg-surface p-5 shadow-[var(--app-shadow)] sm:p-6 lg:sticky lg:top-24"
+      className="lux-panel scroll-mt-28 rounded-[1.75rem] p-5 sm:p-7 lg:sticky lg:top-28"
     >
       <div className="md:grid md:grid-cols-2 md:gap-8 lg:block">
         <div>
-          <p className="font-display text-xs tracking-[0.22em] text-accent uppercase">{t('goals.readingGoal')}</p>
-          <h2 className="font-display mt-2 text-xl font-semibold text-ink">{t('goals.composerTitle')}</h2>
+          <p className="eyebrow">{t('goals.readingGoal')}</p>
+          <h2 className="mt-4 font-display text-2xl font-medium tracking-tight text-ink">{t('goals.composerTitle')}</h2>
           <p className="mt-2 text-sm text-muted">{t('goals.composerLead')}</p>
 
           <label className="mt-5 block">
-            <span className="text-xs font-semibold tracking-wide text-muted uppercase">{t('goals.pickDate')}</span>
+            <span className="text-[11px] font-bold tracking-[0.18em] text-muted uppercase">{t('goals.pickDate')}</span>
             <input
               type="date"
               min={minDate}
               max={maxDate}
               value={date}
               onChange={(event) => onDateChange(event.target.value)}
-              className="focus-ring mt-1.5 w-full rounded-xl border border-line bg-bg px-3 py-2.5 text-sm font-semibold text-ink"
+              className="field-control mt-2 font-semibold"
             />
           </label>
           <p className="mt-2 text-sm text-ink">{formatLongDate(date, i18n.resolvedLanguage ?? 'en')}</p>
@@ -87,7 +87,7 @@ export function GoalComposer({
           <div className="mt-3 flex items-center justify-center gap-3">
             <button
               type="button"
-              className="focus-ring flex h-11 w-11 items-center justify-center rounded-xl border border-line bg-bg text-ink"
+              className="icon-btn h-12 w-12"
               onClick={() => setValue((current) => Math.max(1, current - 1))}
               aria-label={t('goals.decrease')}
             >
@@ -99,12 +99,12 @@ export function GoalComposer({
               max={999}
               value={value}
               onChange={(event) => setValue(Math.min(999, Math.max(1, Number(event.target.value) || 1)))}
-              className="focus-ring w-24 rounded-xl border border-line bg-bg py-2.5 text-center font-display text-2xl font-semibold text-ink"
+              className="field-control !w-28 !rounded-2xl text-center font-display !text-3xl font-medium tabular-nums"
               aria-label={t('goals.targetPages')}
             />
             <button
               type="button"
-              className="focus-ring flex h-11 w-11 items-center justify-center rounded-xl border border-line bg-bg text-ink"
+              className="icon-btn h-12 w-12"
               onClick={() => setValue((current) => Math.min(999, current + 1))}
               aria-label={t('goals.increase')}
             >

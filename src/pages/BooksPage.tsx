@@ -46,8 +46,8 @@ export function BooksPage() {
     <Container className="py-10 sm:py-14">
       <DocumentTitle title={t('books.title')} description={t('books.subtitle')} />
       <Reveal as="header" className="max-w-2xl">
-        <p className="font-display text-xs tracking-[0.24em] text-accent uppercase">{t('nav.books')}</p>
-        <h1 className="font-display mt-3 text-3xl font-bold tracking-tight text-ink sm:text-5xl">
+        <p className="eyebrow">{t('nav.books')}</p>
+        <h1 className="display-title mt-5">
           {t('books.title')}
         </h1>
         <p className="mt-4 text-base leading-relaxed text-muted">{t('books.subtitle')}</p>

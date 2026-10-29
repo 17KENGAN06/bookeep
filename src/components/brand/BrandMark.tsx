@@ -25,7 +25,7 @@ export function BrandMark({ className = 'h-8 w-8', title = 'Bookeep' }: BrandMar
         strokeLinecap="round"
         opacity="0.4"
       />
-      <path d="M41 15.5v13.2l3.4-1.9 3.4 1.9V15.5" className="fill-mint" />
+      <path d="M41 15.5v13.2l3.4-1.9 3.4 1.9V15.5" className="fill-gold" />
     </svg>
   );
 }

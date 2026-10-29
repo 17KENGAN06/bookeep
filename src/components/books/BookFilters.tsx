@@ -19,7 +19,7 @@ export function BookFilters({
   const { t } = useTranslation();
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col gap-5 md:flex-row md:flex-wrap md:items-end md:gap-8">
       <FilterRow label={t('books.language')}>
         <FilterChip active={language === 'all'} onClick={() => onLanguageChange('all')}>
           {t('books.all')}
@@ -51,11 +51,11 @@ export function BookFilters({
 
 function FilterRow({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div role="radiogroup" aria-label={label}>
-      <p className="mb-2 text-[11px] font-semibold tracking-[0.18em] text-muted uppercase">
-        {label}
-      </p>
-      <div className="flex flex-wrap gap-2">{children}</div>
+    <div className="min-w-0">
+      <p className="mb-2.5 text-[11px] font-bold tracking-[0.22em] text-muted uppercase">{label}</p>
+      <div role="radiogroup" aria-label={label} className="seg">
+        {children}
+      </div>
     </div>
   );
 }
@@ -75,12 +75,7 @@ function FilterChip({
       role="radio"
       onClick={onClick}
       aria-checked={active}
-      className={cn(
-        'focus-ring inline-flex min-h-11 items-center rounded-xl px-3.5 text-sm font-semibold transition',
-        active
-          ? 'bg-accent text-on-accent'
-          : 'bg-surface text-muted ring-1 ring-line hover:text-ink hover:ring-accent/40',
-      )}
+      className={cn('seg-item min-h-10 sm:min-h-10', active && 'is-active')}
     >
       {children}
     </button>

@@ -11,7 +11,7 @@ export function NotFoundPage() {
     <Container className="flex min-h-[70vh] flex-col items-center justify-center py-16 text-center">
       <DocumentTitle title={t('notFound.title')} noindex />
       <Reveal>
-        <p className="font-display text-xs tracking-[0.28em] text-accent uppercase">
+        <p className="eyebrow">
           {t('notFound.eyebrow')}
         </p>
         <p className="font-display mt-4 text-7xl font-semibold tracking-tight text-ink sm:text-8xl">404</p>

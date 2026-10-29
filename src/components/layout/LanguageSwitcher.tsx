@@ -19,7 +19,7 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
 
   return (
     <div
-      className={cn('inline-flex items-center gap-1 rounded-xl border border-line bg-surface p-1', className)}
+      className={cn('seg', className)}
       role="group"
       aria-label={t('common.language')}
     >
@@ -32,10 +32,7 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
             onClick={() => {
               void i18n.changeLanguage(language.code);
             }}
-            className={cn(
-              'focus-ring min-h-9 min-w-9 rounded-lg px-2 text-xs font-semibold tracking-wide transition',
-              active ? 'bg-accent text-on-accent' : 'text-muted hover:text-ink',
-            )}
+            className="seg-item !min-h-8 min-w-9 !px-2.5 text-xs tracking-wide"
             aria-label={nativeNames[language.code]}
             aria-pressed={active}
             lang={language.code}

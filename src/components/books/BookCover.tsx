@@ -5,10 +5,11 @@ import { getLocalizedTitle } from '@/utils/bookCopy';
 import { cn } from '@/utils/cn';
 
 const palettes = [
-  ['#1f3d32', '#2e7d66', '#cde3d8'],
-  ['#122e26', '#3cd6a0', '#a7f3d0'],
-  ['#17382e', '#256653', '#e6f0eb'],
-  ['#0d2720', '#2e7d66', '#a7cbbb'],
+  ['#1f5848', '#0f3329', '#d8bd86'],
+  ['#3b2a4a', '#22172c', '#d8bd86'],
+  ['#7a3b2c', '#4a2017', '#ecd9b0'],
+  ['#233a52', '#121f2e', '#d8bd86'],
+  ['#5a4a2a', '#2f2614', '#efe2c4'],
 ] as const;
 
 function paletteFor(slug: string) {
@@ -26,9 +27,10 @@ type BookCoverProps = {
   className?: string;
   labeled?: boolean;
   variant?: 'full' | 'card';
+  compact?: boolean;
 };
 
-export function BookCover({ book, className, labeled = true, variant = 'full' }: BookCoverProps) {
+export function BookCover({ book, className, labeled = true, variant = 'full', compact = false }: BookCoverProps) {
   const { i18n } = useTranslation();
   const title = getLocalizedTitle(book, i18n.resolvedLanguage ?? 'en');
   const palette = paletteFor(book.slug);
@@ -44,17 +46,31 @@ export function BookCover({ book, className, labeled = true, variant = 'full' }:
 
   return (
     <div
-      className={cn('relative isolate flex h-full w-full flex-col justify-end overflow-hidden p-4', className)}
+      className={cn(
+        'relative isolate flex h-full w-full flex-col justify-between overflow-hidden',
+        compact ? 'p-[10%]' : 'p-[9%]',
+        className,
+      )}
       style={{
-        background: `linear-gradient(165deg, ${palette[0]} 0%, ${palette[1]} 62%, ${palette[2]} 140%)`,
+        background: `linear-gradient(160deg, ${palette[0]} 0%, ${palette[1]} 100%)`,
+        color: palette[2],
       }}
     >
-      <div aria-hidden className="absolute inset-x-6 top-6 h-px bg-white/20" />
+      <div aria-hidden className="absolute inset-[5%] rounded-[2px] border border-current opacity-25" />
+      <span aria-hidden className="relative block h-px w-1/3 bg-current opacity-60" />
       {labeled ? (
-        <p className="relative line-clamp-3 font-display text-lg leading-tight font-semibold text-white sm:text-xl">
+        <p
+          className={cn(
+            'relative line-clamp-4 font-display leading-[1.12] font-medium',
+            compact ? 'text-[clamp(0.7rem,2.6vw,1rem)]' : 'text-xl sm:text-2xl',
+          )}
+        >
           {title}
         </p>
       ) : null}
+      <span aria-hidden className="relative font-sans text-[0.55rem] font-bold tracking-[0.24em] uppercase opacity-70">
+        Bookeep · {book.level}
+      </span>
     </div>
   );
 }

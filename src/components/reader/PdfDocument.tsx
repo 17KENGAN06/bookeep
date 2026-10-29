@@ -18,17 +18,16 @@ type PdfDocumentProps = {
   file: string;
   page: number;
   zoom: number;
-  nightPaper?: boolean;
   onLoad: (totalPages: number) => void;
   onPrev: () => void;
   onNext: () => void;
 };
 
 function LoadingPage() {
-  return <Skeleton className="h-64 w-full max-w-2xl rounded-3xl sm:h-80" />;
+  return <Skeleton className="aspect-[3/4] w-full max-w-2xl rounded-lg" />;
 }
 
-export function PdfDocument({ file, page, zoom, nightPaper = false, onLoad, onPrev, onNext }: PdfDocumentProps) {
+export function PdfDocument({ file, page, zoom, onLoad, onPrev, onNext }: PdfDocumentProps) {
   const { t } = useTranslation();
   const stageRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(640);
@@ -46,7 +45,7 @@ export function PdfDocument({ file, page, zoom, nightPaper = false, onLoad, onPr
     if (!node) return;
 
     const update = () => {
-      setWidth(Math.max(260, Math.min(node.clientWidth - 24, 860)));
+      setWidth(Math.max(260, Math.min(node.clientWidth - (node.clientWidth < 640 ? 16 : 48), 860)));
     };
 
     update();
@@ -77,7 +76,7 @@ export function PdfDocument({ file, page, zoom, nightPaper = false, onLoad, onPr
       id="reader-stage"
       ref={stageRef}
       tabIndex={-1}
-      className="reader-stage flex flex-1 justify-center overflow-x-auto px-3 py-6 sm:px-6 sm:py-10"
+      className="reader-stage flex flex-1 justify-center overflow-x-auto px-2 pt-4 pb-28 outline-none sm:px-6 sm:pt-10 md:pb-12"
       onPointerDown={(event) => {
         swipeStart.current = { x: event.clientX, y: event.clientY };
       }}
@@ -116,7 +115,7 @@ export function PdfDocument({ file, page, zoom, nightPaper = false, onLoad, onPr
                 pageNumber={page}
                 width={width * zoom}
                 devicePixelRatio={pixelRatio}
-                className={nightPaper ? 'reader-page is-night' : 'reader-page'}
+                className="reader-page"
                 renderAnnotationLayer={false}
                 suspense={false}
                 loading={<LoadingPage />}

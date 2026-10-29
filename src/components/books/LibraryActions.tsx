@@ -45,13 +45,10 @@ export function LibraryActions({ bookId, compact = false }: LibraryActionsProps)
 
   if (compact) {
     return (
-      <div className="flex gap-1">
+      <div className="flex gap-1.5">
         <button
           type="button"
-          className={cn(
-            'focus-ring inline-flex h-9 w-9 items-center justify-center rounded-xl border border-line bg-surface/95 text-ink shadow-sm',
-            liked && 'border-accent/50 text-accent',
-          )}
+          className="icon-btn icon-btn-sm"
           aria-pressed={liked}
           aria-label={liked ? t('library.unlike') : t('library.like')}
           onClick={(event) => {
@@ -64,10 +61,7 @@ export function LibraryActions({ bookId, compact = false }: LibraryActionsProps)
         </button>
         <button
           type="button"
-          className={cn(
-            'focus-ring inline-flex h-9 w-9 items-center justify-center rounded-xl border border-line bg-surface/95 text-ink shadow-sm',
-            planned && 'border-accent/50 text-accent',
-          )}
+          className="icon-btn icon-btn-sm"
           aria-pressed={planned}
           aria-label={planned ? t('library.unplan') : t('library.plan')}
           onClick={(event) => {
@@ -84,12 +78,12 @@ export function LibraryActions({ bookId, compact = false }: LibraryActionsProps)
 
   return (
     <div className="grid w-full grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:flex sm:w-auto sm:flex-row">
-      <Button type="button" variant="secondary" className="w-full min-w-0 px-3 sm:w-auto sm:min-w-48 sm:px-5" onClick={() => void onFavorite()}>
-        <Heart className={cn('h-4 w-4', liked && 'fill-current text-accent')} />
+      <Button type="button" variant="secondary" className="w-full min-w-0 !px-4 sm:w-auto sm:min-w-44" onClick={() => void onFavorite()}>
+        <Heart className={cn('h-4 w-4 text-gold', liked && 'fill-current')} />
         {liked ? t('library.unlike') : t('library.like')}
       </Button>
-      <Button type="button" variant="secondary" className="w-full min-w-0 px-3 sm:w-auto sm:min-w-48 sm:px-5" onClick={() => void onPlanned()}>
-        <Bookmark className={cn('h-4 w-4', planned && 'fill-current text-accent')} />
+      <Button type="button" variant="secondary" className="w-full min-w-0 !px-4 sm:w-auto sm:min-w-44" onClick={() => void onPlanned()}>
+        <Bookmark className={cn('h-4 w-4 text-gold', planned && 'fill-current')} />
         {planned ? t('library.unplan') : t('library.plan')}
       </Button>
     </div>

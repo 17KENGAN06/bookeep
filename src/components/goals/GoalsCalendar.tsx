@@ -68,24 +68,24 @@ function DayCard({
       type="button"
       onClick={onSelect}
       className={cn(
-        'focus-ring flex min-h-[3.4rem] min-w-0 flex-col rounded-xl border px-1.5 py-1.5 text-left transition sm:min-h-[6.5rem] sm:rounded-2xl lg:min-h-[5.25rem] xl:min-h-[6.5rem] sm:px-2.5 sm:py-2.5',
+        'focus-ring flex min-h-[3.4rem] min-w-0 flex-col rounded-xl border px-1.5 py-1.5 text-left transition duration-300 sm:min-h-[6.5rem] sm:rounded-2xl lg:min-h-[5.25rem] xl:min-h-[6.5rem] sm:px-2.5 sm:py-2.5',
         day.completed
-          ? 'border-accent/40 bg-accent-soft'
+          ? 'border-accent/30 bg-accent-soft'
           : hasGoal
-            ? 'border-line bg-surface hover:border-accent/30'
-            : 'border-line/80 bg-surface/60 hover:border-accent/25',
-        isToday && 'ring-2 ring-accent/45 ring-offset-1 ring-offset-bg sm:ring-offset-2',
-        isSelected && 'border-accent bg-accent-soft',
+            ? 'border-line bg-surface hover:border-gold/40'
+            : 'border-transparent bg-surface-2/50 hover:border-gold/30',
+        isToday && 'shadow-[inset_0_0_0_1px_var(--app-gold)]',
+        isSelected && 'border-gold/70 bg-gold-soft',
       )}
       aria-current={isToday ? 'date' : undefined}
       aria-pressed={isSelected}
     >
       <span className="flex items-center justify-between gap-1">
-        <span className="font-display text-sm font-semibold text-ink sm:text-base">{Number(day.date.slice(-2))}</span>
+        <span className="font-display text-sm font-medium text-ink tabular-nums sm:text-base">{Number(day.date.slice(-2))}</span>
         {day.completed ? <Check className="h-3.5 w-3.5 text-accent" aria-hidden /> : null}
       </span>
         {isToday ? (
-          <span className="mt-0.5 hidden text-[10px] font-semibold text-accent uppercase sm:inline">{t('goals.today')}</span>
+          <span className="mt-0.5 hidden text-[9px] font-bold tracking-[0.16em] text-gold uppercase sm:inline">{t('goals.today')}</span>
         ) : null}
       {hasGoal ? (
         <>
@@ -98,8 +98,8 @@ function DayCard({
           <div className="mt-1 hidden sm:block">
             <ProgressBar value={ratio} />
           </div>
-          <div className="mt-1 h-1 overflow-hidden rounded-full bg-surface-2 sm:hidden">
-            <div className="h-full rounded-full bg-accent" style={{ width: `${ratio}%` }} />
+          <div className="mt-1 h-0.5 overflow-hidden rounded-full bg-line sm:hidden">
+            <div className="h-full rounded-full bg-gradient-to-r from-accent to-gold" style={{ width: `${ratio}%` }} />
           </div>
         </>
       ) : (
