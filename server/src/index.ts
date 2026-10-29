@@ -24,6 +24,15 @@ app.get('/api/health', (_req, res) => {
   res.json({ ok: true, service: 'bookeep-server' });
 });
 
+// Public values only. The service role key must never be returned here.
+app.get('/api/config', (_req, res) => {
+  res.set('Cache-Control', 'public, max-age=300');
+  res.json({
+    supabaseUrl: process.env.SUPABASE_URL ?? '',
+    supabasePublishableKey: process.env.SUPABASE_PUBLISHABLE_KEY ?? '',
+  });
+});
+
 app.listen(port, '0.0.0.0', () => {
   console.log(`Bookeep server listening on ${port}`);
 });
