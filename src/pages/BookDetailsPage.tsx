@@ -119,16 +119,19 @@ export function BookDetailsPage() {
         <div className="mt-6 grid items-center gap-10 sm:mt-8 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] md:gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] lg:gap-20">
           <Reveal direction="left">
             <div className="relative mx-auto aspect-[4/5] w-full max-w-[26rem] md:max-w-none">
-              <div aria-hidden className="absolute inset-x-[4%] top-0 bottom-[12%] rounded-[2rem] border border-white/[0.08] bg-[linear-gradient(160deg,rgba(220,255,240,0.06),rgba(220,255,240,0.01)_50%,rgba(0,0,0,0.15))] shadow-[inset_0_1px_0_rgba(255,255,255,0.07)] sm:rounded-[2.5rem]" />
-              <div aria-hidden className="pointer-events-none absolute top-[-6%] left-1/2 h-[60%] w-[80%] -translate-x-1/2 bg-[radial-gradient(closest-side,rgba(235,250,240,0.12),transparent)]" />
-              <div aria-hidden className="absolute right-[-8%] bottom-0 left-[-8%] h-[13%] [mask-image:linear-gradient(90deg,transparent,#000_14%,#000_86%,transparent)]">
-                <div className="stone-ledge inset-0" />
-                <div className="ledge-front absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-b from-black/50 to-black/85" />
-                <div className="absolute inset-x-0 -bottom-px h-[35%] bg-gradient-to-b from-transparent to-bg" />
+              <div aria-hidden className="showcase-niche !inset-x-[4%]" />
+              <div aria-hidden className="showcase-shelf z-[5]">
+                <div className="showcase-shelf-top" />
+                <div className="showcase-shelf-front" />
               </div>
-              <div className="absolute bottom-[12.2%] left-1/2 w-[58%] -translate-x-1/2">
-                <div className="book-object aspect-[2/3] w-full">
-                  <BookCover book={book} priority />
+              <div className="showcase-book bottom-[11.2%] left-1/2 z-10 w-[56%] -translate-x-1/2">
+                <div className="relative isolate">
+                  <span aria-hidden className="showcase-cast" />
+                  <span aria-hidden className="showcase-pages" />
+                  <div className="showcase-face book-object aspect-[2/3] w-full">
+                    <BookCover book={book} priority />
+                    <span aria-hidden className="showcase-light" />
+                  </div>
                 </div>
                 <span aria-hidden className="book-contact" />
               </div>

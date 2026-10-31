@@ -102,9 +102,9 @@ export function Header() {
             <Link
               to={goalsTo}
               aria-label={t('nav.goals')}
-              className="btn btn-primary btn-sm hidden !min-h-10 sm:inline-flex"
+              className="btn btn-secondary btn-sm hidden !min-h-10 sm:inline-flex"
             >
-              <Target className="h-4 w-4 shrink-0" aria-hidden />
+              <Target className="h-4 w-4 shrink-0 text-accent" aria-hidden />
               <span>{t('nav.goals')}</span>
             </Link>
             <Link to={goalsTo} aria-label={t('nav.goals')} className="icon-btn sm:hidden">
