@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react';
-import { LoaderCircle, RotateCcw, Sparkles, X } from 'lucide-react';
+import { Languages, RotateCcw, Sparkles, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATE_TO_STORAGE_KEY } from '@/config/storage';
 import { supportedLanguages } from '@/i18n';
@@ -22,6 +22,11 @@ type Answer =
   | { status: 'loading' }
   | { status: 'done'; result: ExplainResult }
   | { status: 'error'; code: ExplainErrorCode };
+
+type Translation =
+  | { status: 'loading'; lang: UiLanguage }
+  | { status: 'done'; lang: UiLanguage; text: string }
+  | { status: 'error'; lang: UiLanguage; code: ExplainErrorCode };
 
 type SelectionExplainerProps = {
   /** The reader stage; selections outside it are ignored. */
@@ -112,7 +117,11 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book }: Selec
   const preferred = chosenTarget ?? uiLanguage;
   const target: UiLanguage | null = preferred === book.language ? null : preferred;
   const targets = supportedLanguages.filter((item) => item.code !== book.language);
-  const answers = useRef(new Map<string, ExplainResult>());
+  // Translations already fetched, by language + selection + passage.
+  const translations = useRef(new Map<string, string>());
+  const [translation, setTranslation] = useState<Translation | null>(null);
+  const [showTranslation, setShowTranslation] = useState(false);
+  const translateAbortRef = useRef<AbortController | null>(null);
   const [picked, setPicked] = useState<Picked | null>(null);
   const [open, setOpen] = useState<Picked | null>(null);
   const [answer, setAnswer] = useState<Answer | null>(null);
@@ -128,8 +137,11 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book }: Selec
 
   const close = useCallback(() => {
     abortRef.current?.abort();
+    translateAbortRef.current?.abort();
     setOpen(null);
     setAnswer(null);
+    setTranslation(null);
+    setShowTranslation(false);
   }, []);
 
   // Close everything when the page turns or the zoom changes: the rects are stale.
@@ -138,22 +150,48 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book }: Selec
     close();
   }, [resetKey, close]);
 
-  useEffect(() => () => abortRef.current?.abort(), []);
+  useEffect(
+    () => () => {
+      abortRef.current?.abort();
+      translateAbortRef.current?.abort();
+    },
+    [],
+  );
 
   // Show the "Explain" chip once the selection settles (handles drag on phones too).
+  // While the mouse button is held the reader is still choosing, so nothing snaps yet.
   useEffect(() => {
     let timer = 0;
-    const onChange = () => {
+    let mouseDown = false;
+    const settle = () => {
       window.clearTimeout(timer);
+      if (mouseDown) {
+        setPicked(null);
+        return;
+      }
       timer = window.setTimeout(() => {
         const next = readSelection(stageRef.current);
         setPicked(next ? { ...next, context: '' } : null);
       }, 220);
     };
-    document.addEventListener('selectionchange', onChange);
+    const onDown = (event: PointerEvent) => {
+      if (event.pointerType === 'mouse' && event.button === 0) mouseDown = true;
+    };
+    const onUp = () => {
+      if (!mouseDown) return;
+      mouseDown = false;
+      settle();
+    };
+    document.addEventListener('selectionchange', settle);
+    document.addEventListener('pointerdown', onDown);
+    document.addEventListener('pointerup', onUp);
+    window.addEventListener('blur', onUp);
     return () => {
       window.clearTimeout(timer);
-      document.removeEventListener('selectionchange', onChange);
+      document.removeEventListener('selectionchange', settle);
+      document.removeEventListener('pointerdown', onDown);
+      document.removeEventListener('pointerup', onUp);
+      window.removeEventListener('blur', onUp);
     };
   }, [stageRef]);
 
@@ -169,18 +207,10 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book }: Selec
     };
   }, [picked]);
 
-  const ask = useCallback(
-    (item: Picked, to: UiLanguage | null) => {
-      abortRef.current?.abort();
-      const key = JSON.stringify([to, item.text, item.context]);
-      const known = answers.current.get(key);
-      if (known) {
-        setAnswer({ status: 'done', result: known });
-        return;
-      }
-      const controller = new AbortController();
-      abortRef.current = controller;
-      setAnswer({ status: 'loading' });
+  const translationKey = (lang: UiLanguage, item: Picked) => JSON.stringify([lang, item.text, item.context]);
+
+  const request = useCallback(
+    (item: Picked, to: UiLanguage | null, signal: AbortSignal) =>
       explainSelection(
         {
           selection: item.text,
@@ -190,10 +220,21 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book }: Selec
           level: book.level,
           title: book.title,
         },
-        controller.signal,
-      )
+        signal,
+      ),
+    [book.language, book.level, book.title],
+  );
+
+  // One call brings the explanation and, in the background, the translation for later.
+  const ask = useCallback(
+    (item: Picked, to: UiLanguage | null) => {
+      abortRef.current?.abort();
+      const controller = new AbortController();
+      abortRef.current = controller;
+      setAnswer({ status: 'loading' });
+      request(item, to, controller.signal)
         .then((result) => {
-          answers.current.set(key, result);
+          if (to && result.translation) translations.current.set(translationKey(to, item), result.translation);
           if (!controller.signal.aborted) setAnswer({ status: 'done', result });
         })
         .catch((error: unknown) => {
@@ -201,22 +242,53 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book }: Selec
           setAnswer({ status: 'error', code: error instanceof ExplainError ? error.code : 'failed' });
         });
     },
-    [book.language, book.level, book.title],
+    [request],
+  );
+
+  const translate = useCallback(
+    (item: Picked, lang: UiLanguage) => {
+      translateAbortRef.current?.abort();
+      const known = translations.current.get(translationKey(lang, item));
+      if (known) {
+        setTranslation({ status: 'done', lang, text: known });
+        return;
+      }
+      const controller = new AbortController();
+      translateAbortRef.current = controller;
+      setTranslation({ status: 'loading', lang });
+      request(item, lang, controller.signal)
+        .then((result) => {
+          if (result.translation) translations.current.set(translationKey(lang, item), result.translation);
+          if (!controller.signal.aborted) setTranslation({ status: 'done', lang, text: result.translation });
+        })
+        .catch((error: unknown) => {
+          if (controller.signal.aborted) return;
+          setTranslation({ status: 'error', lang, code: error instanceof ExplainError ? error.code : 'failed' });
+        });
+    },
+    [request],
   );
 
   const explain = () => {
     if (!picked) return;
-    const target = { ...picked, context: contextAround(pageTextRef.current, picked.text) };
-    const targetLanguage = targetRef.current;
-    setOpen(target);
+    const item = { ...picked, context: contextAround(pageTextRef.current, picked.text) };
+    setOpen(item);
     setPicked(null);
-    ask(target, targetLanguage);
+    setTranslation(null);
+    setShowTranslation(false);
+    ask(item, targetRef.current);
+  };
+
+  const revealTranslation = () => {
+    if (!open) return;
+    setShowTranslation(true);
+    if (target) translate(open, target);
   };
 
   const changeTarget = (code: UiLanguage) => {
     saveTargetChoice(code);
     setChosenTarget(code);
-    if (open) ask(open, code);
+    if (open) translate(open, code);
   };
 
   // Escape or a tap outside the card closes it.
@@ -260,7 +332,8 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book }: Selec
     setCardPos({ top, left });
   }, [open, answer]);
 
-  const chip = picked ? chipPosition(picked.rect) : null;
+  // No second chip for the words the open card already explains.
+  const chip = picked && picked.text !== open?.text ? chipPosition(picked.rect) : null;
 
   return (
     <>
@@ -288,9 +361,12 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book }: Selec
           style={!isSheet && cardPos ? { top: cardPos.top, left: cardPos.left } : undefined}
         >
           <div className="flex items-start justify-between gap-3">
-            <p className="explain-phrase min-w-0" lang={book.language}>
-              {open.text}
-            </p>
+            <div className="min-w-0">
+              <p className="explain-eyebrow">{LANGUAGE_LABEL[book.language]}</p>
+              <p className="explain-phrase" lang={book.language}>
+                {open.text}
+              </p>
+            </div>
             <button
               type="button"
               className="icon-btn icon-btn-sm -mt-1 -mr-1"
@@ -302,63 +378,19 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book }: Selec
             </button>
           </div>
 
-          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2">
-            <p className="explain-eyebrow">{t('reader.explain.translation')}</p>
-            <div className="explain-langs" role="radiogroup" aria-label={t('reader.explain.translateTo')}>
-              {targets.map((item) => (
-                <button
-                  key={item.code}
-                  type="button"
-                  role="radio"
-                  aria-checked={target === item.code}
-                  className={cn('explain-lang', target === item.code && 'is-active')}
-                  onClick={() => changeTarget(item.code)}
-                >
-                  {item.short}
-                </button>
-              ))}
-            </div>
-          </div>
-
           <div aria-live="polite" className="mt-2">
             {answer?.status === 'loading' ? (
               <div className="space-y-2 pt-1" aria-busy="true">
                 <p className="sr-only">{t('reader.explain.loading')}</p>
-                {target ? <span className="explain-line h-4 w-[55%]" /> : null}
-                <div className="hairline !my-3" aria-hidden />
-                <span className="explain-line w-[92%]" />
-                <span className="explain-line w-[78%]" />
-                <span className="explain-line w-[56%]" />
-                <p className="flex items-center gap-2 pt-1 text-xs text-faint" aria-hidden>
-                  <LoaderCircle className="h-3.5 w-3.5 animate-spin" />
-                  {t('reader.explain.loading')}
-                </p>
+                <span className="explain-line w-[88%]" />
+                <span className="explain-line w-[60%]" />
               </div>
             ) : null}
 
             {answer?.status === 'done' ? (
-              <>
-                {target ? (
-                  answer.result.translation ? (
-                    <p className="explain-translation" lang={target}>
-                      {answer.result.translation}
-                    </p>
-                  ) : (
-                    <p className="text-sm text-faint">{t('reader.explain.noTranslation')}</p>
-                  )
-                ) : (
-                  <p className="text-sm text-faint">{t('reader.explain.sameLanguage')}</p>
-                )}
-                {answer.result.explanation ? (
-                  <>
-                    <div className="hairline my-3" aria-hidden />
-                    <p className="explain-eyebrow">{LANGUAGE_LABEL[book.language]}</p>
-                    <p className="explain-text mt-1.5" lang={book.language}>
-                      {answer.result.explanation}
-                    </p>
-                  </>
-                ) : null}
-              </>
+              <p className="explain-text" lang={book.language}>
+                {answer.result.explanation || answer.result.translation}
+              </p>
             ) : null}
 
             {answer?.status === 'error' ? (
@@ -377,6 +409,52 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book }: Selec
               </div>
             ) : null}
           </div>
+
+          {answer?.status === 'done' && !showTranslation ? (
+            <button type="button" className="explain-reveal mt-3" onClick={revealTranslation}>
+              <Languages className="h-3.5 w-3.5" aria-hidden />
+              {t('reader.explain.showTranslation')}
+            </button>
+          ) : null}
+
+          {answer?.status === 'done' && showTranslation ? (
+            <div className="mt-3">
+              <div className="hairline mb-3" aria-hidden />
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                <p className="explain-eyebrow">{t('reader.explain.translation')}</p>
+                <div className="explain-langs" role="radiogroup" aria-label={t('reader.explain.translateTo')}>
+                  {targets.map((item) => (
+                    <button
+                      key={item.code}
+                      type="button"
+                      role="radio"
+                      aria-checked={translation?.lang === item.code}
+                      className={cn('explain-lang', translation?.lang === item.code && 'is-active')}
+                      onClick={() => changeTarget(item.code)}
+                    >
+                      {item.short}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="mt-2" aria-live="polite">
+                {!translation ? <p className="text-sm text-faint">{t('reader.explain.sameLanguage')}</p> : null}
+                {translation?.status === 'loading' ? <span className="explain-line mt-1 h-4 w-[55%]" /> : null}
+                {translation?.status === 'done' ? (
+                  translation.text ? (
+                    <p className="explain-translation" lang={translation.lang}>
+                      {translation.text}
+                    </p>
+                  ) : (
+                    <p className="text-sm text-faint">{t('reader.explain.noTranslation')}</p>
+                  )
+                ) : null}
+                {translation?.status === 'error' ? (
+                  <p className="text-sm text-muted">{t(`reader.explain.errors.${translation.code}`)}</p>
+                ) : null}
+              </div>
+            </div>
+          ) : null}
 
           {answer?.status === 'done' ? (
             <p className="mt-3 text-[0.6875rem] leading-snug text-faint">{t('reader.explain.disclaimer')}</p>

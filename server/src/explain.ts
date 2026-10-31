@@ -80,17 +80,10 @@ function remember(key: string, value: ExplainResult) {
 }
 
 const EXPLAIN_RULES: Record<Language, string> = {
-  en: `Write "explanation" in very simple English (A2): short sentences, the 1500 most common words, no idioms, no grammar terms.
-- Start with the meaning in this context, in one or two sentences.
-- If the words have a different usual meaning, or are an idiom, phrasal verb or figure of speech, say so in one short sentence.
-- If it helps, add one very short example sentence on a new line that starts with "Example:".
-Keep it under 70 words.`,
-  fi: `Write "explanation" in very easy Finnish (selkosuomi, A2): short sentences, common words, no idioms, no grammar terms.
-- Start with the meaning in this context, in one or two sentences.
-- If a word is inflected, give its base form briefly (for example "Perusmuoto: talo").
-- If the phrase is an idiom or usually means something else, say so in one short sentence.
-- If it helps, add one very short example sentence on a new line that starts with "Esimerkki:".
-Keep it under 60 words.`,
+  en: `Write "explanation" in very simple English (A2) and keep it as short as possible: one sentence, two at most, under 25 words in total.
+Say only what the words mean in this place in the story. Use the most common words, no idioms, no grammar terms, no examples.`,
+  fi: `Write "explanation" in very easy Finnish (selkosuomi, A2) and keep it as short as possible: one sentence, two at most, under 20 words in total.
+Say only what the words mean in this place in the story. If a word is inflected, you may add its base form in brackets, for example "(talo)". Common words, no idioms, no grammar terms, no examples.`,
 };
 
 function systemPrompt(language: Language, target: Target | null) {

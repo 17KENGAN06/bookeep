@@ -1136,6 +1136,31 @@
   overflow-wrap: anywhere;
 }
 
+.explain-reveal {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  height: 2.125rem;
+  padding: 0 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--app-line-strong);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--app-ink);
+  background: color-mix(in oklab, var(--app-bg) 35%, transparent);
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.explain-reveal:hover {
+  border-color: var(--app-accent);
+  color: var(--app-accent);
+}
+
+.explain-reveal:focus-visible {
+  outline: 2px solid var(--app-accent);
+  outline-offset: 2px;
+}
+
 .explain-langs {
   display: inline-flex;
   gap: 0.25rem;

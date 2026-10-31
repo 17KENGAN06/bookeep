@@ -169,12 +169,12 @@
       "night": "Night"
     },
     "explain": {
-      "action": "Translate",
-      "title": "Translation and explanation",
+      "action": "Explain",
+      "title": "Explanation",
       "loading": "Explaining…",
       "close": "Close",
       "retry": "Try again",
-      "disclaimer": "Translated and explained by AI for this passage. It can make mistakes.",
+      "disclaimer": "Written by AI for this passage. It can make mistakes.",
       "errors": {
         "rate_limited": "Too many requests. Wait a minute and try again.",
         "not_configured": "Explanations are not available yet.",
@@ -183,7 +183,8 @@
       "translation": "Translation",
       "translateTo": "Translate into",
       "noTranslation": "No translation for this selection.",
-      "sameLanguage": "Choose a language to see a translation."
+      "sameLanguage": "Choose a language to see a translation.",
+      "showTranslation": "Show translation"
     }
   },
   "notFound": {
