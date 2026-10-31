@@ -167,6 +167,19 @@
       "light": "Paper",
       "sepia": "Sepia",
       "night": "Night"
+    },
+    "explain": {
+      "action": "Explain",
+      "title": "Explanation",
+      "loading": "Explaining…",
+      "close": "Close",
+      "retry": "Try again",
+      "disclaimer": "Written by AI for this passage. It can make mistakes.",
+      "errors": {
+        "rate_limited": "Too many requests. Wait a minute and try again.",
+        "not_configured": "Explanations are not available yet.",
+        "failed": "Could not get an explanation. Check your connection and try again."
+      }
     }
   },
   "notFound": {

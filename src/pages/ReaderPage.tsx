@@ -7,6 +7,7 @@ import { EmptyState } from '@/components/common/EmptyState';
 import { PdfDocument } from '@/components/reader/PdfDocument';
 import { ReaderPaperFilters } from '@/components/reader/ReaderPaperFilters';
 import { ReaderToolbar } from '@/components/reader/ReaderToolbar';
+import { SelectionExplainer } from '@/components/reader/SelectionExplainer';
 import { Skeleton } from '@/components/common/Skeleton';
 import { useBook } from '@/hooks/useBooks';
 import { useDebouncedCallback } from '@/hooks/useDebouncedCallback';
@@ -34,6 +35,8 @@ function ReaderPageInner() {
   const [totalPages, setTotalPages] = useState(progress?.totalPages ?? 0);
   const [zoom, setZoom] = useState(1);
   const [fullscreen, setFullscreen] = useState(false);
+  const [pageText, setPageText] = useState<{ page: number; text: string } | null>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
 
   const title = book ? getLocalizedTitle(book, i18n.resolvedLanguage ?? 'en') : t('reader.titleFallback');
   const inited = useRef(false);
@@ -187,6 +190,14 @@ function ReaderPageInner() {
           onLoad={onPdfLoad}
           onPrev={() => goTo((current) => current - 1)}
           onNext={() => goTo((current) => current + 1)}
+          onPageText={(text) => setPageText({ page, text })}
+          stageRef={stageRef}
+        />
+        <SelectionExplainer
+          stageRef={stageRef}
+          pageText={pageText?.page === page ? pageText.text : ''}
+          resetKey={`${page}-${zoom}`}
+          book={{ language: book.language, level: book.level, title: book.title_original }}
         />
       </main>
     </div>

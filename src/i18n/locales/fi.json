@@ -167,6 +167,19 @@
       "light": "Paperi",
       "sepia": "Seepia",
       "night": "Yö"
+    },
+    "explain": {
+      "action": "Selitä",
+      "title": "Selitys",
+      "loading": "Selitetään…",
+      "close": "Sulje",
+      "retry": "Yritä uudelleen",
+      "disclaimer": "Tekoäly kirjoitti selityksen tähän kohtaan. Se voi erehtyä.",
+      "errors": {
+        "rate_limited": "Liian monta pyyntöä. Odota hetki ja yritä uudelleen.",
+        "not_configured": "Selitykset eivät ole vielä käytössä.",
+        "failed": "Selitystä ei saatu. Tarkista yhteys ja yritä uudelleen."
+      }
     }
   },
   "notFound": {
