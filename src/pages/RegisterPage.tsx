@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { Link, Navigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { AuthShell } from '@/components/auth/AuthShell';
 import { AuthDivider, GoogleButton } from '@/components/auth/GoogleButton';
 import { Button } from '@/components/common/Button';
 import { DocumentTitle } from '@/components/common/DocumentTitle';
@@ -57,13 +58,8 @@ export function RegisterPage() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-[30rem] px-4 py-10 sm:py-16">
-      <div className="lux-panel rounded-[2rem] px-5 py-8 sm:px-9 sm:py-10">
+    <AuthShell title={t('auth.registerTitle')} lead={t('auth.registerLead')}>
       <DocumentTitle title={t('auth.registerTitle')} noindex />
-      <span aria-hidden className="mb-6 block h-px w-10 bg-gold/70" />
-      <h1 className="font-display text-[2rem] leading-tight font-medium tracking-tight text-ink sm:text-[2.4rem]">{t('auth.registerTitle')}</h1>
-      <p className="mt-3 text-sm leading-relaxed text-muted sm:text-[0.9375rem]">{t('auth.registerLead')}</p>
-
       {!isConfigured ? (
         <p className="mt-6 rounded-2xl border border-line bg-surface-2/60 px-4 py-3 text-sm text-muted">
           {t('auth.notConfigured')}
@@ -98,20 +94,19 @@ export function RegisterPage() {
                 onChange={(event) => setPassword(event.target.value)}
               />
             </Field>
-            {error ? <p role="alert" className="text-sm font-medium text-[#c4674f] dark:text-[#e79a84]">{error}</p> : null}
-            <Button type="submit" className="w-full" isLoading={submitting}>
+            {error ? <p role="alert" className="rounded-xl border border-danger/30 bg-danger/10 px-3.5 py-2.5 text-sm font-medium text-danger">{error}</p> : null}
+            <Button type="submit" className="w-full !min-h-[3.25rem]" isLoading={submitting}>
               {t('auth.registerSubmit')}
             </Button>
           </form>
           <p className="text-sm text-muted">
             {t('auth.hasAccount')}{' '}
-            <Link to={`/login${next ? `?next=${encodeURIComponent(next)}` : ''}`} className="font-semibold text-ink underline decoration-gold/50 underline-offset-4 hover:text-gold">
+            <Link to={`/login${next ? `?next=${encodeURIComponent(next)}` : ''}`} className="text-link">
               {t('auth.loginLink')}
             </Link>
           </p>
         </div>
       )}
-      </div>
-    </div>
+    </AuthShell>
   );
 }

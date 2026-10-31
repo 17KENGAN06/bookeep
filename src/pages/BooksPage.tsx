@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { SearchX } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { BookFilters } from '@/components/books/BookFilters';
 import { BookGrid } from '@/components/books/BookGrid';
@@ -9,6 +10,7 @@ import { DocumentTitle } from '@/components/common/DocumentTitle';
 import { EmptyState } from '@/components/common/EmptyState';
 import { ErrorState } from '@/components/common/ErrorState';
 import { Reveal } from '@/components/common/Reveal';
+import { PageHero } from '@/components/scene/PageHero';
 import { useBooks } from '@/hooks/useBooks';
 import { BOOK_LANGUAGES, CEFR_LEVELS, type BookLanguage, type CefrLevel } from '@/types/book';
 
@@ -42,56 +44,81 @@ export function BooksPage() {
     return t('books.empty');
   })();
 
+  const setFilter = (key: 'lang' | 'level', value: string) => {
+    const next = new URLSearchParams(params);
+    if (value === 'all') next.delete(key);
+    else next.set(key, value);
+    setParams(next, { replace: true });
+  };
+
   return (
-    <Container className="py-10 sm:py-14">
+    <>
       <DocumentTitle title={t('books.title')} description={t('books.subtitle')} />
-      <Reveal as="header" className="max-w-2xl">
-        <p className="eyebrow">{t('nav.books')}</p>
-        <h1 className="display-title mt-5">
-          {t('books.title')}
-        </h1>
-        <p className="mt-4 text-base leading-relaxed text-muted">{t('books.subtitle')}</p>
-      </Reveal>
+      <PageHero
+        scene="library"
+        eyebrow={t('nav.books')}
+        title={t('books.title')}
+        lead={t('books.subtitle')}
+        aside={
+          status === 'success' ? (
+            <dl className="flex gap-8 lg:justify-end">
+              <HeroStat value={books.length} label={t('books.statTitles')} />
+              <HeroStat value={books.filter((book) => book.language === 'en').length} label={t('languages.en')} />
+              <HeroStat value={books.filter((book) => book.language === 'fi').length} label={t('languages.fi')} />
+            </dl>
+          ) : null
+        }
+      />
 
-      <Reveal delay={80} className="mt-8">
-        <BookFilters
-          language={language}
-          level={level}
-          onLanguageChange={(value) => {
-            const next = new URLSearchParams(params);
-            if (value === 'all') next.delete('lang');
-            else next.set('lang', value);
-            setParams(next, { replace: true });
-          }}
-          onLevelChange={(value) => {
-            const next = new URLSearchParams(params);
-            if (value === 'all') next.delete('level');
-            else next.set('level', value);
-            setParams(next, { replace: true });
-          }}
-        />
-      </Reveal>
+      <Container className="relative">
+        <Reveal delay={80}>
+          <div className="glass-card flex flex-col gap-5 rounded-[1.75rem] p-4 sm:p-5 md:flex-row md:items-end md:justify-between">
+            <BookFilters
+              language={language}
+              level={level}
+              onLanguageChange={(value) => setFilter('lang', value)}
+              onLevelChange={(value) => setFilter('level', value)}
+            />
+            {status === 'success' ? (
+              <p className="text-sm text-muted md:pb-2.5" aria-live="polite">
+                {t('books.shown', { count: filtered.length })}
+              </p>
+            ) : null}
+          </div>
+        </Reveal>
 
-      <div className="mt-8">
-        {status === 'error' ? (
-          <ErrorState onRetry={() => void reload()} />
-        ) : status === 'loading' ? (
-          <BookGrid books={[]} isLoading />
-        ) : filtered.length === 0 ? (
-          <EmptyState
-            title={emptyMessage}
-            action={
-              language !== 'all' || level !== 'all' ? (
-                <Button type="button" variant="secondary" onClick={() => setParams({}, { replace: true })}>
-                  {t('books.showAll')}
-                </Button>
-              ) : undefined
-            }
-          />
-        ) : (
-          <BookGrid books={filtered} />
-        )}
-      </div>
-    </Container>
+        <div className="mt-8 sm:mt-10">
+          {status === 'error' ? (
+            <ErrorState onRetry={() => void reload()} />
+          ) : status === 'loading' ? (
+            <BookGrid books={[]} isLoading />
+          ) : filtered.length === 0 ? (
+            <EmptyState
+              icon={<SearchX className="h-6 w-6" />}
+              title={emptyMessage}
+              action={
+                language !== 'all' || level !== 'all' ? (
+                  <Button type="button" variant="secondary" onClick={() => setParams({}, { replace: true })}>
+                    {t('books.showAll')}
+                  </Button>
+                ) : undefined
+              }
+            />
+          ) : (
+            <BookGrid books={filtered} />
+          )}
+        </div>
+      </Container>
+    </>
+  );
+}
+
+function HeroStat({ value, label }: { value: number; label: string }) {
+  return (
+    <div>
+      <dt className="sr-only">{label}</dt>
+      <dd className="font-display text-4xl font-medium tracking-tight text-ink tabular-nums sm:text-5xl">{value}</dd>
+      <dd className="mt-1 text-xs font-semibold tracking-[0.16em] text-muted uppercase">{label}</dd>
+    </div>
   );
 }

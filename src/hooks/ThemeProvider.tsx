@@ -2,18 +2,15 @@ import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react
 import { THEME_STORAGE_KEY } from '@/config/storage';
 import { ThemeContext, type ThemeMode } from '@/hooks/theme-context';
 
-function getSystemTheme(): ThemeMode {
-  if (typeof window === 'undefined') return 'light';
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-}
-
 function getInitialTheme(): ThemeMode {
-  if (typeof window === 'undefined') return 'light';
+  if (typeof window === 'undefined') return 'dark';
 
-  const saved = window.localStorage.getItem(THEME_STORAGE_KEY);
-  if (saved === 'light' || saved === 'dark') return saved;
-
-  return getSystemTheme();
+  // Dark is the house look; light only when the reader chose it.
+  try {
+    return window.localStorage.getItem(THEME_STORAGE_KEY) === 'light' ? 'light' : 'dark';
+  } catch {
+    return 'dark';
+  }
 }
 
 function applyTheme(theme: ThemeMode) {
@@ -30,7 +27,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     applyTheme(theme);
-    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+    try {
+      window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+    } catch {
+      // Private mode: the choice lasts for this visit only.
+    }
   }, [theme]);
 
   const setTheme = useCallback((next: ThemeMode) => {

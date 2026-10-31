@@ -34,12 +34,12 @@ export function ToastProvider({ children }: { children: ReactNode }) {
         {toasts.map((toast) => (
           <p
             key={toast.id}
-            className="glass-card pointer-events-auto flex items-center gap-3 rounded-full px-5 py-3 text-sm font-medium text-ink"
+            className="glass-card toast-in pointer-events-auto flex items-center gap-3 rounded-full bg-[var(--app-glass-strong)] px-5 py-3.5 text-sm font-medium text-ink"
             role="status"
           >
             <span
               aria-hidden
-              className={`h-1.5 w-1.5 shrink-0 rounded-full ${toast.tone === 'error' ? 'bg-[#d9775f]' : 'bg-gold'}`}
+              className={`h-2 w-2 shrink-0 rounded-full ${toast.tone === 'error' ? 'bg-danger' : 'bg-accent shadow-[0_0_10px_var(--app-glow)]'}`}
             />
             {toast.message}
           </p>

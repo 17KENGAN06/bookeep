@@ -182,7 +182,8 @@ async function uploadObject(bucket: string, path: string, file: File) {
   if (!supabase) throw new Error('Supabase is not configured');
 
   const { error } = await supabase.storage.from(bucket).upload(path, file, {
-    cacheControl: '3600',
+    // Every upload gets a new UUID path, so a stored file never changes.
+    cacheControl: '31536000',
     upsert: false,
   });
 

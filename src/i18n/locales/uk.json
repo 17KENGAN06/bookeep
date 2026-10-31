@@ -58,6 +58,11 @@
       "levels": "рівні",
       "languages": "дві мови",
       "reader": "читалка в браузері"
+    },
+    "features": {
+      "eyebrow": "Чому Bookeep",
+      "title": "Історія та сама. Мова йде вам назустріч.",
+      "lead": "Кожну книжку вручну переписують для тих, хто вчить мову: коротші речення, знайоміші слова, ті самі герої й повороти сюжету."
     }
   },
   "books": {
@@ -75,9 +80,15 @@
     "loading": "Завантаження книг...",
     "error": "Щось пішло не так",
     "errorHint": "Каталог не вдалося завантажити. Спробуйте ще раз.",
-    "startReading": "Читати",
-    "continueReading": "Продовжити",
-    "progress": "Прогрес"
+    "startReading": "Почати читати",
+    "continueReading": "Продовжити читання",
+    "progress": "Прогрес",
+    "openBook": "Відкрити книгу",
+    "statTitles": "Книжок",
+    "shown_one": "{{count}} книжка",
+    "shown_other": "{{count}} книжки",
+    "shown_few": "{{count}} книжки",
+    "shown_many": "{{count}} книжок"
   },
   "book": {
     "notFound": "Книгу не знайдено",
@@ -98,7 +109,10 @@
     "adaptationComplete": "Завершена",
     "adaptationCompleteHint": "Адаптація готова. Можна читати від початку до кінця.",
     "adaptationInProgress": "У роботі",
-    "adaptationInProgressHint": "Адаптацію ще пишуть. Читати вже можна."
+    "adaptationInProgressHint": "Адаптацію ще пишуть. Читати вже можна.",
+    "factLevel": "Рівень",
+    "factLanguage": "Мова",
+    "factPages": "Сторінок"
   },
   "languages": {
     "fi": "Фінська",

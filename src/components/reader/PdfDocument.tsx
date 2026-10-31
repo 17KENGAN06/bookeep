@@ -1,13 +1,22 @@
 import { Suspense, useEffect, useRef, useState } from 'react';
-import { Document, Page } from 'react-pdf';
+import { preload } from 'react-dom';
+import { Document, Page, pdfjs } from 'react-pdf';
 import { useTranslation } from 'react-i18next';
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 import { ErrorState } from '@/components/common/ErrorState';
 import { Skeleton } from '@/components/common/Skeleton';
+import pdfWorker from '@/pdf.worker-entry?worker&url';
 
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 
+pdfjs.GlobalWorkerOptions.workerSrc = pdfWorker;
+
+// Warms the browser cache before a document opens: the worker is the reader's slowest step.
+void fetch(pdfWorker).catch(() => {});
+
+// Range stays off: Supabase Storage sends no Access-Control-Expose-Headers, so pdf.js
+// cannot see Accept-Ranges cross-origin and would read the whole file anyway.
 const pdfOptions = {
   disableRange: true,
   disableStream: true,
@@ -35,6 +44,9 @@ export function PdfDocument({ file, page, zoom, onLoad, onPrev, onNext }: PdfDoc
   const [reloadKey, setReloadKey] = useState(0);
   const [failed, setFailed] = useState(false);
   const swipeStart = useRef<{ x: number; y: number } | null>(null);
+
+  // pdf.js requests the file only after its worker has started; this runs both at once.
+  if (file) preload(file, { as: 'fetch', crossOrigin: 'anonymous' });
 
   useEffect(() => {
     setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));

@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { BookOpen, CalendarCheck, ChevronLeft, ChevronRight, Flame, Target, type LucideIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { GoalComposer } from '@/components/goals/GoalComposer';
 import { GoalsCalendar } from '@/components/goals/GoalsCalendar';
 import { Container } from '@/components/common/Container';
+import { PageHero } from '@/components/scene/PageHero';
 import { DocumentTitle } from '@/components/common/DocumentTitle';
 import { ErrorState } from '@/components/common/ErrorState';
 import { Skeleton } from '@/components/common/Skeleton';
@@ -68,20 +69,20 @@ export function ReadingGoalsPage() {
   if (!user) return <Navigate to="/login?next=/goals" replace />;
 
   return (
-    <Container className="py-10 sm:py-14">
+    <>
       <DocumentTitle title={t('goals.title')} noindex />
-      <p className="eyebrow">{t('goals.eyebrow')}</p>
-      <div className="mt-4 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <h1 className="display-title">{t('goals.title')}</h1>
-          <p className="mt-3 max-w-2xl text-sm text-muted sm:text-base">{t('goals.lead')}</p>
-        </div>
-        <div className="flex w-full items-center gap-2 sm:w-auto lg:shrink-0">
+      <PageHero
+        scene="botanical"
+        eyebrow={t('goals.eyebrow')}
+        title={t('goals.title')}
+        lead={t('goals.lead')}
+        aside={
+        <div className="glass-card flex w-full items-center gap-2 rounded-full p-1.5 lg:ml-auto lg:w-auto">
           <button type="button" className="icon-btn" onClick={() => move(-1)} aria-label={t('goals.prevMonth')}>
             <ChevronLeft className="h-5 w-5" />
           </button>
           <select
-            className="field-control !min-h-11 min-w-0 flex-1 !rounded-full !py-0 font-semibold capitalize sm:w-44 sm:flex-none"
+            className="field-control !min-h-11 min-w-0 flex-1 !rounded-full !border-transparent !bg-transparent !py-0 font-semibold capitalize !shadow-none sm:w-44 sm:flex-none"
             value={month}
             aria-label={t('goals.month')}
             onChange={(event) => setMonth(Number(event.target.value))}
@@ -93,7 +94,7 @@ export function ReadingGoalsPage() {
             ))}
           </select>
           <select
-            className="field-control !min-h-11 !w-28 shrink-0 !rounded-full !py-0 font-semibold"
+            className="field-control !min-h-11 !w-28 shrink-0 !rounded-full !border-transparent !bg-transparent !py-0 font-semibold !shadow-none"
             value={year}
             aria-label={t('goals.year')}
             onChange={(event) => setYear(Number(event.target.value))}
@@ -108,15 +109,17 @@ export function ReadingGoalsPage() {
             <ChevronRight className="h-5 w-5" />
           </button>
         </div>
-      </div>
+        }
+      />
 
-      <p className="mt-10 font-display text-xl font-medium tracking-tight text-ink capitalize sm:text-2xl">{monthTitle(year, month, i18n.resolvedLanguage ?? 'en')}</p>
+      <Container>
+      <p className="font-display text-xl font-medium tracking-tight text-ink capitalize sm:text-2xl">{monthTitle(year, month, i18n.resolvedLanguage ?? 'en')}</p>
       <p className="mt-2 text-sm text-muted">{t('goals.calendarHint')}</p>
       <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-4">
-        <SummaryCard label={t('goals.readingDays')} value={String(summary.readingDays)} />
-        <SummaryCard label={t('goals.pagesRead')} value={String(summary.pagesRead)} />
-        <SummaryCard label={t('goals.goalsCompleted')} value={`${summary.goalsCompleted} / ${summary.goalsSet}`} />
-        <SummaryCard label={t('goals.currentStreak')} value={t('goals.streakValue', { count: summary.streak })} />
+        <SummaryCard icon={CalendarCheck} label={t('goals.readingDays')} value={String(summary.readingDays)} />
+        <SummaryCard icon={BookOpen} label={t('goals.pagesRead')} value={String(summary.pagesRead)} />
+        <SummaryCard icon={Target} label={t('goals.goalsCompleted')} value={`${summary.goalsCompleted} / ${summary.goalsSet}`} />
+        <SummaryCard icon={Flame} label={t('goals.currentStreak')} value={t('goals.streakValue', { count: summary.streak })} accent />
       </div>
 
       <div className="mt-8 grid items-start gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(18rem,0.75fr)]">
@@ -153,15 +156,19 @@ export function ReadingGoalsPage() {
           />
         </div>
       </div>
-    </Container>
+      </Container>
+    </>
   );
 }
 
-function SummaryCard({ label, value }: { label: string; value: string }) {
+function SummaryCard({ icon: Icon, label, value, accent = false }: { icon: LucideIcon; label: string; value: string; accent?: boolean }) {
   return (
-    <div className="lux-card flex flex-col justify-between rounded-[1.25rem] px-4 py-4 sm:px-5 sm:py-5">
-      <p className="text-[10px] leading-snug font-bold tracking-[0.18em] break-words text-muted uppercase sm:text-[11px]">{label}</p>
-      <p className="mt-3 font-display text-2xl font-medium tracking-tight text-ink tabular-nums sm:text-3xl">{value}</p>
+    <div className="lux-card lift flex flex-col justify-between rounded-[1.25rem] px-4 py-4 sm:px-5 sm:py-5">
+      <div className="flex items-start justify-between gap-2">
+        <p className="text-[10px] leading-snug font-bold tracking-[0.18em] break-words text-muted uppercase sm:text-[11px]">{label}</p>
+        <Icon className={accent ? 'h-4 w-4 shrink-0 text-accent drop-shadow-[0_0_8px_var(--app-glow)]' : 'h-4 w-4 shrink-0 text-faint'} aria-hidden />
+      </div>
+      <p className="mt-4 font-display text-2xl font-medium tracking-tight text-ink tabular-nums sm:text-[2rem]">{value}</p>
     </div>
   );
 }

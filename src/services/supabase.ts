@@ -19,6 +19,15 @@ export function getSupabaseClient() {
 export const COVER_BUCKET = 'book-covers';
 export const PDF_BUCKET = 'book-pdfs';
 
+const OBJECT_PATH = '/storage/v1/object/public/';
+const RENDER_PATH = '/storage/v1/render/image/public/';
+
+// Storage answers with WebP when the browser accepts it. Mock data has no resized copy.
+export function getResizedImageUrl(url: string, width: number) {
+  if (!url.includes(OBJECT_PATH)) return null;
+  return `${url.replace(OBJECT_PATH, RENDER_PATH)}?width=${width}&quality=70&resize=contain`;
+}
+
 export function getPublicFileUrl(bucket: string, path: string | null | undefined) {
   if (!path) return null;
   if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('/')) {

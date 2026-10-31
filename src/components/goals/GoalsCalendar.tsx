@@ -68,14 +68,14 @@ function DayCard({
       type="button"
       onClick={onSelect}
       className={cn(
-        'focus-ring flex min-h-[3.4rem] min-w-0 flex-col rounded-xl border px-1.5 py-1.5 text-left transition duration-300 sm:min-h-[6.5rem] sm:rounded-2xl lg:min-h-[5.25rem] xl:min-h-[6.5rem] sm:px-2.5 sm:py-2.5',
+        'focus-ring flex min-h-[3.4rem] min-w-0 flex-col rounded-xl border px-1.5 py-1.5 text-left transition duration-300 motion-safe:hover:-translate-y-0.5 sm:min-h-[6.5rem] sm:rounded-2xl lg:min-h-[5.25rem] xl:min-h-[6.5rem] sm:px-2.5 sm:py-2.5',
         day.completed
           ? 'border-accent/30 bg-accent-soft'
           : hasGoal
-            ? 'border-line bg-surface hover:border-gold/40'
-            : 'border-transparent bg-surface-2/50 hover:border-gold/30',
-        isToday && 'shadow-[inset_0_0_0_1px_var(--app-gold)]',
-        isSelected && 'border-gold/70 bg-gold-soft',
+            ? 'border-line bg-surface/70 hover:border-accent/40'
+            : 'border-transparent bg-surface-2/40 hover:border-accent/30',
+        isToday && 'shadow-[inset_0_0_0_1px_var(--app-accent)]',
+        isSelected && 'border-accent/70 bg-accent-soft shadow-[0_0_0_1px_var(--app-accent),0_10px_30px_-12px_var(--app-glow)]',
       )}
       aria-current={isToday ? 'date' : undefined}
       aria-pressed={isSelected}
@@ -85,7 +85,7 @@ function DayCard({
         {day.completed ? <Check className="h-3.5 w-3.5 text-accent" aria-hidden /> : null}
       </span>
         {isToday ? (
-          <span className="mt-0.5 hidden text-[9px] font-bold tracking-[0.16em] text-gold uppercase sm:inline">{t('goals.today')}</span>
+          <span className="mt-0.5 hidden text-[9px] font-bold tracking-[0.16em] text-accent uppercase sm:inline">{t('goals.today')}</span>
         ) : null}
       {hasGoal ? (
         <>
@@ -98,8 +98,8 @@ function DayCard({
           <div className="mt-1 hidden sm:block">
             <ProgressBar value={ratio} />
           </div>
-          <div className="mt-1 h-0.5 overflow-hidden rounded-full bg-line sm:hidden">
-            <div className="h-full rounded-full bg-gradient-to-r from-accent to-gold" style={{ width: `${ratio}%` }} />
+          <div className="meter mt-1 !h-0.5 sm:hidden">
+            <div className="meter-fill" style={{ width: `${ratio}%` }} />
           </div>
         </>
       ) : (

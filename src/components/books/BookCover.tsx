@@ -1,15 +1,20 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { getResizedImageUrl } from '@/services/supabase';
 import type { Book } from '@/types/book';
 import { getLocalizedTitle } from '@/utils/bookCopy';
 import { cn } from '@/utils/cn';
 
+// Covers are 1024x1536. Cards never show them wider than ~240 CSS px, so 480 covers 2x screens.
+const COVER_WIDTH = { full: 800, card: 480 } as const;
+
+// Placeholder bindings for books that have no cover image yet.
 const palettes = [
-  ['#1f5848', '#0f3329', '#d8bd86'],
-  ['#3b2a4a', '#22172c', '#d8bd86'],
-  ['#7a3b2c', '#4a2017', '#ecd9b0'],
-  ['#233a52', '#121f2e', '#d8bd86'],
-  ['#5a4a2a', '#2f2614', '#efe2c4'],
+  ['#1d4a3e', '#0c231d', '#bfeedb'],
+  ['#2f2a44', '#16131f', '#d9e4f2'],
+  ['#5a3027', '#25120e', '#f1dccd'],
+  ['#1f3446', '#0d1822', '#cfe6f0'],
+  ['#3a3f2c', '#181a12', '#e6ead2'],
 ] as const;
 
 function paletteFor(slug: string) {
@@ -18,9 +23,16 @@ function paletteFor(slug: string) {
 }
 
 function coverSources(book: Book, variant: 'full' | 'card') {
-  const list = variant === 'card' ? [book.thumbnail_path, book.cover_path] : [book.cover_path];
-  return list.filter((value, index): value is string => Boolean(value) && list.indexOf(value) === index);
+  // Portrait cover first; the landscape thumbnail is only a fallback and is then shown whole.
+  const list = [book.cover_path, book.thumbnail_path];
+  const originals = list.filter((value, index): value is string => Boolean(value) && list.indexOf(value) === index);
+  // Originals stay as the fallback in case the image service refuses a file.
+  return originals.flatMap((url) => {
+    const resized = getResizedImageUrl(url, COVER_WIDTH[variant]);
+    return resized ? [resized, url] : [url];
+  });
 }
+
 
 type BookCoverProps = {
   book: Book;
@@ -28,9 +40,11 @@ type BookCoverProps = {
   labeled?: boolean;
   variant?: 'full' | 'card';
   compact?: boolean;
+  /** Above-the-fold cover: load at once with high priority. */
+  priority?: boolean;
 };
 
-export function BookCover({ book, className, labeled = true, variant = 'full', compact = false }: BookCoverProps) {
+export function BookCover({ book, className, labeled = true, variant = 'full', compact = false, priority = false }: BookCoverProps) {
   const { i18n } = useTranslation();
   const title = getLocalizedTitle(book, i18n.resolvedLanguage ?? 'en');
   const palette = paletteFor(book.slug);
@@ -39,7 +53,7 @@ export function BookCover({ book, className, labeled = true, variant = 'full', c
   if (sources.length > 0) {
     return (
       <div className={cn('relative h-full w-full overflow-hidden bg-elevated', className)}>
-        <CoverImage key={sources.join('|')} sources={sources} variant={variant} />
+        <CoverImage key={sources.join('|')} sources={sources} lazy={variant === 'card' && !priority} priority={priority} />
       </div>
     );
   }
@@ -68,35 +82,45 @@ export function BookCover({ book, className, labeled = true, variant = 'full', c
           {title}
         </p>
       ) : null}
-      <span aria-hidden className="relative font-sans text-[0.55rem] font-bold tracking-[0.24em] uppercase opacity-70">
+      <span aria-hidden className={cn('relative font-sans text-[0.55rem] font-bold tracking-[0.24em] uppercase opacity-70', compact && 'hidden sm:block')}>
         Bookeep · {book.level}
       </span>
     </div>
   );
 }
 
-function CoverImage({
-  sources,
-  variant,
-}: {
-  sources: string[];
-  variant: 'full' | 'card';
-}) {
+function CoverImage({ sources, lazy, priority }: { sources: string[]; lazy: boolean; priority: boolean }) {
   const [index, setIndex] = useState(0);
+  const [landscape, setLandscape] = useState(false);
   const src = sources[index];
 
   if (!src) return null;
 
-  return (
+  const image = (
     <img
       src={src}
       alt=""
       decoding="async"
+      loading={lazy ? 'lazy' : 'eager'}
+      fetchPriority={priority ? 'high' : undefined}
+      onLoad={(event) => {
+        const { naturalWidth, naturalHeight } = event.currentTarget;
+        setLandscape(naturalWidth > naturalHeight * 1.05);
+      }}
       onError={() => setIndex((current) => current + 1)}
-      className={cn(
-        'h-full w-full object-cover',
-        variant === 'card' ? 'object-center' : 'object-top',
-      )}
+      className={cn('relative h-full w-full', landscape ? 'object-contain' : 'object-cover object-center')}
     />
   );
+
+  // A landscape image in a portrait frame is shown whole on a blurred copy of itself, never cropped.
+  if (landscape) {
+    return (
+      <>
+        <img src={src} alt="" aria-hidden className="absolute inset-0 h-full w-full scale-125 object-cover opacity-60 blur-2xl" />
+        {image}
+      </>
+    );
+  }
+
+  return image;
 }

@@ -1,4 +1,5 @@
-import { useState, type FormEvent } from 'react';
+import { useState, type FormEvent, type ReactNode } from 'react';
+import { Handshake, LifeBuoy, Mail, Send } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
@@ -6,6 +7,7 @@ import { Container } from '@/components/common/Container';
 import { DocumentTitle } from '@/components/common/DocumentTitle';
 import { Field, fieldControlClass } from '@/components/common/Field';
 import { Reveal } from '@/components/common/Reveal';
+import { PageHero } from '@/components/scene/PageHero';
 import { useToast } from '@/components/common/Toast';
 import { ADMIN_EMAIL, CONTACT_TOPICS, emailForTopic, PARTNER_EMAIL, type ContactTopic } from '@/config/contact';
 import { sendContactMessage } from '@/services/contact';
@@ -55,36 +57,29 @@ export function ContactPage() {
   }
 
   return (
-    <Container className="py-12 sm:py-16">
+    <>
       <DocumentTitle title={t('contact.title')} description={t('contact.lead')} />
-      <div className="max-w-3xl">
-        <Reveal>
-          <p className="eyebrow">{t('contact.eyebrow')}</p>
-        </Reveal>
-        <Reveal delay={80}>
-          <h1 className="display-title mt-5">
-            {t('contact.title')}
-          </h1>
-        </Reveal>
-        <Reveal delay={160}>
-          <p className="mt-6 text-lg leading-relaxed text-muted">{t('contact.lead')}</p>
-        </Reveal>
+      <PageHero scene="botanical" eyebrow={t('contact.eyebrow')} title={t('contact.title')} lead={t('contact.lead')} />
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-2">
-          <EmailCard
-            title={t('contact.channels.partner.title')}
-            text={t('contact.channels.partner.text')}
-            email={PARTNER_EMAIL}
-          />
-          <EmailCard
-            title={t('contact.channels.admin.title')}
-            text={t('contact.channels.admin.text')}
-            email={ADMIN_EMAIL}
-          />
-        </div>
+      <Container>
+        <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-10">
+          <div className="grid gap-4 sm:grid-cols-2 lg:sticky lg:top-28 lg:grid-cols-1">
+            <EmailCard
+              icon={<Handshake className="h-5 w-5" />}
+              title={t('contact.channels.partner.title')}
+              text={t('contact.channels.partner.text')}
+              email={PARTNER_EMAIL}
+            />
+            <EmailCard
+              icon={<LifeBuoy className="h-5 w-5" />}
+              title={t('contact.channels.admin.title')}
+              text={t('contact.channels.admin.text')}
+              email={ADMIN_EMAIL}
+            />
+          </div>
 
-        <Reveal delay={280}>
-          <form className="mt-12 space-y-5" onSubmit={(event) => void onSubmit(event)} noValidate>
+          <Reveal delay={120}>
+          <form className="lux-panel space-y-5 rounded-[2rem] p-5 sm:p-8 lg:p-10" onSubmit={(event) => void onSubmit(event)} noValidate>
             <Field label={t('contact.form.topic')} hint={t('contact.form.topicHint', { email: destination })}>
               <select
                 className={fieldControlClass}
@@ -111,6 +106,7 @@ export function ContactPage() {
               </label>
             </div>
 
+            <div className="grid gap-5 sm:grid-cols-2">
             <Field label={t('contact.form.name')}>
               <input
                 className={fieldControlClass}
@@ -133,6 +129,7 @@ export function ContactPage() {
                 required
               />
             </Field>
+            </div>
 
             <Field label={t('contact.form.message')}>
               <textarea
@@ -148,7 +145,7 @@ export function ContactPage() {
             <label className="flex items-start gap-3 text-sm leading-relaxed text-muted">
               <input
                 type="checkbox"
-                className="mt-1 h-4 w-4 rounded border-line accent-[var(--app-accent)]"
+                className="check mt-0.5"
                 checked={form.consent}
                 onChange={(event) => setForm((current) => ({ ...current, consent: event.target.checked }))}
                 required
@@ -158,10 +155,7 @@ export function ContactPage() {
                   i18nKey="contact.form.consent"
                   components={{
                     privacy: (
-                      <Link
-                        to="/privacy"
-                        className="font-semibold text-ink underline decoration-accent/50 underline-offset-4 hover:text-accent"
-                      />
+                      <Link to="/privacy" className="text-link" />
                     ),
                   }}
                 />
@@ -169,25 +163,28 @@ export function ContactPage() {
             </label>
 
             <Button type="submit" isLoading={sending} loadingText={t('contact.form.sending')} className="w-full sm:w-auto">
+              <Send className="h-4 w-4" aria-hidden />
               {t('contact.form.submit')}
             </Button>
           </form>
-        </Reveal>
-      </div>
-    </Container>
+          </Reveal>
+        </div>
+      </Container>
+    </>
   );
 }
 
-function EmailCard({ title, text, email }: { title: string; text: string; email: string }) {
+function EmailCard({ icon, title, text, email }: { icon: ReactNode; title: string; text: string; email: string }) {
   return (
     <Reveal>
-      <div className="h-full rounded-3xl border border-line bg-surface p-5 shadow-[var(--app-shadow)]">
-        <h2 className="font-display text-lg font-semibold text-ink">{title}</h2>
+      <div className="lux-card lift h-full rounded-[1.5rem] p-6">
+        <span aria-hidden className="grid h-11 w-11 place-items-center rounded-full bg-accent-soft text-accent">
+          {icon}
+        </span>
+        <h2 className="mt-5 font-display text-xl font-medium text-ink">{title}</h2>
         <p className="mt-2 text-sm leading-relaxed text-muted">{text}</p>
-        <a
-          href={`mailto:${email}`}
-          className="focus-ring mt-4 inline-flex rounded-md text-sm font-semibold text-accent hover:text-accent-hover"
-        >
+        <a href={`mailto:${email}`} className="focus-ring mt-4 inline-flex items-center gap-2 rounded-md text-sm font-semibold break-all text-accent hover:text-ink">
+          <Mail className="h-4 w-4 shrink-0" aria-hidden />
           {email}
         </a>
       </div>

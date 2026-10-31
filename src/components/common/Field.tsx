@@ -71,7 +71,7 @@ export function ConfirmDialog({
     <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
       <button
         type="button"
-        className="absolute inset-0 bg-bg/70 backdrop-blur-sm"
+        className="absolute inset-0 bg-bg/75 backdrop-blur-md"
         aria-label={cancelLabel}
         onClick={onCancel}
         tabIndex={-1}
@@ -82,7 +82,7 @@ export function ConfirmDialog({
         aria-modal="true"
         aria-labelledby="confirm-title"
         aria-describedby="confirm-desc"
-        className="lux-panel relative w-full max-w-md rounded-[1.75rem] p-6 sm:p-7"
+        className="lux-panel dialog-in relative w-full max-w-md rounded-[1.75rem] p-6 sm:p-8"
       >
         <h2 id="confirm-title" className="font-display text-2xl font-medium tracking-tight text-ink">
           {title}
@@ -112,7 +112,7 @@ type FieldProps = {
 export function Field({ label, children, hint }: FieldProps) {
   return (
     <label className="block">
-      <span className="mb-2 block text-[0.8125rem] font-semibold text-ink">{label}</span>
+      <span className="mb-2 block text-[0.8125rem] font-semibold tracking-wide text-ink/90">{label}</span>
       {children}
       {hint ? <span className="mt-1.5 block text-xs text-muted">{hint}</span> : null}
     </label>

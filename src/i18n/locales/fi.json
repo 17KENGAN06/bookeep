@@ -58,6 +58,11 @@
       "levels": "tasot",
       "languages": "kaksi kieltä",
       "reader": "lukija selaimessa"
+    },
+    "features": {
+      "eyebrow": "Miksi Bookeep",
+      "title": "Tarina pysyy. Kieli tulee vastaan.",
+      "lead": "Jokainen kirja on muokattu käsin kielen oppijoille: lyhyemmät lauseet, tutut sanat, samat henkilöt ja juonenkäänteet."
     }
   },
   "books": {
@@ -75,9 +80,13 @@
     "loading": "Ladataan kirjoja...",
     "error": "Jokin meni vikaan",
     "errorHint": "Luetteloa ei voitu ladata. Yritä uudelleen.",
-    "startReading": "Lue",
-    "continueReading": "Jatka",
-    "progress": "Edistyminen"
+    "startReading": "Aloita lukeminen",
+    "continueReading": "Jatka lukemista",
+    "progress": "Edistyminen",
+    "openBook": "Avaa kirja",
+    "statTitles": "Kirjaa",
+    "shown_one": "{{count}} kirja",
+    "shown_other": "{{count}} kirjaa"
   },
   "book": {
     "notFound": "Kirjaa ei löytynyt",
@@ -98,7 +107,10 @@
     "adaptationComplete": "Valmis",
     "adaptationCompleteHint": "Sovitus on valmis. Voit lukea sen alusta loppuun.",
     "adaptationInProgress": "Kesken",
-    "adaptationInProgressHint": "Tätä sovitusta kirjoitetaan vielä. Lukemisen voi jo aloittaa."
+    "adaptationInProgressHint": "Tätä sovitusta kirjoitetaan vielä. Lukemisen voi jo aloittaa.",
+    "factLevel": "Taso",
+    "factLanguage": "Kieli",
+    "factPages": "Sivuja"
   },
   "languages": {
     "fi": "Suomi",

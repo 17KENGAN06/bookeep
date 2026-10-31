@@ -58,6 +58,11 @@
       "levels": "уровни",
       "languages": "два языка",
       "reader": "читалка в браузере"
+    },
+    "features": {
+      "eyebrow": "Почему Bookeep",
+      "title": "История та же. Язык идёт вам навстречу.",
+      "lead": "Каждую книгу вручную переписывают для изучающих язык: короче предложения, знакомее слова, те же герои и повороты сюжета."
     }
   },
   "books": {
@@ -75,9 +80,15 @@
     "loading": "Загрузка книг...",
     "error": "Что-то пошло не так",
     "errorHint": "Каталог не удалось загрузить. Попробуйте снова.",
-    "startReading": "Читать",
-    "continueReading": "Продолжить",
-    "progress": "Прогресс"
+    "startReading": "Начать чтение",
+    "continueReading": "Продолжить чтение",
+    "progress": "Прогресс",
+    "openBook": "Открыть книгу",
+    "statTitles": "Книг",
+    "shown_one": "{{count}} книга",
+    "shown_other": "{{count}} книги",
+    "shown_few": "{{count}} книги",
+    "shown_many": "{{count}} книг"
   },
   "book": {
     "notFound": "Книга не найдена",
@@ -98,7 +109,10 @@
     "adaptationComplete": "Закончена",
     "adaptationCompleteHint": "Адаптация готова. Можно читать от начала до конца.",
     "adaptationInProgress": "В работе",
-    "adaptationInProgressHint": "Адаптация ещё пишется. Читать уже можно."
+    "adaptationInProgressHint": "Адаптация ещё пишется. Читать уже можно.",
+    "factLevel": "Уровень",
+    "factLanguage": "Язык",
+    "factPages": "Страниц"
   },
   "languages": {
     "fi": "Финский",

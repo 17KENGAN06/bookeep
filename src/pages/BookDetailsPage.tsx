@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, Download } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -14,9 +14,12 @@ import { ErrorState } from '@/components/common/ErrorState';
 import { ProgressBar } from '@/components/common/ProgressBar';
 import { Reveal } from '@/components/common/Reveal';
 import { Skeleton } from '@/components/common/Skeleton';
+import { CoverScene, Scene } from '@/components/scene/Scene';
 import { useBook } from '@/hooks/useBooks';
 import { useReadingProgress } from '@/hooks/useReadingProgress';
+import { loadReaderPage } from '@/routes/lazyPage';
 import { getLocalizedDescription, getLocalizedTitle } from '@/utils/bookCopy';
+import { coverUrl } from '@/utils/cover';
 
 export function BookDetailsPage() {
   const { slug } = useParams();
@@ -25,12 +28,17 @@ export function BookDetailsPage() {
   const { progress } = useReadingProgress(book?.id);
   const [downloading, setDownloading] = useState(false);
 
+  // Most visitors here go on to read, so the reader and its PDF worker are fetched ahead.
+  useEffect(() => {
+    void loadReaderPage().catch(() => {});
+  }, []);
+
   if (status === 'loading') {
     return (
       <Container className="py-10 sm:py-14">
         <DocumentTitle title={t('book.loading')} />
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,1fr)] lg:gap-14">
-          <Skeleton className="aspect-[4/5] w-full max-w-md rounded-[2rem]" />
+        <div className="grid gap-10 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] lg:gap-20">
+          <Skeleton className="mx-auto aspect-[4/5] w-full max-w-[26rem] rounded-[2rem] md:max-w-none" />
           <div className="space-y-4">
             <Skeleton className="h-5 w-24" />
             <Skeleton className="h-12 w-3/4" />
@@ -91,79 +99,103 @@ export function BookDetailsPage() {
     }
   }
 
+  const backdrop = coverUrl(book, 480);
+  const facts = [
+    { label: t('book.factLevel'), value: book.level },
+    { label: t('book.factLanguage'), value: t(`languages.${book.language}`) },
+    ...(book.page_count ? [{ label: t('book.factPages'), value: String(book.page_count) }] : []),
+  ];
+
   return (
-    <Container className="py-10 sm:py-14">
+    <section className="relative isolate">
       <DocumentTitle title={title} description={description} image={book.cover_path} />
-      <Link to="/books" className="btn btn-quiet -ml-1 text-muted hover:text-ink">
-        <ArrowLeft className="h-4 w-4" aria-hidden />
-        <span className="btn-label">{t('book.backToCatalog')}</span>
-      </Link>
+      {backdrop ? <CoverScene src={backdrop} underHeader /> : <Scene name="library" underHeader shade="soft" />}
+      <Container className="relative py-8 sm:py-12 lg:py-16">
+        <Link to="/books" className="btn btn-quiet -ml-1 text-muted hover:text-ink">
+          <ArrowLeft className="h-4 w-4" aria-hidden />
+          <span className="btn-label">{t('book.backToCatalog')}</span>
+        </Link>
 
-      <div className="mt-6 grid items-start gap-8 sm:mt-8 md:grid-cols-[minmax(0,0.44fr)_minmax(0,1fr)] md:gap-10 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,1fr)] lg:gap-16">
-        <Reveal direction="left">
-          <div className="lux-panel book-stage relative mx-auto flex w-full max-w-sm items-center justify-center rounded-[2rem] px-[16%] py-[13%] md:max-w-none">
-            <div aria-hidden className="absolute inset-3 rounded-[1.5rem] border border-gold/15" />
-            <div className="book-object aspect-[2/3] w-full">
-              <BookCover book={book} />
-            </div>
-          </div>
-        </Reveal>
-
-        <Reveal delay={120} direction="right">
-          <div>
-          <div className="flex flex-wrap items-center gap-3">
-            <LevelBadge level={book.level} />
-            <span className="text-[11px] font-bold tracking-[0.22em] text-muted uppercase">{t(`languages.${book.language}`)}</span>
-          </div>
-
-          <h1 className="display-title mt-5 break-words">
-            {title}
-          </h1>
-
-          {book.title_original !== title ? (
-            <p className="mt-3 font-display text-lg text-muted italic">{book.title_original}</p>
-          ) : null}
-
-          <div className="mt-6 max-w-2xl">
-            <AdaptationBadge complete={book.complete} variant="banner" />
-          </div>
-
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted sm:text-[1.0625rem]">{description}</p>
-
-            {hasProgress && progress ? (
-              <div className="mt-6 max-w-md">
-                <ProgressBar value={progress.percentage} label={t('books.progress')} />
-                <p className="mt-2 text-sm text-muted">
-                  {t('book.continueFrom', { page: progress.currentPage })}
-                </p>
+        <div className="mt-6 grid items-center gap-10 sm:mt-8 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] md:gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] lg:gap-20">
+          <Reveal direction="left">
+            <div className="relative mx-auto aspect-[4/5] w-full max-w-[26rem] md:max-w-none">
+              <div aria-hidden className="absolute inset-x-[4%] top-0 bottom-[12%] rounded-[2rem] border border-white/[0.08] bg-[linear-gradient(160deg,rgba(220,255,240,0.06),rgba(220,255,240,0.01)_50%,rgba(0,0,0,0.15))] shadow-[inset_0_1px_0_rgba(255,255,255,0.07)] sm:rounded-[2.5rem]" />
+              <div aria-hidden className="pointer-events-none absolute top-[-6%] left-1/2 h-[60%] w-[80%] -translate-x-1/2 bg-[radial-gradient(closest-side,rgba(235,250,240,0.12),transparent)]" />
+              <div aria-hidden className="absolute right-[-8%] bottom-0 left-[-8%] h-[13%] [mask-image:linear-gradient(90deg,transparent,#000_14%,#000_86%,transparent)]">
+                <div className="stone-ledge inset-0" />
+                <div className="ledge-front absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-b from-black/50 to-black/85" />
+                <div className="absolute inset-x-0 -bottom-px h-[35%] bg-gradient-to-b from-transparent to-bg" />
               </div>
-            ) : null}
+              <div className="absolute bottom-[12.2%] left-1/2 w-[58%] -translate-x-1/2">
+                <div className="book-object aspect-[2/3] w-full">
+                  <BookCover book={book} priority />
+                </div>
+                <span aria-hidden className="book-contact" />
+              </div>
+            </div>
+          </Reveal>
 
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-            <ButtonLink to={`/read/${book.slug}`} className="w-full sm:w-auto">
-              {hasProgress ? t('book.continueReading') : t('book.startReading')}
-              <ButtonArrow />
-            </ButtonLink>
-            {pdfPath ? (
-              <Button
-                type="button"
-                variant="secondary"
-                className="w-full sm:w-auto"
-                isLoading={downloading}
-                loadingText={t('book.downloading')}
-                onClick={() => void downloadPdf()}
-              >
-                <Download className="h-4 w-4 text-gold" aria-hidden />
-                {t('book.download')}
-              </Button>
-            ) : null}
-          </div>
-          <div className="mt-3 sm:mt-4">
-            <LibraryActions bookId={book.id} />
-          </div>
-          </div>
-        </Reveal>
-      </div>
-    </Container>
+          <Reveal delay={120} direction="right">
+            <div>
+              <div className="flex flex-wrap items-center gap-2.5">
+                <LevelBadge level={book.level} />
+                {book.complete ? null : <span className="pill pill-accent">{t('book.adaptationInProgress')}</span>}
+              </div>
+
+              <h1 className="display-title mt-6 break-words">{title}</h1>
+
+              {book.title_original !== title ? (
+                <p className="mt-3 font-display text-xl text-muted italic">{book.title_original}</p>
+              ) : null}
+
+              <p className="lead mt-6 max-w-2xl">{description}</p>
+
+              <dl className="mt-8 flex max-w-xl flex-wrap gap-x-8 gap-y-1 border-y border-line py-1 sm:gap-x-10">
+                {facts.map((fact) => (
+                  <div key={fact.label} className="min-w-0 py-3">
+                    <dt className="text-[10px] font-bold tracking-[0.14em] text-muted uppercase sm:text-[11px] sm:tracking-[0.2em]">{fact.label}</dt>
+                    <dd className="mt-1.5 font-display text-[15px] font-medium break-words text-ink sm:text-xl">{fact.value}</dd>
+                  </div>
+                ))}
+              </dl>
+
+              <div className="mt-6 max-w-2xl">
+                <AdaptationBadge complete={book.complete} variant="banner" />
+              </div>
+
+              {hasProgress && progress ? (
+                <div className="mt-6 max-w-md">
+                  <ProgressBar value={progress.percentage} label={t('books.progress')} />
+                  <p className="mt-2 text-sm text-muted">{t('book.continueFrom', { page: progress.currentPage })}</p>
+                </div>
+              ) : null}
+
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+                <ButtonLink to={`/read/${book.slug}`} className="w-full !min-h-14 !px-7 sm:w-auto">
+                  {hasProgress ? t('books.continueReading') : t('books.startReading')}
+                  <ButtonArrow />
+                </ButtonLink>
+                {pdfPath ? (
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    className="w-full !min-h-14 sm:w-auto"
+                    isLoading={downloading}
+                    loadingText={t('book.downloading')}
+                    onClick={() => void downloadPdf()}
+                  >
+                    <Download className="h-4 w-4 text-accent" aria-hidden />
+                    {t('book.download')}
+                  </Button>
+                ) : null}
+              </div>
+              <div className="mt-3">
+                <LibraryActions bookId={book.id} />
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </Container>
+    </section>
   );
 }

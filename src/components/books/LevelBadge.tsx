@@ -9,7 +9,7 @@ export function LevelBadge({ level, className }: LevelBadgeProps) {
   return (
     <span
       className={cn(
-        'pill-gold shrink-0',
+        'pill shrink-0',
         className,
       )}
     >

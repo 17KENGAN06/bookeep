@@ -1,8 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { ButtonLink } from '@/components/common/Button';
+import { ButtonArrow, ButtonLink } from '@/components/common/Button';
 import { Container } from '@/components/common/Container';
 import { DocumentTitle } from '@/components/common/DocumentTitle';
 import { Reveal } from '@/components/common/Reveal';
+import { PageHero } from '@/components/scene/PageHero';
 
 const SECTIONS = ['purpose', 'adaptation', 'languages', 'levels', 'reading'] as const;
 
@@ -10,40 +11,39 @@ export function AboutPage() {
   const { t } = useTranslation();
 
   return (
-    <Container className="py-12 sm:py-16">
+    <>
       <DocumentTitle title={t('about.title')} description={t('about.lead')} />
-      <div className="max-w-3xl">
-        <Reveal>
-          <p className="eyebrow">{t('about.eyebrow')}</p>
-        </Reveal>
-        <Reveal delay={80}>
-          <h1 className="display-title mt-5">
-            {t('about.title')}
-          </h1>
-        </Reveal>
-        <Reveal delay={160}>
-          <p className="mt-6 text-lg leading-relaxed text-muted">{t('about.lead')}</p>
-        </Reveal>
+      <PageHero scene="room" eyebrow={t('about.eyebrow')} title={t('about.title')} lead={t('about.lead')} />
 
-        <div className="mt-12 space-y-10">
+      <Container>
+        <ol className="border-t border-line">
           {SECTIONS.map((section, index) => (
-            <Reveal key={section} delay={200 + index * 60}>
-              <h2 className="font-display text-xl font-semibold tracking-tight text-ink sm:text-2xl">
-                {t(`about.sections.${section}.title`)}
-              </h2>
-              <p className="mt-3 text-base leading-relaxed text-muted">
-                {t(`about.sections.${section}.text`)}
-              </p>
+            <Reveal as="li" key={section} delay={index * 60} className="border-b border-line">
+              <article className="grid gap-4 py-9 sm:py-12 md:grid-cols-[minmax(0,0.42fr)_minmax(0,1fr)] md:gap-12">
+                <div className="flex items-baseline gap-5">
+                  <span aria-hidden className="font-display text-sm text-accent tabular-nums">0{index + 1}</span>
+                  <h2 className="font-display text-2xl font-medium tracking-tight text-ink sm:text-[1.875rem]">
+                    {t(`about.sections.${section}.title`)}
+                  </h2>
+                </div>
+                <p className="max-w-2xl text-base leading-relaxed text-muted sm:text-[1.0625rem] md:pt-1.5">
+                  {t(`about.sections.${section}.text`)}
+                </p>
+              </article>
             </Reveal>
           ))}
-        </div>
+        </ol>
 
-        <Reveal delay={520}>
-          <ButtonLink to="/books" className="mt-12 w-full min-w-44 sm:w-auto">
-            {t('about.cta')}
-          </ButtonLink>
+        <Reveal delay={120}>
+          <div className="mt-14 flex flex-col items-start gap-6 sm:mt-20 sm:flex-row sm:items-center sm:justify-between">
+            <p className="max-w-xl font-display text-[1.75rem] leading-snug text-ink italic sm:text-[2rem]">{t('footer.tagline')}</p>
+            <ButtonLink to="/books" className="w-full shrink-0 sm:w-auto">
+              {t('about.cta')}
+              <ButtonArrow />
+            </ButtonLink>
+          </div>
         </Reveal>
-      </div>
-    </Container>
+      </Container>
+    </>
   );
 }

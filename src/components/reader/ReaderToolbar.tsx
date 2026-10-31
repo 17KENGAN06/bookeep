@@ -50,17 +50,17 @@ export function ReaderToolbar({
 
   return (
     <>
-      <header className="sticky top-0 z-30 border-b border-line bg-[var(--reader-chrome)] backdrop-blur-xl">
+      <header className="sticky top-0 z-30 border-b border-line bg-[var(--reader-chrome)] backdrop-blur-xl backdrop-saturate-150">
         <p className="sr-only" aria-live="polite" aria-atomic="true">
           {pageLabel}
         </p>
-        <div className="mx-auto flex max-w-[1440px] items-center gap-2 px-3 py-2.5 sm:gap-3 sm:px-5">
+        <div className="mx-auto flex max-w-[90rem] items-center gap-2 px-3 py-2.5 sm:gap-3 sm:px-5">
           <Link to={backTo} className="icon-btn" aria-label={t('reader.back')} title={t('reader.back')}>
             <ChevronLeft className="h-[18px] w-[18px]" aria-hidden />
           </Link>
 
           <div className="min-w-0 flex-1">
-            <p className="truncate font-display text-[15px] font-medium tracking-tight text-ink sm:text-base">{title}</p>
+            <p className="truncate font-display text-base font-medium tracking-tight text-ink sm:text-lg">{title}</p>
             <p className="text-[11px] font-semibold tracking-[0.18em] text-muted uppercase tabular-nums md:hidden" aria-hidden>
               {pageLabel}
             </p>
@@ -125,7 +125,7 @@ export function ReaderToolbar({
         aria-label={t('reader.pages')}
         className="fixed inset-x-0 bottom-0 z-30 flex justify-center px-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:hidden"
       >
-        <div className="glass-card flex items-center gap-1 rounded-full p-1.5">
+        <div className="glass-card flex items-center gap-1 rounded-full bg-[var(--app-glass-strong)] p-1.5">
           <ToolButton label={t('reader.prev')} disabled={!canPrev} onClick={onPrev} large>
             <ChevronLeft className="h-5 w-5" />
           </ToolButton>

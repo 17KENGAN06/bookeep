@@ -169,14 +169,14 @@ function ReaderPageInner() {
         onPaperChange={setPaper}
       />
       <div
-        className="h-[2px] bg-line"
+        className="h-[2px] bg-line/70"
         role="progressbar"
         aria-valuemin={1}
         aria-valuemax={totalPages || 1}
         aria-valuenow={page}
         aria-label={t('reader.page', { current: page, total: totalPages || '—' })}
       >
-        <div className="h-full bg-gradient-to-r from-accent to-gold transition-[width] duration-500 ease-[var(--ease-lux)] motion-reduce:transition-none" style={{ width: `${percent}%` }} />
+        <div className="meter-fill" style={{ width: `${percent}%` }} />
       </div>
       <main className="flex flex-1 flex-col">
         <PdfDocument

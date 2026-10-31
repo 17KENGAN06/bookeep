@@ -52,6 +52,14 @@ export function Header() {
     };
   }, [open]);
 
+  const [scrolled, setScrolled] = useState(() => typeof window !== 'undefined' && window.scrollY > 12);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   const goalsTo = user ? '/goals' : '/login?next=/goals';
   const accountClassName =
     'focus-ring hidden min-h-10 items-center rounded-full px-3.5 text-sm font-semibold whitespace-nowrap text-muted transition hover:text-ink xl:inline-flex';
@@ -59,10 +67,15 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 pt-[max(0.5rem,env(safe-area-inset-top))] sm:pt-3">
       <Container>
-        <div className="glass-card flex h-14 items-center justify-between gap-3 rounded-full pr-1.5 pl-4 sm:h-16 sm:pr-2 sm:pl-5">
+        <div
+          className={cn(
+            'glass-card flex h-14 items-center justify-between gap-3 rounded-full pr-1.5 pl-4 transition-[background-color,box-shadow] duration-500 sm:h-16 sm:pr-2 sm:pl-6',
+            scrolled && 'bg-[var(--app-glass-strong)]',
+          )}
+        >
           <BrandLockup size="md" className="shrink-0" />
 
-          <nav className="hidden min-w-0 items-center gap-0.5 xl:flex" aria-label={t('nav.primary')}>
+          <nav className="hidden min-w-0 items-center gap-1 xl:flex" aria-label={t('nav.primary')}>
             {links.map((link) => (
               <NavLink
                 key={link.to}
@@ -75,7 +88,7 @@ export function Header() {
                   cn(
                     'focus-ring relative inline-flex min-h-10 items-center rounded-full px-3.5 text-sm font-semibold whitespace-nowrap transition',
                     isActive
-                      ? 'text-ink after:absolute after:inset-x-3.5 after:bottom-1.5 after:h-px after:bg-gold'
+                      ? 'text-ink after:absolute after:inset-x-3.5 after:bottom-1 after:h-[2px] after:rounded-full after:bg-accent after:shadow-[0_0_10px_var(--app-glow)]'
                       : 'text-muted hover:text-ink',
                   )
                 }
@@ -148,12 +161,12 @@ export function Header() {
                     }}
                     aria-current={active ? 'page' : undefined}
                     className={cn(
-                      'focus-ring flex items-center justify-between rounded-2xl px-4 py-3.5 font-display text-[1.375rem] font-medium tracking-tight transition',
+                      'focus-ring flex items-center justify-between rounded-2xl px-4 py-3.5 font-display text-[1.5rem] font-medium tracking-tight transition',
                       active ? 'bg-surface-2 text-ink' : 'text-ink/85 hover:bg-surface-2/70',
                     )}
                   >
                     {t(link.key)}
-                    {active ? <span className="h-1.5 w-1.5 rounded-full bg-gold" aria-hidden /> : null}
+                    {active ? <span className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_10px_var(--app-glow)]" aria-hidden /> : null}
                   </Link>
                 );
               })}

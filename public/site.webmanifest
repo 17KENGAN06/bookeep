@@ -4,8 +4,8 @@
   "description": "Adapted English and Finnish books for language learners.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#06140F",
-  "theme_color": "#06140F",
+  "background_color": "#0B1113",
+  "theme_color": "#0B1113",
   "lang": "en",
   "icons": [
     {

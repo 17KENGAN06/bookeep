@@ -58,6 +58,11 @@
       "levels": "levels",
       "languages": "two languages",
       "reader": "reader in the browser"
+    },
+    "features": {
+      "eyebrow": "Why Bookeep",
+      "title": "The story stays. The language meets you halfway.",
+      "lead": "Every book is rewritten for learners by hand: shorter sentences, familiar words, the same characters and turns of plot."
     }
   },
   "books": {
@@ -75,9 +80,13 @@
     "loading": "Loading books...",
     "error": "Something went wrong",
     "errorHint": "The catalog could not be loaded. Please try again.",
-    "startReading": "Read",
-    "continueReading": "Continue",
-    "progress": "Progress"
+    "startReading": "Start reading",
+    "continueReading": "Continue reading",
+    "progress": "Progress",
+    "openBook": "Open book",
+    "statTitles": "Titles",
+    "shown_one": "{{count}} book",
+    "shown_other": "{{count}} books"
   },
   "book": {
     "notFound": "Book not found",
@@ -98,7 +107,10 @@
     "adaptationComplete": "Complete",
     "adaptationCompleteHint": "This adaptation is finished. You can read it from the first page to the last.",
     "adaptationInProgress": "In progress",
-    "adaptationInProgressHint": "This adaptation is still being written. You can already start reading."
+    "adaptationInProgressHint": "This adaptation is still being written. You can already start reading.",
+    "factLevel": "Level",
+    "factLanguage": "Language",
+    "factPages": "Pages"
   },
   "languages": {
     "fi": "Finnish",

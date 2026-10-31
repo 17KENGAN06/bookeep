@@ -35,6 +35,23 @@ function pdfWorkerPlugin(): Plugin {
   };
 }
 
+// Starts the runtime config request alongside the bundle instead of after it.
+function apiConfigPreloadPlugin(apiUrl: string): Plugin {
+  return {
+    name: 'bookeep-api-config-preload',
+    transformIndexHtml() {
+      if (!apiUrl) return [];
+      return [
+        {
+          tag: 'link',
+          attrs: { rel: 'preload', as: 'fetch', href: `${apiUrl}/api/config`, crossorigin: 'anonymous' },
+          injectTo: 'head',
+        },
+      ];
+    },
+  };
+}
+
 function seoSiteUrlPlugin(origin: string): Plugin {
   return {
     name: 'bookeep-seo-site-url',
@@ -55,9 +72,10 @@ function seoSiteUrlPlugin(origin: string): Plugin {
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   const siteUrl = (env.VITE_SITE_URL ?? '').trim().replace(/\/$/, '');
+  const apiUrl = (env.VITE_API_URL ?? '').trim().replace(/\/$/, '');
 
   return {
-    plugins: [react(), tailwindcss(), pdfWorkerPlugin(), seoSiteUrlPlugin(siteUrl)],
+    plugins: [react(), tailwindcss(), pdfWorkerPlugin(), seoSiteUrlPlugin(siteUrl), apiConfigPreloadPlugin(apiUrl)],
     resolve: {
       alias: [
         { find: '@', replacement: fileURLToPath(new URL('./src', import.meta.url)) },

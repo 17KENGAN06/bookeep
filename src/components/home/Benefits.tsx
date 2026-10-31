@@ -9,35 +9,45 @@ const items = [
   { key: 'levels', icon: Layers2 },
 ] as const;
 
+/** Editorial feature list: a statement on the left, three numbered notes on the right. */
 export function Benefits() {
   const { t } = useTranslation();
 
   return (
-    <section className="relative pb-10 sm:pb-16">
+    <section className="relative py-16 sm:py-24">
       <Container>
-        <div className="lux-card grid overflow-hidden rounded-[2rem] md:grid-cols-3">
-          {items.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <Reveal
-                key={item.key}
-                delay={index * 90}
-                className="border-line not-first:border-t md:not-first:border-t-0 md:not-first:border-l"
-              >
-                <article className="h-full p-6 sm:p-8">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-full text-gold shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--app-gold)_40%,transparent)]">
-                    <Icon className="h-[18px] w-[18px]" aria-hidden />
-                  </div>
-                  <h2 className="mt-5 font-display text-xl font-medium tracking-tight text-ink sm:text-[1.375rem]">
-                    {t(`home.moods.${item.key}.title`)}
-                  </h2>
-                  <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted sm:text-[0.9375rem]">
-                    {t(`home.moods.${item.key}.text`)}
-                  </p>
-                </article>
-              </Reveal>
-            );
-          })}
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
+          <Reveal>
+            <div className="lg:sticky lg:top-32">
+              <p className="eyebrow">{t('home.features.eyebrow')}</p>
+              <h2 className="section-title mt-5 max-w-lg">{t('home.features.title')}</h2>
+              <p className="mt-5 max-w-md text-[0.9375rem] leading-relaxed text-muted sm:text-base">{t('home.features.lead')}</p>
+            </div>
+          </Reveal>
+
+          <ol className="relative grid gap-4 sm:gap-5">
+            {items.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <Reveal as="li" key={item.key} delay={index * 90}>
+                  <article className="lux-card lift group grid grid-cols-[auto_minmax(0,1fr)] gap-5 rounded-[1.5rem] p-6 sm:gap-7 sm:p-8">
+                    <div className="flex flex-col items-center gap-4">
+                      <span className="grid h-12 w-12 place-items-center rounded-full bg-accent-soft text-accent shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--app-accent)_28%,transparent)] transition duration-500 group-hover:shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--app-accent)_50%,transparent),0_0_30px_var(--app-glow)]">
+                        <Icon className="h-5 w-5" aria-hidden />
+                      </span>
+                      <span aria-hidden className="font-display text-sm text-faint tabular-nums">0{index + 1}</span>
+                    </div>
+                    <div className="min-w-0 pt-1.5">
+                      <h3 className="font-display text-[1.375rem] font-medium tracking-tight text-ink sm:text-2xl">
+                        {t(`home.moods.${item.key}.title`)}
+                      </h3>
+                      <p className="mt-2.5 max-w-md text-[0.9375rem] leading-relaxed text-muted">{t(`home.moods.${item.key}.text`)}</p>
+                    </div>
+                  </article>
+                </Reveal>
+              );
+            })}
+          </ol>
         </div>
       </Container>
     </section>

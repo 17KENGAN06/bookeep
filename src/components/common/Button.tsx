@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, LoaderCircle } from 'lucide-react';
 import { cn } from '@/utils/cn';
 
-type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'quiet';
+type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'quiet' | 'outline';
 
 const variants: Record<ButtonVariant, string> = {
   primary: 'btn-primary',
   secondary: 'btn-secondary',
   ghost: 'btn-ghost',
   quiet: 'btn-quiet',
+  outline: 'btn-outline',
 };
 
 export function buttonClassName(variant: ButtonVariant = 'primary', className = '') {

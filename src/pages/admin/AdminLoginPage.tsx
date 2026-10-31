@@ -50,7 +50,7 @@ export function AdminLoginPage() {
         <LanguageSwitcher />
       </div>
 
-      <div className="relative z-10 w-full max-w-md rounded-3xl border border-line bg-surface p-6 shadow-[var(--app-shadow)] sm:p-8">
+      <div className="lux-panel relative z-10 w-full max-w-md rounded-[2rem] p-6 sm:p-8">
         <BrandLockup to="/" size="md" />
         <h1 className="font-display mt-6 text-2xl font-semibold text-ink">{t('admin.login.title')}</h1>
         <p className="mt-2 text-sm leading-relaxed text-muted">{t('admin.login.subtitle')}</p>

@@ -11,9 +11,9 @@ export function AdminLayout() {
   const { signOut, user } = useAuth();
 
   return (
-    <div className="min-h-dvh bg-bg">
-      <header className="border-b border-line bg-surface/80 backdrop-blur-md">
-        <div className="mx-auto flex max-w-[1360px] flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
+    <div className="ambient-glow min-h-dvh bg-bg">
+      <header className="sticky top-0 z-30 border-b border-line bg-[var(--app-glass-strong)] backdrop-blur-xl">
+        <div className="mx-auto flex max-w-[85rem] flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
           <BrandLockup to="/admin" size="sm" />
           <div className="flex min-w-0 flex-wrap items-center justify-end gap-2">
             <p className="hidden max-w-[12rem] truncate text-xs text-muted sm:block">{user?.email}</p>
@@ -32,7 +32,7 @@ export function AdminLayout() {
           </div>
         </div>
       </header>
-      <main className="mx-auto max-w-[1360px] px-4 py-8 sm:px-6 sm:py-10">
+      <main className="mx-auto max-w-[85rem] px-4 py-8 sm:px-6 sm:py-10">
         <Outlet />
       </main>
     </div>

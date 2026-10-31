@@ -51,7 +51,7 @@ export function AdminDashboardPage() {
         {status === 'error' ? (
           <ErrorState onRetry={() => void reload()} />
         ) : status === 'loading' ? (
-          <div className="space-y-3 rounded-2xl border border-line bg-surface p-4">
+          <div className="space-y-3 lux-card rounded-2xl p-4">
             {Array.from({ length: 5 }).map((_, index) => (
               <Skeleton key={index} className="h-14 w-full" />
             ))}
@@ -59,7 +59,7 @@ export function AdminDashboardPage() {
         ) : books.length === 0 ? (
           <EmptyState title={t('admin.dashboard.empty')} />
         ) : (
-          <div className="overflow-x-auto rounded-2xl border border-line bg-surface">
+          <div className="overflow-x-auto lux-card rounded-2xl">
             <table className="min-w-full text-left text-sm">
               <thead className="border-b border-line text-xs tracking-wide text-muted uppercase">
                 <tr>
@@ -146,7 +146,7 @@ export function AdminDashboardPage() {
 
 function Stat({ label, value }: { label: string; value: number }) {
   return (
-    <article className="rounded-2xl border border-line bg-surface p-5">
+    <article className="lux-card rounded-2xl p-5">
       <p className="text-xs tracking-[0.16em] text-muted uppercase">{label}</p>
       <p className="font-display mt-2 text-3xl font-semibold text-ink">{value}</p>
     </article>
