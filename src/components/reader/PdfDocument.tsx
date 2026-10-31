@@ -6,6 +6,7 @@ import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 import { ErrorState } from '@/components/common/ErrorState';
 import { Skeleton } from '@/components/common/Skeleton';
 import pdfWorker from '@/pdf.worker-entry?worker&url';
+import { useTextLayerSelection } from '@/hooks/useTextLayerSelection';
 import { pageTextFromContent } from '@/utils/selectionContext';
 
 import 'react-pdf/dist/Page/AnnotationLayer.css';
@@ -49,6 +50,7 @@ export function PdfDocument({ file, page, zoom, onLoad, onPrev, onNext, onPageTe
   const { t } = useTranslation();
   const innerStageRef = useRef<HTMLDivElement>(null);
   const stageRef = outerStageRef ?? innerStageRef;
+  useTextLayerSelection(stageRef);
   const [width, setWidth] = useState(640);
   const [pixelRatio, setPixelRatio] = useState(1);
   const [reloadKey, setReloadKey] = useState(0);

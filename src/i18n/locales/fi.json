@@ -169,17 +169,21 @@
       "night": "Yö"
     },
     "explain": {
-      "action": "Selitä",
-      "title": "Selitys",
+      "action": "Käännä",
+      "title": "Käännös ja selitys",
       "loading": "Selitetään…",
       "close": "Sulje",
       "retry": "Yritä uudelleen",
-      "disclaimer": "Tekoäly kirjoitti selityksen tähän kohtaan. Se voi erehtyä.",
+      "disclaimer": "Tekoäly käänsi ja selitti tämän kohdan. Se voi erehtyä.",
       "errors": {
         "rate_limited": "Liian monta pyyntöä. Odota hetki ja yritä uudelleen.",
         "not_configured": "Selitykset eivät ole vielä käytössä.",
         "failed": "Selitystä ei saatu. Tarkista yhteys ja yritä uudelleen."
-      }
+      },
+      "translation": "Käännös",
+      "translateTo": "Käännä kielelle",
+      "noTranslation": "Tälle valinnalle ei saatu käännöstä.",
+      "sameLanguage": "Valitse kieli, niin näet käännöksen."
     }
   },
   "notFound": {

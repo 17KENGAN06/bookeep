@@ -15,7 +15,7 @@ const hits = new Map<string, number[]>();
 
 // Same word in the same sentence of the same book is asked about often; answer it once.
 const CACHE_LIMIT = 1000;
-const cache = new Map<string, string>();
+const cache = new Map<string, ExplainResult>();
 
 let client: GoogleGenAI | null = null;
 
@@ -27,14 +27,27 @@ function getClient() {
 }
 
 type Language = 'en' | 'fi';
+type Target = 'en' | 'fi' | 'ru' | 'uk';
+
+const TARGETS: Target[] = ['en', 'fi', 'ru', 'uk'];
+
+const LANGUAGE_NAME: Record<Target, string> = {
+  en: 'English',
+  fi: 'Finnish',
+  ru: 'Russian',
+  uk: 'Ukrainian',
+};
 
 type ExplainBody = {
   selection?: unknown;
   context?: unknown;
   language?: unknown;
+  target?: unknown;
   level?: unknown;
   title?: unknown;
 };
+
+type ExplainResult = { explanation: string; translation: string };
 
 function text(value: unknown, max: number) {
   if (typeof value !== 'string') return '';
@@ -58,7 +71,7 @@ function allow(ip: string) {
   return true;
 }
 
-function remember(key: string, value: string) {
+function remember(key: string, value: ExplainResult) {
   if (cache.size >= CACHE_LIMIT) {
     const oldest = cache.keys().next().value;
     if (oldest !== undefined) cache.delete(oldest);
@@ -66,46 +79,68 @@ function remember(key: string, value: string) {
   cache.set(key, value);
 }
 
-const SYSTEM: Record<Language, string> = {
-  en: `You help language learners read an adapted English book (CEFR A2–B1).
-The reader selected a word or phrase they do not understand. Explain what it means in this exact place in the story, using the passage around it.
-
-Write in very simple English (A2): short sentences, the 1500 most common words, no idioms, no grammar terms.
+const EXPLAIN_RULES: Record<Language, string> = {
+  en: `Write "explanation" in very simple English (A2): short sentences, the 1500 most common words, no idioms, no grammar terms.
 - Start with the meaning in this context, in one or two sentences.
 - If the words have a different usual meaning, or are an idiom, phrasal verb or figure of speech, say so in one short sentence.
 - If it helps, add one very short example sentence on a new line that starts with "Example:".
-Keep the whole answer under 70 words. Plain text only: no markdown, no headings, no quotes around the answer. Do not repeat the question or the passage.`,
-  fi: `Autat kielenoppijaa, joka lukee selkokielistä suomenkielistä kirjaa (CEFR A2–B1).
-Lukija valitsi sanan tai ilmauksen, jota hän ei ymmärrä. Selitä, mitä se tarkoittaa juuri tässä kohdassa tarinaa. Käytä apuna ympäröivää tekstiä.
-
-Kirjoita hyvin helppoa selkosuomea (A2): lyhyitä lauseita, yleisiä sanoja, ei idiomeja eikä kielioppitermejä.
-- Aloita merkityksellä tässä yhteydessä, yhdellä tai kahdella lauseella.
-- Jos sana on taivutettu, kerro sen perusmuoto lyhyesti (esim. "Perusmuoto: talo").
-- Jos ilmaus on idiomi tai sillä on tavallisesti eri merkitys, sano se yhdellä lyhyellä lauseella.
-- Jos se auttaa, lisää uudelle riville yksi hyvin lyhyt esimerkkilause, joka alkaa sanalla "Esimerkki:".
-Koko vastaus alle 60 sanaa. Pelkkää tekstiä: ei markdownia, ei otsikoita. Älä toista kysymystä tai tekstiä.`,
+Keep it under 70 words.`,
+  fi: `Write "explanation" in very easy Finnish (selkosuomi, A2): short sentences, common words, no idioms, no grammar terms.
+- Start with the meaning in this context, in one or two sentences.
+- If a word is inflected, give its base form briefly (for example "Perusmuoto: talo").
+- If the phrase is an idiom or usually means something else, say so in one short sentence.
+- If it helps, add one very short example sentence on a new line that starts with "Esimerkki:".
+Keep it under 60 words.`,
 };
 
-function userPrompt(language: Language, selection: string, context: string, title: string, level: string) {
+function systemPrompt(language: Language, target: Target | null) {
+  const book = LANGUAGE_NAME[language];
+  return [
+    `You help language learners read an adapted ${book} book (CEFR A2–B1).`,
+    'The reader selected a word or phrase. Use the passage around it to understand what it means in this exact place in the story.',
+    'Return JSON with two string fields: "explanation" and "translation".',
+    '',
+    EXPLAIN_RULES[language],
+    '',
+    target
+      ? `Write "translation" in ${LANGUAGE_NAME[target]}: translate the selected words as they are meant in this passage (not every dictionary sense). For a word or short phrase give just the translation, a few words at most; for a sentence give a natural full translation. If the selection is part of a fixed expression, translate the whole expression and nothing else.`
+      : 'Set "translation" to an empty string.',
+    '',
+    'Plain text inside the fields: no markdown, no quotes around the text. Do not repeat the question or the passage.',
+  ].join('\n');
+}
+
+function userPrompt(selection: string, context: string, title: string, level: string) {
   const book = title ? `${title}${level ? ` (${level})` : ''}` : level;
-  if (language === 'fi') {
-    return [
-      book ? `Kirja: ${book}` : '',
-      context ? `Teksti:\n<passage>\n${context}\n</passage>` : '',
-      `Valittu kohta: <selection>${selection}</selection>`,
-      'Selitä valittu kohta.',
-    ]
-      .filter(Boolean)
-      .join('\n\n');
-  }
   return [
     book ? `Book: ${book}` : '',
     context ? `Passage:\n<passage>\n${context}\n</passage>` : '',
     `Selected: <selection>${selection}</selection>`,
-    'Explain the selected words.',
   ]
     .filter(Boolean)
     .join('\n\n');
+}
+
+const RESPONSE_SCHEMA = {
+  type: 'object',
+  properties: {
+    explanation: { type: 'string' },
+    translation: { type: 'string' },
+  },
+  required: ['explanation', 'translation'],
+};
+
+function parseResult(raw: string | undefined): ExplainResult | null {
+  if (!raw) return null;
+  try {
+    const data = JSON.parse(raw) as Partial<ExplainResult>;
+    const explanation = typeof data.explanation === 'string' ? data.explanation.trim() : '';
+    const translation = typeof data.translation === 'string' ? data.translation.trim() : '';
+    if (!explanation && !translation) return null;
+    return { explanation, translation };
+  } catch {
+    return null;
+  }
 }
 
 export async function explainHandler(req: Request, res: Response) {
@@ -121,16 +156,19 @@ export async function explainHandler(req: Request, res: Response) {
   const title = text(body.title, MAX_TITLE);
   const level = body.level === 'A2' || body.level === 'B1' ? body.level : '';
   const language: Language = body.language === 'fi' ? 'fi' : 'en';
+  // No translation into the book's own language: the explanation already covers it.
+  const target =
+    TARGETS.includes(body.target as Target) && body.target !== language ? (body.target as Target) : null;
 
   if (!selection || selection.length > MAX_SELECTION) {
     res.status(400).json({ error: 'bad_selection' });
     return;
   }
 
-  const key = JSON.stringify([language, title, selection.toLowerCase(), context]);
+  const key = JSON.stringify([language, target, title, selection.toLowerCase(), context]);
   const cached = cache.get(key);
   if (cached) {
-    res.json({ explanation: cached, cached: true });
+    res.json({ ...cached, cached: true });
     return;
   }
 
@@ -142,9 +180,11 @@ export async function explainHandler(req: Request, res: Response) {
   try {
     const response = await ai.models.generateContent({
       model: MODEL,
-      contents: userPrompt(language, selection, context, title, level),
+      contents: userPrompt(selection, context, title, level),
       config: {
-        systemInstruction: SYSTEM[language],
+        systemInstruction: systemPrompt(language, target),
+        responseMimeType: 'application/json',
+        responseJsonSchema: RESPONSE_SCHEMA,
         maxOutputTokens: 1024,
         // Short, simple answers: little thinking keeps it quick and cheap.
         thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },
@@ -156,14 +196,14 @@ export async function explainHandler(req: Request, res: Response) {
       return;
     }
 
-    const explanation = (response.text ?? '').trim();
-    if (!explanation) {
+    const result = parseResult(response.text);
+    if (!result) {
       res.status(502).json({ error: 'empty' });
       return;
     }
 
-    remember(key, explanation);
-    res.json({ explanation });
+    remember(key, result);
+    res.json(result);
   } catch (error) {
     if (error instanceof ApiError && error.status === 429) {
       res.status(429).json({ error: 'rate_limited' });

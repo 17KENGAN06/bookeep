@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react';
 import { LoaderCircle, RotateCcw, Sparkles, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { explainSelection, ExplainError, type ExplainErrorCode } from '@/services/explain';
-import type { BookLanguage, CefrLevel } from '@/types/book';
+import { TRANSLATE_TO_STORAGE_KEY } from '@/config/storage';
+import { supportedLanguages } from '@/i18n';
+import { explainSelection, ExplainError, type ExplainErrorCode, type ExplainResult } from '@/services/explain';
+import type { BookLanguage, CefrLevel, UiLanguage } from '@/types/book';
 import { contextAround } from '@/utils/selectionContext';
 import { cn } from '@/utils/cn';
 
@@ -18,7 +20,7 @@ type Picked = {
 
 type Answer =
   | { status: 'loading' }
-  | { status: 'done'; text: string }
+  | { status: 'done'; result: ExplainResult }
   | { status: 'error'; code: ExplainErrorCode };
 
 type SelectionExplainerProps = {
@@ -36,11 +38,42 @@ const LANGUAGE_LABEL: Record<BookLanguage, string> = {
   fi: 'Selkosuomi',
 };
 
+const WORD_CHAR = /[\p{L}\p{N}\p{M}'’-]/u;
+
+/** Grows the selection to whole words, so half a word is never sent (or shown) on its own. */
+function snapToWords(selection: Selection) {
+  const range = selection.getRangeAt(0);
+  let { startContainer, startOffset, endContainer, endOffset } = range;
+
+  if (startContainer.nodeType === Node.TEXT_NODE) {
+    const data = (startContainer as Text).data;
+    // A selection that begins on a space or comma starts at the next word instead.
+    while (startOffset < data.length && /\s/.test(data[startOffset])) startOffset += 1;
+    while (startOffset > 0 && WORD_CHAR.test(data[startOffset - 1])) startOffset -= 1;
+  }
+  if (endContainer.nodeType === Node.TEXT_NODE) {
+    const data = (endContainer as Text).data;
+    while (endOffset > 0 && /\s/.test(data[endOffset - 1])) endOffset -= 1;
+    while (endOffset < data.length && WORD_CHAR.test(data[endOffset])) endOffset += 1;
+  }
+
+  const changed =
+    startContainer !== range.startContainer ||
+    startOffset !== range.startOffset ||
+    endContainer !== range.endContainer ||
+    endOffset !== range.endOffset;
+  if (!changed) return;
+  if (startContainer === endContainer && startOffset >= endOffset) return;
+  selection.setBaseAndExtent(startContainer, startOffset, endContainer, endOffset);
+}
+
 function readSelection(stage: HTMLElement | null): Omit<Picked, 'context'> | null {
   const selection = window.getSelection();
   if (!stage || !selection || selection.isCollapsed || selection.rangeCount === 0) return null;
+  if (!stage.contains(selection.getRangeAt(0).commonAncestorContainer)) return null;
+
+  snapToWords(selection);
   const range = selection.getRangeAt(0);
-  if (!stage.contains(range.commonAncestorContainer)) return null;
 
   const text = selection.toString().replace(/\s+/g, ' ').trim();
   if (!text || text.length > MAX_SELECTION || !/\p{L}/u.test(text)) return null;
@@ -50,12 +83,36 @@ function readSelection(stage: HTMLElement | null): Omit<Picked, 'context'> | nul
   return { text, rect: { top: box.top, bottom: box.bottom, left: box.left, right: box.right } };
 }
 
+function readTargetChoice(): UiLanguage | null {
+  try {
+    const value = localStorage.getItem(TRANSLATE_TO_STORAGE_KEY);
+    return supportedLanguages.some((item) => item.code === value) ? (value as UiLanguage) : null;
+  } catch {
+    return null;
+  }
+}
+
+function saveTargetChoice(value: UiLanguage) {
+  try {
+    localStorage.setItem(TRANSLATE_TO_STORAGE_KEY, value);
+  } catch {
+    // Private mode: the choice lasts until the page is closed.
+  }
+}
+
 function isCoarsePointer() {
   return window.matchMedia?.('(pointer: coarse)').matches ?? false;
 }
 
 export function SelectionExplainer({ stageRef, pageText, resetKey, book }: SelectionExplainerProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const uiLanguage = (i18n.resolvedLanguage ?? 'en') as UiLanguage;
+  // The site's language unless the reader picked another one; never the book's own.
+  const [chosenTarget, setChosenTarget] = useState<UiLanguage | null>(readTargetChoice);
+  const preferred = chosenTarget ?? uiLanguage;
+  const target: UiLanguage | null = preferred === book.language ? null : preferred;
+  const targets = supportedLanguages.filter((item) => item.code !== book.language);
+  const answers = useRef(new Map<string, ExplainResult>());
   const [picked, setPicked] = useState<Picked | null>(null);
   const [open, setOpen] = useState<Picked | null>(null);
   const [answer, setAnswer] = useState<Answer | null>(null);
@@ -64,6 +121,8 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book }: Selec
   const [cardPos, setCardPos] = useState<{ top: number; left: number } | null>(null);
   const [isSheet, setIsSheet] = useState(false);
 
+  const targetRef = useRef(target);
+  targetRef.current = target;
   const pageTextRef = useRef(pageText);
   pageTextRef.current = pageText;
 
@@ -111,23 +170,31 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book }: Selec
   }, [picked]);
 
   const ask = useCallback(
-    (target: Picked) => {
+    (item: Picked, to: UiLanguage | null) => {
       abortRef.current?.abort();
+      const key = JSON.stringify([to, item.text, item.context]);
+      const known = answers.current.get(key);
+      if (known) {
+        setAnswer({ status: 'done', result: known });
+        return;
+      }
       const controller = new AbortController();
       abortRef.current = controller;
       setAnswer({ status: 'loading' });
       explainSelection(
         {
-          selection: target.text,
-          context: target.context,
+          selection: item.text,
+          context: item.context,
           language: book.language,
+          target: to,
           level: book.level,
           title: book.title,
         },
         controller.signal,
       )
-        .then((text) => {
-          if (!controller.signal.aborted) setAnswer({ status: 'done', text });
+        .then((result) => {
+          answers.current.set(key, result);
+          if (!controller.signal.aborted) setAnswer({ status: 'done', result });
         })
         .catch((error: unknown) => {
           if (controller.signal.aborted) return;
@@ -140,9 +207,16 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book }: Selec
   const explain = () => {
     if (!picked) return;
     const target = { ...picked, context: contextAround(pageTextRef.current, picked.text) };
+    const targetLanguage = targetRef.current;
     setOpen(target);
     setPicked(null);
-    ask(target);
+    ask(target, targetLanguage);
+  };
+
+  const changeTarget = (code: UiLanguage) => {
+    saveTargetChoice(code);
+    setChosenTarget(code);
+    if (open) ask(open, code);
   };
 
   // Escape or a tap outside the card closes it.
@@ -214,12 +288,9 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book }: Selec
           style={!isSheet && cardPos ? { top: cardPos.top, left: cardPos.left } : undefined}
         >
           <div className="flex items-start justify-between gap-3">
-            <div className="min-w-0">
-              <p className="explain-eyebrow">
-                {t('reader.explain.title')} · {LANGUAGE_LABEL[book.language]}
-              </p>
-              <p className="explain-phrase">{open.text}</p>
-            </div>
+            <p className="explain-phrase min-w-0" lang={book.language}>
+              {open.text}
+            </p>
             <button
               type="button"
               className="icon-btn icon-btn-sm -mt-1 -mr-1"
@@ -231,12 +302,30 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book }: Selec
             </button>
           </div>
 
-          <div className="hairline my-3" aria-hidden />
+          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2">
+            <p className="explain-eyebrow">{t('reader.explain.translation')}</p>
+            <div className="explain-langs" role="radiogroup" aria-label={t('reader.explain.translateTo')}>
+              {targets.map((item) => (
+                <button
+                  key={item.code}
+                  type="button"
+                  role="radio"
+                  aria-checked={target === item.code}
+                  className={cn('explain-lang', target === item.code && 'is-active')}
+                  onClick={() => changeTarget(item.code)}
+                >
+                  {item.short}
+                </button>
+              ))}
+            </div>
+          </div>
 
-          <div aria-live="polite" lang={book.language}>
+          <div aria-live="polite" className="mt-2">
             {answer?.status === 'loading' ? (
-              <div className="space-y-2" aria-busy="true">
+              <div className="space-y-2 pt-1" aria-busy="true">
                 <p className="sr-only">{t('reader.explain.loading')}</p>
+                {target ? <span className="explain-line h-4 w-[55%]" /> : null}
+                <div className="hairline !my-3" aria-hidden />
                 <span className="explain-line w-[92%]" />
                 <span className="explain-line w-[78%]" />
                 <span className="explain-line w-[56%]" />
@@ -247,13 +336,40 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book }: Selec
               </div>
             ) : null}
 
-            {answer?.status === 'done' ? <p className="explain-text">{answer.text}</p> : null}
+            {answer?.status === 'done' ? (
+              <>
+                {target ? (
+                  answer.result.translation ? (
+                    <p className="explain-translation" lang={target}>
+                      {answer.result.translation}
+                    </p>
+                  ) : (
+                    <p className="text-sm text-faint">{t('reader.explain.noTranslation')}</p>
+                  )
+                ) : (
+                  <p className="text-sm text-faint">{t('reader.explain.sameLanguage')}</p>
+                )}
+                {answer.result.explanation ? (
+                  <>
+                    <div className="hairline my-3" aria-hidden />
+                    <p className="explain-eyebrow">{LANGUAGE_LABEL[book.language]}</p>
+                    <p className="explain-text mt-1.5" lang={book.language}>
+                      {answer.result.explanation}
+                    </p>
+                  </>
+                ) : null}
+              </>
+            ) : null}
 
             {answer?.status === 'error' ? (
-              <div className="space-y-3">
+              <div className="space-y-3 pt-1">
                 <p className="text-sm text-muted">{t(`reader.explain.errors.${answer.code}`)}</p>
                 {answer.code !== 'not_configured' ? (
-                  <button type="button" className="btn btn-secondary !min-h-9 !px-3.5 text-sm" onClick={() => ask(open)}>
+                  <button
+                    type="button"
+                    className="btn btn-secondary !min-h-9 !px-3.5 text-sm"
+                    onClick={() => ask(open, target)}
+                  >
                     <RotateCcw className="h-3.5 w-3.5" aria-hidden />
                     {t('reader.explain.retry')}
                   </button>

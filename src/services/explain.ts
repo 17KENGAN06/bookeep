@@ -1,13 +1,17 @@
 import { env } from '@/config/env';
-import type { BookLanguage, CefrLevel } from '@/types/book';
+import type { BookLanguage, CefrLevel, UiLanguage } from '@/types/book';
 
 export type ExplainRequest = {
   selection: string;
   context: string;
   language: BookLanguage;
+  /** Language to translate the selection into; null for no translation. */
+  target: UiLanguage | null;
   level: CefrLevel;
   title: string;
 };
+
+export type ExplainResult = { explanation: string; translation: string };
 
 export type ExplainErrorCode = 'rate_limited' | 'not_configured' | 'failed';
 
@@ -38,7 +42,11 @@ export async function explainSelection(request: ExplainRequest, signal?: AbortSi
   if (response.status === 503) throw new ExplainError('not_configured');
   if (!response.ok) throw new ExplainError('failed');
 
-  const data = (await response.json()) as { explanation?: string };
-  if (!data.explanation) throw new ExplainError('failed');
-  return data.explanation;
+  const data = (await response.json()) as Partial<ExplainResult>;
+  const result = {
+    explanation: typeof data.explanation === 'string' ? data.explanation : '',
+    translation: typeof data.translation === 'string' ? data.translation : '',
+  };
+  if (!result.explanation && !result.translation) throw new ExplainError('failed');
+  return result;
 }

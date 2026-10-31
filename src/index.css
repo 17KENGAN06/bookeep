@@ -1029,6 +1029,17 @@
 }
 
 /* ── Reader: explain a selection ─────────────────────────── */
+/* Only words can be selected: a press on the canvas or a gap must not grab the whole page. */
+.reader-page {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.reader-page .textLayer {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
 .reader-page .react-pdf__Page__textContent ::selection {
   background: color-mix(in oklab, var(--app-accent) 38%, transparent);
 }
@@ -1105,7 +1116,7 @@
 }
 
 .explain-phrase {
-  margin-top: 0.35rem;
+  padding-top: 0.2rem;
   font-family: var(--font-display);
   font-size: 1.125rem;
   line-height: 1.3;
@@ -1115,6 +1126,49 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.explain-translation {
+  font-family: var(--font-display);
+  font-size: 1.3125rem;
+  line-height: 1.3;
+  color: var(--app-accent);
+  overflow-wrap: anywhere;
+}
+
+.explain-langs {
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.1875rem;
+  border-radius: 999px;
+  border: 1px solid var(--app-line);
+  background: color-mix(in oklab, var(--app-bg) 40%, transparent);
+}
+
+.explain-lang {
+  min-width: 2.25rem;
+  height: 1.75rem;
+  padding: 0 0.6rem;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--app-muted);
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.explain-lang:hover {
+  color: var(--app-ink);
+}
+
+.explain-lang.is-active {
+  color: var(--app-on-accent);
+  background: var(--app-accent);
+}
+
+.explain-lang:focus-visible {
+  outline: 2px solid var(--app-accent);
+  outline-offset: 1px;
 }
 
 .explain-text {
