@@ -9,9 +9,16 @@ export function getAdminClient() {
   const url = process.env.SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SECRET_KEY;
   if (!url || !key) return null;
-  admin ??= createClient(url, key, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
+  if (admin) return admin;
+  try {
+    admin = createClient(url, key, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
+  } catch (error) {
+    // e.g. Node.js below 22 (no native WebSocket) or a malformed SUPABASE_URL.
+    console.error('Supabase admin client failed', error instanceof Error ? error.message : error);
+    return null;
+  }
   return admin;
 }
 
