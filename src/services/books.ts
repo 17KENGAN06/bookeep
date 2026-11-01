@@ -2,6 +2,7 @@ import { mockBooks } from '@/data/mockBooks';
 import { isSupabaseConfigured } from '@/config/env';
 import {
   COVER_BUCKET,
+  DEMO_BUCKET,
   getPublicFileUrl,
   getSupabaseClient,
   PDF_BUCKET,
@@ -24,6 +25,8 @@ export type BookDraft = {
   level: CefrLevel;
   published: boolean;
   complete: boolean;
+  /** How many first pages the free demo shows (capped at a third of the book). */
+  demo_pages: number;
   slug?: string;
 };
 
@@ -50,7 +53,10 @@ function mapBook(row: Book): Book {
     ...row,
     cover_path: getPublicFileUrl(COVER_BUCKET, row.cover_path),
     thumbnail_path: getPublicFileUrl(COVER_BUCKET, row.thumbnail_path),
-    pdf_path: getPublicFileUrl(PDF_BUCKET, row.pdf_path),
+    // The full PDF is private: keep the storage path, the reader asks for a signed link.
+    pdf_path: row.pdf_path ?? null,
+    demo_path: getPublicFileUrl(DEMO_BUCKET, row.demo_path ?? null),
+    demo_pages: row.demo_pages ?? 10,
     complete: row.complete ?? true,
     hero_slot: row.hero_slot ?? null,
   };
@@ -209,6 +215,21 @@ export async function uploadPdf(bookId: string, file: File) {
   return uploadObject(PDF_BUCKET, path, file);
 }
 
+type DemoResult = { demo_path: string; page_count: number };
+
+// A failed demo never blocks saving the book: the dashboard shows it as missing.
+async function makeDemo(bookId: string, source: () => Promise<ArrayBuffer>, pages: number): Promise<DemoResult | null> {
+  try {
+    const { buildDemoPdf, uploadDemo } = await import('@/services/demo');
+    const demo = await buildDemoPdf(await source(), pages);
+    const path = await uploadDemo(bookId, demo.file);
+    return { demo_path: path, page_count: demo.totalPages };
+  } catch (error) {
+    console.warn('Demo PDF was not created', error);
+    return null;
+  }
+}
+
 async function removeStoragePath(bucket: string, path: string | null) {
   if (!path || path.startsWith('http://') || path.startsWith('https://') || path.startsWith('/')) {
     return;
@@ -232,6 +253,8 @@ export async function createBook(input: {
   const coverPath = await uploadCover(id, input.cover);
   const thumbnailPath = input.thumbnail ? await uploadThumbnail(id, input.thumbnail) : null;
   const pdfPath = await uploadPdf(id, input.pdf);
+  const pdfFile = input.pdf;
+  const demo = await makeDemo(id, () => pdfFile.arrayBuffer(), input.draft.demo_pages);
 
   const { data, error } = await supabase
     .from('books')
@@ -242,6 +265,7 @@ export async function createBook(input: {
       cover_path: coverPath,
       thumbnail_path: thumbnailPath,
       pdf_path: pdfPath,
+      ...(demo ?? {}),
     })
     .select('*')
     .single();
@@ -250,6 +274,7 @@ export async function createBook(input: {
     await removeStoragePath(COVER_BUCKET, coverPath);
     await removeStoragePath(COVER_BUCKET, thumbnailPath);
     await removeStoragePath(PDF_BUCKET, pdfPath);
+    await removeStoragePath(DEMO_BUCKET, demo?.demo_path ?? null);
     throw error;
   }
 
@@ -267,6 +292,8 @@ export async function updateBook(
     currentCoverPath?: string | null;
     currentThumbnailPath?: string | null;
     currentPdfPath?: string | null;
+    currentDemoPath?: string | null;
+    currentDemoPages?: number | null;
   },
 ) {
   const supabase = getSupabaseClient();
@@ -281,6 +308,17 @@ export async function updateBook(
   if (input.thumbnail) thumbnailPath = await uploadThumbnail(id, input.thumbnail);
   if (input.pdf) pdfPath = await uploadPdf(id, input.pdf);
 
+  // A new PDF, a changed page count or a missing demo means a fresh demo copy.
+  const storedPdf = storagePathFromPublicUrl(input.currentPdfPath ?? null, PDF_BUCKET);
+  const newPdf = input.pdf;
+  let demo: DemoResult | null = null;
+  if (newPdf) {
+    demo = await makeDemo(id, () => newPdf.arrayBuffer(), input.draft.demo_pages);
+  } else if (storedPdf && (!input.currentDemoPath || input.currentDemoPages !== input.draft.demo_pages)) {
+    const { downloadFullPdf } = await import('@/services/demo');
+    demo = await makeDemo(id, () => downloadFullPdf(storedPdf), input.draft.demo_pages);
+  }
+
   const { data, error } = await supabase
     .from('books')
     .update({
@@ -289,6 +327,7 @@ export async function updateBook(
       ...(coverPath ? { cover_path: coverPath } : {}),
       ...(thumbnailPath ? { thumbnail_path: thumbnailPath } : {}),
       ...(pdfPath ? { pdf_path: pdfPath } : {}),
+      ...(demo ?? {}),
     })
     .eq('id', id)
     .select('*')
@@ -298,9 +337,13 @@ export async function updateBook(
     if (coverPath) await removeStoragePath(COVER_BUCKET, coverPath);
     if (thumbnailPath) await removeStoragePath(COVER_BUCKET, thumbnailPath);
     if (pdfPath) await removeStoragePath(PDF_BUCKET, pdfPath);
+    if (demo) await removeStoragePath(DEMO_BUCKET, demo.demo_path);
     throw error;
   }
 
+  if (demo) {
+    await removeStoragePath(DEMO_BUCKET, storagePathFromPublicUrl(input.currentDemoPath ?? null, DEMO_BUCKET));
+  }
   if (coverPath) await removeStoragePath(COVER_BUCKET, storagePathFromPublicUrl(input.currentCoverPath ?? null, COVER_BUCKET));
   if (thumbnailPath) {
     await removeStoragePath(COVER_BUCKET, storagePathFromPublicUrl(input.currentThumbnailPath ?? null, COVER_BUCKET));
@@ -321,9 +364,34 @@ export async function deleteBook(book: Book) {
   const coverPath = storagePathFromPublicUrl(book.cover_path, COVER_BUCKET);
   const thumbnailPath = storagePathFromPublicUrl(book.thumbnail_path, COVER_BUCKET);
   const pdfPath = storagePathFromPublicUrl(book.pdf_path, PDF_BUCKET);
+  const demoPath = storagePathFromPublicUrl(book.demo_path, DEMO_BUCKET);
   await removeStoragePath(COVER_BUCKET, coverPath);
   await removeStoragePath(COVER_BUCKET, thumbnailPath);
   await removeStoragePath(PDF_BUCKET, pdfPath);
+  await removeStoragePath(DEMO_BUCKET, demoPath);
+  invalidateBooksCache();
+}
+
+/** Makes (or remakes) the demo PDF of a stored book from its full PDF. Admin only. */
+export async function regenerateDemo(book: Book) {
+  const supabase = getSupabaseClient();
+  if (!supabase) throw new Error('Supabase is not configured');
+  const storedPdf = storagePathFromPublicUrl(book.pdf_path, PDF_BUCKET);
+  if (!storedPdf) throw new Error('This book has no PDF');
+
+  const { buildDemoPdf, downloadFullPdf, uploadDemo } = await import('@/services/demo');
+  const demo = await buildDemoPdf(await downloadFullPdf(storedPdf), book.demo_pages);
+  const demoPath = await uploadDemo(book.id, demo.file);
+
+  const { error } = await supabase
+    .from('books')
+    .update({ demo_path: demoPath, page_count: demo.totalPages })
+    .eq('id', book.id);
+  if (error) {
+    await removeStoragePath(DEMO_BUCKET, demoPath);
+    throw error;
+  }
+  await removeStoragePath(DEMO_BUCKET, storagePathFromPublicUrl(book.demo_path, DEMO_BUCKET));
   invalidateBooksCache();
 }
 

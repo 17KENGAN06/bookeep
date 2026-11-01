@@ -14,6 +14,7 @@ const links = [
   { to: '/', key: 'nav.home' },
   { to: '/books', key: 'nav.books' },
   { to: '/library', key: 'nav.library' },
+  { to: '/subscribe', key: 'nav.subscribe' },
   { to: '/about', key: 'nav.about' },
   { to: '/contact', key: 'nav.contact' },
 ] as const;

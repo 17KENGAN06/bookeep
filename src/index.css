@@ -1632,3 +1632,46 @@
     linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 35%, transparent 70%, rgba(0, 0, 0, 0.28));
   mix-blend-mode: soft-light;
 }
+
+/* Demo mode in the reader: a thin strip under the toolbar and the end-of-demo card. */
+.demo-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1rem;
+  border-bottom: 1px solid var(--app-line);
+  background: color-mix(in oklab, var(--app-accent) 9%, var(--reader-chrome, var(--app-bg)));
+  font-size: 0.8125rem;
+  color: var(--app-muted);
+}
+
+.demo-strip-link {
+  flex-shrink: 0;
+  font-weight: 700;
+  color: var(--app-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.demo-end {
+  position: fixed;
+  z-index: 35;
+  left: 50%;
+  bottom: max(1.25rem, env(safe-area-inset-bottom));
+  width: min(34rem, calc(100vw - 2rem));
+  transform: translateX(-50%);
+  padding: 1.25rem 1.35rem;
+  border-radius: 1.5rem;
+  background: color-mix(in oklab, var(--app-bg) 94%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  backdrop-filter: blur(18px) saturate(1.2);
+  box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.55);
+}
+
+/* Above the round page buttons on phones. */
+@media (max-width: 767px) {
+  .demo-end {
+    bottom: calc(max(1rem, env(safe-area-inset-bottom)) + 4.75rem);
+  }
+}

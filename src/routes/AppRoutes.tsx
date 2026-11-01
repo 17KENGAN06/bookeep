@@ -13,6 +13,7 @@ import { NotFoundPage } from '@/pages/NotFoundPage';
 import { PrivacyPage } from '@/pages/PrivacyPage';
 import { ReadingGoalsPage } from '@/pages/ReadingGoalsPage';
 import { RegisterPage } from '@/pages/RegisterPage';
+import { SubscribePage } from '@/pages/SubscribePage';
 import { lazyPage, loadReaderPage } from '@/routes/lazyPage';
 import { ProtectedAdminRoute } from '@/routes/ProtectedAdminRoute';
 
@@ -52,6 +53,7 @@ export function AppRoutes() {
           <Route path="/goals" element={<ReadingGoalsPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/subscribe" element={<SubscribePage />} />
           <Route path="/auth/callback" element={<AuthCallbackPage />} />
           <Route path="/how-it-works" element={<Navigate to="/about" replace />} />
           <Route path="*" element={<NotFoundPage />} />

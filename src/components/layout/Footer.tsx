@@ -3,7 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { BrandLockup } from '@/components/brand/BrandLockup';
 import { Container } from '@/components/common/Container';
 import { Scene } from '@/components/scene/Scene';
-import { ADMIN_EMAIL, PARTNER_EMAIL } from '@/config/contact';
+import { ADMIN_EMAIL, CONTACT_EMAIL } from '@/config/contact';
 import { useAuth } from '@/hooks/useAuth';
 import { scrollToPageTop } from '@/utils/scroll';
 
@@ -59,9 +59,9 @@ export function Footer() {
               <p className="text-[11px] font-bold tracking-[0.24em] text-accent uppercase">{t('nav.contact')}</p>
               <ul className="mt-4 space-y-4 text-sm">
                 <li>
-                  <p className="text-xs text-muted">{t('contact.channels.partner.title')}</p>
-                  <a className={`${linkClass} mt-0.5 inline-flex font-semibold`} href={`mailto:${PARTNER_EMAIL}`}>
-                    {PARTNER_EMAIL}
+                  <p className="text-xs text-muted">{t('contact.channels.support.title')}</p>
+                  <a className={`${linkClass} mt-0.5 inline-flex font-semibold`} href={`mailto:${CONTACT_EMAIL}`}>
+                    {CONTACT_EMAIL}
                   </a>
                 </li>
                 <li>

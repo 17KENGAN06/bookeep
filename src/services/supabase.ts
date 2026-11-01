@@ -18,6 +18,7 @@ export function getSupabaseClient() {
 
 export const COVER_BUCKET = 'book-covers';
 export const PDF_BUCKET = 'book-pdfs';
+export const DEMO_BUCKET = 'book-demos';
 
 const OBJECT_PATH = '/storage/v1/object/public/';
 const RENDER_PATH = '/storage/v1/render/image/public/';

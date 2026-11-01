@@ -1,5 +1,5 @@
 import { useState, type FormEvent, type ReactNode } from 'react';
-import { Handshake, LifeBuoy, Mail, Send } from 'lucide-react';
+import { LifeBuoy, Mail, Send, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
@@ -9,7 +9,7 @@ import { Field, fieldControlClass } from '@/components/common/Field';
 import { Reveal } from '@/components/common/Reveal';
 import { PageHero } from '@/components/scene/PageHero';
 import { useToast } from '@/components/common/Toast';
-import { ADMIN_EMAIL, CONTACT_TOPICS, emailForTopic, PARTNER_EMAIL, type ContactTopic } from '@/config/contact';
+import { ADMIN_EMAIL, CONTACT_EMAIL, CONTACT_TOPICS, emailForTopic, type ContactTopic } from '@/config/contact';
 import { sendContactMessage } from '@/services/contact';
 import { cn } from '@/utils/cn';
 
@@ -65,13 +65,13 @@ export function ContactPage() {
         <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-10">
           <div className="grid gap-4 sm:grid-cols-2 lg:sticky lg:top-28 lg:grid-cols-1">
             <EmailCard
-              icon={<Handshake className="h-5 w-5" />}
-              title={t('contact.channels.partner.title')}
-              text={t('contact.channels.partner.text')}
-              email={PARTNER_EMAIL}
+              icon={<LifeBuoy className="h-5 w-5" />}
+              title={t('contact.channels.support.title')}
+              text={t('contact.channels.support.text')}
+              email={CONTACT_EMAIL}
             />
             <EmailCard
-              icon={<LifeBuoy className="h-5 w-5" />}
+              icon={<ShieldCheck className="h-5 w-5" />}
               title={t('contact.channels.admin.title')}
               text={t('contact.channels.admin.text')}
               email={ADMIN_EMAIL}

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react';
-import { Languages, RotateCcw, Sparkles, X } from 'lucide-react';
+import { Languages, Lock, RotateCcw, Sparkles, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATE_TO_STORAGE_KEY } from '@/config/storage';
 import { supportedLanguages } from '@/i18n';
@@ -36,6 +37,8 @@ type SelectionExplainerProps = {
   /** Changes when the page or zoom changes: anything open is closed. */
   resetKey: string;
   book: { language: BookLanguage; level: CefrLevel; title: string };
+  /** Translation is part of the subscription; without it the card offers the plan instead. */
+  canTranslate?: boolean;
 };
 
 const LANGUAGE_LABEL: Record<BookLanguage, string> = {
@@ -109,13 +112,13 @@ function isCoarsePointer() {
   return window.matchMedia?.('(pointer: coarse)').matches ?? false;
 }
 
-export function SelectionExplainer({ stageRef, pageText, resetKey, book }: SelectionExplainerProps) {
+export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTranslate = true }: SelectionExplainerProps) {
   const { t, i18n } = useTranslation();
   const uiLanguage = (i18n.resolvedLanguage ?? 'en') as UiLanguage;
   // The site's language unless the reader picked another one; never the book's own.
   const [chosenTarget, setChosenTarget] = useState<UiLanguage | null>(readTargetChoice);
   const preferred = chosenTarget ?? uiLanguage;
-  const target: UiLanguage | null = preferred === book.language ? null : preferred;
+  const target: UiLanguage | null = !canTranslate || preferred === book.language ? null : preferred;
   const targets = supportedLanguages.filter((item) => item.code !== book.language);
   // Translations already fetched, by language + selection + passage.
   const translations = useRef(new Map<string, string>());
@@ -396,7 +399,12 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book }: Selec
             {answer?.status === 'error' ? (
               <div className="space-y-3 pt-1">
                 <p className="text-sm text-muted">{t(`reader.explain.errors.${answer.code}`)}</p>
-                {answer.code !== 'not_configured' ? (
+                {answer.code === 'daily_limit' && !canTranslate ? (
+                  <Link to="/subscribe" className="btn btn-secondary !min-h-9 !px-3.5 text-sm" onClick={close}>
+                    {t('subscribe.cta')}
+                  </Link>
+                ) : null}
+                {answer.code !== 'not_configured' && answer.code !== 'daily_limit' ? (
                   <button
                     type="button"
                     className="btn btn-secondary !min-h-9 !px-3.5 text-sm"
@@ -410,7 +418,14 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book }: Selec
             ) : null}
           </div>
 
-          {answer?.status === 'done' && !showTranslation ? (
+          {answer?.status === 'done' && (!canTranslate || answer.result.translationLocked) ? (
+            <Link to="/subscribe" className="explain-reveal mt-3" onClick={close}>
+              <Lock className="h-3.5 w-3.5" aria-hidden />
+              {t('reader.explain.translationLocked')}
+            </Link>
+          ) : null}
+
+          {answer?.status === 'done' && canTranslate && !answer.result.translationLocked && !showTranslation ? (
             <button type="button" className="explain-reveal mt-3" onClick={revealTranslation}>
               <Languages className="h-3.5 w-3.5" aria-hidden />
               {t('reader.explain.showTranslation')}

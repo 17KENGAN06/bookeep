@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
+import { checkoutHandler, planHandler, portalHandler, webhookHandler } from './billing.js';
 import { explainHandler } from './explain.js';
 
 const port = Number(process.env.PORT) || 4000;
@@ -18,6 +19,11 @@ app.use(
     origin: clientOrigin.split(',').map((value) => value.trim()),
   }),
 );
+// Stripe signs the exact bytes it sent, so this route reads the raw body (before express.json).
+app.post('/api/stripe/webhook', express.raw({ type: 'application/json', limit: '1mb' }), (req, res) => {
+  void webhookHandler(req, res);
+});
+
 app.use(express.json({ limit: '32kb' }));
 
 app.get('/health', (_req, res) => {
@@ -40,6 +46,19 @@ app.get('/api/config', (_req, res) => {
 // Explains a selected word or phrase from a book, in simple English or Finnish.
 app.post('/api/explain', (req, res) => {
   void explainHandler(req, res);
+});
+
+// Subscription: Stripe Checkout (with the free trial) and Stripe's billing portal.
+app.get('/api/billing/plan', (req, res) => {
+  void planHandler(req, res);
+});
+
+app.post('/api/billing/checkout', (req, res) => {
+  void checkoutHandler(req, res);
+});
+
+app.post('/api/billing/portal', (req, res) => {
+  void portalHandler(req, res);
 });
 
 app.listen(port, '0.0.0.0', () => {

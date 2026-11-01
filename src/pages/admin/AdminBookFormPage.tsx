@@ -45,6 +45,8 @@ export function AdminBookFormPage() {
           currentCoverPath: book?.cover_path,
           currentThumbnailPath: book?.thumbnail_path,
           currentPdfPath: book?.pdf_path,
+          currentDemoPath: book?.demo_path,
+          currentDemoPages: book?.demo_pages,
         });
         notify(t('admin.form.updated'));
       } else {

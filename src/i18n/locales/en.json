@@ -24,7 +24,8 @@
     "privacy": "Privacy",
     "library": "My books",
     "goals": "Reading goals",
-    "login": "Sign in"
+    "login": "Sign in",
+    "subscribe": "Subscription"
   },
   "home": {
     "eyebrow": "Adaptations · English · Finnish",
@@ -178,13 +179,15 @@
       "errors": {
         "rate_limited": "Too many requests. Wait a minute and try again.",
         "not_configured": "Explanations are not available yet.",
-        "failed": "Could not get an explanation. Check your connection and try again."
+        "failed": "Could not get an explanation. Check your connection and try again.",
+        "daily_limit": "That's all explanations for today. The limit resets tomorrow, and subscribers get more."
       },
       "translation": "Translation",
       "translateTo": "Translate into",
       "noTranslation": "No translation for this selection.",
       "sameLanguage": "Choose a language to see a translation.",
-      "showTranslation": "Show translation"
+      "showTranslation": "Show translation",
+      "translationLocked": "Translation comes with a subscription"
     }
   },
   "notFound": {
@@ -199,13 +202,13 @@
     "title": "Get in touch",
     "lead": "Write about a partnership, a question, or a bug. The form sends the message to the matching inbox.",
     "channels": {
-      "partner": {
-        "title": "Partnerships",
-        "text": "Publishing, adaptation, or other collaboration with Bookeep and WEISEZAHOY."
+      "support": {
+        "title": "Questions and support",
+        "text": "Questions about books or the reader, bugs on the site, partnership ideas. The contact form writes here too."
       },
       "admin": {
-        "title": "Questions and bugs",
-        "text": "If something on the site is broken, or you need help with the catalog."
+        "title": "Admin, legal and payments",
+        "text": "Subscription and payments, refunds, personal data requests and other legal matters."
       }
     },
     "form": {
@@ -246,7 +249,7 @@
       },
       "form": {
         "title": "Contact form",
-        "text": "If you send the form, we receive your name, email, topic and message. Partnership notes go to partner@weisezahoy.com. Questions and bug reports go to admin@weisezahoy.com. We use them only to reply."
+        "text": "If you send the form, we receive your name, email, topic and message. It goes to contact@bookeep.cloud. Payment, legal and personal data questions go to admin@bookeep.cloud. We use them only to reply."
       },
       "local": {
         "title": "On this device",
@@ -341,7 +344,9 @@
       "error": "Could not save the book",
       "titleRequired": "Original title is required",
       "coverRequired": "A cover image is required",
-      "pdfRequired": "A PDF file is required"
+      "pdfRequired": "A PDF file is required",
+      "demoPages": "Demo pages",
+      "demoPagesHint": "Readers without a subscription see the first pages, never more than a third of the book."
     },
     "upload": {
       "drop": "Drop a file here",
@@ -358,6 +363,17 @@
       "cancel": "Cancel",
       "success": "Book deleted",
       "error": "Could not delete the book"
+    },
+    "demo": {
+      "has": "Demo: {{count}} pages",
+      "none": "No demo",
+      "remake": "Remake demo",
+      "working": "Working…",
+      "missingTitle": "Books without a demo: {{count}}",
+      "missingHint": "Guests and readers without a subscription can't open these books until they have a demo.",
+      "createMissing": "Create missing demos",
+      "done": "Demo ready",
+      "failed": "Demos that failed: {{count}}"
     }
   },
   "auth": {
@@ -443,5 +459,65 @@
     "saveError": "Could not save the reading goal.",
     "completedToast": "Reading goal completed",
     "completedToastHint": "You read {{pages}} of {{target}} pages today."
+  },
+  "demo": {
+    "strip": "Demo: first {{pages}} pages",
+    "stripOf": "Demo: first {{pages}} of {{total}} pages",
+    "endTitle": "This is the end of the free sample",
+    "endBody": "The whole book, translation of selected text and PDF downloads come with a subscription.",
+    "haveAccount": "Have an account? Sign in",
+    "notReady": "The demo of this book is not ready yet",
+    "notReadyHint": "Subscribers can read the full book.",
+    "readDemo": "Read the demo",
+    "fullWithSubscription": "Full book with a subscription"
+  },
+  "subscribe": {
+    "eyebrow": "Subscription",
+    "title": "Read whole books",
+    "lead": "The full catalogue of adapted books, translation of selected text and PDF downloads. The first days are free.",
+    "planName": "Bookeep Premium",
+    "trialBadge": "{{count}} days free",
+    "per": {
+      "month": "/ month",
+      "year": "/ year",
+      "week": "/ week",
+      "day": "/ day"
+    },
+    "features": {
+      "catalog": "Every book in full, no page limit",
+      "translation": "Translate selected text into English, Finnish, Ukrainian or Russian",
+      "explanations": "Up to 60 simple explanations a day",
+      "download": "PDF downloads"
+    },
+    "freeName": "Without a subscription",
+    "free": {
+      "demo": "The first pages of every book",
+      "explanations": "Explanations in the book's language (a few a day)",
+      "noTranslation": "No translation of selected text",
+      "noDownload": "No downloads"
+    },
+    "startTrial": "Start: {{count}} days free",
+    "cta": "Subscribe",
+    "ctaShort": "Unlock the whole book",
+    "manage": "Manage subscription",
+    "trialNote": "A card is needed for the trial. You are charged only after {{count}} days and can cancel any time before that.",
+    "status": {
+      "trial": "Free trial until {{date}}. You'll be charged that day unless you cancel before then.",
+      "active": "Subscription active, renews {{date}}",
+      "ending": "Subscription cancelled, ends {{date}}",
+      "pastDue": "A payment failed. Update your card in Manage subscription.",
+      "manual": "Subscription active"
+    },
+    "checkoutWaiting": "Payment received, turning on your subscription…",
+    "checkoutDone": "Done! Your subscription is active and every book is open.",
+    "checkoutLate": "Payment received, but the subscription is not on yet. Refresh in a minute.",
+    "checkoutCanceled": "Checkout cancelled. You can come back to it any time.",
+    "toCatalog": "Go to books",
+    "errors": {
+      "not_configured": "Payments are not set up yet. Try again later.",
+      "auth_required": "Sign in first.",
+      "already_subscribed": "Your subscription is already active.",
+      "failed": "Couldn't open checkout. Try again."
+    }
   }
 }

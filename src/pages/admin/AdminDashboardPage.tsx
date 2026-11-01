@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { BookCover } from '@/components/books/BookCover';
-import { ButtonLink } from '@/components/common/Button';
+import { Button, ButtonLink } from '@/components/common/Button';
 import { ConfirmDialog } from '@/components/common/Field';
 import { DocumentTitle } from '@/components/common/DocumentTitle';
 import { EmptyState } from '@/components/common/EmptyState';
@@ -12,7 +12,7 @@ import { Skeleton } from '@/components/common/Skeleton';
 import { useToast } from '@/components/common/Toast';
 import { useAdminBooks } from '@/hooks/useAdminBooks';
 import { AdminHeroBooks } from '@/components/admin/AdminHeroBooks';
-import { deleteBook } from '@/services/books';
+import { deleteBook, regenerateDemo } from '@/services/books';
 import type { Book } from '@/types/book';
 
 export function AdminDashboardPage() {
@@ -21,6 +21,25 @@ export function AdminDashboardPage() {
   const { notify } = useToast();
   const [pending, setPending] = useState<Book | null>(null);
   const [deleting, setDeleting] = useState(false);
+  const [demoBusy, setDemoBusy] = useState<string | null>(null);
+  const missingDemos = books.filter((book) => book.pdf_path && !book.demo_path);
+
+  // Demos are cut from the full PDF in this browser, one book at a time.
+  async function makeDemos(list: Book[]) {
+    let failed = 0;
+    for (const book of list) {
+      setDemoBusy(book.id);
+      try {
+        await regenerateDemo(book);
+      } catch (error) {
+        console.error('Demo failed for', book.slug, error);
+        failed += 1;
+      }
+    }
+    setDemoBusy(null);
+    notify(failed ? t('admin.demo.failed', { count: failed }) : t('admin.demo.done'), failed ? 'error' : undefined);
+    void reload();
+  }
 
   const finnish = books.filter((book) => book.language === 'fi').length;
   const english = books.filter((book) => book.language === 'en').length;
@@ -46,6 +65,18 @@ export function AdminDashboardPage() {
       </div>
 
       {status === 'success' && books.length > 0 ? <AdminHeroBooks books={books} onSaved={reload} /> : null}
+
+      {status === 'success' && missingDemos.length > 0 ? (
+        <div className="lux-card mt-8 flex flex-col gap-3 rounded-2xl p-5 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="font-semibold text-ink">{t('admin.demo.missingTitle', { count: missingDemos.length })}</p>
+            <p className="mt-1 text-sm text-muted">{t('admin.demo.missingHint')}</p>
+          </div>
+          <Button isLoading={Boolean(demoBusy)} onClick={() => void makeDemos(missingDemos)}>
+            {t('admin.demo.createMissing')}
+          </Button>
+        </div>
+      ) : null}
 
       <div className="mt-8">
         {status === 'error' ? (
@@ -88,6 +119,9 @@ export function AdminDashboardPage() {
                       <div className="text-xs">
                         {book.complete ? t('admin.status.complete') : t('admin.status.inProgress')}
                       </div>
+                      <div className="text-xs">
+                        {book.demo_path ? t('admin.demo.has', { count: book.demo_pages }) : t('admin.demo.none')}
+                      </div>
                     </td>
                     <td className="px-4 py-3 text-muted">
                       {new Date(book.created_at).toLocaleDateString(i18n.resolvedLanguage)}
@@ -104,6 +138,16 @@ export function AdminDashboardPage() {
                         >
                           {t('admin.table.delete')}
                         </button>
+                        {book.pdf_path ? (
+                          <button
+                            type="button"
+                            disabled={Boolean(demoBusy)}
+                            className="focus-ring rounded-md text-sm font-semibold text-muted hover:text-ink disabled:opacity-50"
+                            onClick={() => void makeDemos([book])}
+                          >
+                            {demoBusy === book.id ? t('admin.demo.working') : t('admin.demo.remake')}
+                          </button>
+                        ) : null}
                         {book.published ? (
                           <Link to={`/books/${book.slug}`} className="focus-ring rounded-md text-sm font-semibold text-muted hover:text-ink">
                             {t('admin.table.open')}

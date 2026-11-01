@@ -1,15 +1,18 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ButtonLink } from '@/components/common/Button';
+import { ButtonArrow, ButtonLink } from '@/components/common/Button';
 import { DocumentTitle } from '@/components/common/DocumentTitle';
 import { EmptyState } from '@/components/common/EmptyState';
+import { DemoNotice } from '@/components/reader/DemoNotice';
 import { PdfDocument } from '@/components/reader/PdfDocument';
 import { ReaderPaperFilters } from '@/components/reader/ReaderPaperFilters';
 import { ReaderToolbar } from '@/components/reader/ReaderToolbar';
 import { SelectionExplainer } from '@/components/reader/SelectionExplainer';
 import { Skeleton } from '@/components/common/Skeleton';
 import { useBook } from '@/hooks/useBooks';
+import { useBookAccess } from '@/hooks/useBookAccess';
+import { getFullPdfUrl } from '@/services/access';
 import { useDebouncedCallback } from '@/hooks/useDebouncedCallback';
 import { usePdfPaper } from '@/hooks/usePdfPaper';
 import { useReadingProgress } from '@/hooks/useReadingProgress';
@@ -29,7 +32,40 @@ function ReaderPageInner() {
   const { slug } = useParams();
   const { t, i18n } = useTranslation();
   const { book, status } = useBook(slug);
-  const { progress, saveProgress } = useReadingProgress(book?.id);
+  const { progress, saveProgress: saveReadingProgress } = useReadingProgress(book?.id);
+  const access = useBookAccess();
+  // Subscribers get a signed link to the full PDF; everyone else reads the public demo.
+  const [fullFile, setFullFile] = useState<{ path: string; url: string | null } | null>(null);
+  const pdfPath = book?.pdf_path ?? null;
+  const wantsFull = access.ready && access.hasFullAccess && Boolean(pdfPath);
+  useEffect(() => {
+    if (!wantsFull || !pdfPath) return;
+    let active = true;
+    void getFullPdfUrl(pdfPath)
+      .then((url) => {
+        if (active) setFullFile({ path: pdfPath, url });
+      })
+      .catch((error: unknown) => {
+        console.warn('Full PDF is not available, showing the demo', error);
+        if (active) setFullFile({ path: pdfPath, url: null });
+      });
+    return () => {
+      active = false;
+    };
+  }, [wantsFull, pdfPath]);
+  const fullUrl = fullFile?.path === pdfPath ? fullFile.url : undefined;
+  const isDemo = access.ready && (!wantsFull || fullUrl === null);
+  const accessPending = !access.ready || (wantsFull && fullUrl === undefined);
+  const readerFile = isDemo ? (book?.demo_path ?? null) : (fullUrl ?? null);
+  const isDemoRef = useRef(isDemo);
+  isDemoRef.current = isDemo;
+  // The demo has fewer pages than the book: its page numbers must not overwrite real progress.
+  const saveProgress = useCallback(
+    (next: { currentPage: number; totalPages: number }) => {
+      if (!isDemoRef.current) saveReadingProgress(next);
+    },
+    [saveReadingProgress],
+  );
   const { paper, setPaper } = usePdfPaper();
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(progress?.totalPages ?? 0);
@@ -98,7 +134,10 @@ function ReaderPageInner() {
     (numPages: number) => {
       if (numPages <= 0) return;
       setTotalPages(numPages);
-      if (inited.current) return;
+      if (inited.current) {
+        setPage((current) => (current > numPages ? 1 : current));
+        return;
+      }
       inited.current = true;
       const saved = progressRef.current?.currentPage ?? 1;
       const currentPage = saved > numPages ? 1 : clamp(saved, 1, numPages);
@@ -108,7 +147,7 @@ function ReaderPageInner() {
     [saveProgress],
   );
 
-  if (status === 'loading') {
+  if (status === 'loading' || (book && accessPending)) {
     return (
       <div className="min-h-dvh bg-bg p-6">
         <Skeleton className="h-14 w-full rounded-2xl" />
@@ -130,7 +169,7 @@ function ReaderPageInner() {
     );
   }
 
-  if (!book.pdf_path) {
+  if (!book.pdf_path && !book.demo_path) {
     return (
       <div className="min-h-dvh bg-bg px-4 py-16">
         <DocumentTitle title={title} noindex />
@@ -138,6 +177,25 @@ function ReaderPageInner() {
           title={t('reader.missing')}
           description={t('reader.missingHint')}
           action={<ButtonLink to={`/books/${book.slug}`} variant="secondary">{t('reader.back')}</ButtonLink>}
+        />
+      </div>
+    );
+  }
+
+  if (!readerFile) {
+    // No demo copy yet (an admin makes one in /admin).
+    return (
+      <div className="min-h-dvh bg-bg px-4 py-16">
+        <DocumentTitle title={title} noindex />
+        <EmptyState
+          title={t('demo.notReady')}
+          description={t('demo.notReadyHint')}
+          action={
+            <ButtonLink to="/subscribe">
+              {t('subscribe.cta')}
+              <ButtonArrow />
+            </ButtonLink>
+          }
         />
       </div>
     );
@@ -181,10 +239,18 @@ function ReaderPageInner() {
       >
         <div className="meter-fill" style={{ width: `${percent}%` }} />
       </div>
+      {isDemo ? (
+        <DemoNotice
+          demoPages={totalPages || book.demo_pages}
+          fullPages={book.page_count}
+          isGuest={access.isGuest}
+          atEnd={totalPages > 0 && page >= totalPages}
+        />
+      ) : null}
       <main className="flex flex-1 flex-col">
         <PdfDocument
-          key={book.id}
-          file={book.pdf_path}
+          key={`${book.id}-${isDemo ? 'demo' : 'full'}`}
+          file={readerFile}
           page={page}
           zoom={zoom}
           onLoad={onPdfLoad}
@@ -198,6 +264,7 @@ function ReaderPageInner() {
           pageText={pageText?.page === page ? pageText.text : ''}
           resetKey={`${page}-${zoom}`}
           book={{ language: book.language, level: book.level, title: book.title_original }}
+          canTranslate={access.hasFullAccess}
         />
       </main>
     </div>

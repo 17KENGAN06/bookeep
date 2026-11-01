@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft, Download } from 'lucide-react';
+import { ArrowLeft, Download, Lock } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { AdaptationBadge } from '@/components/books/AdaptationBadge';
 import { BookCover } from '@/components/books/BookCover';
@@ -16,6 +16,8 @@ import { Reveal } from '@/components/common/Reveal';
 import { Skeleton } from '@/components/common/Skeleton';
 import { CoverScene, Scene } from '@/components/scene/Scene';
 import { useBook } from '@/hooks/useBooks';
+import { useBookAccess } from '@/hooks/useBookAccess';
+import { getFullPdfUrl } from '@/services/access';
 import { useReadingProgress } from '@/hooks/useReadingProgress';
 import { loadReaderPage } from '@/routes/lazyPage';
 import { getLocalizedDescription, getLocalizedTitle } from '@/utils/bookCopy';
@@ -27,6 +29,7 @@ export function BookDetailsPage() {
   const { book, status, reload } = useBook(slug);
   const { progress } = useReadingProgress(book?.id);
   const [downloading, setDownloading] = useState(false);
+  const access = useBookAccess();
 
   // Most visitors here go on to read, so the reader and its PDF worker are fetched ahead.
   useEffect(() => {
@@ -76,12 +79,17 @@ export function BookDetailsPage() {
   const hasProgress = Boolean(progress && progress.currentPage > 1);
   const pdfPath = book.pdf_path;
   const pdfFileName = `${book.slug}.pdf`;
+  // Guests and readers without a subscription get the demo in the reader and no download.
+  const canDownload = access.ready && access.hasFullAccess && Boolean(pdfPath);
+  const isDemoReader = access.ready && !access.hasFullAccess;
 
   async function downloadPdf() {
     if (!pdfPath) return;
     setDownloading(true);
+    let signedUrl: string | null = null;
     try {
-      const response = await fetch(pdfPath);
+      signedUrl = await getFullPdfUrl(pdfPath, { download: pdfFileName });
+      const response = await fetch(signedUrl);
       if (!response.ok) throw new Error('download');
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
@@ -93,7 +101,7 @@ export function BookDetailsPage() {
       link.remove();
       URL.revokeObjectURL(url);
     } catch {
-      window.open(pdfPath, '_blank', 'noopener,noreferrer');
+      if (signedUrl) window.open(signedUrl, '_blank', 'noopener,noreferrer');
     } finally {
       setDownloading(false);
     }
@@ -175,10 +183,16 @@ export function BookDetailsPage() {
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                 <ButtonLink to={`/read/${book.slug}`} className="w-full !min-h-14 !px-7 sm:w-auto">
-                  {hasProgress ? t('books.continueReading') : t('books.startReading')}
+                  {isDemoReader ? t('demo.readDemo') : hasProgress ? t('books.continueReading') : t('books.startReading')}
                   <ButtonArrow />
                 </ButtonLink>
-                {pdfPath ? (
+                {isDemoReader ? (
+                  <Link to="/subscribe" className="btn btn-secondary w-full !min-h-14 sm:w-auto">
+                    <Lock className="h-4 w-4 text-accent" aria-hidden />
+                    {t('demo.fullWithSubscription')}
+                  </Link>
+                ) : null}
+                {canDownload ? (
                   <Button
                     type="button"
                     variant="secondary"

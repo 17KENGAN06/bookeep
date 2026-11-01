@@ -24,7 +24,8 @@
     "privacy": "Tietosuoja",
     "library": "Omat kirjat",
     "goals": "Lukutavoitteet",
-    "login": "Kirjaudu"
+    "login": "Kirjaudu",
+    "subscribe": "Tilaus"
   },
   "home": {
     "eyebrow": "Mukautukset · English · Suomi",
@@ -178,13 +179,15 @@
       "errors": {
         "rate_limited": "Liian monta pyyntöä. Odota hetki ja yritä uudelleen.",
         "not_configured": "Selitykset eivät ole vielä käytössä.",
-        "failed": "Selitystä ei saatu. Tarkista yhteys ja yritä uudelleen."
+        "failed": "Selitystä ei saatu. Tarkista yhteys ja yritä uudelleen.",
+        "daily_limit": "Päivän selitykset on käytetty. Raja nollautuu huomenna, ja tilaajilla niitä on enemmän."
       },
       "translation": "Käännös",
       "translateTo": "Käännä kielelle",
       "noTranslation": "Tälle valinnalle ei saatu käännöstä.",
       "sameLanguage": "Valitse kieli, niin näet käännöksen.",
-      "showTranslation": "Näytä käännös"
+      "showTranslation": "Näytä käännös",
+      "translationLocked": "Käännös kuuluu tilaukseen"
     }
   },
   "notFound": {
@@ -199,13 +202,13 @@
     "title": "Ota yhteyttä",
     "lead": "Kirjoita yhteistyöstä, kysymyksestä tai virheestä. Lomake lähettää viestin oikeaan postilaatikkoon.",
     "channels": {
-      "partner": {
-        "title": "Yhteistyö",
-        "text": "Kustannus, mukautus tai muu yhteistyö Bookeepin ja WEISEZAHOYn kanssa."
+      "support": {
+        "title": "Kysymykset ja tuki",
+        "text": "Kysymykset kirjoista tai lukijasta, virheet sivustolla, yhteistyöideat. Myös yhteydenottolomake lähettää tänne."
       },
       "admin": {
-        "title": "Kysymykset ja virheet",
-        "text": "Jos sivusto ei toimi tai tarvitset apua luettelon kanssa."
+        "title": "Ylläpito, juridiikka ja maksut",
+        "text": "Tilaus ja maksut, palautukset, henkilötietopyynnöt ja muut juridiset asiat."
       }
     },
     "form": {
@@ -246,7 +249,7 @@
       },
       "form": {
         "title": "Yhteydenottolomake",
-        "text": "Jos lähetät lomakkeen, saamme nimen, sähköpostin, aiheen ja viestin. Yhteistyöviestit menevät osoitteeseen partner@weisezahoy.com. Kysymykset ja virheilmoitukset osoitteeseen admin@weisezahoy.com. Käytämme niitä vain vastaamiseen."
+        "text": "Jos lähetät lomakkeen, saamme nimen, sähköpostin, aiheen ja viestin. Viesti menee osoitteeseen contact@bookeep.cloud. Maksu-, juridiset ja henkilötietoasiat osoitteeseen admin@bookeep.cloud. Käytämme niitä vain vastaamiseen."
       },
       "local": {
         "title": "Tällä laitteella",
@@ -341,7 +344,9 @@
       "error": "Kirjaa ei voitu tallentaa",
       "titleRequired": "Alkuperäinen nimi on pakollinen",
       "coverRequired": "Kansikuva on pakollinen",
-      "pdfRequired": "PDF-tiedosto on pakollinen"
+      "pdfRequired": "PDF-tiedosto on pakollinen",
+      "demoPages": "Näytteen sivut",
+      "demoPagesHint": "Ilman tilausta näkyvät ensimmäiset sivut, enintään kolmasosa kirjasta."
     },
     "upload": {
       "drop": "Vedä tiedosto tähän",
@@ -358,6 +363,17 @@
       "cancel": "Peruuta",
       "success": "Kirja poistettu",
       "error": "Kirjaa ei voitu poistaa"
+    },
+    "demo": {
+      "has": "Näyte: {{count}} s.",
+      "none": "Ei näytettä",
+      "remake": "Tee näyte uudelleen",
+      "working": "Tehdään…",
+      "missingTitle": "Kirjoja ilman näytettä: {{count}}",
+      "missingHint": "Vierailijat ja lukijat ilman tilausta eivät voi avata näitä kirjoja ennen näytettä.",
+      "createMissing": "Tee puuttuvat näytteet",
+      "done": "Näyte valmis",
+      "failed": "Epäonnistuneet näytteet: {{count}}"
     }
   },
   "auth": {
@@ -443,5 +459,65 @@
     "saveError": "Lukutavoitetta ei voitu tallentaa.",
     "completedToast": "Lukutavoite täyttyi",
     "completedToastHint": "Luit tänään {{pages}} / {{target}} sivua."
+  },
+  "demo": {
+    "strip": "Näyte: ensimmäiset {{pages}} sivua",
+    "stripOf": "Näyte: ensimmäiset {{pages}}/{{total}} sivua",
+    "endTitle": "Tähän näyte loppuu",
+    "endBody": "Koko kirja, valitun tekstin käännös ja PDF-lataus kuuluvat tilaukseen.",
+    "haveAccount": "Onko sinulla tili? Kirjaudu",
+    "notReady": "Tämän kirjan näyte ei ole vielä valmis",
+    "notReadyHint": "Tilaajat voivat lukea koko kirjan.",
+    "readDemo": "Lue näyte",
+    "fullWithSubscription": "Koko kirja tilauksella"
+  },
+  "subscribe": {
+    "eyebrow": "Tilaus",
+    "title": "Lue kirjat kokonaan",
+    "lead": "Koko selkokirjojen valikoima, valitun tekstin käännös ja PDF-lataus. Ensimmäiset päivät ilmaiseksi.",
+    "planName": "Bookeep Premium",
+    "trialBadge": "{{count}} päivää ilmaiseksi",
+    "per": {
+      "month": "/ kk",
+      "year": "/ vuosi",
+      "week": "/ vko",
+      "day": "/ päivä"
+    },
+    "features": {
+      "catalog": "Kaikki kirjat kokonaan, ei sivurajaa",
+      "translation": "Valitun tekstin käännös englanniksi, suomeksi, ukrainaksi tai venäjäksi",
+      "explanations": "Jopa 60 selkeää selitystä päivässä",
+      "download": "PDF-lataus"
+    },
+    "freeName": "Ilman tilausta",
+    "free": {
+      "demo": "Jokaisen kirjan ensimmäiset sivut",
+      "explanations": "Selitykset kirjan kielellä (muutama päivässä)",
+      "noTranslation": "Ei valitun tekstin käännöstä",
+      "noDownload": "Ei latausta"
+    },
+    "startTrial": "Aloita: {{count}} päivää ilmaiseksi",
+    "cta": "Tilaa",
+    "ctaShort": "Avaa koko kirja",
+    "manage": "Hallitse tilausta",
+    "trialNote": "Kokeilujaksoon tarvitaan kortti. Veloitamme vasta {{count}} päivän jälkeen, ja voit perua milloin tahansa sitä ennen.",
+    "status": {
+      "trial": "Kokeilujakso {{date}} asti. Silloin veloitetaan, ellet peru tilausta ennen sitä.",
+      "active": "Tilaus voimassa, uusiutuu {{date}}",
+      "ending": "Tilaus peruttu, päättyy {{date}}",
+      "pastDue": "Maksu epäonnistui. Päivitä kortti tilauksen hallinnassa.",
+      "manual": "Tilaus voimassa"
+    },
+    "checkoutWaiting": "Maksu vastaanotettu, tilausta otetaan käyttöön…",
+    "checkoutDone": "Valmista! Tilaus on voimassa ja kaikki kirjat ovat auki.",
+    "checkoutLate": "Maksu vastaanotettu, mutta tilaus ei ole vielä päällä. Päivitä sivu hetken päästä.",
+    "checkoutCanceled": "Maksu peruttiin. Voit palata siihen milloin tahansa.",
+    "toCatalog": "Kirjoihin",
+    "errors": {
+      "not_configured": "Maksuja ei ole vielä otettu käyttöön. Yritä myöhemmin.",
+      "auth_required": "Kirjaudu ensin sisään.",
+      "already_subscribed": "Tilauksesi on jo voimassa.",
+      "failed": "Maksusivu ei auennut. Yritä uudelleen."
+    }
   }
 }

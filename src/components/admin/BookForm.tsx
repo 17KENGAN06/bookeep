@@ -7,6 +7,7 @@ import { Field, fieldControlClass } from '@/components/common/Field';
 import type { Book, BookLanguage, CefrLevel } from '@/types/book';
 import { BOOK_LANGUAGES, CEFR_LEVELS } from '@/types/book';
 import type { BookDraft } from '@/services/books';
+import { DEFAULT_DEMO_PAGES } from '@/services/demoPages';
 import { isCoverFile, isPdfFile } from '@/utils/files';
 import { slugify } from '@/utils/slug';
 
@@ -30,6 +31,7 @@ const emptyDraft: BookDraft = {
   level: 'A2',
   published: true,
   complete: false,
+  demo_pages: DEFAULT_DEMO_PAGES,
 };
 
 function nullable(value: string) {
@@ -55,6 +57,7 @@ export function BookForm({ book, isSaving, onSubmit }: BookFormProps) {
           level: book.level,
           published: book.published,
           complete: book.complete ?? true,
+          demo_pages: book.demo_pages ?? DEFAULT_DEMO_PAGES,
           slug: book.slug,
         }
       : emptyDraft,
@@ -187,6 +190,22 @@ export function BookForm({ book, isSaving, onSubmit }: BookFormProps) {
               </option>
             ))}
           </select>
+        </Field>
+        <Field label={t('admin.form.demoPages')} hint={t('admin.form.demoPagesHint')}>
+          <input
+            type="number"
+            min={1}
+            max={100}
+            inputMode="numeric"
+            className={fieldControlClass}
+            value={draft.demo_pages}
+            onChange={(event) =>
+              setDraft((current) => ({
+                ...current,
+                demo_pages: Math.min(100, Math.max(1, Math.round(Number(event.target.value) || 1))),
+              }))
+            }
+          />
         </Field>
       </div>
 

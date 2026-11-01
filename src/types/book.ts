@@ -18,7 +18,11 @@ export type Book = {
   level: CefrLevel;
   cover_path: string | null;
   thumbnail_path: string | null;
+  /** Storage path in the private book-pdfs bucket. Open it with getFullPdfUrl. */
   pdf_path: string | null;
+  /** Public URL of the short demo PDF (first pages), or null until one is made. */
+  demo_path: string | null;
+  demo_pages: number;
   page_count: number | null;
   published: boolean;
   complete: boolean;
