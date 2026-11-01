@@ -102,7 +102,8 @@ export function PdfDocument({ file, page, zoom, onLoad, onPrev, onNext, onPageTe
       tabIndex={-1}
       className="reader-stage flex flex-1 justify-center overflow-x-auto px-2 pt-4 pb-28 outline-none sm:px-6 sm:pt-10 md:pb-12"
       onPointerDown={(event) => {
-        swipeStart.current = { x: event.clientX, y: event.clientY };
+        // Swipes turn pages on touch screens. A mouse drag over the page selects text.
+        swipeStart.current = event.pointerType === 'mouse' ? null : { x: event.clientX, y: event.clientY };
       }}
       onPointerUp={(event) => {
         if (swipeStart.current == null || zoom !== 1) {

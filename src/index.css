@@ -1040,6 +1040,15 @@
   user-select: text;
 }
 
+/* Empty block under the text that a press beside a line lands in (see useTextLayerSelection). */
+.reader-page .textLayer .pressStart {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
 .reader-page .react-pdf__Page__textContent ::selection {
   background: color-mix(in oklab, var(--app-accent) 38%, transparent);
 }

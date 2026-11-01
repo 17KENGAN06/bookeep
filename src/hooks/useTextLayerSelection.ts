@@ -20,6 +20,7 @@ export function useTextLayerSelection(stageRef: RefObject<HTMLElement | null>) {
       Array.from(stageRef.current?.querySelectorAll<HTMLElement>('.textLayer') ?? []);
 
     const reset = (layer: HTMLElement) => {
+      layer.querySelector<HTMLElement>(':scope > .pressStart')?.removeAttribute('style');
       const end = layer.querySelector<HTMLElement>('.endOfContent');
       if (end) {
         layer.append(end);
@@ -33,10 +34,74 @@ export function useTextLayerSelection(stageRef: RefObject<HTMLElement | null>) {
     let pointerDown = false;
     let prevRange: Range | null = null;
 
+    // A press on empty space beside the text starts the selection inside a `.pressStart`
+    // block: an empty block that lies under the text and covers the whole layer. On the
+    // press, it is moved right after the text of the line under the pointer (or of
+    // the line above, between lines), or right before that line when the press is to its
+    // left. So the selection starts there, as on a normal page. Without it the press
+    // hits the layer itself, and Chrome before 148 starts the selection at the end of
+    // the page: dragging back or up from there selected the whole page.
+    const pressCover = (layer: HTMLElement) => {
+      let cover = layer.querySelector<HTMLElement>(':scope > .pressStart');
+      if (!cover) {
+        cover = document.createElement('div');
+        cover.className = 'pressStart';
+        cover.setAttribute('aria-hidden', 'true');
+        layer.append(cover);
+      }
+      return cover;
+    };
+
+    const placeForPress = (layer: HTMLElement, cover: HTMLElement, x: number, y: number) => {
+      const spans = Array.from(layer.querySelectorAll<HTMLElement>('span[role="presentation"]')).filter(
+        (span) => span.textContent?.trim(),
+      );
+      if (spans.length === 0) return;
+      const rects = spans.map((span) => span.getBoundingClientRect());
+      let line = rects.flatMap((r, i) => (r.top <= y && y <= r.bottom ? [i] : []));
+      if (line.length === 0) {
+        const above = rects.flatMap((r, i) => (r.bottom < y ? [i] : []));
+        if (above.length === 0) {
+          spans[0].before(cover);
+          return;
+        }
+        const bottom = Math.max(...above.map((i) => rects[i].bottom));
+        line = above.filter((i) => bottom - rects[i].bottom < rects[i].height / 2);
+        x = Infinity;
+      }
+      const left = line.filter((i) => rects[i].left <= x);
+      if (left.length === 0) spans[Math.min(...line)].before(cover);
+      else spans[Math.max(...left)].after(cover);
+    };
+
+    const onPointerOver = (event: PointerEvent) => {
+      if (!(event.target instanceof Element)) return;
+      const layer = event.target.closest<HTMLElement>('.textLayer');
+      if (layer && stageRef.current?.contains(layer)) pressCover(layer);
+    };
+
     const onPointerDown = (event: PointerEvent) => {
       pointerDown = true;
-      if (event.target instanceof Element) {
-        event.target.closest<HTMLElement>('.textLayer')?.classList.add('selecting');
+      prevRange = null;
+      layers().forEach(reset);
+      if (!(event.target instanceof Element)) return;
+      const layer = event.target.closest<HTMLElement>('.textLayer');
+      if (!layer) return;
+      layer.classList.add('selecting');
+      const cover = pressCover(layer);
+      if (event.button === 0 && (event.target === cover || event.target === layer)) {
+        placeForPress(layer, cover, event.clientX, event.clientY);
+        // Chrome looks up the press point again when the drag starts. Shrink the block to
+        // that point and lift it over the end-of-content block, so the lookup lands here
+        // again while the rest of the empty space is left to pdf.js's logic below.
+        const box = layer.getBoundingClientRect();
+        const scale = layer.offsetWidth / (box.width || 1);
+        cover.style.inset = 'auto';
+        cover.style.left = `${(event.clientX - box.left) * scale - 2}px`;
+        cover.style.top = `${(event.clientY - box.top) * scale - 2}px`;
+        cover.style.width = '4px';
+        cover.style.height = '4px';
+        cover.style.zIndex = '1';
       }
     };
     const onPointerUp = () => {
@@ -50,7 +115,9 @@ export function useTextLayerSelection(stageRef: RefObject<HTMLElement | null>) {
     const onSelectionChange = () => {
       const selection = document.getSelection();
       const all = layers();
-      if (!selection || selection.rangeCount === 0 || all.length === 0) {
+      // A bare caret left after a click is no selection: drop the cover so the next
+      // press starts from a clean layer.
+      if (!selection || selection.rangeCount === 0 || all.length === 0 || (selection.isCollapsed && !pointerDown)) {
         all.forEach(reset);
         prevRange = null;
         return;
@@ -92,6 +159,7 @@ export function useTextLayerSelection(stageRef: RefObject<HTMLElement | null>) {
       prevRange = range.cloneRange();
     };
 
+    document.addEventListener('pointerover', onPointerOver);
     document.addEventListener('pointerdown', onPointerDown);
     document.addEventListener('pointerup', onPointerUp);
     document.addEventListener('pointercancel', onPointerUp);
@@ -99,6 +167,7 @@ export function useTextLayerSelection(stageRef: RefObject<HTMLElement | null>) {
     document.addEventListener('selectionchange', onSelectionChange);
     window.addEventListener('blur', onPointerUp);
     return () => {
+      document.removeEventListener('pointerover', onPointerOver);
       document.removeEventListener('pointerdown', onPointerDown);
       document.removeEventListener('pointerup', onPointerUp);
       document.removeEventListener('pointercancel', onPointerUp);
