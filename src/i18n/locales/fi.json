@@ -500,6 +500,7 @@
     "cta": "Tilaa",
     "ctaShort": "Avaa koko kirja",
     "manage": "Hallitse tilausta",
+    "history": "Laskut ja maksut",
     "trialNote": "Kokeilujaksoon tarvitaan kortti. Veloitamme vasta {{count}} päivän jälkeen, ja voit perua milloin tahansa sitä ennen.",
     "status": {
       "trial": "Kokeilujakso {{date}} asti. Silloin veloitetaan, ellet peru tilausta ennen sitä.",

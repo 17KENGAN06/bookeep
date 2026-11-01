@@ -500,6 +500,7 @@
     "cta": "Subscribe",
     "ctaShort": "Unlock the whole book",
     "manage": "Manage subscription",
+    "history": "Invoices and payments",
     "trialNote": "A card is needed for the trial. You are charged only after {{count}} days and can cancel any time before that.",
     "status": {
       "trial": "Free trial until {{date}}. You'll be charged that day unless you cancel before then.",

@@ -25,9 +25,12 @@ import {
 const ACTIVE = new Set(['trialing', 'active', 'past_due']);
 const FEATURES = ['catalog', 'translation', 'explanations', 'download'] as const;
 
+// One day of grace, the same rule the database uses to open the books.
+const GRACE_MS = 24 * 60 * 60 * 1000;
+
 function isActive(sub: MySubscription | null) {
   if (!sub || !ACTIVE.has(sub.status)) return false;
-  return !sub.current_period_end || new Date(sub.current_period_end).getTime() > Date.now();
+  return !sub.current_period_end || new Date(sub.current_period_end).getTime() > Date.now() - GRACE_MS;
 }
 
 export function SubscribePage() {
@@ -195,6 +198,16 @@ export function SubscribePage() {
                 ))}
               </ul>
               <div className="mt-8">{action}</div>
+              {user && !active && sub?.stripe_customer_id && (sub.status === 'canceled' || sub.status === 'expired') ? (
+                <button
+                  type="button"
+                  className="mt-4 text-sm font-semibold text-muted hover:text-ink"
+                  disabled={busy}
+                  onClick={() => void run(openBillingPortal)}
+                >
+                  {t('subscribe.history')}
+                </button>
+              ) : null}
               {!active && canTrial ? <p className="mt-3 text-xs text-faint">{t('subscribe.trialNote', { count: trialDays })}</p> : null}
             </article>
           </Reveal>

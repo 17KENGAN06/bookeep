@@ -1,7 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
-import { checkoutHandler, planHandler, portalHandler, webhookHandler } from './billing.js';
+import { billingHealthHandler, checkoutHandler, planHandler, portalHandler, webhookHandler } from './billing.js';
 import { explainHandler } from './explain.js';
 
 const port = Number(process.env.PORT) || 4000;
@@ -52,6 +52,8 @@ app.post('/api/explain', (req, res) => {
 app.get('/api/billing/plan', (req, res) => {
   void planHandler(req, res);
 });
+
+app.get('/api/billing/health', billingHealthHandler);
 
 app.post('/api/billing/checkout', (req, res) => {
   void checkoutHandler(req, res);

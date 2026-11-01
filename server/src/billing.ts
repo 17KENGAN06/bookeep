@@ -46,13 +46,32 @@ async function readRow(userId: string) {
   return (data as SubscriptionRow | null) ?? null;
 }
 
+// Same day of grace as public.has_active_subscription(): a renewal webhook can land a bit late.
+const GRACE_MS = 24 * 60 * 60 * 1000;
+
 function isActiveRow(row: SubscriptionRow | null) {
   if (!row || !ACTIVE.has(row.status)) return false;
-  return !row.current_period_end || new Date(row.current_period_end).getTime() > Date.now();
+  return !row.current_period_end || new Date(row.current_period_end).getTime() > Date.now() - GRACE_MS;
+}
+
+function isMissing(error: unknown) {
+  return error instanceof Stripe.errors.StripeError && error.code === 'resource_missing';
+}
+
+/** True when the customer exists in the Stripe account of the current key (test and live are separate). */
+async function customerExists(api: Stripe, id: string) {
+  try {
+    const customer = await api.customers.retrieve(id);
+    return !('deleted' in customer && customer.deleted);
+  } catch (error) {
+    if (isMissing(error)) return false;
+    throw error;
+  }
 }
 
 async function ensureCustomer(api: Stripe, userId: string, email: string | undefined, row: SubscriptionRow | null) {
-  if (row?.stripe_customer_id) return row.stripe_customer_id;
+  // A customer saved under another key (test vs live, or an old account) does not exist here: make a new one.
+  if (row?.stripe_customer_id && (await customerExists(api, row.stripe_customer_id))) return row.stripe_customer_id;
 
   const customer = await api.customers.create({
     email,
@@ -174,7 +193,7 @@ export async function portalHandler(req: Request, res: Response) {
 
   try {
     const row = await readRow(user.id);
-    if (!row?.stripe_customer_id) {
+    if (!row?.stripe_customer_id || !(await customerExists(api, row.stripe_customer_id))) {
       res.status(404).json({ error: 'no_customer' });
       return;
     }
@@ -221,6 +240,14 @@ async function userIdFor(subscription: Stripe.Subscription) {
   return (data?.user_id as string | undefined) ?? null;
 }
 
+/** The subscription an invoice belongs to (the field moved in newer Stripe API versions). */
+function invoiceSubscriptionId(invoice: Stripe.Invoice) {
+  const fromParent = invoice.parent?.subscription_details?.subscription;
+  const legacy = (invoice as unknown as { subscription?: string | { id: string } | null }).subscription;
+  const value = fromParent ?? legacy ?? null;
+  return typeof value === 'string' ? value : (value?.id ?? null);
+}
+
 async function syncSubscription(api: Stripe, subscriptionId: string) {
   // Always read the latest state: webhook events can arrive out of order.
   const subscription = await api.subscriptions.retrieve(subscriptionId);
@@ -229,6 +256,7 @@ async function syncSubscription(api: Stripe, subscriptionId: string) {
     console.warn('Stripe subscription without a Bookeep user', subscription.id);
     return;
   }
+  console.log('Stripe subscription synced', subscription.id, subscription.status);
 
   const row = await readRow(userId);
   const status = mapStatus(subscription.status);
@@ -292,13 +320,37 @@ export async function webhookHandler(req: Request, res: Response) {
       case 'customer.subscription.resumed':
         await syncSubscription(api, event.data.object.id);
         break;
+      // Renewals and failed charges. subscription.updated usually says the same, these make it certain.
+      case 'invoice.paid':
+      case 'invoice.payment_succeeded':
+      case 'invoice.payment_failed': {
+        const id = invoiceSubscriptionId(event.data.object);
+        if (id) await syncSubscription(api, id);
+        break;
+      }
       default:
         break;
     }
     res.json({ received: true });
   } catch (error) {
     // A 500 makes Stripe retry the event later.
-    console.error('Stripe webhook failed', event.type, error);
+    console.error('Stripe webhook failed', event.type, event.id, error instanceof Error ? error.message : error);
     res.status(500).json({ error: 'sync_failed' });
   }
+}
+
+/** GET /api/billing/health: which settings are present (yes/no only, never the values). */
+export function billingHealthHandler(_req: Request, res: Response) {
+  const key = process.env.STRIPE_SECRET_KEY ?? '';
+  const mode = key.startsWith('sk_live_') || key.startsWith('rk_live_') ? 'live' : key ? 'test' : null;
+  res.set('Cache-Control', 'no-store');
+  res.json({
+    stripeMode: mode,
+    stripeSecretKey: Boolean(key),
+    stripePriceId: Boolean(process.env.STRIPE_PRICE_ID),
+    stripeWebhookSecret: Boolean(process.env.STRIPE_WEBHOOK_SECRET),
+    supabaseServiceKey: Boolean(getAdminClient()),
+    siteUrl: siteUrl(),
+    trialDays: TRIAL_DAYS,
+  });
 }

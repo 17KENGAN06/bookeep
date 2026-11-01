@@ -1,12 +1,13 @@
 import { createClient, type SupabaseClient, type User } from '@supabase/supabase-js';
 import type { Request } from 'express';
 
-// Server-only client. SUPABASE_SERVICE_ROLE_KEY bypasses RLS: never send it to the site.
+// Server-only client. The service role / secret key bypasses RLS: never send it to the site.
+// Either name works: SUPABASE_SERVICE_ROLE_KEY (legacy JWT key) or SUPABASE_SECRET_KEY (sb_secret_...).
 let admin: SupabaseClient | null = null;
 
 export function getAdminClient() {
   const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SECRET_KEY;
   if (!url || !key) return null;
   admin ??= createClient(url, key, {
     auth: { persistSession: false, autoRefreshToken: false },
