@@ -20,7 +20,7 @@ export function useTextLayerSelection(stageRef: RefObject<HTMLElement | null>) {
       Array.from(stageRef.current?.querySelectorAll<HTMLElement>('.textLayer') ?? []);
 
     const reset = (layer: HTMLElement) => {
-      layer.querySelector<HTMLElement>(':scope > .pressStart')?.removeAttribute('style');
+      layer.querySelector<HTMLElement>('.pressStart')?.removeAttribute('style');
       const end = layer.querySelector<HTMLElement>('.endOfContent');
       if (end) {
         layer.append(end);
@@ -42,7 +42,7 @@ export function useTextLayerSelection(stageRef: RefObject<HTMLElement | null>) {
     // hits the layer itself, and Chrome before 148 starts the selection at the end of
     // the page: dragging back or up from there selected the whole page.
     const pressCover = (layer: HTMLElement) => {
-      let cover = layer.querySelector<HTMLElement>(':scope > .pressStart');
+      let cover = layer.querySelector<HTMLElement>('.pressStart');
       if (!cover) {
         cover = document.createElement('div');
         cover.className = 'pressStart';
@@ -89,8 +89,22 @@ export function useTextLayerSelection(stageRef: RefObject<HTMLElement | null>) {
       if (!layer) return;
       layer.classList.add('selecting');
       const cover = pressCover(layer);
-      if (event.button === 0 && (event.target === cover || event.target === layer)) {
+      const end = layer.querySelector<HTMLElement>('.endOfContent');
+      const onEnd = end != null && event.target === end;
+      if (event.button === 0 && !event.shiftKey && (event.target === cover || event.target === layer || onEnd)) {
+        // A plain press starts a new selection anyway. Drop the old one first: it may
+        // still start inside this block, and moving the block would drag it along.
+        document.getSelection()?.removeAllRanges();
         placeForPress(layer, cover, event.clientX, event.clientY);
+        // Start the end-of-content block at the same spot. It takes the press itself when an
+        // old selection was showing, and the first move of the drag before any selection
+        // change could place it.
+        if (end) {
+          end.style.width = layer.style.width;
+          end.style.height = layer.style.height;
+          end.style.userSelect = 'text';
+          cover.after(end);
+        }
         // Chrome looks up the press point again when the drag starts. Shrink the block to
         // that point and lift it over the end-of-content block, so the lookup lands here
         // again while the rest of the empty space is left to pdf.js's logic below.
