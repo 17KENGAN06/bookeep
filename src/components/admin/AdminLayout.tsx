@@ -18,7 +18,7 @@ export function AdminLayout() {
           <div className="flex min-w-0 flex-wrap items-center justify-end gap-2">
             <p className="hidden max-w-[12rem] truncate text-xs text-muted sm:block">{user?.email}</p>
             <ThemeToggle />
-            <LanguageSwitcher className="max-sm:order-3 max-sm:w-full max-sm:justify-center" />
+            <LanguageSwitcher />
             <Button
               type="button"
               variant="secondary"

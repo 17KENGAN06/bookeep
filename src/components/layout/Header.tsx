@@ -112,9 +112,7 @@ export function Header() {
               <Target className="h-[18px] w-[18px]" aria-hidden />
             </Link>
             <ThemeToggle />
-            <div className="hidden xl:block">
-              <LanguageSwitcher />
-            </div>
+            <LanguageSwitcher className="hidden sm:block" />
             {!isLoading ? (
               user ? (
                 <button type="button" className={accountClassName} onClick={() => void signOut()}>
@@ -196,8 +194,8 @@ export function Header() {
                 </Link>
               ) : null}
             </div>
-            <div className="mt-3 flex justify-center px-1 pb-1">
-              <LanguageSwitcher />
+            <div className="mt-3 px-1 pb-1">
+              <LanguageSwitcher variant="panel" />
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { supportedLanguages } from '@/i18n';
+import { contentLanguages } from '@/i18n';
 import { FileDropzone } from '@/components/admin/FileDropzone';
 import { Button } from '@/components/common/Button';
 import { Field, fieldControlClass } from '@/components/common/Field';
@@ -232,7 +232,7 @@ export function BookForm({ book, isSaving, onSubmit }: BookFormProps) {
       </div>
 
       <div className="grid gap-5 md:grid-cols-2">
-        {supportedLanguages.map((language) => (
+        {contentLanguages.map((language) => (
           <div key={language.code} className="space-y-4 rounded-2xl border border-line bg-surface p-4">
             <p className="text-xs font-semibold tracking-[0.16em] text-muted uppercase">{language.short}</p>
             <Field label={t('admin.form.localizedTitle')}>

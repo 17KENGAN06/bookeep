@@ -170,7 +170,7 @@
       },
       "languages": {
         "title": "English and Finnish",
-        "text": "Books in the catalog are English and Finnish only. Those are the languages of the texts. The interface can be switched to Finnish, English, Ukrainian or Russian: site labels change, the book stays in the language of the adaptation."
+        "text": "Books in the catalog are English and Finnish only. Those are the languages of the texts. The interface is available in nine languages, from Finnish and English to Polish, German, French, Italian and Spanish: site labels change, the book stays in the language of the adaptation."
       },
       "levels": {
         "title": "Levels A2 and B1",
@@ -556,7 +556,7 @@
     },
     "features": {
       "catalog": "Every book in full, no page limit",
-      "translation": "Translate selected text into English, Finnish, Ukrainian or Russian",
+      "translation": "Translate selected text into any of the nine site languages",
       "explanations": "Up to 60 simple explanations a day",
       "download": "PDF downloads"
     },

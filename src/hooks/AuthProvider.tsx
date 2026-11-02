@@ -81,6 +81,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
+  // Account emails (password reset etc.) are sent in the language saved on the account.
+  // Keep it in step with the language the reader picks on the site.
+  const userId = user?.id;
+  const savedLocale = user?.user_metadata?.locale as string | undefined;
+  useEffect(() => {
+    if (!userId) return;
+    const supabase = getSupabaseClient();
+    if (!supabase) return;
+    const sync = (language?: string) => {
+      const next = language || i18n.resolvedLanguage;
+      if (!next || next === savedLocale) return;
+      void supabase.auth.updateUser({ data: { locale: next } }).catch(() => undefined);
+    };
+    sync();
+    i18n.on('languageChanged', sync);
+    return () => {
+      i18n.off('languageChanged', sync);
+    };
+  }, [userId, savedLocale]);
+
   const signIn = useCallback(async (email: string, password: string) => {
     const supabase = getSupabaseClient();
     if (!supabase) throw new Error('Supabase is not configured');

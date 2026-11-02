@@ -1,6 +1,8 @@
 export type BookLanguage = 'fi' | 'en';
 export type CefrLevel = 'A2' | 'B1';
-export type UiLanguage = 'fi' | 'en' | 'uk' | 'ru';
+export type UiLanguage = 'fi' | 'en' | 'uk' | 'ru' | 'pl' | 'de' | 'fr' | 'it' | 'es';
+/** Languages a book's title and description columns exist for. */
+export type ContentLanguage = 'fi' | 'en' | 'uk' | 'ru';
 
 export type Book = {
   id: string;

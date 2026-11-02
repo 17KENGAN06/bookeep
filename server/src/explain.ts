@@ -76,15 +76,20 @@ function getClient() {
 }
 
 type Language = 'en' | 'fi';
-type Target = 'en' | 'fi' | 'ru' | 'uk';
+type Target = 'en' | 'fi' | 'ru' | 'uk' | 'pl' | 'de' | 'fr' | 'it' | 'es';
 
-const TARGETS: Target[] = ['en', 'fi', 'ru', 'uk'];
+const TARGETS: Target[] = ['en', 'fi', 'ru', 'uk', 'pl', 'de', 'fr', 'it', 'es'];
 
 const LANGUAGE_NAME: Record<Target, string> = {
   en: 'English',
   fi: 'Finnish',
   ru: 'Russian',
   uk: 'Ukrainian',
+  pl: 'Polish',
+  de: 'German',
+  fr: 'French',
+  it: 'Italian',
+  es: 'Spanish',
 };
 
 type ExplainBody = {

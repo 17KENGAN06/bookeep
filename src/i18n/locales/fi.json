@@ -170,7 +170,7 @@
       },
       "languages": {
         "title": "Englanti ja suomi",
-        "text": "Luettelon kirjat ovat vain englanniksi ja suomeksi. Ne ovat itse tekstien kieliä. Käyttöliittymän voi vaihtaa suomeksi, englanniksi, ukrainaksi tai venäjäksi: sivuston tekstit vaihtuvat, kirja pysyy mukautuksen kielellä."
+        "text": "Luettelon kirjat ovat vain englanniksi ja suomeksi. Ne ovat itse tekstien kieliä. Käyttöliittymä on saatavilla yhdeksällä kielellä, suomesta ja englannista puolaan, saksaan, ranskaan, italiaan ja espanjaan: sivuston tekstit vaihtuvat, kirja pysyy mukautuksen kielellä."
       },
       "levels": {
         "title": "Tasot A2 ja B1",
@@ -556,7 +556,7 @@
     },
     "features": {
       "catalog": "Kaikki kirjat kokonaan, ei sivurajaa",
-      "translation": "Valitun tekstin käännös englanniksi, suomeksi, ukrainaksi tai venäjäksi",
+      "translation": "Valitun tekstin käännös mille tahansa sivuston yhdeksästä kielestä",
       "explanations": "Jopa 60 selkeää selitystä päivässä",
       "download": "PDF-lataus"
     },

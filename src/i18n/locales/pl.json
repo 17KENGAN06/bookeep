@@ -1,0 +1,601 @@
+{
+  "common": {
+    "appName": "Bookeep",
+    "themeLight": "Przełącz na jasny motyw",
+    "themeDark": "Przełącz na ciemny motyw",
+    "language": "Język interfejsu",
+    "loading": "Ładowanie...",
+    "retry": "Spróbuj ponownie",
+    "openMenu": "Otwórz menu",
+    "closeMenu": "Zamknij menu",
+    "skipToContent": "Przejdź do treści"
+  },
+  "seo": {
+    "title": "Bookeep — adaptowane książki po angielsku i fińsku",
+    "description": "Katalog adaptowanych książek po angielsku i fińsku. Tytuły są przepisane dla czytelników na poziomie A2–B1, a fabuła pozostaje nienaruszona.",
+    "keywords": "Bookeep, adaptowane książki, angielski, fiński, A2, B1, czytanie w języku obcym"
+  },
+  "nav": {
+    "primary": "Główna nawigacja",
+    "home": "Start",
+    "books": "Książki",
+    "about": "O nas",
+    "contact": "Kontakt",
+    "privacy": "Prywatność",
+    "library": "Moje książki",
+    "goals": "Cele czytania",
+    "login": "Zaloguj się",
+    "subscribe": "Subskrypcja"
+  },
+  "home": {
+    "eyebrow": "Adaptacje · Angielski · Fiński",
+    "line1": "Adaptowane",
+    "line2": "po angielsku",
+    "line3": "i fińsku",
+    "subtitle": "Bookeep to katalog angielskich i fińskich książek przygotowanych dla osób uczących się języków. Fabuła zostaje, język staje się jaśniejszy.",
+    "ctaPrimary": "Otwórz katalog",
+    "ctaGoals": "Plan czytania",
+    "featuredTitle": "W katalogu",
+    "featuredSubtitle": "Adaptowane książki po angielsku i fińsku. Jeśli chcesz, filtruj według języka i poziomu.",
+    "viewAll": "Wszystkie książki",
+    "planTitle": "Spokojny plan czytania",
+    "planLead": "Ustal, ile stron chcesz czytać każdego dnia. Kalendarz liczy strony ze wszystkich książek, a liczą się tylko nowe strony.",
+    "planCta": "Otwórz kalendarz",
+    "moods": {
+      "adaptation": {
+        "title": "Adaptacja",
+        "text": "Tekst jest napisany prościej, bez utraty fabuły i struktury książki."
+      },
+      "languages": {
+        "title": "Dwa języki",
+        "text": "Katalog obejmuje tylko angielski i fiński — dwa działy w jednym miejscu."
+      },
+      "levels": {
+        "title": "Poziomy A2–B1",
+        "text": "Wybierz gęstość języka dopasowaną do tego, gdzie jesteś teraz."
+      }
+    },
+    "stats": {
+      "levels": "poziomy",
+      "languages": "dwa języki",
+      "reader": "czytnik w przeglądarce"
+    },
+    "features": {
+      "eyebrow": "Dlaczego Bookeep",
+      "title": "Historia zostaje. Język wychodzi ci naprzeciw.",
+      "lead": "Każda książka jest ręcznie przepisywana dla uczących się: krótsze zdania, znane słowa, ci sami bohaterowie i zwroty akcji."
+    },
+    "ctaStart": "Zacznij czytać za darmo",
+    "ctaResume": "Kontynuuj: {{title}}",
+    "resumeHint": "Zatrzymałeś się na stronie {{page}} z {{total}}.",
+    "trust": {
+      "free": "Darmowe konto",
+      "demo": "Fragment każdej książki",
+      "trial": "Darmowy okres próbny Premium"
+    },
+    "start": {
+      "eyebrow": "Jak zacząć",
+      "title": "Twoja pierwsza strona w minutę",
+      "lead": "Załóż konto, wybierz książkę na swoim poziomie i czytaj od razu w przeglądarce. Postęp zapisuje się na koncie i czeka na ciebie na każdym urządzeniu.",
+      "account": {
+        "title": "Załóż konto",
+        "text": "Przez e-mail lub Google. To nic nie kosztuje i zajmuje pół minuty."
+      },
+      "choose": {
+        "title": "Wybierz książkę",
+        "text": "Angielski lub fiński, poziomy A2–B1. Ta sama historia w jaśniejszym języku."
+      },
+      "read": {
+        "title": "Czytaj i rozumiej",
+        "text": "Zaznacz nieznane słowo i dostań krótkie wyjaśnienie od razu na stronie."
+      },
+      "cta": "Załóż konto i czytaj",
+      "sampleBefore": "She opened the door and felt a",
+      "sampleWord": "shiver",
+      "sampleAfter": "run down her back.",
+      "sampleExplain": "shiver — szybkie drżenie ciała z zimna lub ze strachu."
+    },
+    "final": {
+      "eyebrow": "Twoja następna książka",
+      "title": "Ciesz się czytaniem w nowym języku",
+      "lead": "Zacznij od darmowego fragmentu dowolnej książki. Gdy zechcesz ją skończyć, otwórz cały katalog z Premium.",
+      "cta": "Zacznij czytać za darmo"
+    }
+  },
+  "books": {
+    "title": "Książki",
+    "subtitle": "Adaptowane książki po angielsku i fińsku. Filtruj według języka i poziomu.",
+    "all": "Wszystkie",
+    "allLevels": "Dowolny",
+    "language": "Język",
+    "level": "Poziom",
+    "empty": "Nie znaleziono książek",
+    "emptyFi": "Nie znaleziono fińskich książek",
+    "emptyEn": "Nie znaleziono angielskich książek",
+    "emptyLevel": "Nie znaleziono książek na tym poziomie",
+    "showAll": "Pokaż wszystkie",
+    "loading": "Ładowanie książek...",
+    "error": "Coś poszło nie tak",
+    "errorHint": "Nie udało się wczytać katalogu. Spróbuj ponownie.",
+    "startReading": "Zacznij czytać",
+    "continueReading": "Czytaj dalej",
+    "progress": "Postęp",
+    "openBook": "Otwórz książkę",
+    "statTitles": "Tytuły",
+    "shown_one": "{{count}} książka",
+    "shown_few": "{{count}} książki",
+    "shown_many": "{{count}} książek",
+    "shown_other": "{{count}} książki"
+  },
+  "book": {
+    "notFound": "Nie znaleziono książki",
+    "notFoundHint": "Ten tytuł jest niedostępny albo nie został jeszcze opublikowany.",
+    "backToCatalog": "Wróć do katalogu",
+    "startReading": "Czytaj",
+    "continueReading": "Kontynuuj",
+    "download": "Pobierz PDF",
+    "downloading": "Pobieranie…",
+    "openInApp": "Otwórz w aplikacji",
+    "continueFrom": "od strony {{page}}",
+    "pages": "{{current}} / {{total}} stron",
+    "completed": "Przeczytano {{percent}}%",
+    "language": "Język",
+    "level": "Poziom",
+    "description": "O książce",
+    "loading": "Ładowanie książki...",
+    "adaptationComplete": "Gotowa",
+    "adaptationCompleteHint": "Ta adaptacja jest skończona. Możesz przeczytać ją od pierwszej do ostatniej strony.",
+    "adaptationInProgress": "W trakcie",
+    "adaptationInProgressHint": "Ta adaptacja wciąż powstaje. Możesz już zacząć czytać.",
+    "factLevel": "Poziom",
+    "factLanguage": "Język",
+    "factPages": "Strony",
+    "signUpToRead": "Zaloguj się, aby czytać"
+  },
+  "languages": {
+    "fi": "Fiński",
+    "en": "Angielski"
+  },
+  "about": {
+    "eyebrow": "O nas",
+    "title": "O projekcie",
+    "lead": "Bookeep to katalog adaptowanych książek po angielsku i fińsku. Nie ma tu lekcji ani ćwiczeń: otwierasz książkę i czytasz ją w przeglądarce.",
+    "cta": "Otwórz katalog",
+    "sections": {
+      "purpose": {
+        "title": "Po co to jest",
+        "text": "Podręcznik daje zasady i ćwiczenia. Oryginalna powieść jest często zbyt gęsta, jeśli nie znasz jeszcze płynnie języka. Adaptacja jest pomiędzy: czytasz ciągłą historię na poziomie, który już udźwigniesz, bez słownika przy każdej linijce."
+      },
+      "adaptation": {
+        "title": "Czym jest adaptowana książka",
+        "text": "To nie krótkie streszczenie ani zbiór dialogów. To całe dzieło, w którym gęsta gramatyka, rzadkie słowa i długie okresy zdaniowe zostały sprowadzone do wybranego poziomu CEFR. Fabuła, bohaterowie i struktura zostają. Najpierw zmienia się język."
+      },
+      "languages": {
+        "title": "Angielski i fiński",
+        "text": "Książki w katalogu są tylko po angielsku i fińsku. To języki samych tekstów. Interfejs jest dostępny w dziewięciu językach, od fińskiego i angielskiego po polski, niemiecki, francuski, włoski i hiszpański: zmieniają się napisy na stronie, książka zostaje w języku adaptacji."
+      },
+      "levels": {
+        "title": "Poziomy A2 i B1",
+        "text": "Każdy tytuł ma poziom. A2 jest jaśniejszy i krótszy. B1 jest bliżej zwykłej literatury, ale wciąż napisany z myślą o osobie uczącej się języka. Wybierz to, co przeczytasz spokojnie."
+      },
+      "reading": {
+        "title": "Jak działa czytanie",
+        "text": "W katalogu możesz filtrować według języka i poziomu. Książka otwiera się na stronie: strony, powiększenie, jasny lub ciemny papier. Czytanie działa bez konta; ostatnia strona zostaje na tym urządzeniu. Zaloguj się, aby zachować polubienia, listę do przeczytania i historię w różnych przeglądarkach."
+      }
+    }
+  },
+  "reader": {
+    "back": "Wstecz",
+    "titleFallback": "Książka",
+    "page": "{{current}} / {{total}}",
+    "prev": "Poprzednia strona",
+    "next": "Następna strona",
+    "zoomOut": "Pomniejsz",
+    "zoomIn": "Powiększ",
+    "fullscreen": "Pełny ekran",
+    "exitFullscreen": "Zamknij pełny ekran",
+    "paperDark": "Ciemne strony",
+    "paperLight": "Jasne strony",
+    "skipToPage": "Przejdź do strony",
+    "error": "Nie udało się otworzyć",
+    "errorHint": "Plik się nie wczytał. Spróbuj ponownie.",
+    "missing": "Brak pliku",
+    "missingHint": "Tej książki nie ma jeszcze w czytniku.",
+    "paperMode": "Kolor strony",
+    "pages": "Strony",
+    "paper": {
+      "light": "Papier",
+      "sepia": "Sepia",
+      "night": "Noc"
+    },
+    "explain": {
+      "action": "Wyjaśnij",
+      "title": "Wyjaśnienie",
+      "loading": "Wyjaśniam…",
+      "close": "Zamknij",
+      "retry": "Spróbuj ponownie",
+      "disclaimer": "Napisane przez AI dla tego fragmentu. Może się mylić.",
+      "errors": {
+        "rate_limited": "Zbyt wiele zapytań. Poczekaj minutę i spróbuj ponownie.",
+        "not_configured": "Wyjaśnienia nie są jeszcze dostępne.",
+        "failed": "Nie udało się uzyskać wyjaśnienia. Sprawdź połączenie i spróbuj ponownie.",
+        "daily_limit": "To wszystkie wyjaśnienia na dziś. Limit odnowi się jutro, a subskrybenci dostają więcej."
+      },
+      "translation": "Tłumaczenie",
+      "translateTo": "Przetłumacz na",
+      "noTranslation": "Brak tłumaczenia dla tego zaznaczenia.",
+      "sameLanguage": "Wybierz język, aby zobaczyć tłumaczenie.",
+      "showTranslation": "Pokaż tłumaczenie",
+      "translationLocked": "Tłumaczenie jest w subskrypcji"
+    }
+  },
+  "notFound": {
+    "eyebrow": "Błąd 404",
+    "title": "Nie znaleziono strony",
+    "subtitle": "Link może być nieaktualny albo książka nie została jeszcze opublikowana.",
+    "home": "Na stronę główną",
+    "catalog": "Przeglądaj książki"
+  },
+  "contact": {
+    "eyebrow": "Kontakt",
+    "title": "Napisz do nas",
+    "lead": "Napisz w sprawie współpracy, pytania lub błędu. Formularz wyśle wiadomość do właściwej skrzynki.",
+    "channels": {
+      "support": {
+        "title": "Pytania i pomoc",
+        "text": "Pytania o książki lub czytnik, błędy na stronie, pomysły na współpracę. Formularz kontaktowy też pisze tutaj."
+      },
+      "admin": {
+        "title": "Administracja, sprawy prawne i płatności",
+        "text": "Subskrypcja i płatności, zwroty, wnioski dotyczące danych osobowych i inne sprawy prawne."
+      }
+    },
+    "form": {
+      "topic": "Czego dotyczy wiadomość?",
+      "topicHint": "Ta wiadomość trafi na adres {{email}}.",
+      "topics": {
+        "partnership": "Partnerstwo / współpraca",
+        "question": "Pytanie",
+        "bug": "Znalazłem błąd"
+      },
+      "name": "Imię",
+      "email": "E-mail",
+      "message": "Wiadomość",
+      "messageHint": "Co najmniej {{min}} znaków: zostało {{left}}.",
+      "messageOk": "{{count}} znaków. Gotowe do wysłania.",
+      "consent": "Zgadzam się na przetwarzanie tej wiadomości zgodnie z <privacy>polityką prywatności</privacy>.",
+      "submit": "Wyślij",
+      "sending": "Wysyłanie…",
+      "success": "Wiadomość wysłana. Odpowiemy na podany adres e-mail.",
+      "error": "Nie udało się wysłać wiadomości. Spróbuj później albo napisz bezpośrednio na {{email}}.",
+      "errors": {
+        "name": "Wpisz swoje imię.",
+        "email": "Wpisz poprawny e-mail, na przykład name@mail.com.",
+        "message": "Wiadomość jest za krótka: co najmniej {{min}} znaków, zostało {{left}}.",
+        "consent": "Zaznacz zgodę, aby wysłać wiadomość."
+      }
+    }
+  },
+  "privacy": {
+    "eyebrow": "Informacje prawne",
+    "title": "Polityka prywatności",
+    "lead": "Ta strona wyjaśnia, co przechowuje Bookeep, co wysyła formularz kontaktowy i jak skontaktować się z nami w sprawie danych osobowych.",
+    "sections": {
+      "who": {
+        "title": "Kim jesteśmy",
+        "text": "Bookeep to katalog adaptowanych książek prowadzony przez studio WEISEZAHOY. W sprawach prywatności pisz na <mail>{{email}}</mail>."
+      },
+      "data": {
+        "title": "Co przetwarzamy",
+        "text": "Motyw i język zostają na tym urządzeniu. Jeśli się zalogujesz, przechowujemy w Supabase twój e-mail (i imię z Google, jeśli używasz Google), polubienia, zaplanowane książki i postęp czytania. Administratorzy mają osobne logowanie do katalogu. Hosting jest w Hostinger; pliki książek i katalog znajdują się w magazynie i bazie danych Supabase."
+      },
+      "account": {
+        "title": "Konta",
+        "text": "Możesz założyć konto przez e-mail albo zalogować się przez Google. Polubienia, lista do przeczytania i historia należą do tego konta. Wylogowanie ich nie usuwa. Aby usunąć konto, napisz na <mail>{{email}}</mail>."
+      },
+      "form": {
+        "title": "Formularz kontaktowy",
+        "text": "Gdy wysyłasz formularz, otrzymujemy twoje imię, e-mail, temat i wiadomość. Trafia ona na contact@bookeep.cloud. Pytania o płatności, sprawy prawne i dane osobowe trafiają na admin@bookeep.cloud. Używamy ich tylko do odpowiedzi."
+      },
+      "local": {
+        "title": "Na tym urządzeniu",
+        "text": "Motyw, język i postęp czytania gościa są zapisywane w przeglądarce. Po zalogowaniu postęp zapisuje się też na koncie. Wyczyszczenie danych strony usuwa lokalną kopię."
+      },
+      "sharing": {
+        "title": "Udostępnianie",
+        "text": "Nie sprzedajemy danych osobowych. Wiadomości mogą przechodzić przez usługę wysyłki e-maili, aby dotrzeć do naszych skrzynek. Dostawcy hostingu i bazy danych przetwarzają dane tylko po to, by strona działała."
+      },
+      "rights": {
+        "title": "Twoje prawa",
+        "text": "Możesz zapytać, co przechowujemy z wiadomości kontaktowej, poprosić o jej usunięcie lub sprzeciwić się dalszemu wykorzystaniu. Napisz na <mail>{{email}}</mail>. Aktualizujemy tę stronę, jeśli zmieni się sposób, w jaki postępujemy z danymi."
+      }
+    }
+  },
+  "footer": {
+    "tagline": "Adaptowane książki po angielsku i fińsku.",
+    "credit": "Stronę tworzy i utrzymuje <studio>WEISEZAHOY</studio>."
+  },
+  "admin": {
+    "eyebrow": "Administracja",
+    "logout": "Wyloguj się",
+    "back": "Wróć do panelu",
+    "login": {
+      "title": "Logowanie administratora",
+      "subtitle": "Nie ma publicznej rejestracji. Wejść mogą tylko administratorzy.",
+      "email": "E-mail",
+      "password": "Hasło",
+      "submit": "Zaloguj się",
+      "error": "Logowanie nie powiodło się. Sprawdź e-mail i hasło.",
+      "notConfigured": "Supabase nie jest jeszcze skonfigurowany. Dodaj VITE_SUPABASE_URL i VITE_SUPABASE_ANON_KEY do pliku .env.",
+      "forbidden": "To konto nie jest administratorem."
+    },
+    "dashboard": {
+      "title": "Książki",
+      "add": "Dodaj książkę",
+      "total": "Wszystkie książki",
+      "finnish": "Książki fińskie",
+      "english": "Książki angielskie",
+      "empty": "Na razie brak książek"
+    },
+    "hero": {
+      "title": "Okładki na stronie głównej",
+      "lead": "Wybierz do trzech opublikowanych książek do stosu na stronie głównej. Zostaw miejsce puste, jeśli chcesz mniej niż trzy.",
+      "slot": "Miejsce {{n}}",
+      "empty": "Nie pokazano",
+      "save": "Zapisz okładki",
+      "saved": "Okładki na stronie głównej zaktualizowane",
+      "error": "Nie udało się zapisać okładek",
+      "duplicate": "Ta sama książka nie może być w dwóch miejscach."
+    },
+    "table": {
+      "cover": "Okładka",
+      "title": "Tytuł",
+      "language": "Język",
+      "level": "Poziom",
+      "status": "Status",
+      "created": "Utworzono",
+      "actions": "Działania",
+      "edit": "Edytuj",
+      "delete": "Usuń",
+      "open": "Otwórz"
+    },
+    "status": {
+      "published": "Opublikowana",
+      "draft": "Szkic",
+      "complete": "Gotowa",
+      "inProgress": "W trakcie"
+    },
+    "form": {
+      "createTitle": "Dodaj książkę",
+      "editTitle": "Edytuj książkę",
+      "titleOriginal": "Tytuł oryginalny",
+      "slug": "Slug",
+      "language": "Język książki",
+      "level": "Poziom",
+      "published": "Opublikowana",
+      "complete": "Książka jest gotowa",
+      "completeHint": "Jeśli nie zaznaczysz, czytelnicy zobaczą, że adaptacja wciąż trwa. Nadal możesz ją opublikować i pozwolić zacząć czytać.",
+      "cover": "Obraz okładki",
+      "coverHint": "Wysoki obraz na stronę książki. Najlepiej w pionie.",
+      "thumbnail": "Miniatura karty",
+      "thumbnailHint": "Niższy obraz na karty w katalogu. Opcjonalnie — bez niego wysoka okładka zostanie przycięta.",
+      "pdf": "Plik PDF",
+      "fileKept": "Obecny plik zostaje, dopóki nie wybierzesz nowego",
+      "localizedTitle": "Tytuł",
+      "localizedDescription": "Krótki opis",
+      "create": "Utwórz książkę",
+      "save": "Zapisz zmiany",
+      "created": "Książka utworzona",
+      "updated": "Książka zaktualizowana",
+      "error": "Nie udało się zapisać książki",
+      "titleRequired": "Tytuł oryginalny jest wymagany",
+      "coverRequired": "Obraz okładki jest wymagany",
+      "pdfRequired": "Plik PDF jest wymagany",
+      "demoPages": "Strony demo",
+      "demoPagesHint": "Czytelnicy bez subskrypcji widzą pierwsze strony, nigdy więcej niż jedną trzecią książki."
+    },
+    "upload": {
+      "drop": "Upuść plik tutaj",
+      "orBrowse": "lub kliknij, aby wybrać",
+      "uploading": "Przesyłanie…",
+      "ready": "Plik gotowy do przesłania",
+      "coverInvalid": "Okładka musi być w formacie JPG, PNG lub WebP",
+      "pdfInvalid": "Dozwolone są tylko pliki PDF"
+    },
+    "delete": {
+      "title": "Usunąć tę książkę?",
+      "body": "„{{title}}” zostanie usunięta z katalogu. Tego nie da się cofnąć.",
+      "confirm": "Usuń",
+      "cancel": "Anuluj",
+      "success": "Książka usunięta",
+      "error": "Nie udało się usunąć książki"
+    },
+    "demo": {
+      "has": "Demo: {{count}} stron",
+      "none": "Brak demo",
+      "remake": "Utwórz demo ponownie",
+      "working": "Trwa…",
+      "missingTitle": "Książki bez demo: {{count}}",
+      "missingHint": "Goście i czytelnicy bez subskrypcji nie mogą otworzyć tych książek, dopóki nie mają demo.",
+      "createMissing": "Utwórz brakujące demo",
+      "done": "Demo gotowe",
+      "failed": "Nieudane demo: {{count}}"
+    },
+    "testers": {
+      "title": "Użytkownicy i testerzy",
+      "lead": "Tester dostaje wszystko, co daje subskrypcja: całe książki, pobieranie i tłumaczenie, bez Stripe. Administratorzy zawsze mają pełny dostęp.",
+      "search": "Szukaj po e-mailu",
+      "count": "Testerzy: {{count}}",
+      "grant": "Nadaj testera",
+      "revoke": "Odbierz testera",
+      "granted": "{{email}} jest teraz testerem",
+      "revoked": "{{email}} nie jest już testerem",
+      "error": "Nie udało się zmienić. Sprawdź, czy migracja 011 została uruchomiona.",
+      "loadError": "Nie udało się wczytać użytkowników. Uruchom migrację 011 w Supabase.",
+      "retry": "Ponów",
+      "loading": "Ładowanie…",
+      "empty": "Nikogo nie znaleziono",
+      "you": "ty",
+      "badgeAdmin": "Admin",
+      "badgeTester": "Tester",
+      "badgePaid": "Subskrybent",
+      "registered": "Od {{date}}",
+      "adminAlways": "Pełny dostęp jako admin"
+    }
+  },
+  "auth": {
+    "loginTitle": "Zaloguj się",
+    "loginLead": "Zaloguj się przez Google lub e-mail, aby czytać książki i wracać tam, gdzie skończyłeś.",
+    "loginSubmit": "Zaloguj się",
+    "loginError": "Logowanie nie powiodło się. Sprawdź e-mail i hasło.",
+    "registerTitle": "Załóż konto",
+    "registerLead": "Wystarczy e-mail lub Google. Możesz zacząć czytać zaraz po rejestracji.",
+    "registerSubmit": "Załóż konto",
+    "registerError": "Nie udało się założyć konta. Spróbuj innego e-maila.",
+    "registerLink": "Załóż konto",
+    "loginLink": "Zaloguj się",
+    "noAccount": "Nie masz jeszcze konta?",
+    "hasAccount": "Masz już konto?",
+    "email": "E-mail",
+    "password": "Hasło",
+    "passwordHint": "Co najmniej 6 znaków.",
+    "google": "Kontynuuj z Google",
+    "googleError": "Logowanie przez Google się nie rozpoczęło. Spróbuj ponownie.",
+    "or": "lub",
+    "checkEmail": "Sprawdź skrzynkę i otwórz link potwierdzający.",
+    "notConfigured": "Logowanie nie jest jeszcze skonfigurowane na tej stronie.",
+    "signOut": "Wyloguj się",
+    "callback": "Logowanie…",
+    "callbackError": "Nie udało się dokończyć logowania.",
+    "readNotice": "Aby czytać, zaloguj się lub załóż darmowe konto. Od razu wrócimy do książki.",
+    "perks": {
+      "demo": "Darmowy fragment każdej książki",
+      "progress": "Postęp czytania zapisany na koncie",
+      "trial": "Okres próbny Premium: każda książka w całości plus tłumaczenie"
+    }
+  },
+  "library": {
+    "title": "Moje książki",
+    "eyebrow": "Biblioteka",
+    "hello": "Zalogowano jako {{name}}.",
+    "liked": "Polubione",
+    "likedEmpty": "Na razie brak polubionych książek.",
+    "planned": "Do przeczytania",
+    "plannedEmpty": "Na liście do przeczytania jeszcze nic nie ma.",
+    "history": "Historia czytania",
+    "historyEmpty": "Otwórz książkę, a tutaj pojawią się ostatnie tytuły.",
+    "like": "Lubię",
+    "unlike": "Polubiona",
+    "plan": "Do przeczytania",
+    "unplan": "Na liście",
+    "error": "Nie udało się zaktualizować biblioteki.",
+    "guestTitle": "Zaloguj się, aby zachować bibliotekę",
+    "guestHint": "Polubienia, lista do przeczytania i historia są przypisane do konta.",
+    "toCatalog": "Otwórz katalog",
+    "toGoals": "Otwórz cele czytania"
+  },
+  "goals": {
+    "title": "Cele czytania",
+    "eyebrow": "Codzienne czytanie",
+    "lead": "Ustal, ile stron chcesz czytać każdego dnia. Strony ze wszystkich książek liczą się razem, a zapisywane są tylko nowo osiągnięte strony.",
+    "guestTitle": "Zaloguj się, aby planować czytanie",
+    "guestHint": "Cele dzienne są przypisane do konta, razem z polubieniami i historią czytania.",
+    "month": "Miesiąc",
+    "year": "Rok",
+    "prevMonth": "Poprzedni miesiąc",
+    "nextMonth": "Następny miesiąc",
+    "readingDays": "Dni czytania",
+    "pagesRead": "Przeczytane strony",
+    "goalsCompleted": "Osiągnięte cele",
+    "currentStreak": "Obecna seria",
+    "streakValue_one": "{{count}} dzień",
+    "streakValue_few": "{{count}} dni",
+    "streakValue_many": "{{count}} dni",
+    "streakValue_other": "{{count}} dnia",
+    "today": "Dziś",
+    "noGoal": "Brak celu",
+    "pages": "stron",
+    "readingGoal": "Cel czytania",
+    "howMany": "Ile stron chcesz przeczytać?",
+    "targetPages": "Cel stron",
+    "calendarHint": "Wybierz dzień w kalendarzu lub datę w formularzu — tak ustawisz cel.",
+    "composerTitle": "Ustaw cel dzienny",
+    "composerLead": "Wybierz datę i liczbę stron, a potem zapisz. Cel możesz w każdej chwili zmienić lub usunąć.",
+    "pickDate": "Data",
+    "openComposer": "Ustaw cel",
+    "setGoal": "Ustaw cel",
+    "editGoal": "Zaktualizuj cel",
+    "deleteGoal": "Usuń cel",
+    "close": "Zamknij",
+    "decrease": "Mniej stron",
+    "increase": "Więcej stron",
+    "alreadyRead": "Tego dnia przeczytano już {{count}} stron.",
+    "goalCompleted": "Cel osiągnięty",
+    "saveError": "Nie udało się zapisać celu czytania.",
+    "completedToast": "Cel czytania osiągnięty",
+    "completedToastHint": "Dziś przeczytałeś {{pages}} z {{target}} stron."
+  },
+  "demo": {
+    "strip": "Demo: pierwsze {{pages}} stron",
+    "stripOf": "Demo: pierwsze {{pages}} z {{total}} stron",
+    "endTitle": "Tu kończy się darmowy fragment",
+    "endBody": "Cała książka, tłumaczenie zaznaczonego tekstu i pobieranie PDF są w subskrypcji.",
+    "haveAccount": "Masz konto? Zaloguj się",
+    "notReady": "Demo tej książki nie jest jeszcze gotowe",
+    "notReadyHint": "Subskrybenci mogą przeczytać całą książkę.",
+    "readDemo": "Czytaj demo",
+    "fullWithSubscription": "Cała książka w subskrypcji"
+  },
+  "subscribe": {
+    "eyebrow": "Subskrypcja",
+    "title": "Czytaj całe książki",
+    "lead": "Cały katalog adaptowanych książek, tłumaczenie zaznaczonego tekstu i pobieranie PDF. Pierwsze dni są darmowe.",
+    "planName": "Bookeep Premium",
+    "trialBadge": "{{count}} dni za darmo",
+    "per": {
+      "month": "/ miesiąc",
+      "year": "/ rok",
+      "week": "/ tydzień",
+      "day": "/ dzień"
+    },
+    "features": {
+      "catalog": "Każda książka w całości, bez limitu stron",
+      "translation": "Tłumaczenie zaznaczonego tekstu na dowolny z dziewięciu języków strony",
+      "explanations": "Do 60 prostych wyjaśnień dziennie",
+      "download": "Pobieranie PDF"
+    },
+    "freeName": "Bez subskrypcji",
+    "free": {
+      "demo": "Pierwsze strony każdej książki",
+      "explanations": "Wyjaśnienia w języku książki (kilka dziennie)",
+      "noTranslation": "Bez tłumaczenia zaznaczonego tekstu",
+      "noDownload": "Bez pobierania"
+    },
+    "startTrial": "Zacznij: {{count}} dni za darmo",
+    "cta": "Subskrybuj",
+    "ctaShort": "Odblokuj całą książkę",
+    "manage": "Zarządzaj subskrypcją",
+    "history": "Faktury i płatności",
+    "trialNote": "Do okresu próbnego potrzebna jest karta. Opłata zostanie pobrana dopiero po {{count}} dniach, a wcześniej możesz zrezygnować w każdej chwili.",
+    "status": {
+      "trial": "Darmowy okres próbny do {{date}}. Tego dnia zostanie pobrana opłata, chyba że wcześniej zrezygnujesz.",
+      "active": "Subskrypcja aktywna, odnawia się {{date}}",
+      "ending": "Subskrypcja anulowana, kończy się {{date}}",
+      "pastDue": "Płatność nie powiodła się. Zaktualizuj kartę w „Zarządzaj subskrypcją”.",
+      "manual": "Subskrypcja aktywna",
+      "admin": "Dostęp administratora: wszystko z subskrypcji jest otwarte",
+      "tester": "Dostęp testera: wszystko z subskrypcji jest otwarte za darmo"
+    },
+    "checkoutWaiting": "Płatność otrzymana, włączamy subskrypcję…",
+    "checkoutDone": "Gotowe! Subskrypcja jest aktywna, a każda książka otwarta.",
+    "checkoutLate": "Płatność otrzymana, ale subskrypcja jeszcze nie działa. Odśwież za minutę.",
+    "checkoutCanceled": "Płatność anulowana. Możesz do niej wrócić w każdej chwili.",
+    "toCatalog": "Przejdź do książek",
+    "errors": {
+      "not_configured": "Płatności nie są jeszcze skonfigurowane. Spróbuj później.",
+      "auth_required": "Najpierw się zaloguj.",
+      "already_subscribed": "Twoja subskrypcja jest już aktywna.",
+      "failed": "Nie udało się otworzyć płatności. Spróbuj ponownie."
+    }
+  }
+}

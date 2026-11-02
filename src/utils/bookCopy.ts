@@ -1,4 +1,4 @@
-import type { Book, UiLanguage } from '@/types/book';
+import type { Book, ContentLanguage } from '@/types/book';
 
 const TITLE_KEYS = {
   en: 'title_en',
@@ -14,7 +14,7 @@ const DESCRIPTION_KEYS = {
   ru: 'description_ru',
 } as const;
 
-function isUiLanguage(value: string): value is UiLanguage {
+function isUiLanguage(value: string): value is ContentLanguage {
   return value === 'en' || value === 'fi' || value === 'uk' || value === 'ru';
 }
 

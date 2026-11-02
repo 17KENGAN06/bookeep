@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express';
 import { EmailUnavailableError, escapeHtml, sendEmail } from './email.js';
+import { EMAIL_COLORS, paragraph, renderEmail } from './emailLayout.js';
 
 /**
  * Contact form → Resend. The form posts here instead of FormSubmit.
@@ -60,18 +61,23 @@ export async function contactHandler(req: Request, res: Response) {
 
   const label = TOPICS[topic];
   const text = [`Topic: ${label}`, `Name: ${name}`, `Email: ${email}`, '', message].join('\n');
-  const html = `<!DOCTYPE html>
-<html>
-<body style="margin:0;padding:24px;background:#f6f4ef;color:#1c1917;font-family:Georgia,serif;font-size:16px;line-height:1.5;">
-  <div style="max-width:560px;margin:0 auto;padding:24px;background:#fff;border-radius:16px;">
-    <p style="margin:0 0 8px;"><strong>Topic:</strong> ${escapeHtml(label)}</p>
-    <p style="margin:0 0 8px;"><strong>Name:</strong> ${escapeHtml(name)}</p>
-    <p style="margin:0 0 8px;"><strong>Email:</strong> ${escapeHtml(email)}</p>
-    <p style="margin:16px 0 8px;"><strong>Message:</strong></p>
-    <p style="margin:0;white-space:pre-wrap;">${escapeHtml(message)}</p>
-  </div>
-</body>
-</html>`;
+  const c = EMAIL_COLORS;
+  const row = (label: string, value: string) =>
+    `<tr><td style="padding:10px 0;border-bottom:1px solid ${c.line};font-family:Manrope,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:1.6px;text-transform:uppercase;color:${c.faint};width:96px;vertical-align:top;">${escapeHtml(label)}</td><td style="padding:10px 0;border-bottom:1px solid ${c.line};font-family:Manrope,Helvetica,Arial,sans-serif;font-size:15px;color:${c.ink};">${escapeHtml(value)}</td></tr>`;
+  const html = renderEmail({
+    lang: 'en',
+    preheader: message.slice(0, 120),
+    eyebrow: label,
+    heading: `Message from ${name}`,
+    bodyHtml: `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:4px 0 22px;">
+                ${row('Topic', label)}
+                ${row('Name', name)}
+                ${row('Email', email)}
+              </table>
+              <p style="margin:0;font-family:Manrope,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.65;color:${c.ink};white-space:pre-wrap;">${escapeHtml(message)}</p>
+              ${paragraph('Reply to this email to answer the reader directly.', 'muted')}`,
+    footer: 'Sent from the contact form on bookeep.cloud',
+  });
 
   try {
     await sendEmail({
