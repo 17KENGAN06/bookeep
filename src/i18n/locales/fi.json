@@ -418,6 +418,27 @@
       "createMissing": "Tee puuttuvat näytteet",
       "done": "Näyte valmis",
       "failed": "Epäonnistuneet näytteet: {{count}}"
+    },
+    "testers": {
+      "title": "Käyttäjät ja testaajat",
+      "lead": "Testaaja saa kaiken, mitä tilaus antaa: kokonaiset kirjat, lataukset ja käännökset ilman Stripeä. Ylläpitäjillä on aina täysi pääsy.",
+      "search": "Hae sähköpostilla",
+      "count": "Testaajia: {{count}}",
+      "grant": "Tee testaajaksi",
+      "revoke": "Poista testaaja",
+      "granted": "{{email}} on nyt testaaja",
+      "revoked": "{{email}} ei ole enää testaaja",
+      "error": "Muutos epäonnistui. Tarkista, että migraatio 011 on ajettu.",
+      "loadError": "Käyttäjiä ei voitu ladata. Aja migraatio 011 Supabasessa.",
+      "retry": "Yritä uudelleen",
+      "loading": "Ladataan…",
+      "empty": "Ketään ei löytynyt",
+      "you": "sinä",
+      "badgeAdmin": "Ylläpitäjä",
+      "badgeTester": "Testaaja",
+      "badgePaid": "Tilaus",
+      "registered": "Alkaen {{date}}",
+      "adminAlways": "Täysi pääsy ylläpitäjänä"
     }
   },
   "auth": {
@@ -557,7 +578,9 @@
       "active": "Tilaus voimassa, uusiutuu {{date}}",
       "ending": "Tilaus peruttu, päättyy {{date}}",
       "pastDue": "Maksu epäonnistui. Päivitä kortti tilauksen hallinnassa.",
-      "manual": "Tilaus voimassa"
+      "manual": "Tilaus voimassa",
+      "admin": "Ylläpitäjän pääsy: kaikki tilauksen ominaisuudet ovat auki",
+      "tester": "Testaajan pääsy: kaikki tilauksen ominaisuudet ovat auki maksutta"
     },
     "checkoutWaiting": "Maksu vastaanotettu, tilausta otetaan käyttöön…",
     "checkoutDone": "Valmista! Tilaus on voimassa ja kaikki kirjat ovat auki.",

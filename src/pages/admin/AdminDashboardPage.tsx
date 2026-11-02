@@ -12,6 +12,7 @@ import { Skeleton } from '@/components/common/Skeleton';
 import { useToast } from '@/components/common/Toast';
 import { useAdminBooks } from '@/hooks/useAdminBooks';
 import { AdminHeroBooks } from '@/components/admin/AdminHeroBooks';
+import { AdminTesters } from '@/components/admin/AdminTesters';
 import { deleteBook, regenerateDemo } from '@/services/books';
 import type { Book } from '@/types/book';
 
@@ -65,6 +66,8 @@ export function AdminDashboardPage() {
       </div>
 
       {status === 'success' && books.length > 0 ? <AdminHeroBooks books={books} onSaved={reload} /> : null}
+
+      <AdminTesters />
 
       {status === 'success' && missingDemos.length > 0 ? (
         <div className="lux-card mt-8 flex flex-col gap-3 rounded-2xl p-5 sm:flex-row sm:items-center sm:justify-between">

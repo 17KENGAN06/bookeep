@@ -1,6 +1,6 @@
 import Stripe from 'stripe';
 import type { Request, Response } from 'express';
-import { getAdminClient, userFromRequest } from './supabaseAdmin.js';
+import { getAdminClient, hasActiveSubscription, userFromRequest } from './supabaseAdmin.js';
 
 // Stripe subscription with a free trial. The webhook is the only writer of
 // public.subscriptions, so access always follows what Stripe says.
@@ -137,7 +137,8 @@ export async function checkoutHandler(req: Request, res: Response) {
 
   try {
     const row = await readRow(user.id);
-    if (isActiveRow(row)) {
+    // Admins and testers already have everything: no Stripe subscription for them.
+    if (isActiveRow(row) || (await hasActiveSubscription(user.id))) {
       res.status(409).json({ error: 'already_subscribed' });
       return;
     }

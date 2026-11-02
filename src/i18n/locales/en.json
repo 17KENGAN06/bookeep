@@ -418,6 +418,27 @@
       "createMissing": "Create missing demos",
       "done": "Demo ready",
       "failed": "Demos that failed: {{count}}"
+    },
+    "testers": {
+      "title": "Users and testers",
+      "lead": "A tester gets everything the subscription gives: full books, downloads and translation, without Stripe. Admins always have full access.",
+      "search": "Search by email",
+      "count": "Testers: {{count}}",
+      "grant": "Make tester",
+      "revoke": "Remove tester",
+      "granted": "{{email}} is now a tester",
+      "revoked": "{{email}} is no longer a tester",
+      "error": "Could not change it. Check that migration 011 has been run.",
+      "loadError": "Could not load users. Run migration 011 in Supabase.",
+      "retry": "Retry",
+      "loading": "Loading…",
+      "empty": "Nobody found",
+      "you": "you",
+      "badgeAdmin": "Admin",
+      "badgeTester": "Tester",
+      "badgePaid": "Subscribed",
+      "registered": "Since {{date}}",
+      "adminAlways": "Full access as an admin"
     }
   },
   "auth": {
@@ -557,7 +578,9 @@
       "active": "Subscription active, renews {{date}}",
       "ending": "Subscription cancelled, ends {{date}}",
       "pastDue": "A payment failed. Update your card in Manage subscription.",
-      "manual": "Subscription active"
+      "manual": "Subscription active",
+      "admin": "Admin access: everything in the subscription is open",
+      "tester": "Tester access: everything in the subscription is open for free"
     },
     "checkoutWaiting": "Payment received, turning on your subscription…",
     "checkoutDone": "Done! Your subscription is active and every book is open.",

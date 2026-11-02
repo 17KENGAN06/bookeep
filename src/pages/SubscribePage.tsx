@@ -9,7 +9,7 @@ import { Reveal } from '@/components/common/Reveal';
 import { useToast } from '@/components/common/Toast';
 import { PageHero } from '@/components/scene/PageHero';
 import { useAuth } from '@/hooks/useAuth';
-import { forgetBookAccess } from '@/hooks/useBookAccess';
+import { forgetBookAccess, useBookAccess } from '@/hooks/useBookAccess';
 import { clearSignedPdfCache } from '@/services/access';
 import {
   BillingError,
@@ -36,7 +36,8 @@ function isActive(sub: MySubscription | null) {
 export function SubscribePage() {
   const { t, i18n } = useTranslation();
   const { notify } = useToast();
-  const { user, isLoading: authLoading } = useAuth();
+  const { user, isLoading: authLoading, isAdmin } = useAuth();
+  const access = useBookAccess();
   const [params, setParams] = useSearchParams();
   const checkout = params.get('checkout');
   const [plan, setPlan] = useState<Plan | null>(null);
@@ -103,12 +104,17 @@ export function SubscribePage() {
 
   const price = plan ? formatPrice(plan, locale) : null;
   const trialDays = plan?.trialDays ?? 3;
-  const active = isActive(sub);
+  const paid = isActive(sub);
+  // Admins and testers (granted in /admin) have full access without a Stripe subscription.
+  const granted = Boolean(user) && access.ready && access.hasFullAccess && !paid;
+  const active = paid || granted;
   const canTrial = !sub?.trial_used && trialDays > 0;
   const dateOf = (value: string | null) => (value ? new Date(value).toLocaleDateString(locale) : '');
 
   let status: string | null = null;
-  if (active && sub) {
+  if (granted) {
+    status = isAdmin ? t('subscribe.status.admin') : t('subscribe.status.tester');
+  } else if (active && sub) {
     if (sub.status === 'trialing') status = t('subscribe.status.trial', { date: dateOf(sub.trial_end ?? sub.current_period_end) });
     else if (sub.cancel_at_period_end) status = t('subscribe.status.ending', { date: dateOf(sub.current_period_end) });
     else if (sub.status === 'past_due') status = t('subscribe.status.pastDue');
@@ -117,7 +123,7 @@ export function SubscribePage() {
   }
 
   let action;
-  if (authLoading || (user && !subLoaded)) {
+  if (authLoading || (user && (!subLoaded || !access.ready))) {
     action = <div className="h-14" />;
   } else if (!user) {
     action = (
@@ -132,7 +138,7 @@ export function SubscribePage() {
       </div>
     );
   } else if (active) {
-    action = sub?.stripe_customer_id ? (
+    action = paid && sub?.stripe_customer_id ? (
       <Button variant="secondary" className="w-full !min-h-14 sm:w-auto" isLoading={busy} onClick={() => void run(openBillingPortal)}>
         {t('subscribe.manage')}
       </Button>

@@ -53,20 +53,22 @@ export async function userFromRequest(req: Request): Promise<User | null> {
 const ACTIVE = ['trialing', 'active', 'past_due'];
 const GRACE_MS = 24 * 60 * 60 * 1000;
 
-/** Same rule as public.has_active_subscription(): admins and active / trialing subscribers. */
+/** Same rule as public.has_active_subscription(): admins, testers and active / trialing subscribers. */
 export async function hasActiveSubscription(userId: string): Promise<boolean> {
   const supabase = getAdminClient();
   if (!supabase) return false;
 
-  const [{ data: adminRow }, { data: sub }] = await Promise.all([
+  const [{ data: adminRow }, { data: testerRow }, { data: sub }] = await Promise.all([
     supabase.from('admins').select('user_id').eq('user_id', userId).maybeSingle(),
+    // Testers are granted in /admin (migration 011). Before it runs the table is missing: no row.
+    supabase.from('testers').select('user_id').eq('user_id', userId).maybeSingle(),
     supabase
       .from('subscriptions')
       .select('status, current_period_end')
       .eq('user_id', userId)
       .maybeSingle(),
   ]);
-  if (adminRow) return true;
+  if (adminRow || testerRow) return true;
   if (!sub || !ACTIVE.includes(sub.status as string)) return false;
   const end = sub.current_period_end as string | null;
   return !end || new Date(end).getTime() > Date.now() - GRACE_MS;
