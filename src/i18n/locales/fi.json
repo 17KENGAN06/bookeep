@@ -64,6 +64,42 @@
       "eyebrow": "Miksi Bookeep",
       "title": "Tarina pysyy. Kieli tulee vastaan.",
       "lead": "Jokainen kirja on muokattu käsin kielen oppijoille: lyhyemmät lauseet, tutut sanat, samat henkilöt ja juonenkäänteet."
+    },
+    "ctaStart": "Aloita lukeminen ilmaiseksi",
+    "ctaResume": "Jatka: {{title}}",
+    "resumeHint": "Jäit sivulle {{page}}/{{total}}.",
+    "trust": {
+      "free": "Ilmainen tili",
+      "demo": "Näyte jokaisesta kirjasta",
+      "trial": "Premiumin ilmainen kokeilu"
+    },
+    "start": {
+      "eyebrow": "Näin aloitat",
+      "title": "Ensimmäinen sivu minuutissa",
+      "lead": "Luo tili, valitse tasollesi sopiva kirja ja lue suoraan selaimessa. Edistymisesi tallentuu tiliisi ja odottaa sinua millä tahansa laitteella.",
+      "account": {
+        "title": "Luo tili",
+        "text": "Sähköposti tai Google. Se on ilmaista ja vie puoli minuuttia."
+      },
+      "choose": {
+        "title": "Valitse kirja",
+        "text": "Englanti tai suomi, tasot A2–B1. Sama tarina selkeämmällä kielellä."
+      },
+      "read": {
+        "title": "Lue ja ymmärrä",
+        "text": "Valitse vieras sana ja saat lyhyen selityksen suoraan sivulle."
+      },
+      "cta": "Luo tili ja lue",
+      "sampleBefore": "She opened the door and felt a",
+      "sampleWord": "shiver",
+      "sampleAfter": "run down her back.",
+      "sampleExplain": "shiver — a quick shake of the body, from cold or fear."
+    },
+    "final": {
+      "eyebrow": "Seuraava kirjasi",
+      "title": "Nauti lukemisesta uudella kielellä",
+      "lead": "Aloita minkä tahansa kirjan ilmaisella näytteellä. Kun haluat lukea loppuun, avaa koko valikoima Premiumilla.",
+      "cta": "Aloita lukeminen ilmaiseksi"
     }
   },
   "books": {
@@ -111,7 +147,8 @@
     "adaptationInProgressHint": "Tätä sovitusta kirjoitetaan vielä. Lukemisen voi jo aloittaa.",
     "factLevel": "Taso",
     "factLanguage": "Kieli",
-    "factPages": "Sivuja"
+    "factPages": "Sivuja",
+    "signUpToRead": "Kirjaudu ja lue"
   },
   "languages": {
     "fi": "Suomi",
@@ -378,11 +415,11 @@
   },
   "auth": {
     "loginTitle": "Kirjaudu",
-    "loginLead": "Käytä Googlea tai Bookeep-sähköpostia, jotta tykkäykset, lukulista ja historia säilyvät.",
+    "loginLead": "Kirjaudu Googlella tai sähköpostilla lukeaksesi kirjoja ja jatkaaksesi siitä, mihin jäit.",
     "loginSubmit": "Kirjaudu",
     "loginError": "Kirjautuminen epäonnistui. Tarkista sähköposti ja salasana.",
     "registerTitle": "Luo tili",
-    "registerLead": "Sähköposti tai Google riittää. Sen jälkeen voit tykätä kirjoista ja suunnitella lukemista.",
+    "registerLead": "Sähköposti tai Google riittää. Voit aloittaa lukemisen heti rekisteröitymisen jälkeen.",
     "registerSubmit": "Luo tili",
     "registerError": "Tiliä ei voitu luoda. Kokeile toista sähköpostia.",
     "registerLink": "Luo tili",
@@ -399,7 +436,13 @@
     "notConfigured": "Kirjautumista ei ole vielä määritetty tälle sivustolle.",
     "signOut": "Kirjaudu ulos",
     "callback": "Kirjaudutaan…",
-    "callbackError": "Kirjautumista ei voitu viimeistellä."
+    "callbackError": "Kirjautumista ei voitu viimeistellä.",
+    "readNotice": "Kirjaudu sisään tai luo ilmainen tili lukeaksesi. Palautamme sinut heti kirjan pariin.",
+    "perks": {
+      "demo": "Ilmainen näyte jokaisesta kirjasta",
+      "progress": "Lukuedistyminen tallentuu tiliisi",
+      "trial": "Premium-kokeilu: kaikki kirjat kokonaan ja käännös"
+    }
   },
   "library": {
     "title": "Omat kirjat",

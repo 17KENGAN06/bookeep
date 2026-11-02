@@ -21,6 +21,7 @@ import { getFullPdfUrl } from '@/services/access';
 import { useReadingProgress } from '@/hooks/useReadingProgress';
 import { loadReaderPage } from '@/routes/lazyPage';
 import { getLocalizedDescription, getLocalizedTitle } from '@/utils/bookCopy';
+import { authPathFor } from '@/utils/auth';
 import { coverUrl } from '@/utils/cover';
 
 export function BookDetailsPage() {
@@ -182,8 +183,17 @@ export function BookDetailsPage() {
               ) : null}
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-                <ButtonLink to={`/read/${book.slug}`} className="w-full !min-h-14 !px-7 sm:w-auto">
-                  {isDemoReader ? t('demo.readDemo') : hasProgress ? t('books.continueReading') : t('books.startReading')}
+                <ButtonLink
+                  to={access.isGuest ? authPathFor(`/read/${book.slug}`, 'read') : `/read/${book.slug}`}
+                  className="w-full !min-h-14 !px-7 sm:w-auto"
+                >
+                  {access.isGuest
+                    ? t('book.signUpToRead')
+                    : isDemoReader
+                      ? t('demo.readDemo')
+                      : hasProgress
+                        ? t('books.continueReading')
+                        : t('books.startReading')}
                   <ButtonArrow />
                 </ButtonLink>
                 {isDemoReader ? (

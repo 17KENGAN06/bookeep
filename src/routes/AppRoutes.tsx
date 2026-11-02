@@ -16,6 +16,7 @@ import { RegisterPage } from '@/pages/RegisterPage';
 import { SubscribePage } from '@/pages/SubscribePage';
 import { lazyPage, loadReaderPage } from '@/routes/lazyPage';
 import { ProtectedAdminRoute } from '@/routes/ProtectedAdminRoute';
+import { RequireAuth } from '@/routes/RequireAuth';
 
 const AdminLayout = lazyPage(() => import('@/components/admin/AdminLayout').then((module) => module.AdminLayout));
 const AdminBookFormPage = lazyPage(() => import('@/pages/admin/AdminBookFormPage').then((module) => module.AdminBookFormPage));
@@ -40,7 +41,9 @@ export function AppRoutes() {
           </Route>
         </Route>
 
-        <Route path="/read/:slug" element={<ReaderPage />} />
+        <Route element={<RequireAuth />}>
+          <Route path="/read/:slug" element={<ReaderPage />} />
+        </Route>
 
         <Route element={<PublicLayout />}>
           <Route path="/" element={<HomePage />} />

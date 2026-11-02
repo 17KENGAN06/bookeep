@@ -4,3 +4,7 @@ export const LANGUAGE_STORAGE_KEY = 'bookeep_language';
 export const PROGRESS_STORAGE_KEY = 'bookeep_reading_progress';
 export const PDF_PAPER_STORAGE_KEY = 'bookeep_pdf_paper';
 export const TRANSLATE_TO_STORAGE_KEY = 'bookeep_translate_to';
+/** Progress is cached per account; the old shared key is only read once to migrate it. */
+export const progressStorageKey = (userId: string) => `${PROGRESS_STORAGE_KEY}:${userId}`;
+/** Set after any sign-in on this device: guests who have an account are sent to log in, not to sign up. */
+export const HAS_ACCOUNT_STORAGE_KEY = 'bookeep_has_account';

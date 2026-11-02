@@ -1707,3 +1707,78 @@
     bottom: calc(max(1rem, env(safe-area-inset-bottom)) + 4.75rem);
   }
 }
+
+/* ── Welcome page & sign-in prompts (2026-11-02) ─────────── */
+@layer components {
+  /* The main "start reading" button gets a soft mint halo so it is the obvious next step. */
+  .hero-cta {
+    box-shadow:
+      inset 0 1px 0 var(--btn-edge),
+      0 1px 2px rgba(0, 0, 0, 0.28),
+      0 0 0 1px color-mix(in oklab, var(--app-accent) 22%, transparent),
+      0 14px 40px -12px var(--app-glow);
+  }
+
+  .auth-read-notice {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.85rem 1rem;
+    border-radius: 1.1rem;
+    border: 1px solid color-mix(in oklab, var(--app-accent) 32%, transparent);
+    background: color-mix(in oklab, var(--app-accent) 8%, transparent);
+  }
+
+
+  .start-step {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .start-step-num {
+    font-family: var(--font-display);
+    font-size: 2.75rem;
+    line-height: 1;
+    font-weight: 500;
+    color: transparent;
+    -webkit-text-stroke: 1px color-mix(in oklab, var(--app-accent) 45%, transparent);
+    font-feature-settings: 'lnum' 1;
+  }
+
+  .start-explain {
+    margin-top: auto;
+    padding-top: 1.25rem;
+  }
+
+  .start-mark {
+    color: var(--app-ink);
+    background: color-mix(in oklab, var(--app-accent) 26%, transparent);
+    border-radius: 0.3rem;
+    padding: 0.05rem 0.25rem;
+  }
+
+  .start-explain-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    padding: 0.65rem 0.8rem;
+    border-radius: 0.9rem;
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: var(--app-ink);
+    background: var(--app-glass);
+    border: 1px solid var(--app-line);
+    box-shadow: inset 0 1px 0 var(--app-highlight), var(--app-shadow);
+  }
+
+  .final-cta-glow {
+    position: absolute;
+    inset: auto 10% -40% 10%;
+    height: 80%;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(50% 50% at 50% 50%, var(--app-glow), transparent 70%);
+    filter: blur(20px);
+  }
+}

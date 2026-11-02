@@ -64,6 +64,42 @@
       "eyebrow": "Why Bookeep",
       "title": "The story stays. The language meets you halfway.",
       "lead": "Every book is rewritten for learners by hand: shorter sentences, familiar words, the same characters and turns of plot."
+    },
+    "ctaStart": "Start reading for free",
+    "ctaResume": "Continue: {{title}}",
+    "resumeHint": "You stopped on page {{page}} of {{total}}.",
+    "trust": {
+      "free": "Free account",
+      "demo": "A sample of every book",
+      "trial": "Premium free trial"
+    },
+    "start": {
+      "eyebrow": "How to start",
+      "title": "Your first page in a minute",
+      "lead": "Create an account, pick a book at your level and read right in the browser. Your progress is saved to your account and waits for you on any device.",
+      "account": {
+        "title": "Create an account",
+        "text": "Email or Google. It is free and takes half a minute."
+      },
+      "choose": {
+        "title": "Pick a book",
+        "text": "English or Finnish, levels A2–B1. The same story in clearer language."
+      },
+      "read": {
+        "title": "Read and understand",
+        "text": "Select an unfamiliar word and get a short explanation right on the page."
+      },
+      "cta": "Create an account and read",
+      "sampleBefore": "She opened the door and felt a",
+      "sampleWord": "shiver",
+      "sampleAfter": "run down her back.",
+      "sampleExplain": "shiver — a quick shake of the body, from cold or fear."
+    },
+    "final": {
+      "eyebrow": "Your next book",
+      "title": "Enjoy reading in a new language",
+      "lead": "Start with a free sample of any book. When you want to finish it, open the whole catalogue with Premium.",
+      "cta": "Start reading for free"
     }
   },
   "books": {
@@ -111,7 +147,8 @@
     "adaptationInProgressHint": "This adaptation is still being written. You can already start reading.",
     "factLevel": "Level",
     "factLanguage": "Language",
-    "factPages": "Pages"
+    "factPages": "Pages",
+    "signUpToRead": "Log in to read"
   },
   "languages": {
     "fi": "Finnish",
@@ -378,11 +415,11 @@
   },
   "auth": {
     "loginTitle": "Sign in",
-    "loginLead": "Use Google or your Bookeep email to keep likes, a reading list and history.",
+    "loginLead": "Log in with Google or email to read books and pick up where you left off.",
     "loginSubmit": "Sign in",
     "loginError": "Sign in failed. Check the email and password.",
     "registerTitle": "Create an account",
-    "registerLead": "An email account or Google is enough. You can then like books and plan what to read.",
+    "registerLead": "Email or Google is enough. You can start reading right after signing up.",
     "registerSubmit": "Create account",
     "registerError": "Could not create the account. Try another email.",
     "registerLink": "Create an account",
@@ -399,7 +436,13 @@
     "notConfigured": "Sign-in is not configured on this site yet.",
     "signOut": "Sign out",
     "callback": "Signing you in…",
-    "callbackError": "Could not finish sign-in."
+    "callbackError": "Could not finish sign-in.",
+    "readNotice": "To read, log in or create a free account. We will take you straight back to the book.",
+    "perks": {
+      "demo": "A free sample of every book",
+      "progress": "Reading progress saved to your account",
+      "trial": "Premium trial: every book in full, plus translation"
+    }
   },
   "library": {
     "title": "My books",

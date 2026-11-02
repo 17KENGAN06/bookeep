@@ -1,4 +1,4 @@
-import { FileText, Globe, Target } from 'lucide-react';
+import { BookOpen, Check, FileText, Globe, Target } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ButtonArrow, ButtonLink } from '@/components/common/Button';
 import { Container } from '@/components/common/Container';
@@ -6,6 +6,10 @@ import { Reveal } from '@/components/common/Reveal';
 import { HeroVisual } from '@/components/home/HeroVisual';
 import { Scene } from '@/components/scene/Scene';
 import { useAuth } from '@/hooks/useAuth';
+import { useBooks } from '@/hooks/useBooks';
+import { useReadingProgress } from '@/hooks/useReadingProgress';
+import { authPathFor } from '@/utils/auth';
+import { getLocalizedTitle } from '@/utils/bookCopy';
 
 function LevelsIcon({ className }: { className?: string }) {
   return (
@@ -16,9 +20,16 @@ function LevelsIcon({ className }: { className?: string }) {
 }
 
 export function Hero() {
-  const { t } = useTranslation();
-  const { user } = useAuth();
+  const { t, i18n } = useTranslation();
+  const { user, isLoading } = useAuth();
   const goalsTo = user ? '/goals' : '/login?next=/goals';
+  const isGuest = !isLoading && !user;
+  const { latest } = useReadingProgress();
+  const { books } = useBooks();
+  // Signed-in readers pick up where they stopped; new visitors are invited to start for free.
+  const lastBook = latest ? books.find((book) => book.id === latest[0]) : undefined;
+  const lastProgress = latest?.[1];
+  const resume = user && lastBook && lastProgress && !lastProgress.completedAt ? { book: lastBook, progress: lastProgress } : null;
 
   const stats = [
     { value: 'A2–B1', label: t('home.stats.levels'), icon: LevelsIcon },
@@ -51,16 +62,59 @@ export function Hero() {
             </Reveal>
 
             <Reveal delay={340}>
-              <div className="mt-9 flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
-                <ButtonLink to="/books" className="w-full !min-h-14 !px-7 !text-base min-[480px]:w-auto">
-                  {t('home.ctaPrimary')}
-                  <ButtonArrow />
-                </ButtonLink>
-                <ButtonLink to={goalsTo} variant="secondary" className="w-full !min-h-14 !px-7 !text-base min-[480px]:w-auto">
-                  <Target className="h-[18px] w-[18px] text-accent" aria-hidden />
-                  {t('home.ctaGoals')}
-                </ButtonLink>
-              </div>
+              {isGuest ? (
+                <>
+                  <div className="mt-9 flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
+                    <ButtonLink to={authPathFor('/books')} className="hero-cta w-full !min-h-14 !px-7 !text-base min-[480px]:w-auto">
+                      <BookOpen className="h-[18px] w-[18px]" aria-hidden />
+                      {t('home.ctaStart')}
+                      <ButtonArrow />
+                    </ButtonLink>
+                    <ButtonLink to="/books" variant="secondary" className="w-full !min-h-14 !px-7 !text-base min-[480px]:w-auto">
+                      {t('home.ctaPrimary')}
+                    </ButtonLink>
+                  </div>
+                  <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-[0.8125rem] text-muted">
+                    {(['free', 'demo', 'trial'] as const).map((key) => (
+                      <li key={key} className="inline-flex items-center gap-1.5">
+                        <Check className="h-3.5 w-3.5 text-accent" strokeWidth={2.6} aria-hidden />
+                        {t(`home.trust.${key}`)}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                <div className="mt-9 flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
+                  {resume ? (
+                    <ButtonLink to={`/read/${resume.book.slug}`} className="hero-cta w-full !min-h-14 !px-7 !text-base min-[480px]:w-auto">
+                      <BookOpen className="h-[18px] w-[18px]" aria-hidden />
+                      <span className="min-w-0 truncate">
+                        {t('home.ctaResume', { title: getLocalizedTitle(resume.book, i18n.resolvedLanguage ?? 'en') })}
+                      </span>
+                      <ButtonArrow />
+                    </ButtonLink>
+                  ) : null}
+                  <ButtonLink
+                    to="/books"
+                    variant={resume ? 'secondary' : 'primary'}
+                    className="w-full !min-h-14 !px-7 !text-base min-[480px]:w-auto"
+                  >
+                    {t('home.ctaPrimary')}
+                    {resume ? null : <ButtonArrow />}
+                  </ButtonLink>
+                  {resume ? null : (
+                    <ButtonLink to={goalsTo} variant="secondary" className="w-full !min-h-14 !px-7 !text-base min-[480px]:w-auto">
+                      <Target className="h-[18px] w-[18px] text-accent" aria-hidden />
+                      {t('home.ctaGoals')}
+                    </ButtonLink>
+                  )}
+                </div>
+              )}
+              {resume ? (
+                <p className="mt-4 text-sm text-muted">
+                  {t('home.resumeHint', { page: resume.progress.currentPage, total: resume.progress.totalPages })}
+                </p>
+              ) : null}
             </Reveal>
 
           </div>

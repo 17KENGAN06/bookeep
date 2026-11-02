@@ -5,7 +5,7 @@ import { AuthContext } from '@/hooks/auth-context';
 import { clearSignedPdfCache } from '@/services/access';
 import { getSupabaseClient } from '@/services/supabase';
 import { forgetBookAccess } from '@/hooks/useBookAccess';
-import { authRedirectTo } from '@/utils/auth';
+import { authRedirectTo, rememberHasAccount } from '@/utils/auth';
 
 async function loadIsAdmin(user: User | null) {
   if (!user) return false;
@@ -36,6 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (!active) return;
       const nextUser = data.session?.user ?? null;
       userIdRef.current = nextUser?.id ?? null;
+      if (nextUser) rememberHasAccount();
       setSession(data.session);
       setUser(nextUser);
       setIsAdmin(await loadIsAdmin(nextUser));
@@ -64,6 +65,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (nextUser.id === userIdRef.current) return;
 
       userIdRef.current = nextUser.id;
+      rememberHasAccount();
       setAdminReady(false);
       void loadIsAdmin(nextUser).then((admin) => {
         if (!active) return;

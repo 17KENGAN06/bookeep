@@ -1,5 +1,5 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
-import { PROGRESS_STORAGE_KEY } from '@/config/storage';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { PROGRESS_STORAGE_KEY, progressStorageKey } from '@/config/storage';
 import { useAuth } from '@/hooks/useAuth';
 import {
   fetchCloudProgress,
@@ -18,11 +18,11 @@ type ProgressContextValue = {
 
 const ReadingProgressContext = createContext<ProgressContextValue | null>(null);
 
-function readProgressMap(): ReadingProgressMap {
+function readMap(key: string): ReadingProgressMap {
   if (typeof window === 'undefined') return {};
 
   try {
-    const raw = window.localStorage.getItem(PROGRESS_STORAGE_KEY);
+    const raw = window.localStorage.getItem(key);
     if (!raw) return {};
     const parsed = JSON.parse(raw) as ReadingProgressMap;
     return parsed && typeof parsed === 'object' ? parsed : {};
@@ -31,61 +31,106 @@ function readProgressMap(): ReadingProgressMap {
   }
 }
 
-function writeProgressMap(map: ReadingProgressMap) {
-  window.localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(map));
+function writeMap(key: string, map: ReadingProgressMap) {
+  try {
+    window.localStorage.setItem(key, JSON.stringify(map));
+  } catch {
+    // storage full or blocked: the cloud copy is the source of truth anyway
+  }
 }
 
+function removeKey(key: string) {
+  try {
+    window.localStorage.removeItem(key);
+  } catch {
+    // ignore
+  }
+}
+
+/**
+ * Progress belongs to the signed-in account. The Supabase table is the source of truth;
+ * localStorage only keeps a per-account cache so pages show progress before the network answers.
+ * Signed out, nobody's progress is shown.
+ */
 export function ReadingProgressProvider({ children }: { children: ReactNode }) {
-  const { user } = useAuth();
-  const [map, setMap] = useState<ReadingProgressMap>(() => readProgressMap());
+  const { user, isLoading } = useAuth();
+  const userId = user?.id ?? null;
+  const [state, setState] = useState<{ userId: string | null; map: ReadingProgressMap }>(() => ({
+    userId,
+    map: userId ? readMap(progressStorageKey(userId)) : {},
+  }));
+  const lastUserRef = useRef<string | null>(null);
 
+  // Another tab of the same account saved progress.
   useEffect(() => {
+    if (!userId) return;
+    const key = progressStorageKey(userId);
     const onStorage = (event: StorageEvent) => {
-      if (event.key === PROGRESS_STORAGE_KEY) {
-        setMap(readProgressMap());
-      }
+      if (event.key === key) setState({ userId, map: readMap(key) });
     };
-
     window.addEventListener('storage', onStorage);
     return () => window.removeEventListener('storage', onStorage);
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
-    if (!user) {
-      setMap(readProgressMap());
+    if (isLoading) return;
+
+    if (!userId) {
+      // Signed out: drop the previous account's cache from this device and show nothing.
+      if (lastUserRef.current) removeKey(progressStorageKey(lastUserRef.current));
+      lastUserRef.current = null;
+      setState({ userId: null, map: {} });
       return;
     }
+
+    lastUserRef.current = userId;
+    const key = progressStorageKey(userId);
+    setState({ userId, map: readMap(key) });
 
     let active = true;
     void (async () => {
       try {
         const cloud = await fetchCloudProgress();
-        const merged = await mergeProgressMaps(readProgressMap(), cloud);
+        // Progress saved before it was tied to accounts goes to the first account
+        // that signs in on this device, then the shared copy is removed.
+        const legacy = readMap(PROGRESS_STORAGE_KEY);
+        const local = { ...legacy, ...readMap(key) };
+        const merged = await mergeProgressMaps(local, cloud);
+        removeKey(PROGRESS_STORAGE_KEY);
         if (!active) return;
-        writeProgressMap(merged);
-        setMap(merged);
+        writeMap(key, merged);
+        setState({ userId, map: merged });
       } catch {
-        if (active) setMap(readProgressMap());
+        // offline: keep the cached copy
       }
     })();
 
     return () => {
       active = false;
     };
-  }, [user]);
+  }, [isLoading, userId]);
 
-  const updateProgress = useCallback((bookId: string, next: ReadingProgress) => {
-    setMap((current) => {
-      const updated = { ...current, [bookId]: next };
-      writeProgressMap(updated);
-      return updated;
-    });
-  }, []);
+  const updateProgress = useCallback(
+    (bookId: string, next: ReadingProgress) => {
+      if (!userId) return;
+      setState((current) => {
+        const base = current.userId === userId ? current.map : {};
+        const updated = { ...base, [bookId]: next };
+        writeMap(progressStorageKey(userId), updated);
+        return { userId, map: updated };
+      });
+    },
+    [userId],
+  );
 
+  // Never show one account's map to another (or to a guest) while the effect above catches up.
+  const map = state.userId === userId && userId ? state.map : EMPTY;
   const value = useMemo(() => ({ map, updateProgress }), [map, updateProgress]);
 
   return <ReadingProgressContext.Provider value={value}>{children}</ReadingProgressContext.Provider>;
 }
+
+const EMPTY: ReadingProgressMap = {};
 
 export function useAllReadingProgress() {
   const context = useContext(ReadingProgressContext);
@@ -103,7 +148,7 @@ export function useReadingProgress(bookId?: string) {
 
   const saveProgress = useCallback(
     (input: { currentPage: number; totalPages: number }) => {
-      if (!bookId || input.totalPages <= 0) return;
+      if (!bookId || !user || input.totalPages <= 0) return;
 
       const currentPage = clamp(input.currentPage, 1, input.totalPages);
       const percentage = Number(((currentPage / input.totalPages) * 100).toFixed(1));
@@ -123,16 +168,14 @@ export function useReadingProgress(bookId?: string) {
 
       updateProgress(bookId, next);
 
-      if (user) {
-        void recordReadingAdvance({
-          bookId,
-          currentPage,
-          totalPages: input.totalPages,
-          readDate: localDateISO(),
-        }).catch(() => {
-          void upsertCloudProgress(bookId, next);
-        });
-      }
+      void recordReadingAdvance({
+        bookId,
+        currentPage,
+        totalPages: input.totalPages,
+        readDate: localDateISO(),
+      }).catch(() => {
+        void upsertCloudProgress(bookId, next);
+      });
     },
     [bookId, map, updateProgress, user],
   );

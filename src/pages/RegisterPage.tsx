@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { Link, Navigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { AuthShell } from '@/components/auth/AuthShell';
+import { AuthPerks, AuthReadNotice } from '@/components/auth/AuthReadNotice';
 import { AuthDivider, GoogleButton } from '@/components/auth/GoogleButton';
 import { Button } from '@/components/common/Button';
 import { DocumentTitle } from '@/components/common/DocumentTitle';
@@ -14,6 +15,8 @@ export function RegisterPage() {
   const { signUp, signInWithGoogle, user, isLoading, isConfigured } = useAuth();
   const [params] = useSearchParams();
   const next = safeNextPath(params.get('next'));
+  const forReading = params.get('reason') === 'read';
+  const keep = `?next=${encodeURIComponent(next)}${forReading ? '&reason=read' : ''}`;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -60,6 +63,7 @@ export function RegisterPage() {
   return (
     <AuthShell title={t('auth.registerTitle')} lead={t('auth.registerLead')}>
       <DocumentTitle title={t('auth.registerTitle')} noindex />
+      {forReading ? <AuthReadNotice /> : null}
       {!isConfigured ? (
         <p className="mt-6 rounded-2xl border border-line bg-surface-2/60 px-4 py-3 text-sm text-muted">
           {t('auth.notConfigured')}
@@ -69,6 +73,8 @@ export function RegisterPage() {
           {t('auth.checkEmail')}
         </p>
       ) : (
+        <>
+        <AuthPerks />
         <div className="mt-8 space-y-5">
           <GoogleButton onClick={() => void onGoogle()} disabled={submitting} />
           <AuthDivider />
@@ -101,11 +107,12 @@ export function RegisterPage() {
           </form>
           <p className="text-sm text-muted">
             {t('auth.hasAccount')}{' '}
-            <Link to={`/login${next ? `?next=${encodeURIComponent(next)}` : ''}`} className="text-link">
+            <Link to={`/login${keep}`} className="text-link">
               {t('auth.loginLink')}
             </Link>
           </p>
         </div>
+        </>
       )}
     </AuthShell>
   );
