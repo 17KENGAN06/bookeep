@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import { billingHealthHandler, checkoutHandler, planHandler, portalHandler, webhookHandler } from './billing.js';
 import { authEmailHookHandler } from './authEmailHook.js';
 import { contactHandler } from './contact.js';
+import { emailHealth } from './email.js';
 import { explainHandler } from './explain.js';
 
 const port = Number(process.env.PORT) || 4000;
@@ -68,6 +69,10 @@ app.post('/api/billing/checkout', (req, res) => {
 
 app.post('/api/billing/portal', (req, res) => {
   void portalHandler(req, res);
+});
+
+app.get('/api/email/health', (_req, res) => {
+  res.json(emailHealth());
 });
 
 // Contact form: delivered to contact@bookeep.cloud through Resend.

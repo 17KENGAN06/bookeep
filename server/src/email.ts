@@ -18,8 +18,14 @@ export class EmailUnavailableError extends Error {
   }
 }
 
-export function emailConfigured(): boolean {
-  return Boolean(process.env.RESEND_API_KEY?.trim() && process.env.EMAIL_FROM?.trim());
+/** Booleans only: which email settings the running server can see. */
+export function emailHealth() {
+  return {
+    RESEND_API_KEY: Boolean(process.env.RESEND_API_KEY?.trim()),
+    EMAIL_FROM: Boolean(process.env.EMAIL_FROM?.trim()),
+    SEND_EMAIL_HOOK_SECRET: Boolean(process.env.SEND_EMAIL_HOOK_SECRET?.trim()),
+    SUPABASE_URL: Boolean(process.env.SUPABASE_URL?.trim()),
+  };
 }
 
 export async function sendEmail(input: SendEmailInput): Promise<void> {
@@ -28,7 +34,7 @@ export async function sendEmail(input: SendEmailInput): Promise<void> {
 
   if (!from || !apiKey) {
     // Fail loudly: a silent skip would tell Supabase the email went out when it did not.
-    console.error('[email] RESEND_API_KEY / EMAIL_FROM are not set');
+    console.error('[email] not configured', { RESEND_API_KEY: Boolean(apiKey), EMAIL_FROM: Boolean(from) });
     throw new EmailUnavailableError();
   }
 
