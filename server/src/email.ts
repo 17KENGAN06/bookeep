@@ -25,6 +25,10 @@ export function emailHealth() {
     EMAIL_FROM: Boolean(process.env.EMAIL_FROM?.trim()),
     SEND_EMAIL_HOOK_SECRET: Boolean(process.env.SEND_EMAIL_HOOK_SECRET?.trim()),
     SUPABASE_URL: Boolean(process.env.SUPABASE_URL?.trim()),
+    // Names only (never values) of variables that look like these, to spot typos or hidden spaces.
+    similarNames: Object.keys(process.env)
+      .filter((name) => /mail|resend|from/i.test(name))
+      .map((name) => JSON.stringify(name)),
   };
 }
 
