@@ -28,7 +28,7 @@ export function emailHealth() {
     // Names only (never values) of variables that look like these, to spot typos or hidden spaces.
     similarNames: Object.keys(process.env)
       .filter((name) => /mail|resend|from/i.test(name))
-      .map((name) => JSON.stringify(name)),
+      .map((name) => `${JSON.stringify(name)} length=${(process.env[name] ?? '').length}`),
   };
 }
 
