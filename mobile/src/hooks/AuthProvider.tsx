@@ -5,6 +5,7 @@ import { isSupabaseConfigured } from '../config/env';
 import { authRedirectTo, createSessionFromUrl, signInWithGoogle as startGoogleSignIn } from '../services/auth';
 import { getSupabaseClient } from '../services/supabase';
 import { bookSlugFromUrl } from './useDeepLinks';
+import i18n from '../i18n';
 
 type AuthContextValue = {
   user: User | null;
@@ -84,7 +85,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const { data, error } = await supabase.auth.signUp({
       email: email.trim().toLowerCase(),
       password,
-      options: { emailRedirectTo: authRedirectTo() },
+      // The language of the confirmation / reset emails our server sends.
+      options: { emailRedirectTo: authRedirectTo(), data: { locale: i18n.resolvedLanguage ?? i18n.language ?? 'en' } },
     });
     if (error) throw error;
     return { needsConfirmation: !data.session };

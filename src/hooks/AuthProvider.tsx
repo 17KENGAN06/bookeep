@@ -6,6 +6,7 @@ import { clearSignedPdfCache } from '@/services/access';
 import { getSupabaseClient } from '@/services/supabase';
 import { forgetBookAccess } from '@/hooks/useBookAccess';
 import { authRedirectTo, rememberHasAccount } from '@/utils/auth';
+import i18n from '@/i18n';
 
 async function loadIsAdmin(user: User | null) {
   if (!user) return false;
@@ -98,7 +99,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const { data, error } = await supabase.auth.signUp({
       email: email.trim().toLowerCase(),
       password,
-      options: { emailRedirectTo: authRedirectTo() },
+      // The language of the confirmation / reset emails our server sends.
+      options: { emailRedirectTo: authRedirectTo(), data: { locale: i18n.resolvedLanguage ?? i18n.language ?? 'en' } },
     });
     if (error) throw error;
     return { needsConfirmation: !data.session };

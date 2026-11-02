@@ -1,4 +1,5 @@
-import { emailForTopic, type ContactTopic } from '@/config/contact';
+import { env } from '@/config/env';
+import type { ContactTopic } from '@/config/contact';
 
 export type ContactPayload = {
   topic: ContactTopic;
@@ -8,41 +9,22 @@ export type ContactPayload = {
   company?: string;
 };
 
-type FormSubmitResponse = {
-  success?: boolean | string;
-  message?: string;
-};
-
+/** Sends the contact form through our server (Resend) to contact@bookeep.cloud. */
 export async function sendContactMessage(payload: ContactPayload) {
-  const to = emailForTopic(payload.topic);
-  const response = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(to)}`, {
+  const response = await fetch(`${env.apiUrl}/api/contact`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
     body: JSON.stringify({
+      topic: payload.topic,
       name: payload.name,
       email: payload.email,
       message: payload.message,
-      topic: payload.topic,
-      _subject: `Bookeep · ${payload.topic}`,
-      _template: 'table',
-      _captcha: 'false',
-      _honey: payload.company ?? '',
+      company: payload.company ?? '',
     }),
   });
 
-  let data: FormSubmitResponse | null = null;
-  try {
-    data = (await response.json()) as FormSubmitResponse;
-  } catch {
-    data = null;
-  }
-
-  if (!response.ok || data?.success === false || data?.success === 'false') {
-    // FormSubmit answers "This form needs Activation..." until the inbox owner
-    // clicks the link in its activation email.
-    throw new Error(`${response.status}: ${data?.message || 'contact-send-failed'}`);
+  if (!response.ok) {
+    const data = (await response.json().catch(() => null)) as { error?: string } | null;
+    throw new Error(`${response.status}: ${data?.error || 'contact-send-failed'}`);
   }
 }

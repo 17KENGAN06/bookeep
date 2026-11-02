@@ -2,6 +2,8 @@ import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import { billingHealthHandler, checkoutHandler, planHandler, portalHandler, webhookHandler } from './billing.js';
+import { authEmailHookHandler } from './authEmailHook.js';
+import { contactHandler } from './contact.js';
 import { explainHandler } from './explain.js';
 
 const port = Number(process.env.PORT) || 4000;
@@ -22,6 +24,11 @@ app.use(
 // Stripe signs the exact bytes it sent, so this route reads the raw body (before express.json).
 app.post('/api/stripe/webhook', express.raw({ type: 'application/json', limit: '1mb' }), (req, res) => {
   void webhookHandler(req, res);
+});
+
+// Supabase auth emails (signup, password reset...) arrive here signed; the check needs the raw body.
+app.post('/api/auth/email-hook', express.raw({ type: '*/*', limit: '256kb' }), (req, res) => {
+  void authEmailHookHandler(req, res);
 });
 
 app.use(express.json({ limit: '32kb' }));
@@ -61,6 +68,11 @@ app.post('/api/billing/checkout', (req, res) => {
 
 app.post('/api/billing/portal', (req, res) => {
   void portalHandler(req, res);
+});
+
+// Contact form: delivered to contact@bookeep.cloud through Resend.
+app.post('/api/contact', (req, res) => {
+  void contactHandler(req, res);
 });
 
 app.listen(port, '0.0.0.0', () => {
