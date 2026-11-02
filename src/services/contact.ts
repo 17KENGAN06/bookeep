@@ -41,6 +41,8 @@ export async function sendContactMessage(payload: ContactPayload) {
   }
 
   if (!response.ok || data?.success === false || data?.success === 'false') {
-    throw new Error(data?.message || 'contact-send-failed');
+    // FormSubmit answers "This form needs Activation..." until the inbox owner
+    // clicks the link in its activation email.
+    throw new Error(`${response.status}: ${data?.message || 'contact-send-failed'}`);
   }
 }

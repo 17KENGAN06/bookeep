@@ -107,14 +107,22 @@ type FieldProps = {
   label: string;
   children: ReactNode;
   hint?: string;
+  /** Replaces the hint and is shown in the danger color. */
+  error?: string;
 };
 
-export function Field({ label, children, hint }: FieldProps) {
+export function Field({ label, children, hint, error }: FieldProps) {
   return (
     <label className="block">
       <span className="mb-2 block text-[0.8125rem] font-semibold tracking-wide text-ink/90">{label}</span>
       {children}
-      {hint ? <span className="mt-1.5 block text-xs text-muted">{hint}</span> : null}
+      {error ? (
+        <span className="mt-1.5 block text-xs font-medium text-danger" role="alert">
+          {error}
+        </span>
+      ) : hint ? (
+        <span className="mt-1.5 block text-xs text-muted">{hint}</span>
+      ) : null}
     </label>
   );
 }

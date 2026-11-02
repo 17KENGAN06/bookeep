@@ -259,12 +259,19 @@
       "name": "Nimi",
       "email": "Sähköposti",
       "message": "Viesti",
+      "messageHint": "Vähintään {{min}} merkkiä: vielä {{left}}.",
+      "messageOk": "{{count}} merkkiä. Valmis lähetettäväksi.",
       "consent": "Hyväksyn tämän viestin käsittelyn <privacy>tietosuojakäytännön</privacy> mukaisesti.",
       "submit": "Lähetä",
       "sending": "Lähetetään…",
       "success": "Viesti lähetettiin. Vastaamme jättämääsi sähköpostiin.",
-      "error": "Viestiä ei voitu lähettää. Yritä uudelleen tai kirjoita yllä olevaan osoitteeseen.",
-      "invalid": "Täytä nimi, kelvollinen sähköposti, viesti ja suostumus."
+      "error": "Viestiä ei voitu lähettää. Yritä myöhemmin uudelleen tai kirjoita suoraan osoitteeseen {{email}}.",
+      "errors": {
+        "name": "Kirjoita nimesi.",
+        "email": "Kirjoita toimiva sähköpostiosoite, esimerkiksi nimi@mail.com.",
+        "message": "Viesti on liian lyhyt: vähintään {{min}} merkkiä, vielä {{left}}.",
+        "consent": "Hyväksy tietojen käsittely, jotta viesti voidaan lähettää."
+      }
     }
   },
   "privacy": {

@@ -259,12 +259,19 @@
       "name": "Name",
       "email": "Email",
       "message": "Message",
+      "messageHint": "At least {{min}} characters: {{left}} more to go.",
+      "messageOk": "{{count}} characters. Ready to send.",
       "consent": "I agree to the processing of this message as described in the <privacy>privacy policy</privacy>.",
       "submit": "Send",
       "sending": "Sending…",
       "success": "Message sent. We will reply to the email you left.",
-      "error": "The message could not be sent. Try again, or write to the address above.",
-      "invalid": "Please fill in the name, a valid email, a message, and the consent checkbox."
+      "error": "The message could not be sent. Try again later, or write to {{email}} directly.",
+      "errors": {
+        "name": "Please enter your name.",
+        "email": "Please enter a valid email, for example name@mail.com.",
+        "message": "The message is too short: at least {{min}} characters, {{left}} more to go.",
+        "consent": "Please tick the consent box to send the message."
+      }
     }
   },
   "privacy": {

@@ -14,6 +14,9 @@ import { sendContactMessage } from '@/services/contact';
 import { cn } from '@/utils/cn';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const MIN_MESSAGE = 10;
+
+type FieldErrors = Partial<Record<'name' | 'email' | 'message' | 'consent', string>>;
 
 const emptyForm = {
   topic: 'question' as ContactTopic,
@@ -29,13 +32,32 @@ export function ContactPage() {
   const { notify } = useToast();
   const [form, setForm] = useState(emptyForm);
   const [sending, setSending] = useState(false);
+  const [triedSubmit, setTriedSubmit] = useState(false);
   const destination = emailForTopic(form.topic);
+  const messageLength = form.message.trim().length;
+  const messageLeft = Math.max(0, MIN_MESSAGE - messageLength);
+
+  function validate(): FieldErrors {
+    const errors: FieldErrors = {};
+    if (!form.name.trim()) errors.name = t('contact.form.errors.name');
+    if (!EMAIL_RE.test(form.email.trim())) errors.email = t('contact.form.errors.email');
+    if (messageLength < MIN_MESSAGE) {
+      errors.message = t('contact.form.errors.message', { min: MIN_MESSAGE, left: messageLeft });
+    }
+    if (!form.consent) errors.consent = t('contact.form.errors.consent');
+    return errors;
+  }
+
+  const errors = triedSubmit ? validate() : {};
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (form.company.trim()) return;
-    if (!form.name.trim() || !EMAIL_RE.test(form.email.trim()) || form.message.trim().length < 10 || !form.consent) {
-      notify(t('contact.form.invalid'), 'error');
+    const found = validate();
+    const first = Object.values(found)[0];
+    if (first) {
+      setTriedSubmit(true);
+      notify(first, 'error');
       return;
     }
 
@@ -48,9 +70,11 @@ export function ContactPage() {
         message: form.message.trim(),
       });
       setForm(emptyForm);
+      setTriedSubmit(false);
       notify(t('contact.form.success'));
-    } catch {
-      notify(t('contact.form.error'), 'error');
+    } catch (error) {
+      console.warn('[contact] send failed:', error);
+      notify(t('contact.form.error', { email: destination }), 'error');
     } finally {
       setSending(false);
     }
@@ -107,23 +131,25 @@ export function ContactPage() {
             </div>
 
             <div className="grid gap-5 sm:grid-cols-2">
-            <Field label={t('contact.form.name')}>
+            <Field label={t('contact.form.name')} error={errors.name}>
               <input
                 className={fieldControlClass}
                 name="name"
                 autoComplete="name"
+                aria-invalid={errors.name ? true : undefined}
                 value={form.name}
                 onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))}
                 required
               />
             </Field>
 
-            <Field label={t('contact.form.email')}>
+            <Field label={t('contact.form.email')} error={errors.email}>
               <input
                 className={fieldControlClass}
                 type="email"
                 name="email"
                 autoComplete="email"
+                aria-invalid={errors.email ? true : undefined}
                 value={form.email}
                 onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))}
                 required
@@ -131,18 +157,27 @@ export function ContactPage() {
             </Field>
             </div>
 
-            <Field label={t('contact.form.message')}>
+            <Field
+              label={t('contact.form.message')}
+              error={errors.message}
+              hint={
+                messageLeft > 0
+                  ? t('contact.form.messageHint', { min: MIN_MESSAGE, left: messageLeft })
+                  : t('contact.form.messageOk', { count: messageLength })
+              }
+            >
               <textarea
                 className={cn(fieldControlClass, 'min-h-36 resize-y')}
                 name="message"
                 value={form.message}
                 onChange={(event) => setForm((current) => ({ ...current, message: event.target.value }))}
                 required
-                minLength={10}
+                minLength={MIN_MESSAGE}
+                aria-invalid={errors.message ? true : undefined}
               />
             </Field>
 
-            <label className="flex items-start gap-3 text-sm leading-relaxed text-muted">
+            <label className={cn('flex items-start gap-3 text-sm leading-relaxed', errors.consent ? 'text-danger' : 'text-muted')}>
               <input
                 type="checkbox"
                 className="check mt-0.5"
