@@ -1,4 +1,5 @@
 import { env } from '@/config/env';
+import i18n from '@/i18n';
 import type { ContactTopic } from '@/config/contact';
 
 export type ContactPayload = {
@@ -20,6 +21,8 @@ export async function sendContactMessage(payload: ContactPayload) {
       email: payload.email,
       message: payload.message,
       company: payload.company ?? '',
+      // The notification email is written in the language of the site.
+      locale: i18n.resolvedLanguage ?? 'en',
     }),
   });
 

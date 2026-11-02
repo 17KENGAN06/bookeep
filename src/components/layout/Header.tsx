@@ -4,6 +4,7 @@ import { Menu, Target, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { BrandLockup } from '@/components/brand/BrandLockup';
 import { Container } from '@/components/common/Container';
+import { GoalsButton } from '@/components/layout/GoalsButton';
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { useAuth } from '@/hooks/useAuth';
@@ -100,17 +101,7 @@ export function Header() {
           </nav>
 
           <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-            <Link
-              to={goalsTo}
-              aria-label={t('nav.goals')}
-              className="btn btn-secondary btn-sm hidden !min-h-10 sm:inline-flex"
-            >
-              <Target className="h-4 w-4 shrink-0 text-accent" aria-hidden />
-              <span>{t('nav.goals')}</span>
-            </Link>
-            <Link to={goalsTo} aria-label={t('nav.goals')} className="icon-btn sm:hidden">
-              <Target className="h-[18px] w-[18px]" aria-hidden />
-            </Link>
+            <GoalsButton to={goalsTo} />
             <ThemeToggle />
             <LanguageSwitcher className="hidden sm:block" />
             {!isLoading ? (

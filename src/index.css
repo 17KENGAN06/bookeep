@@ -734,6 +734,115 @@
     box-shadow: 0 0 0 2px var(--app-accent);
   }
 
+  /* ── Reading goals button (header) ─────────────────────── */
+  .goals-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    height: 2.75rem;
+    padding: 0 1rem 0 0.3125rem;
+    border-radius: 999px;
+    color: var(--app-ink);
+    background:
+      radial-gradient(120% 140% at 0% 50%, color-mix(in oklab, var(--app-accent) 16%, transparent) 0%, transparent 55%),
+      color-mix(in oklab, var(--app-surface) 62%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow:
+      inset 0 1px 0 var(--app-highlight),
+      0 0 0 1px var(--app-line-strong),
+      0 8px 20px -12px rgba(0, 0, 0, 0.7);
+    transition:
+      box-shadow 0.3s var(--ease-lux),
+      transform 0.3s var(--ease-lux);
+  }
+
+  .goals-btn:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px 0 var(--app-highlight),
+      0 0 0 1px color-mix(in oklab, var(--app-accent) 55%, var(--app-line-strong)),
+      0 10px 26px -12px color-mix(in oklab, var(--app-accent) 45%, transparent);
+  }
+
+  .goals-btn.is-active {
+    box-shadow:
+      inset 0 1px 0 var(--app-highlight),
+      0 0 0 1px var(--app-accent),
+      0 0 22px -6px var(--app-glow);
+  }
+
+  .goals-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--app-accent);
+  }
+
+  .goals-ring {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 2.125rem;
+    height: 2.125rem;
+    border-radius: 999px;
+    color: var(--app-accent);
+    background: color-mix(in oklab, var(--app-accent) 12%, var(--app-bg));
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--app-accent) 22%, transparent);
+  }
+
+  .goals-ring-track {
+    fill: none;
+    stroke: color-mix(in oklab, var(--app-accent) 18%, transparent);
+    stroke-width: 2;
+  }
+
+  .goals-ring-value {
+    fill: none;
+    stroke: var(--app-accent);
+    stroke-width: 2.25;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.8s var(--ease-lux);
+    filter: drop-shadow(0 0 3px var(--app-glow));
+  }
+
+  .goals-ring.is-done {
+    color: var(--app-on-accent);
+    background: var(--app-accent);
+  }
+
+  .goals-btn-text {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.45rem;
+    white-space: nowrap;
+  }
+
+  .goals-btn-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.005em;
+  }
+
+  .goals-btn-meta {
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--app-accent);
+  }
+
+  /* Phones: just the ring. */
+  @media (max-width: 639px) {
+    .goals-btn {
+      width: 2.75rem;
+      padding: 0;
+      justify-content: center;
+    }
+    .goals-btn-text {
+      display: none;
+    }
+  }
+
   /* ── Language picker ──────────────────────────────────── */
   .lang-trigger {
     display: inline-flex;
