@@ -55,6 +55,9 @@ export function PdfDocument({ file, page, zoom, onLoad, onPrev, onNext, onPageTe
   const [pixelRatio, setPixelRatio] = useState(1);
   const [reloadKey, setReloadKey] = useState(0);
   const [failed, setFailed] = useState(false);
+  // The last page whose canvas finished drawing. It stays on screen while the next one renders.
+  const [shownPage, setShownPage] = useState<number | null>(null);
+  const pages = shownPage == null || shownPage === page ? [page] : [shownPage, page];
   const swipeStart = useRef<{ x: number; y: number } | null>(null);
 
   // pdf.js requests the file only after its worker has started; this runs both at once.
@@ -138,16 +141,30 @@ export function PdfDocument({ file, page, zoom, onLoad, onPrev, onNext, onPageTe
               }}
               onLoadSuccess={({ numPages }) => onLoad(numPages)}
             >
-              <Page
-                pageNumber={page}
-                width={width * zoom}
-                devicePixelRatio={pixelRatio}
-                className="reader-page"
-                renderAnnotationLayer={false}
-                suspense={false}
-                loading={<LoadingPage />}
-                onGetTextSuccess={(content) => onPageText?.(pageTextFromContent(content))}
-              />
+              {pages.map((pageNumber) => {
+                const incoming = pageNumber === page && pages.length > 1;
+                return (
+                  <Page
+                    key={pageNumber}
+                    pageNumber={pageNumber}
+                    width={width * zoom}
+                    devicePixelRatio={pixelRatio}
+                    className={incoming ? 'reader-page reader-page-incoming' : 'reader-page'}
+                    renderAnnotationLayer={false}
+                    suspense={false}
+                    loading={incoming ? null : <LoadingPage />}
+                    onRenderSuccess={() => {
+                      if (pageNumber === page) setShownPage(pageNumber);
+                    }}
+                    onRenderError={() => {
+                      if (pageNumber === page) setShownPage(pageNumber);
+                    }}
+                    onGetTextSuccess={(content) => {
+                      if (pageNumber === page) onPageText?.(pageTextFromContent(content));
+                    }}
+                  />
+                );
+              })}
             </Document>
           </Suspense>
         </ErrorBoundary>
