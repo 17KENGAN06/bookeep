@@ -146,6 +146,7 @@ export function Header() {
         <div
           ref={panelRef}
           id="mobile-nav"
+          data-lenis-prevent
           className="menu-sheet fixed inset-x-0 top-[calc(max(0.5rem,env(safe-area-inset-top))+4rem)] bottom-0 z-40 overflow-y-auto px-4 pt-2 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:top-[5.25rem] xl:hidden"
         >
           <div className="lux-panel mx-auto max-w-xl rounded-[2rem] p-3 sm:p-4">

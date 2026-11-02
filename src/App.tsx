@@ -1,5 +1,6 @@
 import { BrowserRouter } from 'react-router-dom';
 import { ScrollToTop } from '@/components/layout/ScrollToTop';
+import { SmoothScroll } from '@/components/layout/SmoothScroll';
 import { ToastProvider } from '@/components/common/Toast';
 import { GoalCompletedToast } from '@/components/goals/GoalCompletedToast';
 import { AuthProvider } from '@/hooks/AuthProvider';
@@ -16,6 +17,7 @@ export default function App() {
           <ReadingProgressProvider>
             <ToastProvider>
               <BrowserRouter>
+                <SmoothScroll />
                 <ScrollToTop />
                 <AppRoutes />
                 <GoalCompletedToast />

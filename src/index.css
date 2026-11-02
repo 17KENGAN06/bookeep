@@ -61,6 +61,12 @@
   --btn-bg-hover: #ffffff;
   --btn-ink: #0b1113;
   --btn-edge: rgba(255, 255, 255, 0.7);
+
+  --scrollbar-thumb: rgba(155, 229, 196, 0.42);
+  --scrollbar-thumb-a: rgba(155, 229, 196, 0.62);
+  --scrollbar-thumb-b: rgba(117, 205, 168, 0.42);
+  --scrollbar-thumb-hover-a: rgba(155, 229, 196, 0.85);
+  --scrollbar-thumb-hover-b: rgba(117, 205, 168, 0.6);
 }
 
 [data-theme='light'] {
@@ -94,6 +100,12 @@
   --btn-bg-hover: #1b3730;
   --btn-ink: #f3f5f2;
   --btn-edge: rgba(255, 255, 255, 0.12);
+
+  --scrollbar-thumb: rgba(35, 122, 91, 0.45);
+  --scrollbar-thumb-a: rgba(35, 122, 91, 0.5);
+  --scrollbar-thumb-b: rgba(26, 99, 73, 0.34);
+  --scrollbar-thumb-hover-a: rgba(35, 122, 91, 0.85);
+  --scrollbar-thumb-hover-b: rgba(26, 99, 73, 0.65);
 }
 
 @layer base {
@@ -111,6 +123,11 @@
     @apply scroll-smooth antialiased;
     -webkit-tap-highlight-color: transparent;
     text-rendering: optimizeLegibility;
+  }
+
+  /* The wheel engine animates the page itself; native smooth behaviour on top of it would stutter. */
+  html.lenis-smooth {
+    scroll-behavior: auto;
   }
 
   body {
@@ -158,9 +175,56 @@
     background: color-mix(in oklab, var(--app-accent) 32%, transparent);
   }
 
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: color-mix(in oklab, var(--app-muted) 40%, transparent) transparent;
+  /*
+   * Scrollbars: a slim mint "pill" floating on the page tone. Chromium/Safari get the gradient thumb via
+   * ::-webkit-scrollbar; Firefox (no pseudo-elements) gets the same colours through scrollbar-color.
+   * The standard properties are kept away from Chromium on purpose: once scrollbar-color is set there,
+   * it ignores ::-webkit-scrollbar and falls back to a flat bar.
+   */
+  @supports not selector(::-webkit-scrollbar) {
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: var(--scrollbar-thumb) transparent;
+    }
+
+    html {
+      scrollbar-color: var(--scrollbar-thumb) var(--app-bg);
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    min-height: 48px;
+    border: 3px solid transparent;
+    border-radius: 999px;
+    background: linear-gradient(180deg, var(--scrollbar-thumb-a), var(--scrollbar-thumb-b)) padding-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    border-width: 2px;
+    background: linear-gradient(180deg, var(--scrollbar-thumb-hover-a), var(--scrollbar-thumb-hover-b)) padding-box;
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    background: var(--app-accent) padding-box;
+  }
+
+  ::-webkit-scrollbar-thumb:horizontal {
+    min-width: 48px;
+    background: linear-gradient(90deg, var(--scrollbar-thumb-a), var(--scrollbar-thumb-b)) padding-box;
+  }
+
+  html::-webkit-scrollbar-track {
+    background: var(--app-bg);
   }
 
   select {
