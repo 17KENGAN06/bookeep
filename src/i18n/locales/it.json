@@ -100,6 +100,33 @@
       "title": "Goditi la lettura in una nuova lingua",
       "lead": "Inizia con un’anteprima gratuita di qualsiasi libro. Quando vuoi finirlo, apri tutto il catalogo con Premium.",
       "cta": "Inizia a leggere gratis"
+    },
+    "explain": {
+      "eyebrow": "Lettore intelligente",
+      "title": "Un passaggio poco chiaro? Basta selezionarlo.",
+      "lead": "Seleziona una parola o un’espressione direttamente sulla pagina e Bookeep la spiega nella lingua semplice del libro, tenendo conto di ciò che succede proprio in quella scena. Se serve, mostra anche la traduzione nella tua lingua.",
+      "steps": {
+        "select": {
+          "title": "Seleziona il testo",
+          "text": "Una parola, un’espressione o un’intera frase: con il mouse sul computer o con il dito sul telefono."
+        },
+        "explain": {
+          "title": "Leggi la spiegazione",
+          "text": "Breve e semplice, nella lingua del libro. Non una voce di dizionario, ma il senso proprio in quel punto."
+        },
+        "translate": {
+          "title": "Apri la traduzione",
+          "text": "Un tocco e vedi la traduzione in una qualsiasi delle nove lingue del sito."
+        }
+      },
+      "perks": {
+        "context": "Capisce la scena, non solo la parola",
+        "devices": "Su computer, tablet e telefono",
+        "languages": "Traduzione in 9 lingue"
+      },
+      "sampleLabel": "Esempio",
+      "cta": "Provalo in un libro",
+      "note": "Le spiegazioni sono aperte a tutti i lettori, la traduzione è inclusa in Premium."
     }
   },
   "books": {

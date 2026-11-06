@@ -100,6 +100,33 @@
       "title": "Genieße das Lesen in einer neuen Sprache",
       "lead": "Beginne mit einer kostenlosen Leseprobe eines beliebigen Buches. Wenn du es zu Ende lesen willst, öffnet Premium den ganzen Katalog.",
       "cta": "Kostenlos lesen"
+    },
+    "explain": {
+      "eyebrow": "Smarter Reader",
+      "title": "Eine Stelle unklar? Einfach markieren.",
+      "lead": "Markiere ein Wort oder eine Wendung direkt auf der Seite, und Bookeep erklärt sie in der einfachen Sprache des Buches, passend zu dem, was genau in dieser Szene passiert. Bei Bedarf zeigt es auch eine Übersetzung in deine Sprache.",
+      "steps": {
+        "select": {
+          "title": "Text markieren",
+          "text": "Ein Wort, ein Ausdruck oder ein ganzer Satz: mit der Maus am Computer oder mit dem Finger am Handy."
+        },
+        "explain": {
+          "title": "Erklärung lesen",
+          "text": "Kurz und einfach, in der Sprache des Buches. Kein Wörterbucheintrag, sondern die Bedeutung genau an dieser Stelle."
+        },
+        "translate": {
+          "title": "Übersetzung öffnen",
+          "text": "Ein Tipp, und du siehst die Übersetzung in jede der neun Sprachen der Website."
+        }
+      },
+      "perks": {
+        "context": "Versteht die Szene, nicht nur das Wort",
+        "devices": "Auf Computer, Tablet und Handy",
+        "languages": "Übersetzung in 9 Sprachen"
+      },
+      "sampleLabel": "Beispiel",
+      "cta": "Im Buch ausprobieren",
+      "note": "Erklärungen gibt es für alle Leser, die Übersetzung ist Teil von Premium."
     }
   },
   "books": {

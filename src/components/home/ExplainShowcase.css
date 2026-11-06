@@ -1,0 +1,550 @@
+/* Home: "select text → explanation → translation" showcase. Reuses the reader's .explain-* card styles. */
+
+.xs-aura {
+  position: absolute;
+  z-index: -1;
+  inset: 10% -10% auto 35%;
+  height: 70%;
+  pointer-events: none;
+  background:
+    radial-gradient(45% 55% at 55% 45%, color-mix(in oklab, var(--app-accent) 14%, transparent), transparent 70%),
+    radial-gradient(30% 40% at 85% 80%, color-mix(in oklab, var(--app-accent-strong) 10%, transparent), transparent 70%);
+  filter: blur(30px);
+}
+
+/* ── Steps ─────────────────────────────────────────────── */
+
+.xs-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem 1.1rem;
+  border-radius: 1.25rem;
+  border: 1px solid transparent;
+  overflow: hidden;
+  color: inherit;
+  transition:
+    background-color 0.35s var(--ease-lux),
+    border-color 0.35s var(--ease-lux),
+    box-shadow 0.35s var(--ease-lux);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.xs-step:hover {
+  background: color-mix(in oklab, var(--app-surface) 60%, transparent);
+}
+
+.xs-step:focus-visible {
+  outline: 2px solid var(--app-accent);
+  outline-offset: 2px;
+}
+
+.xs-step.is-active {
+  background:
+    radial-gradient(120% 120% at 0% 0%, color-mix(in oklab, var(--app-accent) 9%, transparent), transparent 60%),
+    color-mix(in oklab, var(--app-surface) 85%, transparent);
+  border-color: var(--app-line-strong);
+  box-shadow: inset 0 1px 0 var(--app-highlight), var(--app-shadow);
+}
+
+.xs-step-icon {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  color: var(--app-muted);
+  background: color-mix(in oklab, var(--app-surface-2) 80%, transparent);
+  box-shadow: inset 0 0 0 1px var(--app-line);
+  transition: color 0.35s, background-color 0.35s, box-shadow 0.35s;
+}
+
+.xs-step.is-active .xs-step-icon,
+.xs-step.is-done .xs-step-icon {
+  color: var(--app-accent);
+  background: var(--app-accent-soft);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--app-accent) 32%, transparent);
+}
+
+.xs-step.is-active .xs-step-icon {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklab, var(--app-accent) 50%, transparent),
+    0 0 28px var(--app-glow);
+}
+
+.xs-step-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 1.1875rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  color: var(--app-ink);
+}
+
+.xs-step-num {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--app-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.xs-step.is-active .xs-step-num {
+  color: var(--app-accent);
+}
+
+.xs-step-text {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--app-muted);
+}
+
+.xs-step-progress {
+  position: absolute;
+  left: 1.1rem;
+  right: 1.1rem;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--app-accent);
+  transform-origin: left center;
+  animation: xs-progress linear both;
+  opacity: 0.8;
+}
+
+@keyframes xs-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ── Stage ─────────────────────────────────────────────── */
+
+.xs-stage {
+  position: relative;
+  padding: 0.9rem;
+  border-radius: 1.75rem;
+  background:
+    radial-gradient(110% 80% at 100% 0%, color-mix(in oklab, var(--app-accent) 10%, transparent), transparent 55%),
+    linear-gradient(180deg, color-mix(in oklab, var(--app-surface) 90%, transparent), color-mix(in oklab, var(--app-bg-2) 92%, transparent));
+  border: 1px solid var(--app-line-strong);
+  box-shadow: inset 0 1px 0 var(--app-highlight), var(--app-shadow-lg);
+}
+
+@media (min-width: 640px) {
+  .xs-stage {
+    padding: 1.1rem;
+  }
+}
+
+.xs-stage-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0 0.15rem 0.85rem;
+}
+
+.xs-stage-hint {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--app-faint);
+}
+
+.xs-tabs {
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.2rem;
+  border-radius: 999px;
+  border: 1px solid var(--app-line);
+  background: color-mix(in oklab, var(--app-bg) 45%, transparent);
+}
+
+.xs-tab {
+  height: 2rem;
+  padding: 0 0.95rem;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--app-muted);
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.xs-tab:hover {
+  color: var(--app-ink);
+}
+
+.xs-tab.is-active {
+  color: var(--app-on-accent);
+  background: var(--app-accent);
+}
+
+.xs-tab:focus-visible {
+  outline: 2px solid var(--app-accent);
+  outline-offset: 1px;
+}
+
+/* The page: paper like the reader's default, in both site themes. */
+.xs-page {
+  position: relative;
+  min-height: 30rem;
+  padding: 2rem 1.6rem 2.25rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  color: #1b1d1c;
+  background:
+    radial-gradient(120% 70% at 50% 0%, #ffffff, transparent 70%),
+    #f7f4ec;
+  box-shadow:
+    inset 0 0 0 1px rgba(20, 40, 30, 0.06),
+    0 30px 60px -36px rgba(0, 0, 0, 0.75);
+}
+
+@media (min-width: 640px) {
+  .xs-page {
+    min-height: 35rem;
+    padding: 2.6rem 3rem 2.75rem;
+  }
+}
+
+.xs-page.is-narrow {
+  min-height: 33rem;
+}
+
+.xs-page-chapter {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #6c7a74;
+}
+
+.xs-page-text {
+  margin-top: 1rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  animation: xs-fade 0.5s var(--ease-lux) both;
+}
+
+@media (min-width: 640px) {
+  .xs-page-text {
+    font-size: 1.1875rem;
+  }
+}
+
+.xs-page-text p + p {
+  margin-top: 0.9rem;
+  text-indent: 1.4em;
+}
+
+.xs-page-fade {
+  -webkit-mask-image: linear-gradient(180deg, #000, transparent 90%);
+  mask-image: linear-gradient(180deg, #000, transparent 90%);
+  opacity: 0.6;
+}
+
+.xs-page ::selection {
+  background: rgba(117, 205, 168, 0.35);
+}
+
+/* The "selected" phrase: the highlight sweeps in from the left. */
+.xs-phrase {
+  border-radius: 0.2rem;
+  padding: 0.05rem 0.1rem;
+  margin: 0 -0.1rem;
+  background-image: linear-gradient(rgba(117, 205, 168, 0.42), rgba(117, 205, 168, 0.42));
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.xs-page[data-stage='0'] .xs-phrase {
+  animation: xs-sweep 1.1s var(--ease-lux) 0.25s both;
+}
+
+@keyframes xs-sweep {
+  from {
+    background-size: 0% 100%;
+  }
+}
+
+.xs-chip {
+  position: absolute;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  height: 2.25rem;
+  padding: 0 0.95rem 0 0.8rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #072219;
+  background: #9be5c4;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 12px 28px -12px rgba(0, 0, 0, 0.55);
+  animation: xs-pop 0.35s var(--ease-lux) 1.2s both;
+}
+
+.xs-chip:hover {
+  background: #75cda8;
+}
+
+.xs-cursor {
+  position: absolute;
+  z-index: 4;
+  width: 1.35rem;
+  height: 1.35rem;
+  color: #101413;
+  fill: #ffffff;
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.35));
+  pointer-events: none;
+  animation: xs-cursor 2.4s var(--ease-lux) both;
+}
+
+@keyframes xs-cursor {
+  0% {
+    opacity: 0;
+    transform: translate(-150px, 4px);
+  }
+  12% {
+    opacity: 1;
+    transform: translate(-150px, 4px);
+  }
+  50% {
+    transform: translate(0, 4px);
+  }
+  70% {
+    transform: translate(0, 4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-28px, -38px);
+  }
+}
+
+@keyframes xs-pop {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.94);
+  }
+}
+
+/* The card sits inside the page instead of floating over the window. */
+.explain-card.xs-card {
+  /* Over a light page the reader's glass turns grey: keep it nearly opaque. */
+  --app-glass-strong: rgba(14, 24, 25, 0.95);
+  position: absolute;
+  z-index: 5;
+  text-align: left;
+}
+
+.explain-card.xs-card--pop {
+  width: min(23.5rem, calc(100% - 1.5rem));
+  border-radius: 1.125rem;
+  animation: explain-in 260ms var(--ease-lux) both;
+}
+
+.explain-card.xs-card--sheet {
+  inset-inline: 0.6rem;
+  bottom: 0.6rem;
+  border-radius: 1.125rem;
+  animation: explain-up 300ms var(--ease-lux) both;
+}
+
+/* The real card floats on a dark reader; keep the same dark glass over the light page. */
+[data-theme='light'] .xs-card {
+  --app-ink: #f3f5f2;
+  --app-muted: #98a9a6;
+  --app-faint: #8a9b98;
+  --app-line: rgba(180, 225, 210, 0.14);
+  --app-line-strong: rgba(180, 225, 210, 0.22);
+  --app-accent: #9be5c4;
+  --app-accent-strong: #75cda8;
+  --app-on-accent: #072219;
+  --app-bg: #0b1113;
+  --app-surface: #111c1d;
+  --app-highlight: rgba(220, 255, 240, 0.07);
+}
+
+.xs-reveal {
+  animation: xs-pop 0.35s var(--ease-lux) both;
+}
+
+.xs-fade-in {
+  animation: xs-fade 0.45s var(--ease-lux) both;
+}
+
+@keyframes xs-fade {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+}
+
+/* ── Phone ─────────────────────────────────────────────── */
+
+.xs-phone {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .xs-phone {
+    display: block;
+    position: absolute;
+    z-index: 6;
+    left: -2rem;
+    bottom: -2.75rem;
+    width: 10.5rem;
+    padding: 0.45rem;
+    border-radius: 1.9rem;
+    background: linear-gradient(160deg, #2a3634, #0e1414 60%);
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+      0 40px 70px -30px rgba(0, 0, 0, 0.85),
+      0 0 0 1px rgba(0, 0, 0, 0.4);
+    transform: rotate(-4deg);
+    animation: xs-float 7s ease-in-out infinite alternate;
+  }
+}
+
+@media (min-width: 1280px) {
+  .xs-phone {
+    left: -3rem;
+  }
+}
+
+@keyframes xs-float {
+  to {
+    transform: rotate(-3deg) translateY(-8px);
+  }
+}
+
+.xs-phone-screen {
+  position: relative;
+  height: 19.5rem;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  background: #f7f4ec;
+}
+
+.xs-phone-notch {
+  position: absolute;
+  top: 0.45rem;
+  left: 50%;
+  width: 3.2rem;
+  height: 0.85rem;
+  border-radius: 999px;
+  background: #0e1414;
+  transform: translateX(-50%);
+}
+
+.xs-phone-lines {
+  display: grid;
+  gap: 0.55rem;
+  padding: 2.2rem 0.9rem 0;
+}
+
+.xs-phone-lines span {
+  height: 0.38rem;
+  border-radius: 999px;
+  background: rgba(27, 29, 28, 0.16);
+}
+
+.xs-phone-lines span.is-mark {
+  background: rgba(117, 205, 168, 0.75);
+}
+
+.xs-phone-sheet {
+  position: absolute;
+  inset: auto 0.4rem 0.4rem;
+  padding: 0.7rem 0.75rem 0.8rem;
+  border-radius: 1rem;
+  color: #f3f5f2;
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgba(155, 229, 196, 0.12), transparent 55%),
+    rgba(14, 24, 25, 0.94);
+  border: 1px solid rgba(180, 225, 210, 0.2);
+  animation: explain-up 0.4s var(--ease-lux) both;
+}
+
+.xs-phone-eyebrow {
+  font-size: 0.45rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #9be5c4;
+}
+
+.xs-phone-phrase {
+  margin-top: 0.15rem;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  line-height: 1.25;
+}
+
+.xs-phone-text {
+  margin-top: 0.3rem;
+  font-size: 0.55rem;
+  line-height: 1.45;
+  color: rgba(243, 245, 242, 0.85);
+}
+
+.xs-phone-translation {
+  margin-top: 0.45rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid rgba(180, 225, 210, 0.16);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  line-height: 1.25;
+  color: #9be5c4;
+}
+
+/* ── Perks ─────────────────────────────────────────────── */
+
+.xs-perk {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  height: 100%;
+  padding: 0.9rem 1.1rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--app-ink);
+  background: color-mix(in oklab, var(--app-surface) 70%, transparent);
+  border: 1px solid var(--app-line);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xs-page-text,
+  .xs-chip,
+  .xs-cursor,
+  .xs-card--pop,
+  .xs-card--sheet,
+  .xs-reveal,
+  .xs-fade-in,
+  .xs-phone,
+  .xs-phone-sheet,
+  .xs-step-progress,
+  .xs-page[data-stage='0'] .xs-phrase {
+    animation: none;
+  }
+}

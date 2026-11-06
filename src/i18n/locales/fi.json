@@ -100,6 +100,33 @@
       "title": "Nauti lukemisesta uudella kielellä",
       "lead": "Aloita minkä tahansa kirjan ilmaisella näytteellä. Kun haluat lukea loppuun, avaa koko valikoima Premiumilla.",
       "cta": "Aloita lukeminen ilmaiseksi"
+    },
+    "explain": {
+      "eyebrow": "Älykäs lukija",
+      "title": "Jäikö jokin epäselväksi? Valitse se.",
+      "lead": "Valitse sana tai ilmaus suoraan sivulta, niin Bookeep selittää sen kirjan omalla selkokielellä ja juuri tämän kohtauksen tapahtumien mukaan. Tarvittaessa näet myös käännöksen omalle kielellesi.",
+      "steps": {
+        "select": {
+          "title": "Valitse teksti",
+          "text": "Sana, ilmaus tai koko lause: hiirellä tietokoneella tai sormella puhelimessa."
+        },
+        "explain": {
+          "title": "Lue selitys",
+          "text": "Lyhyesti ja selkeästi kirjan kielellä. Ei sanakirja-artikkeli, vaan merkitys juuri tässä kohdassa."
+        },
+        "translate": {
+          "title": "Avaa käännös",
+          "text": "Yksi napautus, ja näet käännöksen millä tahansa sivuston yhdeksästä kielestä."
+        }
+      },
+      "perks": {
+        "context": "Ymmärtää kohtauksen, ei vain sanaa",
+        "devices": "Tietokoneella, tabletilla ja puhelimella",
+        "languages": "Käännös 9 kielelle"
+      },
+      "sampleLabel": "Esimerkki",
+      "cta": "Kokeile kirjassa",
+      "note": "Selitykset ovat kaikkien lukijoiden käytössä, käännös kuuluu Premiumiin."
     }
   },
   "books": {

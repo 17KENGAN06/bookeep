@@ -100,6 +100,33 @@
       "title": "Ciesz się czytaniem w nowym języku",
       "lead": "Zacznij od darmowego fragmentu dowolnej książki. Gdy zechcesz ją skończyć, otwórz cały katalog z Premium.",
       "cta": "Zacznij czytać za darmo"
+    },
+    "explain": {
+      "eyebrow": "Inteligentny czytnik",
+      "title": "Niejasny fragment? Po prostu go zaznacz.",
+      "lead": "Zaznacz słowo lub zwrot bezpośrednio na stronie, a Bookeep wyjaśni je prostym językiem książki, biorąc pod uwagę to, co dzieje się właśnie w tej scenie. W razie potrzeby pokaże też tłumaczenie na Twój język.",
+      "steps": {
+        "select": {
+          "title": "Zaznacz tekst",
+          "text": "Słowo, wyrażenie albo całe zdanie: myszą na komputerze lub palcem na telefonie."
+        },
+        "explain": {
+          "title": "Przeczytaj wyjaśnienie",
+          "text": "Krótko i prosto, w języku książki. Nie hasło ze słownika, tylko sens w tym konkretnym miejscu."
+        },
+        "translate": {
+          "title": "Otwórz tłumaczenie",
+          "text": "Jedno dotknięcie i widzisz tłumaczenie na dowolny z dziewięciu języków strony."
+        }
+      },
+      "perks": {
+        "context": "Rozumie kontekst sceny, nie tylko słowo",
+        "devices": "Na komputerze, tablecie i telefonie",
+        "languages": "Tłumaczenie na 9 języków"
+      },
+      "sampleLabel": "Przykład",
+      "cta": "Wypróbuj w książce",
+      "note": "Wyjaśnienia są dostępne dla wszystkich czytelników, tłumaczenie wchodzi w Premium."
     }
   },
   "books": {

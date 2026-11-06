@@ -1,5 +1,6 @@
 import { DocumentTitle } from '@/components/common/DocumentTitle';
 import { Benefits } from '@/components/home/Benefits';
+import { ExplainShowcase } from '@/components/home/ExplainShowcase';
 import { FeaturedBooks } from '@/components/home/FeaturedBooks';
 import { FinalCta } from '@/components/home/FinalCta';
 import { Hero } from '@/components/home/Hero';
@@ -17,6 +18,7 @@ export function HomePage() {
       <Hero />
       {isGuest ? <StartSteps /> : null}
       <FeaturedBooks />
+      <ExplainShowcase />
       <Benefits />
       <ReadingPlanTeaser />
       {isGuest ? <FinalCta /> : null}

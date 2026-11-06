@@ -100,6 +100,33 @@
       "title": "Enjoy reading in a new language",
       "lead": "Start with a free sample of any book. When you want to finish it, open the whole catalogue with Premium.",
       "cta": "Start reading for free"
+    },
+    "explain": {
+      "eyebrow": "Smart reader",
+      "title": "Stuck on a line? Just select it.",
+      "lead": "Select a word or phrase right on the page and Bookeep explains it in the book’s own simple language, based on what is happening in that very scene. When you need it, it shows a translation into your language too.",
+      "steps": {
+        "select": {
+          "title": "Select the text",
+          "text": "A word, an expression or a whole sentence: with a mouse on a computer or a finger on a phone."
+        },
+        "explain": {
+          "title": "Read the explanation",
+          "text": "Short and simple, in the language of the book. Not a dictionary entry, but what it means right here."
+        },
+        "translate": {
+          "title": "Open the translation",
+          "text": "One tap and you see it translated into any of the site’s nine languages."
+        }
+      },
+      "perks": {
+        "context": "Understands the scene, not just the word",
+        "devices": "On computer, tablet and phone",
+        "languages": "Translation into 9 languages"
+      },
+      "sampleLabel": "Example",
+      "cta": "Try it in a book",
+      "note": "Explanations are open to every reader; translation comes with Premium."
     }
   },
   "books": {
