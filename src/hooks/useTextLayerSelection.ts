@@ -26,8 +26,9 @@ const textSpans = (layer: HTMLElement) =>
 /**
  * A long press with a finger often lands between two lines. Phones then select the whole
  * block under the finger, which here is the whole page. When the first selection of a
- * press runs over more than one line, it is replaced with the word nearest the finger,
- * as if the press had landed on it. Dragging the handles afterwards stays native.
+ * press runs over more than one line, or out of the page, it is replaced with the word
+ * nearest the finger, as if the press had landed on it. Dragging the handles afterwards
+ * stays native.
  */
 function narrowToWord(selection: Selection, press: Press) {
   const range = selection.getRangeAt(0);
@@ -35,7 +36,10 @@ function narrowToWord(selection: Selection, press: Press) {
   const hit = spans.filter((span) => range.intersectsNode(span)).map((span) => span.getBoundingClientRect());
   const top = Math.min(...hit.map((r) => r.top));
   const oneLine = hit.every((r) => r.top < top + r.height / 2);
-  if (hit.length === 0 || oneLine) return false;
+  // iPhone: a press between lines starts at the end of the text layer and runs on into
+  // the page counter below it, so the selection may hold no words of the page at all.
+  const inLayer = press.layer.contains(range.startContainer) && press.layer.contains(range.endContainer);
+  if (inLayer && hit.length > 0 && oneLine) return false;
 
   let best: HTMLElement | null = null;
   let bestDistance = Infinity;
