@@ -103,7 +103,10 @@ export function PdfDocument({ file, page, zoom, onLoad, onPrev, onNext, onPageTe
       id="reader-stage"
       ref={stageRef}
       tabIndex={-1}
-      className="reader-stage flex flex-1 justify-center overflow-x-auto px-2 pt-4 pb-28 outline-none sm:px-6 sm:pt-10 md:pb-12"
+      // The book's hidden text layer must stay as it is: a page translated by the browser
+      // would break selection and send the translated words to "Explain".
+      translate="no"
+      className="notranslate reader-stage flex flex-1 justify-center overflow-x-auto px-2 pt-4 pb-28 outline-none sm:px-6 sm:pt-10 md:pb-12"
       onPointerDown={(event) => {
         // Swipes turn pages on touch screens. A mouse drag over the page selects text.
         swipeStart.current = event.pointerType === 'mouse' ? null : { x: event.clientX, y: event.clientY };

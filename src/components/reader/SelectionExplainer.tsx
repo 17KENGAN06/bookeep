@@ -12,6 +12,7 @@ import { cn } from '@/utils/cn';
 const MAX_SELECTION = 400;
 const CARD_WIDTH = 360;
 const GAP = 10;
+const TOUCH_SETTLE_MS = 650;
 
 type Picked = {
   text: string;
@@ -137,6 +138,9 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
   targetRef.current = target;
   const pageTextRef = useRef(pageText);
   pageTextRef.current = pageText;
+  const openRef = useRef(open);
+  openRef.current = open;
+  const openItemRef = useRef<(item: Picked) => void>(() => {});
 
   const close = useCallback(() => {
     abortRef.current?.abort();
@@ -163,21 +167,34 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
 
   // Show the "Explain" chip once the selection settles (handles drag on phones too).
   // While the mouse button is held the reader is still choosing, so nothing snaps yet.
+  // On touch screens (iPad, phones) the card opens by itself: the system menu with its
+  // own translate buttons sits right over the selection, and our chip got lost beside it.
   useEffect(() => {
     let timer = 0;
     let mouseDown = false;
+    let lastPointer = '';
     const settle = () => {
       window.clearTimeout(timer);
       if (mouseDown) {
         setPicked(null);
         return;
       }
-      timer = window.setTimeout(() => {
-        const next = readSelection(stageRef.current);
-        setPicked(next ? { ...next, context: '' } : null);
-      }, 220);
+      const byTouch = lastPointer === 'touch' || lastPointer === 'pen';
+      timer = window.setTimeout(
+        () => {
+          const next = readSelection(stageRef.current);
+          if (next && byTouch) {
+            if (next.text !== openRef.current?.text) openItemRef.current({ ...next, context: '' });
+            return;
+          }
+          setPicked(next ? { ...next, context: '' } : null);
+        },
+        // Waits a little longer on touch, while the reader may still drag the handles.
+        byTouch ? TOUCH_SETTLE_MS : 220,
+      );
     };
     const onDown = (event: PointerEvent) => {
+      lastPointer = event.pointerType;
       if (event.pointerType === 'mouse' && event.button === 0) mouseDown = true;
     };
     const onUp = () => {
@@ -272,14 +289,18 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
     [request],
   );
 
-  const explain = () => {
-    if (!picked) return;
-    const item = { ...picked, context: contextAround(pageTextRef.current, picked.text) };
+  const openItem = (base: Picked) => {
+    const item = { ...base, context: contextAround(pageTextRef.current, base.text) };
     setOpen(item);
     setPicked(null);
     setTranslation(null);
     setShowTranslation(false);
     ask(item, targetRef.current);
+  };
+  openItemRef.current = openItem;
+
+  const explain = () => {
+    if (picked) openItem(picked);
   };
 
   const revealTranslation = () => {
