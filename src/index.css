@@ -1369,16 +1369,13 @@
 }
 
 /* ── Reader: explain a selection ─────────────────────────── */
-/* Only the book's words can be selected in the reader. The bars around the page are not
-   text: a long press on an iPhone ran on from the page into the page counter. */
-.reader-shell {
+/* The bars around the page are not text: a long press on an iPhone ran on from the page
+   into the page counter. Only the bars themselves: on an iPhone, user-select: none on an
+   element that holds the page stops every long-press selection inside it. */
+.reader-shell > header,
+.reader-shell nav {
   -webkit-user-select: none;
   user-select: none;
-}
-
-.reader-shell .explain-card {
-  -webkit-user-select: text;
-  user-select: text;
 }
 
 /* Only words can be selected: a press on the canvas or a gap must not grab the whole page. */
