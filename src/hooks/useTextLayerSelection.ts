@@ -75,6 +75,8 @@ export function useTextLayerSelection(stageRef: RefObject<HTMLElement | null>) {
     };
 
     const onPointerOver = (event: PointerEvent) => {
+      // Fingers select with a long press and the system handles: no press block for them.
+      if (event.pointerType !== 'mouse') return;
       if (!(event.target instanceof Element)) return;
       const layer = event.target.closest<HTMLElement>('.textLayer');
       if (layer && stageRef.current?.contains(layer)) pressCover(layer);
@@ -88,10 +90,15 @@ export function useTextLayerSelection(stageRef: RefObject<HTMLElement | null>) {
       const layer = event.target.closest<HTMLElement>('.textLayer');
       if (!layer) return;
       layer.classList.add('selecting');
+      if (event.pointerType !== 'mouse') {
+        layer.querySelector('.pressStart')?.remove();
+        return;
+      }
       const cover = pressCover(layer);
       const end = layer.querySelector<HTMLElement>('.endOfContent');
       const onEnd = end != null && event.target === end;
-      if (event.button === 0 && !event.shiftKey && (event.target === cover || event.target === layer || onEnd)) {
+      const plainPress = event.pointerType === 'mouse' && event.button === 0 && !event.shiftKey;
+      if (plainPress && (event.target === cover || event.target === layer || onEnd)) {
         // A plain press starts a new selection anyway. Drop the old one first: it may
         // still start inside this block, and moving the block would drag it along.
         document.getSelection()?.removeAllRanges();

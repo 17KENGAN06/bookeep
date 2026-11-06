@@ -1389,6 +1389,20 @@
   user-select: text;
 }
 
+/* Touch: a long press between lines lands on the layer itself, and phones then select
+   the whole block, i.e. the whole page. Only the words take a long press there. */
+@media (pointer: coarse) {
+  .reader-page .textLayer {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .reader-page .textLayer span[role='presentation'] {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+}
+
 .reader-page .react-pdf__Page__textContent ::selection {
   background: color-mix(in oklab, var(--app-accent) 38%, transparent);
 }
