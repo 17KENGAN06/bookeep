@@ -1398,6 +1398,13 @@
   user-select: text;
 }
 
+/* iPhone (every browser there is WebKit) does not let a finger select text that is fully
+   transparent: a long press found no words and selected the whole page or nothing. pdf.js
+   paints its text layer transparent; 1% black is still invisible over the page. */
+.reader-page .textLayer :is(span, br) {
+  color: rgb(0 0 0 / 0.01);
+}
+
 .reader-page .react-pdf__Page__textContent ::selection {
   background: color-mix(in oklab, var(--app-accent) 38%, transparent);
 }
