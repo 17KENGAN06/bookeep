@@ -1326,8 +1326,10 @@
   position: relative;
 }
 
+/* Pages drawn ahead and the page still drawing. react-pdf sets position: relative inline,
+   so absolute needs !important or the hidden pages would stack below and add blank scroll. */
 .reader-page.reader-page-incoming {
-  position: absolute;
+  position: absolute !important;
   top: 0;
   left: 0;
   visibility: hidden;

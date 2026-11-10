@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useRef, useState, type RefObject } from 'react';
+import { Suspense, useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react';
 import { preload } from 'react-dom';
 import { Document, Page, pdfjs } from 'react-pdf';
 import { useTranslation } from 'react-i18next';
@@ -51,12 +51,41 @@ export function PdfDocument({ file, page, zoom, onLoad, onPageText, stageRef: ou
   const [pixelRatio, setPixelRatio] = useState(1);
   const [reloadKey, setReloadKey] = useState(0);
   const [failed, setFailed] = useState(false);
-  // The last page whose canvas finished drawing. It stays on screen while the next one renders.
+  const [numPages, setNumPages] = useState(0);
+  // Pages whose canvas is drawn, with the size it was drawn at.
+  const [drawn, setDrawn] = useState<ReadonlyMap<number, string>>(() => new Map());
+  const sizeKey = `${width}:${zoom}:${pixelRatio}`;
+  const isDrawn = (pageNumber: number) => drawn.get(pageNumber) === sizeKey;
+  // The last page on screen. It stays there while the next one is drawn.
   const [shownPage, setShownPage] = useState<number | null>(null);
-  const pages = shownPage == null || shownPage === page ? [page] : [shownPage, page];
+  if (isDrawn(page) && shownPage !== page) setShownPage(page);
+  const visiblePage = isDrawn(page) || shownPage == null ? page : shownPage;
+  // Once the page on screen is drawn, the next page and then the previous one are drawn
+  // hidden, so turning to them only reveals them. At most three pages are kept.
+  const neighbours: number[] = [];
+  if (isDrawn(page)) {
+    if (page + 1 <= numPages) neighbours.push(page + 1);
+    if (page - 1 >= 1 && (page + 1 > numPages || isDrawn(page + 1))) neighbours.push(page - 1);
+  }
+  const pages = [...new Set([visiblePage, page, ...neighbours])].slice(0, 3);
+  // A page that left keeps no canvas: drop it, or it would show blank when it comes back.
+  if ([...drawn.keys()].some((pageNumber) => !pages.includes(pageNumber))) {
+    setDrawn(new Map([...drawn].filter(([pageNumber]) => pages.includes(pageNumber))));
+  }
 
   // pdf.js requests the file only after its worker has started; this runs both at once.
-  if (file) preload(file, { as: 'fetch', crossOrigin: 'anonymous' });
+  // A blob: URL is already in memory.
+  if (file && !file.startsWith('blob:')) preload(file, { as: 'fetch', crossOrigin: 'anonymous' });
+
+  // Hidden pages are out of reach: no focus, no selection, nothing for screen readers.
+  useLayoutEffect(() => {
+    for (const node of stageRef.current?.querySelectorAll<HTMLElement>('.reader-page') ?? []) {
+      const hidden = node.classList.contains('reader-page-incoming');
+      node.inert = hidden;
+      if (hidden) node.setAttribute('aria-hidden', 'true');
+      else node.removeAttribute('aria-hidden');
+    }
+  });
 
   useEffect(() => {
     setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -119,26 +148,31 @@ export function PdfDocument({ file, page, zoom, onLoad, onPageText, stageRef: ou
                 console.error(error);
                 setFailed(true);
               }}
-              onLoadSuccess={({ numPages }) => onLoad(numPages)}
+              onLoadSuccess={({ numPages: total }) => {
+                setNumPages(total);
+                onLoad(total);
+              }}
             >
               {pages.map((pageNumber) => {
-                const incoming = pageNumber === page && pages.length > 1;
+                const hidden = pageNumber !== visiblePage;
+                const markDrawn = () => {
+                  setDrawn((current) => new Map(current).set(pageNumber, sizeKey));
+                };
                 return (
                   <Page
                     key={pageNumber}
                     pageNumber={pageNumber}
                     width={width * zoom}
                     devicePixelRatio={pixelRatio}
-                    className={incoming ? 'reader-page reader-page-incoming' : 'reader-page'}
+                    className={hidden ? 'reader-page reader-page-incoming' : 'reader-page'}
                     renderAnnotationLayer={false}
+                    // A drawn-ahead page gets its text layer when it comes on screen, so the
+                    // selection code only ever finds the text of the page being read.
+                    renderTextLayer={pageNumber === page || pageNumber === visiblePage}
                     suspense={false}
-                    loading={incoming ? null : <LoadingPage />}
-                    onRenderSuccess={() => {
-                      if (pageNumber === page) setShownPage(pageNumber);
-                    }}
-                    onRenderError={() => {
-                      if (pageNumber === page) setShownPage(pageNumber);
-                    }}
+                    loading={hidden ? null : <LoadingPage />}
+                    onRenderSuccess={markDrawn}
+                    onRenderError={markDrawn}
                     onGetTextSuccess={(content) => {
                       if (pageNumber === page) onPageText?.(pageTextFromContent(content));
                     }}
