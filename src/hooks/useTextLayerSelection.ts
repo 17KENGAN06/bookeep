@@ -41,12 +41,27 @@ function narrowToWord(selection: Selection, press: Press) {
   const inLayer = press.layer.contains(range.startContainer) && press.layer.contains(range.endContainer);
   if (inLayer && hit.length > 0 && oneLine) return false;
 
+  const word = wordAt(press.layer, press.x, press.y);
+  if (!word) return false;
+  selection.setBaseAndExtent(word.node, word.start, word.node, word.end);
+  return true;
+}
+
+export type WordAt = { node: Text; start: number; end: number };
+
+/**
+ * The word of the text layer at a point, or the nearest one. With `reach`, only a word
+ * at most that many pixels away counts, so a tap on empty paper finds nothing.
+ */
+export function wordAt(layer: HTMLElement, px: number, py: number, reach = Infinity): WordAt | null {
+  const spans = textSpans(layer);
   let best: HTMLElement | null = null;
   let bestDistance = Infinity;
   for (const span of spans) {
     const r = span.getBoundingClientRect();
-    const dx = Math.max(r.left - press.x, 0, press.x - r.right);
-    const dy = Math.max(r.top - press.y, 0, press.y - r.bottom);
+    const dx = Math.max(r.left - px, 0, px - r.right);
+    const dy = Math.max(r.top - py, 0, py - r.bottom);
+    if (dx > reach || dy > reach) continue;
     // Lines are close together and long: being off by a line counts more than along it.
     const distance = dx * dx + 4 * dy * dy;
     if (distance < bestDistance) {
@@ -55,11 +70,11 @@ function narrowToWord(selection: Selection, press: Press) {
     }
   }
   const node = best?.firstChild;
-  if (!best || !node || node.nodeType !== Node.TEXT_NODE) return false;
+  if (!best || !node || node.nodeType !== Node.TEXT_NODE) return null;
   const data = (node as Text).data;
 
   const r = best.getBoundingClientRect();
-  const x = Math.min(Math.max(press.x, r.left + 1), r.right - 1);
+  const x = Math.min(Math.max(px, r.left + 1), r.right - 1);
   const y = (r.top + r.bottom) / 2;
   let offset = Math.round(((x - r.left) / (r.width || 1)) * data.length);
   const caret = document.caretRangeFromPoint?.(x, y);
@@ -78,10 +93,16 @@ function narrowToWord(selection: Selection, press: Press) {
   let end = offset;
   while (start > 0 && WORD_CHAR.test(data[start - 1])) start -= 1;
   while (end < data.length && WORD_CHAR.test(data[end])) end += 1;
-  if (start === end) return false;
+  if (start === end) return null;
+  return { node: node as Text, start, end };
+}
 
-  selection.setBaseAndExtent(node, start, node, end);
-  return true;
+
+let ownSelection = false;
+
+/** The next selection change is the site's own (a tapped word): leave it as it is. */
+export function markOwnSelection() {
+  ownSelection = true;
 }
 
 export function useTextLayerSelection(stageRef: RefObject<HTMLElement | null>) {
@@ -207,6 +228,10 @@ export function useTextLayerSelection(stageRef: RefObject<HTMLElement | null>) {
 
     const onSelectionChange = () => {
       const selection = document.getSelection();
+      if (ownSelection) {
+        ownSelection = false;
+        touchPress = null;
+      }
       if (touchPress && selection && selection.rangeCount > 0 && !selection.isCollapsed) {
         const press = touchPress;
         touchPress = null;

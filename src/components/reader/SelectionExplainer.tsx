@@ -7,12 +7,18 @@ import { supportedLanguages } from '@/i18n';
 import { explainSelection, ExplainError, type ExplainErrorCode, type ExplainResult } from '@/services/explain';
 import type { BookLanguage, CefrLevel, UiLanguage } from '@/types/book';
 import { contextAround } from '@/utils/selectionContext';
+import { markOwnSelection, wordAt, type WordAt } from '@/hooks/useTextLayerSelection';
 import { cn } from '@/utils/cn';
 
 const MAX_SELECTION = 400;
 const CARD_WIDTH = 360;
 const GAP = 10;
 const TOUCH_SETTLE_MS = 650;
+/** A finger that moved less than this and lifted within TAP_MS tapped, not swiped. */
+const TAP_SLOP = 10;
+const TAP_MS = 350;
+/** How far from a word a tap may land and still pick it. */
+const TAP_REACH = 8;
 
 type Picked = {
   text: string;
@@ -141,8 +147,11 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
   const openRef = useRef(open);
   openRef.current = open;
   const openItemRef = useRef<(item: Picked) => void>(() => {});
+  // The word a tap picked, while its card is open: a tap on a second word makes a phrase.
+  const tapAnchorRef = useRef<(WordAt & { layer: HTMLElement }) | null>(null);
 
   const close = useCallback(() => {
+    tapAnchorRef.current = null;
     abortRef.current?.abort();
     translateAbortRef.current?.abort();
     setOpen(null);
@@ -303,6 +312,40 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
     if (picked) openItem(picked);
   };
 
+  const tapWord = (word: WordAt, layer: HTMLElement) => {
+    const anchor = tapAnchorRef.current;
+    const sameWord = anchor != null && anchor.node === word.node && anchor.start === word.start;
+    if (anchor && open && sameWord) {
+      // The same word again: put it away.
+      window.getSelection()?.removeAllRanges();
+      close();
+      return;
+    }
+    let from: WordAt = word;
+    let to: WordAt = word;
+    if (anchor && open && anchor.layer === layer) {
+      const anchorFirst =
+        anchor.node === word.node
+          ? anchor.start < word.start
+          : Boolean(anchor.node.compareDocumentPosition(word.node) & Node.DOCUMENT_POSITION_FOLLOWING);
+      if (anchorFirst) from = anchor;
+      else to = anchor;
+    }
+    const range = document.createRange();
+    range.setStart(from.node, from.start);
+    range.setEnd(to.node, to.end);
+    const text = range.toString().replace(/\s+/g, ' ').trim();
+    if (!text || text.length > MAX_SELECTION) return;
+    // A phrase ends the pick; the next tap starts a new word.
+    tapAnchorRef.current = from === to ? { ...word, layer } : null;
+    markOwnSelection();
+    window.getSelection()?.setBaseAndExtent(from.node, from.start, to.node, to.end);
+    const box = range.getBoundingClientRect();
+    openItem({ text, context: '', rect: { top: box.top, bottom: box.bottom, left: box.left, right: box.right } });
+  };
+  const tapWordRef = useRef(tapWord);
+  tapWordRef.current = tapWord;
+
   const revealTranslation = () => {
     if (!open) return;
     setShowTranslation(true);
@@ -323,6 +366,9 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
     };
     const onDown = (event: PointerEvent) => {
       if (cardRef.current && event.target instanceof Node && cardRef.current.contains(event.target)) return;
+      // A finger on the book's text may be tapping the next word of a phrase: the tap
+      // handler below decides once the finger lifts.
+      if (event.pointerType !== 'mouse' && onBookText(event.target, stageRef.current)) return;
       close();
     };
     window.addEventListener('keydown', onKey);
@@ -331,7 +377,41 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
       window.removeEventListener('keydown', onKey);
       window.removeEventListener('pointerdown', onDown);
     };
-  }, [open, close]);
+  }, [open, close, stageRef]);
+
+  // Touch screens: a tap on a word picks it and opens the card; with the card open, a tap
+  // on another word stretches the pick into the phrase between them. Phones decide on
+  // their own what a long press selects (an iPhone often took the whole page), while a
+  // tap lands where the finger is.
+  useEffect(() => {
+    let down: { x: number; y: number; time: number } | null = null;
+    const onDown = (event: PointerEvent) => {
+      down = event.pointerType === 'mouse' ? null : { x: event.clientX, y: event.clientY, time: event.timeStamp };
+    };
+    const onUp = (event: PointerEvent) => {
+      const start = down;
+      down = null;
+      if (!start || event.pointerType === 'mouse') return;
+      const moved = Math.hypot(event.clientX - start.x, event.clientY - start.y);
+      if (moved > TAP_SLOP || event.timeStamp - start.time > TAP_MS) return;
+      if (!onBookText(event.target, stageRef.current)) return;
+      const layer = (event.target as Element).closest<HTMLElement>('.textLayer');
+      const word = layer ? wordAt(layer, event.clientX, event.clientY, TAP_REACH) : null;
+      if (!layer || !word) {
+        // Empty paper: the same as a tap anywhere else outside the card.
+        if (openRef.current) close();
+        return;
+      }
+      // After the browser has finished with the tap, which may clear a selection.
+      window.setTimeout(() => tapWordRef.current(word, layer), 40);
+    };
+    document.addEventListener('pointerdown', onDown);
+    document.addEventListener('pointerup', onUp);
+    return () => {
+      document.removeEventListener('pointerdown', onDown);
+      document.removeEventListener('pointerup', onUp);
+    };
+  }, [stageRef, close]);
 
   // Desktop: a popover beside the selection. Narrow screens: a sheet above the bottom bar.
   useLayoutEffect(() => {
@@ -499,6 +579,11 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
       ) : null}
     </>
   );
+}
+
+/** Whether an event target is the book's text layer on the reader stage. */
+function onBookText(target: EventTarget | null, stage: HTMLElement | null) {
+  return target instanceof Element && stage != null && stage.contains(target) && target.closest('.textLayer') != null;
 }
 
 /** Above the selection with a mouse; below it on touch, where the system menu sits above. */
