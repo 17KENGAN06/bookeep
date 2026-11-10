@@ -12,7 +12,8 @@ import { SelectionExplainer } from '@/components/reader/SelectionExplainer';
 import { Skeleton } from '@/components/common/Skeleton';
 import { useBook } from '@/hooks/useBooks';
 import { useBookAccess } from '@/hooks/useBookAccess';
-import { getFullPdfUrl } from '@/services/access';
+import { useAuth } from '@/hooks/useAuth';
+import { openFullPdf } from '@/services/pdfCache';
 import { useDebouncedCallback } from '@/hooks/useDebouncedCallback';
 import { usePdfPaper } from '@/hooks/usePdfPaper';
 import { useReadingProgress } from '@/hooks/useReadingProgress';
@@ -34,25 +35,38 @@ function ReaderPageInner() {
   const { book, status } = useBook(slug);
   const { progress, saveProgress: saveReadingProgress } = useReadingProgress(book?.id);
   const access = useBookAccess();
-  // Subscribers get a signed link to the full PDF; everyone else reads the public demo.
+  const { user } = useAuth();
+  // Subscribers read the full PDF (from the device cache when opened before);
+  // everyone else reads the public demo.
   const [fullFile, setFullFile] = useState<{ path: string; url: string | null } | null>(null);
   const pdfPath = book?.pdf_path ?? null;
   const wantsFull = access.ready && access.hasFullAccess && Boolean(pdfPath);
+  const wantsFullRef = useRef(wantsFull);
   useEffect(() => {
-    if (!wantsFull || !pdfPath) return;
+    wantsFullRef.current = wantsFull;
+  }, [wantsFull]);
+  // Runs alongside the subscription check, not after it. Without a subscription
+  // storage refuses the link and the demo opens.
+  const mayHaveFull = Boolean(pdfPath) && (Boolean(user) || access.hasFullAccess);
+  useEffect(() => {
+    if (!mayHaveFull || !pdfPath) return;
     let active = true;
-    void getFullPdfUrl(pdfPath)
+    let opened: string | null = null;
+    void openFullPdf(pdfPath)
       .then((url) => {
+        if (url.startsWith('blob:')) opened = url;
         if (active) setFullFile({ path: pdfPath, url });
+        else if (opened) URL.revokeObjectURL(opened);
       })
       .catch((error: unknown) => {
-        console.warn('Full PDF is not available, showing the demo', error);
+        if (wantsFullRef.current) console.warn('Full PDF is not available, showing the demo', error);
         if (active) setFullFile({ path: pdfPath, url: null });
       });
     return () => {
       active = false;
+      if (opened) URL.revokeObjectURL(opened);
     };
-  }, [wantsFull, pdfPath]);
+  }, [mayHaveFull, pdfPath]);
   const fullUrl = fullFile?.path === pdfPath ? fullFile.url : undefined;
   const isDemo = access.ready && (!wantsFull || fullUrl === null);
   const accessPending = !access.ready || (wantsFull && fullUrl === undefined);

@@ -3,6 +3,7 @@ import type { Session, User } from '@supabase/supabase-js';
 import { isSupabaseConfigured } from '@/config/env';
 import { AuthContext } from '@/hooks/auth-context';
 import { clearSignedPdfCache } from '@/services/access';
+import { clearPdfCache } from '@/services/pdfCache';
 import { getSupabaseClient } from '@/services/supabase';
 import { forgetBookAccess } from '@/hooks/useBookAccess';
 import { authRedirectTo, rememberHasAccount } from '@/utils/auth';
@@ -55,6 +56,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (!nextUser) {
         userIdRef.current = null;
         clearSignedPdfCache();
+        clearPdfCache();
         forgetBookAccess();
         setIsAdmin(false);
         setAdminReady(true);
@@ -143,6 +145,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
     clearSignedPdfCache();
+    clearPdfCache();
     forgetBookAccess();
     setIsAdmin(false);
     setAdminReady(true);

@@ -18,6 +18,7 @@ import { CoverScene, Scene } from '@/components/scene/Scene';
 import { useBook } from '@/hooks/useBooks';
 import { useBookAccess } from '@/hooks/useBookAccess';
 import { getFullPdfUrl } from '@/services/access';
+import { warmFullPdf } from '@/services/pdfCache';
 import { useReadingProgress } from '@/hooks/useReadingProgress';
 import { loadReaderPage } from '@/routes/lazyPage';
 import { getLocalizedDescription, getLocalizedTitle } from '@/utils/bookCopy';
@@ -36,6 +37,12 @@ export function BookDetailsPage() {
   useEffect(() => {
     void loadReaderPage().catch(() => {});
   }, []);
+
+  // A subscriber's book downloads while this page is open, so Read opens it at once.
+  const warmPath = access.ready && access.hasFullAccess ? (book?.pdf_path ?? null) : null;
+  useEffect(() => {
+    if (warmPath) warmFullPdf(warmPath);
+  }, [warmPath]);
 
   if (status === 'loading') {
     return (

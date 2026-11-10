@@ -124,6 +124,10 @@ export async function fetchPublishedBooks(): Promise<Book[]> {
 }
 
 export async function fetchBookBySlug(slug: string): Promise<Book | null> {
+  // The catalog was already loaded on this visit: no second request.
+  const known = booksCache?.find((book) => book.slug === slug);
+  if (known) return known;
+
   if (isSupabaseConfigured()) {
     const supabase = getSupabaseClient();
     if (!supabase) return null;
