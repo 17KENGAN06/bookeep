@@ -30,23 +30,19 @@ type PdfDocumentProps = {
   page: number;
   zoom: number;
   onLoad: (totalPages: number) => void;
-  onPrev: () => void;
-  onNext: () => void;
+  /** Unused: pages turn only with the reader's buttons, a swipe over the text never turns one. */
+  onPrev?: () => void;
+  onNext?: () => void;
   /** The text of the page on screen, once pdf.js has read it. */
   onPageText?: (text: string) => void;
   stageRef?: RefObject<HTMLDivElement | null>;
 };
 
-function hasTextSelection() {
-  const selection = window.getSelection();
-  return Boolean(selection && !selection.isCollapsed && selection.toString().trim());
-}
-
 function LoadingPage() {
   return <Skeleton className="aspect-[3/4] w-full max-w-2xl rounded-lg" />;
 }
 
-export function PdfDocument({ file, page, zoom, onLoad, onPrev, onNext, onPageText, stageRef: outerStageRef }: PdfDocumentProps) {
+export function PdfDocument({ file, page, zoom, onLoad, onPageText, stageRef: outerStageRef }: PdfDocumentProps) {
   const { t } = useTranslation();
   const innerStageRef = useRef<HTMLDivElement>(null);
   const stageRef = outerStageRef ?? innerStageRef;
@@ -58,7 +54,6 @@ export function PdfDocument({ file, page, zoom, onLoad, onPrev, onNext, onPageTe
   // The last page whose canvas finished drawing. It stays on screen while the next one renders.
   const [shownPage, setShownPage] = useState<number | null>(null);
   const pages = shownPage == null || shownPage === page ? [page] : [shownPage, page];
-  const swipeStart = useRef<{ x: number; y: number } | null>(null);
 
   // pdf.js requests the file only after its worker has started; this runs both at once.
   if (file) preload(file, { as: 'fetch', crossOrigin: 'anonymous' });
@@ -107,24 +102,6 @@ export function PdfDocument({ file, page, zoom, onLoad, onPrev, onNext, onPageTe
       // would break selection and send the translated words to "Explain".
       translate="no"
       className="notranslate reader-stage flex flex-1 justify-center overflow-x-auto px-2 pt-4 pb-28 outline-none sm:px-6 sm:pt-10 md:pb-12"
-      onPointerDown={(event) => {
-        // Swipes turn pages on touch screens. A mouse drag over the page selects text.
-        swipeStart.current = event.pointerType === 'mouse' ? null : { x: event.clientX, y: event.clientY };
-      }}
-      onPointerUp={(event) => {
-        if (swipeStart.current == null || zoom !== 1) {
-          swipeStart.current = null;
-          return;
-        }
-        const dx = event.clientX - swipeStart.current.x;
-        const dy = event.clientY - swipeStart.current.y;
-        swipeStart.current = null;
-        // A drag that selected text is a selection, not a page turn.
-        if (hasTextSelection()) return;
-        if (Math.abs(dx) < 56 || Math.abs(dx) < Math.abs(dy)) return;
-        if (dx > 0) onPrev();
-        else onNext();
-      }}
     >
       {!file || failed ? (
         errorState
