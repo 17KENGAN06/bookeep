@@ -1,4 +1,6 @@
 import { useEffect, type RefObject } from 'react';
+// Must run before pdf.js reads any page text: iPhone needs it for the text layer.
+import '@/utils/readableStreamIterator';
 
 /**
  * Keeps a selection in the PDF text layer to the text between the press and the pointer.
