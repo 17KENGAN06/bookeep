@@ -441,7 +441,6 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
 
   return (
     <>
-      {debugOn ? <SelectionDebug stageRef={stageRef} /> : null}
       {picked && chip ? (
         <button
           type="button"
@@ -579,107 +578,6 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
         </div>
       ) : null}
     </>
-  );
-}
-
-const debugOn = typeof location !== 'undefined' && location.search.includes('seldebug');
-
-function describeNode(node: EventTarget | Node | null) {
-  if (!(node instanceof Node)) return 'none';
-  const el = node.nodeType === Node.TEXT_NODE ? node.parentElement : (node as Element);
-  if (!el) return 'none';
-  const cls = typeof el.className === 'string' && el.className ? '.' + el.className.split(' ').slice(0, 2).join('.') : '';
-  const text = el.matches('span[role="presentation"]') ? ` "${(el.textContent ?? '').slice(0, 16)}"` : '';
-  return el.tagName.toLowerCase() + cls + text;
-}
-
-/**
- * Open the reader with ?seldebug to see, on the device itself, what a finger lands on and
- * whether the page has its text layer. Not shown otherwise.
- */
-function SelectionDebug({ stageRef }: { stageRef: RefObject<HTMLElement | null> }) {
-  const [lines, setLines] = useState<string[]>([]);
-  useEffect(() => {
-    const log: Record<string, string> = {};
-    const errors: string[] = [];
-    const render = () => {
-      const stage = stageRef.current;
-      const layers = stage?.querySelectorAll('.textLayer').length ?? 0;
-      const spans = stage?.querySelectorAll('.textLayer span[role="presentation"]').length ?? 0;
-      const sel = window.getSelection();
-      const text = sel && !sel.isCollapsed ? sel.toString().replace(/\s+/g, ' ').trim() : '';
-      setLines([
-        `layers ${layers} · words ${spans}`,
-        `down: ${log.down ?? '—'}`,
-        `up: ${log.up ?? '—'}`,
-        `tap: ${log.tap ?? '—'}`,
-        `selection: ${text ? `"${text.slice(0, 40)}" (${text.length})` : 'none'}${sel && sel.rangeCount ? ' from ' + describeNode(sel.getRangeAt(0).startContainer) : ''}`,
-        ...errors.slice(-3).map((e) => `error: ${e}`),
-        navigator.userAgent.slice(0, 90),
-      ]);
-    };
-    const onDown = (e: PointerEvent) => {
-      log.down = `${e.pointerType} ${Math.round(e.clientX)},${Math.round(e.clientY)} on ${describeNode(e.target)} · under: ${describeNode(document.elementFromPoint(e.clientX, e.clientY))}`;
-      render();
-    };
-    const onUp = (e: PointerEvent) => {
-      log.up = `${e.pointerType} on ${describeNode(e.target)}`;
-      const layer = e.target instanceof Element ? e.target.closest<HTMLElement>('.textLayer') : null;
-      const word = layer ? wordAt(layer, e.clientX, e.clientY, TAP_REACH) : null;
-      log.tap = !layer ? 'not on the text layer' : word ? `word "${word.node.data.slice(word.start, word.end)}"` : 'no word within reach';
-      render();
-    };
-    const onCancel = (e: PointerEvent) => {
-      log.up = `CANCEL ${e.pointerType}`;
-      render();
-    };
-    const onError = (e: ErrorEvent) => {
-      errors.push(e.message);
-      render();
-    };
-    const onRejection = (e: PromiseRejectionEvent) => {
-      errors.push(String(e.reason?.message ?? e.reason));
-      render();
-    };
-    document.addEventListener('pointerdown', onDown, true);
-    document.addEventListener('pointerup', onUp, true);
-    document.addEventListener('pointercancel', onCancel, true);
-    document.addEventListener('selectionchange', render);
-    window.addEventListener('error', onError);
-    window.addEventListener('unhandledrejection', onRejection);
-    const timer = window.setInterval(render, 1500);
-    render();
-    return () => {
-      document.removeEventListener('pointerdown', onDown, true);
-      document.removeEventListener('pointerup', onUp, true);
-      document.removeEventListener('pointercancel', onCancel, true);
-      document.removeEventListener('selectionchange', render);
-      window.removeEventListener('error', onError);
-      window.removeEventListener('unhandledrejection', onRejection);
-      window.clearInterval(timer);
-    };
-  }, [stageRef]);
-  return (
-    <div
-      aria-hidden
-      style={{
-        position: 'fixed',
-        top: 'calc(env(safe-area-inset-top, 0px) + 64px)',
-        left: 8,
-        right: 8,
-        zIndex: 60,
-        padding: '6px 8px',
-        font: '11px/1.35 ui-monospace, Menlo, monospace',
-        color: '#fff',
-        background: 'rgba(0, 0, 0, 0.78)',
-        borderRadius: 8,
-        pointerEvents: 'none',
-        whiteSpace: 'pre-wrap',
-        wordBreak: 'break-word',
-      }}
-    >
-      {lines.join('\n')}
-    </div>
   );
 }
 
