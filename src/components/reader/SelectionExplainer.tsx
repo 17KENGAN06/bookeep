@@ -466,7 +466,14 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
         >
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <p className="explain-eyebrow">{LANGUAGE_LABEL[book.language]}</p>
+              <p className="explain-eyebrow">
+                {LANGUAGE_LABEL[book.language]}
+                {answer?.status === 'done' && answer.result.level && answer.result.explanationLevel ? (
+                  <span className="ml-1.5 opacity-70" title={`${answer.result.level} → ${answer.result.explanationLevel}`}>
+                    · {answer.result.level} → {answer.result.explanationLevel}
+                  </span>
+                ) : null}
+              </p>
               <p className="explain-phrase" lang={book.language}>
                 {open.text}
               </p>

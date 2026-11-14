@@ -101,7 +101,14 @@ type ExplainBody = {
   title?: unknown;
 };
 
-type ExplainResult = { explanation: string; translation: string };
+type ExplainResult = {
+  explanation: string;
+  translation: string;
+  /** CEFR level of the selected words in context, as the model judged it. */
+  level?: Cefr;
+  /** Level the explanation was written at (one below `level`, capped at B1). */
+  explanationLevel?: Cefr;
+};
 
 function text(value: unknown, max: number) {
   if (typeof value !== 'string') return '';
@@ -133,21 +140,54 @@ function remember(key: string, value: ExplainResult) {
   cache.set(key, value);
 }
 
-const EXPLAIN_RULES: Record<Language, string> = {
-  en: `Write "explanation" in very simple English (A2) and keep it as short as possible: one sentence, two at most, under 25 words in total.
-Say only what the words mean in this place in the story. Use the most common words, no idioms, no grammar terms, no examples.`,
-  fi: `Write "explanation" in very easy Finnish (selkosuomi, A2) and keep it as short as possible: one sentence, two at most, under 20 words in total.
-Say only what the words mean in this place in the story. If a word is inflected, you may add its base form in brackets, for example "(talo)". Common words, no idioms, no grammar terms, no examples.`,
+type Cefr = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2';
+const CEFR: Cefr[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+
+/** The explanation is one level easier than the selection, never above B1, never below A1. */
+function explanationLevel(level: Cefr): Cefr {
+  const index = CEFR.indexOf(level);
+  return CEFR[Math.min(2, Math.max(0, index - 1))];
+}
+
+// How to write at each level, per book language. "Level" = the reader's level, so the text must be
+// easy enough for them: one step below what they just found hard.
+const STYLE: Record<Language, Record<'A1' | 'A2' | 'B1', string>> = {
+  en: {
+    A1: 'A1: only the most basic words (like "big", "go", "happy", "not"), one tiny sentence, present tense, under 12 words. A simple synonym is fine, e.g. "very sad".',
+    A2: 'A2: very simple everyday English, one short sentence (two at most), under 20 words. No idioms, no grammar terms.',
+    B1: 'B1: clear everyday English, one or two sentences, under 25 words. Say the idea in plain words; no rare words, idioms or grammar terms.',
+  },
+  fi: {
+    A1: 'A1: vain kaikkein yleisimmät sanat (esim. "iso", "mennä", "iloinen", "ei"), yksi lyhyt päälause preesensissä, alle 10 sanaa. Pelkkä helppo synonyymi käy, esim. "hyvin surullinen".',
+    A2: 'A2: selkosuomi, yksi lyhyt lause (korkeintaan kaksi), alle 16 sanaa. Ei idiomeja, ei kielioppitermejä.',
+    B1: 'B1: selkeää yleiskieltä, yksi tai kaksi lausetta, alle 22 sanaa. Kerro asia tavallisin sanoin; ei harvinaisia sanoja, idiomeja tai kielioppitermejä.',
+  },
 };
+
+function explainRules(language: Language) {
+  const book = LANGUAGE_NAME[language];
+  const style = STYLE[language];
+  return [
+    `First set "level": the CEFR level (A1, A2, B1, B2, C1 or C2) a learner needs to understand the selected words as they are used in this passage. Judge the words, not the whole book: a basic word is A1/A2 even in a hard sentence, an idiom, rare word or literary phrase is B2 or higher.`,
+    `Then write "explanation" in ${book}, ONE level easier than "level", because the reader found it hard: C2/C1/B2 -> write at B1, B1 -> write at A2, A2 or A1 -> write at A1. Never write above B1.`,
+    style.B1,
+    style.A2,
+    style.A1,
+    `Keep it as short as possible. Say only what the words mean in this place in the story, no examples. Do not reuse the selected word itself to explain it.`,
+    language === 'fi' ? 'If a word is inflected, you may add its base form in brackets, for example "(talo)".' : '',
+  ]
+    .filter(Boolean)
+    .join('\n');
+}
 
 function systemPrompt(language: Language, target: Target | null) {
   const book = LANGUAGE_NAME[language];
   return [
-    `You help language learners read an adapted ${book} book (CEFR A2–B1).`,
+    `You help language learners read an adapted ${book} book (CEFR A2–B1). Readers may be below the book's level.`,
     'The reader selected a word or phrase. Use the passage around it to understand what it means in this exact place in the story.',
-    'Return JSON with two string fields: "explanation" and "translation".',
+    'Return JSON with three string fields: "level", "explanation" and "translation".',
     '',
-    EXPLAIN_RULES[language],
+    explainRules(language),
     '',
     target
       ? `Write "translation" in ${LANGUAGE_NAME[target]}: translate the selected words as they are meant in this passage (not every dictionary sense). For a word or short phrase give just the translation, a few words at most; for a sentence give a natural full translation. If the selection is part of a fixed expression, translate the whole expression and nothing else.`
@@ -170,21 +210,26 @@ function userPrompt(selection: string, context: string, title: string, level: st
 
 const RESPONSE_SCHEMA = {
   type: 'object',
+  // "level" comes first so the model decides it before writing the explanation.
   properties: {
+    level: { type: 'string', enum: CEFR },
     explanation: { type: 'string' },
     translation: { type: 'string' },
   },
-  required: ['explanation', 'translation'],
+  required: ['level', 'explanation', 'translation'],
 };
 
 function parseResult(raw: string | undefined): ExplainResult | null {
   if (!raw) return null;
   try {
-    const data = JSON.parse(raw) as Partial<ExplainResult>;
+    const data = JSON.parse(raw) as Partial<Record<keyof ExplainResult, unknown>>;
     const explanation = typeof data.explanation === 'string' ? data.explanation.trim() : '';
     const translation = typeof data.translation === 'string' ? data.translation.trim() : '';
     if (!explanation && !translation) return null;
-    return { explanation, translation };
+    const level = CEFR.includes(data.level as Cefr) ? (data.level as Cefr) : undefined;
+    return level
+      ? { explanation, translation, level, explanationLevel: explanationLevel(level) }
+      : { explanation, translation };
   } catch {
     return null;
   }
@@ -218,7 +263,7 @@ export async function explainHandler(req: Request, res: Response) {
     return;
   }
 
-  const key = JSON.stringify([language, target, title, selection.toLowerCase(), context]);
+  const key = JSON.stringify(['v2', language, target, title, selection.toLowerCase(), context]);
   const cached = cache.get(key);
   if (cached) {
     res.json({ ...cached, cached: true, translationLocked });

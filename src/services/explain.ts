@@ -17,7 +17,13 @@ export type ExplainResult = {
   translation: string;
   /** The server left the translation out: it comes with the subscription. */
   translationLocked?: boolean;
+  /** CEFR level of the selected words (model's estimate). */
+  level?: string;
+  /** Level the explanation is written at: one below `level`, at most B1. */
+  explanationLevel?: string;
 };
+
+const CEFR = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 
 export type ExplainErrorCode = 'rate_limited' | 'daily_limit' | 'not_configured' | 'failed';
 
@@ -62,6 +68,8 @@ export async function explainSelection(request: ExplainRequest, signal?: AbortSi
     explanation: typeof data.explanation === 'string' ? data.explanation : '',
     translation: typeof data.translation === 'string' ? data.translation : '',
     translationLocked: data.translationLocked === true,
+    level: CEFR.includes(data.level ?? '') ? data.level : undefined,
+    explanationLevel: CEFR.includes(data.explanationLevel ?? '') ? data.explanationLevel : undefined,
   };
   if (!result.explanation && !result.translation) throw new ExplainError('failed');
   return result;
