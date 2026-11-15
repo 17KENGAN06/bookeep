@@ -1312,9 +1312,8 @@
 .reader-page {
   background: var(--reader-page);
   border-radius: 0.5rem;
-  /* Round the corners with a mask, not overflow: hidden. A rounded overflow clip cuts the
-     page canvas before its sepia/night filter runs, so the cut edge turns into a light
-     rim. The mask is applied after the filter, so the corners stay clean. */
+  /* Round the corners with a mask, not overflow: hidden (kept as it was: stock mode has
+     always had it, and its selection works). */
   -webkit-mask-image: linear-gradient(#000, #000);
   mask-image: linear-gradient(#000, #000);
   transition: background-color 0.5s var(--ease-lux);
@@ -1357,17 +1356,114 @@
   height: auto !important;
 }
 
-.reader-shell[data-paper='sepia'] .reader-page canvas {
-  filter: url(#reader-paper-sepia);
-}
-
-.reader-shell[data-paper='night'] .reader-page canvas {
-  filter: url(#reader-paper-night);
-}
+/* No filter on the page canvas: sepia and night are drawn into its pixels (tonePageCanvas),
+   so the page under the text layer is the same element with the same styles in every mode.
+   A CSS/SVG filter there made phones re-run it on every repaint of a finger selection. */
 
 .reader-page .react-pdf__Page__textContent,
 .reader-page .react-pdf__Page__annotations {
   border-radius: inherit;
+}
+
+/* ── Reader: page thumbnails ─────────────────────────────── */
+.page-thumbs-backdrop {
+  animation: page-thumbs-fade 0.25s ease both;
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+.page-thumbs-panel {
+  animation: page-thumbs-up 0.35s var(--ease-lux) both;
+}
+
+@media (min-width: 768px) {
+  .page-thumbs-panel {
+    animation-name: page-thumbs-in;
+  }
+}
+
+@keyframes page-thumbs-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes page-thumbs-up {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes page-thumbs-in {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-thumbs-backdrop,
+  .page-thumbs-panel {
+    animation: none;
+  }
+}
+
+.page-thumbs-input {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.page-thumbs-input::-webkit-inner-spin-button,
+.page-thumbs-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.page-thumb-sheet {
+  box-shadow:
+    0 0 0 1px var(--app-line-strong),
+    0 6px 16px -10px rgba(0, 0, 0, 0.5);
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.25s var(--ease-lux);
+}
+
+.page-thumb[aria-current='page'] .page-thumb-sheet {
+  box-shadow:
+    0 0 0 2px var(--app-accent),
+    0 8px 20px -10px rgba(0, 0, 0, 0.5);
+}
+
+.page-thumb:focus-visible .page-thumb-sheet {
+  box-shadow:
+    0 0 0 2px var(--app-surface),
+    0 0 0 4px var(--app-accent);
+}
+
+@media (hover: hover) {
+  .page-thumb:hover .page-thumb-sheet {
+    transform: translateY(-2px);
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--app-accent) 60%, transparent),
+      0 10px 22px -12px rgba(0, 0, 0, 0.6);
+  }
+
+  .reader-pages-btn:hover:not(:disabled) {
+    color: var(--app-accent);
+  }
+}
+
+.reader-pages-btn:focus-visible {
+  outline: 2px solid var(--app-accent);
+  outline-offset: 2px;
+}
+
+/* Thumbnails take the same sepia/night look as the page itself. */
+.reader-shell[data-paper='sepia'] .page-thumb img {
+  filter: url(#reader-paper-sepia);
+}
+
+.reader-shell[data-paper='night'] .page-thumb img {
+  filter: url(#reader-paper-night);
 }
 
 /* ── Reader: explain a selection ─────────────────────────── */
@@ -1407,6 +1503,11 @@
   color: rgb(0 0 0 / 0.01);
 }
 
+/* The words the open card explains on a touch screen (see holdPickAsHighlight). */
+::highlight(reader-pick) {
+  background-color: color-mix(in oklab, var(--app-accent) 38%, transparent);
+}
+
 .reader-page .react-pdf__Page__textContent ::selection {
   background: color-mix(in oklab, var(--app-accent) 38%, transparent);
 }
@@ -1417,6 +1518,26 @@
 .reader-page .react-pdf__Page__textContent .endOfContent::selection,
 .reader-page .react-pdf__Page__textContent .pressStart::selection {
   background: transparent;
+}
+
+/* Holds the chip and the card. Pinch-zoomed in, it covers the visible part of the page and
+   is scaled back down (inline transform), so the card is on screen at its usual size. */
+.explain-layer[data-zoomed] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+
+.explain-layer[data-zoomed] > * {
+  pointer-events: auto;
+}
+
+.explain-layer[data-zoomed] .explain-card--sheet {
+  max-width: 30rem;
+  margin-inline: auto;
 }
 
 .explain-chip {

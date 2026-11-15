@@ -252,6 +252,14 @@
       "sameLanguage": "Choose a language to see a translation.",
       "showTranslation": "Show translation",
       "translationLocked": "Translation comes with a subscription"
+    },
+    "thumbs": {
+      "open": "All pages",
+      "title": "Pages",
+      "goTo": "Go to page",
+      "go": "Go",
+      "close": "Close",
+      "page": "Page {{page}}"
     }
   },
   "notFound": {

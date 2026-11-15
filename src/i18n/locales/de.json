@@ -252,6 +252,14 @@
       "sameLanguage": "Wähle eine Sprache, um eine Übersetzung zu sehen.",
       "showTranslation": "Übersetzung anzeigen",
       "translationLocked": "Die Übersetzung ist im Abo enthalten"
+    },
+    "thumbs": {
+      "open": "Alle Seiten",
+      "title": "Seiten",
+      "goTo": "Zu Seite springen",
+      "go": "Los",
+      "close": "Schließen",
+      "page": "Seite {{page}}"
     }
   },
   "notFound": {

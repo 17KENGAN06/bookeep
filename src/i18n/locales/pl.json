@@ -254,6 +254,14 @@
       "sameLanguage": "Wybierz język, aby zobaczyć tłumaczenie.",
       "showTranslation": "Pokaż tłumaczenie",
       "translationLocked": "Tłumaczenie jest w subskrypcji"
+    },
+    "thumbs": {
+      "open": "Wszystkie strony",
+      "title": "Strony",
+      "goTo": "Przejdź do strony",
+      "go": "Przejdź",
+      "close": "Zamknij",
+      "page": "Strona {{page}}"
     }
   },
   "notFound": {

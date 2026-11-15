@@ -5,7 +5,9 @@ import { ButtonArrow, ButtonLink } from '@/components/common/Button';
 import { DocumentTitle } from '@/components/common/DocumentTitle';
 import { EmptyState } from '@/components/common/EmptyState';
 import { DemoNotice } from '@/components/reader/DemoNotice';
+import { PageThumbnails, useThumbStore } from '@/components/reader/PageThumbnails';
 import { PdfDocument } from '@/components/reader/PdfDocument';
+import type { PDFDocumentProxy } from 'pdfjs-dist';
 import { ReaderPaperFilters } from '@/components/reader/ReaderPaperFilters';
 import { ReaderToolbar } from '@/components/reader/ReaderToolbar';
 import { SelectionExplainer } from '@/components/reader/SelectionExplainer';
@@ -87,6 +89,10 @@ function ReaderPageInner() {
   const [fullscreen, setFullscreen] = useState(false);
   const [pageText, setPageText] = useState<{ page: number; text: string } | null>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const [pdf, setPdf] = useState<PDFDocumentProxy | null>(null);
+  const thumbStore = useThumbStore(pdf);
+  const [thumbsOpen, setThumbsOpen] = useState(false);
+  const closeThumbs = useCallback(() => setThumbsOpen(false), []);
 
   const title = book ? getLocalizedTitle(book, i18n.resolvedLanguage ?? 'en') : t('reader.titleFallback');
   const inited = useRef(false);
@@ -242,6 +248,8 @@ function ReaderPageInner() {
         }}
         paper={paper}
         onPaperChange={setPaper}
+        onOpenPages={() => setThumbsOpen(true)}
+        pagesOpen={thumbsOpen}
       />
       <div
         className="h-[2px] bg-line/70"
@@ -272,6 +280,8 @@ function ReaderPageInner() {
           onNext={() => goTo((current) => current + 1)}
           onPageText={(text) => setPageText({ page, text })}
           stageRef={stageRef}
+          onDocument={setPdf}
+          paper={paper}
         />
         <SelectionExplainer
           stageRef={stageRef}
@@ -281,6 +291,17 @@ function ReaderPageInner() {
           canTranslate={access.hasFullAccess}
         />
       </main>
+      <PageThumbnails
+        open={thumbsOpen && totalPages > 0}
+        store={thumbStore}
+        totalPages={totalPages}
+        currentPage={page}
+        onSelect={(next) => {
+          goTo(next);
+          setThumbsOpen(false);
+        }}
+        onClose={closeThumbs}
+      />
     </div>
   );
 }

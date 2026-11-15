@@ -115,6 +115,61 @@ function saveTargetChoice(value: UiLanguage) {
   }
 }
 
+const PICK_HIGHLIGHT = 'reader-pick';
+
+/**
+ * Touch screens: once the card is open, the browser's selection gives way to our own
+ * highlight of the same words. While a selection stays, iPhone and iPad keep their system
+ * menu over it, where Chrome adds its own Google Translate; no page can remove that item.
+ * The finger still selects natively; only the selection left behind is swapped.
+ * Browsers without CSS highlights keep the selection (and the menu).
+ */
+function holdPickAsHighlight() {
+  if (typeof CSS === 'undefined' || !CSS.highlights || typeof Highlight === 'undefined') return;
+  const selection = window.getSelection();
+  if (!selection || selection.rangeCount === 0 || selection.isCollapsed) return;
+  CSS.highlights.set(PICK_HIGHLIGHT, new Highlight(selection.getRangeAt(0).cloneRange()));
+  selection.removeAllRanges();
+}
+
+function dropPickHighlight() {
+  if (typeof CSS !== 'undefined') CSS.highlights?.delete(PICK_HIGHLIGHT);
+}
+
+type View = { scale: number; left: number; top: number; width: number; height: number };
+
+function readView(): View {
+  const vv = window.visualViewport;
+  if (!vv) return { scale: 1, left: 0, top: 0, width: window.innerWidth, height: window.innerHeight };
+  return { scale: vv.scale, left: vv.offsetLeft, top: vv.offsetTop, width: vv.width, height: vv.height };
+}
+
+/**
+ * The part of the page on screen (the visual viewport). A pinch zoom on a phone or tablet
+ * magnifies position: fixed elements with the page and lets them drift off screen; the card
+ * layer uses this to stay on screen at its normal size.
+ */
+function useVisualViewport() {
+  const [view, setView] = useState<View>(readView);
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+    let frame = 0;
+    const update = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => setView(readView()));
+    };
+    vv.addEventListener('resize', update);
+    vv.addEventListener('scroll', update);
+    return () => {
+      cancelAnimationFrame(frame);
+      vv.removeEventListener('resize', update);
+      vv.removeEventListener('scroll', update);
+    };
+  }, []);
+  return view;
+}
+
 function isCoarsePointer() {
   return window.matchMedia?.('(pointer: coarse)').matches ?? false;
 }
@@ -139,6 +194,21 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
   const cardRef = useRef<HTMLDivElement>(null);
   const [cardPos, setCardPos] = useState<{ top: number; left: number } | null>(null);
   const [isSheet, setIsSheet] = useState(false);
+  const view = useVisualViewport();
+  const zoomed = view.scale > 1.01;
+  // Zoomed in, the card layer covers exactly the screen, at the size of an unzoomed screen.
+  const screen = zoomed
+    ? { width: view.width * view.scale, height: view.height * view.scale }
+    : { width: window.innerWidth, height: window.innerHeight };
+  const toScreen = (rect: Picked['rect']): Picked['rect'] =>
+    zoomed
+      ? {
+          top: (rect.top - view.top) * view.scale,
+          bottom: (rect.bottom - view.top) * view.scale,
+          left: (rect.left - view.left) * view.scale,
+          right: (rect.right - view.left) * view.scale,
+        }
+      : rect;
 
   const targetRef = useRef(target);
   targetRef.current = target;
@@ -151,6 +221,7 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
   const tapAnchorRef = useRef<(WordAt & { layer: HTMLElement }) | null>(null);
 
   const close = useCallback(() => {
+    dropPickHighlight();
     tapAnchorRef.current = null;
     abortRef.current?.abort();
     translateAbortRef.current?.abort();
@@ -194,6 +265,7 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
           const next = readSelection(stageRef.current);
           if (next && byTouch) {
             if (next.text !== openRef.current?.text) openItemRef.current({ ...next, context: '' });
+            holdPickAsHighlight();
             return;
           }
           setPicked(next ? { ...next, context: '' } : null);
@@ -342,6 +414,7 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
     window.getSelection()?.setBaseAndExtent(from.node, from.start, to.node, to.end);
     const box = range.getBoundingClientRect();
     openItem({ text, context: '', rect: { top: box.top, bottom: box.bottom, left: box.left, right: box.right } });
+    holdPickAsHighlight();
   };
   const tapWordRef = useRef(tapWord);
   tapWordRef.current = tapWord;
@@ -419,7 +492,8 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
       setCardPos(null);
       return;
     }
-    const sheet = window.innerWidth < 640;
+    // Zoomed in, the words move under the finger: the sheet at the bottom stays put.
+    const sheet = zoomed || window.innerWidth < 640;
     setIsSheet(sheet);
     if (sheet) {
       setCardPos(null);
@@ -434,13 +508,25 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
     const top =
       below + height <= window.innerHeight - 16 ? below : Math.max(16, open.rect.top - GAP - height);
     setCardPos({ top, left });
-  }, [open, answer]);
+  }, [open, answer, zoomed]);
 
   // No second chip for the words the open card already explains.
-  const chip = picked && picked.text !== open?.text ? chipPosition(picked.rect) : null;
+  const chip = picked && picked.text !== open?.text ? chipPosition(toScreen(picked.rect), screen) : null;
 
   return (
-    <>
+    <div
+      className="explain-layer"
+      style={
+        zoomed
+          ? {
+              width: screen.width,
+              height: screen.height,
+              transform: `translate(${view.left}px, ${view.top}px) scale(${1 / view.scale})`,
+            }
+          : undefined
+      }
+      data-zoomed={zoomed || undefined}
+    >
       {picked && chip ? (
         <button
           type="button"
@@ -584,7 +670,7 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
           ) : null}
         </div>
       ) : null}
-    </>
+    </div>
   );
 }
 
@@ -594,14 +680,14 @@ function onBookText(target: EventTarget | null, stage: HTMLElement | null) {
 }
 
 /** Above the selection with a mouse; below it on touch, where the system menu sits above. */
-function chipPosition(rect: Picked['rect']) {
+function chipPosition(rect: Picked['rect'], screen: { width: number; height: number }) {
   const chipHeight = 36;
   const chipWidth = 132;
   const center = (rect.left + rect.right) / 2;
-  const left = Math.min(Math.max(12, center - chipWidth / 2), window.innerWidth - chipWidth - 12);
+  const left = Math.min(Math.max(12, center - chipWidth / 2), screen.width - chipWidth - 12);
   const preferBelow = isCoarsePointer() || rect.top - chipHeight - GAP < 72;
   const top = preferBelow
-    ? Math.min(rect.bottom + GAP, window.innerHeight - chipHeight - 12)
+    ? Math.min(rect.bottom + GAP, screen.height - chipHeight - 12)
     : rect.top - chipHeight - GAP;
   return { top, left };
 }

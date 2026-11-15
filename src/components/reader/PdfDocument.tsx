@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react';
 import { preload } from 'react-dom';
 import { Document, Page, pdfjs } from 'react-pdf';
+import type { PDFDocumentProxy } from 'pdfjs-dist';
 import { useTranslation } from 'react-i18next';
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 import { ErrorState } from '@/components/common/ErrorState';
@@ -8,6 +9,8 @@ import { Skeleton } from '@/components/common/Skeleton';
 import pdfWorker from '@/pdf.worker-entry?worker&url';
 import { useTextLayerSelection } from '@/hooks/useTextLayerSelection';
 import { pageTextFromContent } from '@/utils/selectionContext';
+import { tonePageCanvas } from '@/utils/paperTone';
+import type { PdfPaper } from '@/hooks/usePdfPaper';
 
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
@@ -35,14 +38,33 @@ type PdfDocumentProps = {
   onNext?: () => void;
   /** The text of the page on screen, once pdf.js has read it. */
   onPageText?: (text: string) => void;
+  /** Sepia and night recolour the canvas pixels; the page's elements stay as in stock mode. */
+  paper?: PdfPaper;
   stageRef?: RefObject<HTMLDivElement | null>;
+  /** The open document (null once it closes), for the page thumbnails. */
+  onDocument?: (pdf: PDFDocumentProxy | null) => void;
+};
+
+const CANVAS_BACKGROUND: Record<PdfPaper, string> = {
+  light: '#ffffff',
+  sepia: '#fffffe',
+  night: '#fffffd',
 };
 
 function LoadingPage() {
   return <Skeleton className="aspect-[3/4] w-full max-w-2xl rounded-lg" />;
 }
 
-export function PdfDocument({ file, page, zoom, onLoad, onPageText, stageRef: outerStageRef }: PdfDocumentProps) {
+export function PdfDocument({
+  file,
+  page,
+  zoom,
+  onLoad,
+  onPageText,
+  stageRef: outerStageRef,
+  onDocument,
+  paper = 'light',
+}: PdfDocumentProps) {
   const { t } = useTranslation();
   const innerStageRef = useRef<HTMLDivElement>(null);
   const stageRef = outerStageRef ?? innerStageRef;
@@ -54,7 +76,8 @@ export function PdfDocument({ file, page, zoom, onLoad, onPageText, stageRef: ou
   const [numPages, setNumPages] = useState(0);
   // Pages whose canvas is drawn, with the size it was drawn at.
   const [drawn, setDrawn] = useState<ReadonlyMap<number, string>>(() => new Map());
-  const sizeKey = `${width}:${zoom}:${pixelRatio}`;
+  const sizeKey = `${width}:${zoom}:${pixelRatio}:${paper}`;
+  const canvases = useRef(new Map<number, HTMLCanvasElement>());
   const isDrawn = (pageNumber: number) => drawn.get(pageNumber) === sizeKey;
   // The last page on screen. It stays there while the next one is drawn.
   const [shownPage, setShownPage] = useState<number | null>(null);
@@ -109,6 +132,9 @@ export function PdfDocument({ file, page, zoom, onLoad, onPageText, stageRef: ou
     setFailed(false);
   }, [file, reloadKey]);
 
+  // react-pdf destroys the document when the file changes or the reader closes.
+  useEffect(() => () => onDocument?.(null), [file, reloadKey, onDocument]);
+
   const retry = () => {
     setFailed(false);
     setReloadKey((value) => value + 1);
@@ -148,14 +174,19 @@ export function PdfDocument({ file, page, zoom, onLoad, onPageText, stageRef: ou
                 console.error(error);
                 setFailed(true);
               }}
-              onLoadSuccess={({ numPages: total }) => {
-                setNumPages(total);
-                onLoad(total);
+              onLoadSuccess={(pdf) => {
+                setNumPages(pdf.numPages);
+                onLoad(pdf.numPages);
+                onDocument?.(pdf);
               }}
             >
               {pages.map((pageNumber) => {
                 const hidden = pageNumber !== visiblePage;
                 const markDrawn = () => {
+                  // react-pdf shows the canvas and calls this in the same task, so the page
+                  // never paints in its stock colours before it is toned.
+                  const canvas = canvases.current.get(pageNumber);
+                  if (canvas) tonePageCanvas(canvas, paper);
                   setDrawn((current) => new Map(current).set(pageNumber, sizeKey));
                 };
                 return (
@@ -164,6 +195,13 @@ export function PdfDocument({ file, page, zoom, onLoad, onPageText, stageRef: ou
                     pageNumber={pageNumber}
                     width={width * zoom}
                     devicePixelRatio={pixelRatio}
+                    // A new value redraws the canvas in place (no remount), so switching the
+                    // paper mode tones a fresh stock render. All three are white to the eye.
+                    canvasBackground={CANVAS_BACKGROUND[paper]}
+                    canvasRef={(canvas) => {
+                      if (canvas) canvases.current.set(pageNumber, canvas);
+                      else canvases.current.delete(pageNumber);
+                    }}
                     className={hidden ? 'reader-page reader-page-incoming' : 'reader-page'}
                     renderAnnotationLayer={false}
                     // A drawn-ahead page gets its text layer when it comes on screen, so the

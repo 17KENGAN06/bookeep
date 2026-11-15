@@ -252,6 +252,14 @@
       "sameLanguage": "Valitse kieli, niin näet käännöksen.",
       "showTranslation": "Näytä käännös",
       "translationLocked": "Käännös kuuluu tilaukseen"
+    },
+    "thumbs": {
+      "open": "Kaikki sivut",
+      "title": "Sivut",
+      "goTo": "Siirry sivulle",
+      "go": "Siirry",
+      "close": "Sulje",
+      "page": "Sivu {{page}}"
     }
   },
   "notFound": {

@@ -252,6 +252,14 @@
       "sameLanguage": "Scegli una lingua per vedere la traduzione.",
       "showTranslation": "Mostra la traduzione",
       "translationLocked": "La traduzione è inclusa nell’abbonamento"
+    },
+    "thumbs": {
+      "open": "Tutte le pagine",
+      "title": "Pagine",
+      "goTo": "Vai alla pagina",
+      "go": "Vai",
+      "close": "Chiudi",
+      "page": "Pagina {{page}}"
     }
   },
   "notFound": {

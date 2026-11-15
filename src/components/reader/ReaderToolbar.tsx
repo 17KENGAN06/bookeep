@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { ChevronLeft, ChevronRight, Maximize2, Minimize2, Minus, Plus } from 'lucide-react';
+import { ChevronLeft, ChevronRight, LayoutGrid, Maximize2, Minimize2, Minus, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
@@ -21,6 +21,9 @@ type ReaderToolbarProps = {
   onToggleFullscreen: () => void;
   paper: PdfPaper;
   onPaperChange: (paper: PdfPaper) => void;
+  /** Opens the grid of page thumbnails. */
+  onOpenPages: () => void;
+  pagesOpen: boolean;
 };
 
 const swatches: Record<PdfPaper, string> = {
@@ -44,6 +47,8 @@ export function ReaderToolbar({
   onToggleFullscreen,
   paper,
   onPaperChange,
+  onOpenPages,
+  pagesOpen,
 }: ReaderToolbarProps) {
   const { t } = useTranslation();
   const pageLabel = t('reader.page', { current: currentPage, total: totalPages || '—' });
@@ -75,6 +80,9 @@ export function ReaderToolbar({
             </ToolButton>
             <ToolButton label={t('reader.next')} disabled={!canNext} onClick={onNext}>
               <ChevronRight className="h-4 w-4" />
+            </ToolButton>
+            <ToolButton label={t('reader.thumbs.open')} disabled={totalPages <= 0} onClick={onOpenPages} expanded={pagesOpen}>
+              <LayoutGrid className="h-4 w-4" />
             </ToolButton>
           </div>
 
@@ -129,10 +137,21 @@ export function ReaderToolbar({
           <ToolButton label={t('reader.prev')} disabled={!canPrev} onClick={onPrev} large>
             <ChevronLeft className="h-5 w-5" />
           </ToolButton>
-          <p className="min-w-20 text-center text-sm font-semibold tabular-nums text-ink" aria-hidden>
-            {currentPage}
-            <span className="text-muted"> / {totalPages || '—'}</span>
-          </p>
+          <button
+            type="button"
+            onClick={onOpenPages}
+            disabled={totalPages <= 0}
+            aria-label={t('reader.thumbs.open')}
+            aria-haspopup="dialog"
+            aria-expanded={pagesOpen}
+            className="reader-pages-btn flex h-12 min-w-24 items-center justify-center gap-1.5 rounded-full px-3 text-sm font-semibold tabular-nums text-ink"
+          >
+            <LayoutGrid className="h-4 w-4 shrink-0 text-muted" aria-hidden />
+            <span>
+              {currentPage}
+              <span className="text-muted"> / {totalPages || '—'}</span>
+            </span>
+          </button>
           <ToolButton label={t('reader.next')} disabled={!canNext} onClick={onNext} large>
             <ChevronRight className="h-5 w-5" />
           </ToolButton>
@@ -147,12 +166,15 @@ function ToolButton({
   onClick,
   disabled,
   large,
+  expanded,
   children,
 }: {
   label: string;
   onClick: () => void;
   disabled?: boolean;
   large?: boolean;
+  /** Set on a button that opens a dialog. */
+  expanded?: boolean;
   children: ReactNode;
 }) {
   return (
@@ -162,6 +184,8 @@ function ToolButton({
       disabled={disabled}
       aria-label={label}
       title={label}
+      aria-haspopup={expanded === undefined ? undefined : 'dialog'}
+      aria-expanded={expanded}
       className={cn('icon-btn', !large && 'icon-btn-sm sm:h-10 sm:w-10', large && 'h-12 w-12')}
     >
       {children}
