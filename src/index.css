@@ -1837,7 +1837,7 @@
   border-radius: var(--radius-sheet);
   overflow: hidden;
   background:
-    radial-gradient(55% 40% at 50% 0%, var(--edge-highlight), transparent 70%),
+    radial-gradient(38% 55% at 50% 0%, color-mix(in oklab, var(--app-ink) 7%, transparent), transparent 75%),
     radial-gradient(42% 46% at 50% 52%, color-mix(in oklab, var(--app-ink) 5%, transparent), transparent 72%),
     var(--panel-fill);
   border: 1px solid var(--app-line);
@@ -1859,8 +1859,48 @@
   mask-image: linear-gradient(180deg, #000 0%, transparent 85%);
 }
 
+/* Passe-partout: a second hairline frame inset inside the panel, like a gallery mount. */
 .showcase-niche::after {
-  content: none;
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 1px solid var(--app-line);
+  border-radius: calc(var(--radius-sheet) - 6px);
+  pointer-events: none;
+}
+
+/* Colour from the covers themselves, blurred into the panel behind them. */
+.showcase-ambient {
+  position: absolute;
+  inset: 0 3%;
+  z-index: 1;
+  overflow: hidden;
+  border-radius: var(--radius-sheet);
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(70% 65% at 50% 55%, #000 30%, transparent 85%);
+  mask-image: radial-gradient(70% 65% at 50% 55%, #000 30%, transparent 85%);
+}
+
+.showcase-ambient img {
+  position: absolute;
+  top: 24%;
+  width: 44%;
+  height: 58%;
+  object-fit: cover;
+  opacity: 0.3;
+  filter: blur(56px) saturate(1.15);
+}
+
+.showcase-ambient img:first-child {
+  left: 14%;
+}
+
+.showcase-ambient img:nth-child(2) {
+  right: 14%;
+}
+
+[data-theme='light'] .showcase-ambient img {
+  opacity: 0.22;
 }
 
 /* No visible ledge: the books stand on a soft floor shadow inside the panel. */

@@ -6,6 +6,7 @@ import { BookCover } from '@/components/books/BookCover';
 import { useBooks } from '@/hooks/useBooks';
 import { pickHeroBooks } from '@/services/books';
 import { getLocalizedTitle } from '@/utils/bookCopy';
+import { coverUrl } from '@/utils/cover';
 import { cn } from '@/utils/cn';
 
 type Pose = { className: string; depth: number };
@@ -75,6 +76,15 @@ export function HeroVisual() {
   return (
     <div ref={stageRef} className="hero-stage relative isolate mx-auto aspect-[10/9] w-full max-w-[36rem] md:max-w-none tabp:max-w-[38rem]">
       <div aria-hidden className="hero-layer showcase-niche" style={depth(3)} />
+
+      {pile.length > 0 ? (
+        <div aria-hidden className="showcase-ambient">
+          {pile.slice(0, 2).map((book) => {
+            const src = coverUrl(book, 200);
+            return src ? <img key={book.id} src={src} alt="" loading="lazy" decoding="async" /> : null;
+          })}
+        </div>
+      ) : null}
 
       <div aria-hidden className="hero-layer showcase-shelf z-[5]" style={depth(2)}>
         <div className="showcase-shelf-top" />
