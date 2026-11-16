@@ -29,11 +29,11 @@ export function ReadingPlanTeaser() {
         <Reveal direction="scale">
           <div className="relative isolate overflow-hidden rounded-[2rem] border border-line shadow-[var(--app-shadow-lg)] sm:rounded-[2.5rem]">
             <Scene name="library" shade="left" />
-            <div className="relative grid items-center gap-10 p-6 sm:p-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16 lg:p-16">
+            <div className="relative grid items-center gap-10 p-6 sm:p-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16 lg:p-16 tabp:grid-cols-[minmax(0,1fr)] tabp:gap-10 tabp:p-12">
               <div>
                 <p className="eyebrow">{t('nav.goals')}</p>
                 <h2 className="section-title mt-5">{t('home.planTitle')}</h2>
-                <p className="mt-4 max-w-md text-[0.9375rem] leading-relaxed text-muted sm:text-base">{t('home.planLead')}</p>
+                <p className="mt-4 max-w-md tabp:max-w-xl text-[0.9375rem] leading-relaxed text-muted sm:text-base">{t('home.planLead')}</p>
                 <ButtonLink to={goalsTo} className="mt-8 w-full min-[480px]:w-auto">
                   <CalendarDays className="h-4 w-4" aria-hidden />
                   {t('home.planCta')}
@@ -62,7 +62,7 @@ export function ReadingPlanTeaser() {
                       <span
                         key={index}
                         className={cn(
-                          'flex aspect-square flex-col justify-between rounded-lg p-1 text-[10px] font-semibold tabular-nums sm:rounded-xl sm:p-1.5 sm:text-xs',
+                          'flex aspect-square flex-col tabp:aspect-[3/2] justify-between rounded-lg p-1 text-[10px] font-semibold tabular-nums sm:rounded-xl sm:p-1.5 sm:text-xs',
                           done ? 'bg-accent-soft text-ink' : pages > 0 ? 'bg-surface-2/80 text-ink' : 'bg-surface-2/40 text-muted',
                           index === 23 && 'shadow-[inset_0_0_0_1px_var(--app-accent)]',
                         )}

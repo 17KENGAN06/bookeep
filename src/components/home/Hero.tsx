@@ -41,13 +41,13 @@ export function Hero() {
     <section className="relative isolate overflow-x-clip">
       <Scene name="room" underHeader />
       <Container className="relative pt-10 pb-16 sm:pt-16 sm:pb-24 lg:pt-20 lg:pb-28">
-        <div className="grid grid-cols-[minmax(0,1fr)] items-center gap-x-6 gap-y-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:grid-rows-[auto_auto] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-x-10">
+        <div className="grid grid-cols-[minmax(0,1fr)] items-center gap-x-6 gap-y-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:grid-rows-[auto_auto] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-x-10 tabp:grid-cols-[minmax(0,1fr)] tabp:grid-rows-none tabp:gap-y-12">
           <div className="relative z-10 min-w-0 md:self-end">
             <Reveal>
               <p className="eyebrow">{t('home.eyebrow')}</p>
             </Reveal>
 
-            <h1 className="hero-title mt-7 font-display text-[2.75rem] leading-[0.98] font-medium tracking-[-0.02em] break-words text-ink min-[400px]:text-[3.1rem] sm:text-[4rem] md:text-[3.4rem] lg:text-[3.9rem] xl:text-[4.9rem] 2xl:text-[5.4rem]">
+            <h1 className="hero-title mt-7 font-display text-[2.75rem] leading-[0.98] font-medium tracking-[-0.02em] break-words text-ink min-[400px]:text-[3.1rem] sm:text-[4rem] md:text-[3.4rem] lg:text-[3.9rem] xl:text-[4.9rem] 2xl:text-[5.4rem] tabp:text-[4.6rem]">
               <Reveal as="span" delay={80} className="block">
                 {t('home.line1')}
               </Reveal>
@@ -58,7 +58,7 @@ export function Hero() {
             </h1>
 
             <Reveal delay={260}>
-              <p className="lead mt-7 max-w-[34rem]">{t('home.subtitle')}</p>
+              <p className="lead mt-7 max-w-[34rem] tabp:max-w-[40rem]">{t('home.subtitle')}</p>
             </Reveal>
 
             <Reveal delay={340}>
@@ -119,13 +119,13 @@ export function Hero() {
 
           </div>
 
-          <Reveal delay={180} direction="right" className="-mx-2 sm:mx-0 md:col-start-2 md:row-span-2 md:row-start-1 md:-mr-4 lg:-mr-8">
+          <Reveal delay={180} direction="right" className="-mx-2 sm:mx-0 md:col-start-2 md:row-span-2 md:row-start-1 md:-mr-4 lg:-mr-8 tabp:col-start-auto tabp:row-span-1 tabp:row-start-auto tabp:mx-0">
             <HeroVisual />
           </Reveal>
 
-          <div className="md:col-start-1 md:row-start-2 md:self-start">
+          <div className="md:col-start-1 md:row-start-2 md:self-start tabp:col-start-auto tabp:row-start-auto">
             <Reveal delay={420}>
-              <dl className="grid max-w-xl grid-cols-3 gap-3 border-t border-line pt-7 sm:gap-6">
+              <dl className="grid max-w-xl grid-cols-3 gap-3 border-t border-line pt-7 sm:gap-6 tabp:max-w-none">
                 {stats.map((item) => {
                   const Icon = item.icon;
                   return (

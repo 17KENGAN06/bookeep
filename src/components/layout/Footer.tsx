@@ -23,15 +23,15 @@ export function Footer() {
       <Container className="relative pt-4 pb-10 sm:pb-14">
         <div className="hairline mb-12 sm:mb-16" />
         <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
-          <div className="max-w-md">
+          <div className="max-w-md tabp:max-w-xl">
             <BrandLockup to="/" size="md" />
             <p className="mt-6 font-display text-[1.75rem] leading-snug font-normal tracking-tight text-ink/90 italic sm:text-[2rem]">
               {t('footer.tagline')}
             </p>
           </div>
 
-          <div className="flex flex-col gap-10 md:flex-row md:gap-12 lg:gap-16">
-            <nav className="grid grid-cols-2 gap-x-6 gap-y-3.5 text-sm font-medium sm:grid-cols-3 md:grid-cols-2 lg:flex lg:flex-col lg:gap-2.5">
+          <div className="flex flex-col gap-10 md:flex-row md:gap-12 lg:gap-16 tabp:justify-between">
+            <nav className="grid grid-cols-2 gap-x-6 gap-y-3.5 text-sm font-medium sm:grid-cols-3 md:grid-cols-2 lg:flex lg:flex-col lg:gap-2.5 tabp:grid tabp:flex-1 tabp:content-start tabp:grid-cols-3 tabp:gap-x-10 tabp:gap-y-3.5">
               <Link to="/" onClick={() => scrollToPageTop()} className={linkClass}>
                 {t('nav.home')}
               </Link>

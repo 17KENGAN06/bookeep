@@ -72,7 +72,7 @@ export function HeroVisual() {
   const set = poses[Math.min(Math.max(pile.length, 1), 3) as 1 | 2 | 3];
 
   return (
-    <div ref={stageRef} className="hero-stage relative isolate mx-auto aspect-[10/9] w-full max-w-[36rem] md:max-w-none">
+    <div ref={stageRef} className="hero-stage relative isolate mx-auto aspect-[10/9] w-full max-w-[36rem] md:max-w-none tabp:max-w-[38rem]">
       <div aria-hidden className="hero-layer showcase-niche" style={depth(3)} />
 
       <div aria-hidden className="hero-layer showcase-shelf z-[5]" style={depth(2)}>

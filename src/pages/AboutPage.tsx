@@ -19,14 +19,14 @@ export function AboutPage() {
         <ol className="border-t border-line">
           {SECTIONS.map((section, index) => (
             <Reveal as="li" key={section} delay={index * 60} className="border-b border-line">
-              <article className="grid gap-4 py-9 sm:py-12 md:grid-cols-[minmax(0,0.42fr)_minmax(0,1fr)] md:gap-12">
+              <article className="grid gap-4 py-9 sm:py-12 md:grid-cols-[minmax(0,0.42fr)_minmax(0,1fr)] md:gap-12 tabp:grid-cols-[minmax(0,1fr)] tabp:gap-4">
                 <div className="flex items-baseline gap-5">
                   <span aria-hidden className="font-display text-sm text-accent tabular-nums">0{index + 1}</span>
                   <h2 className="font-display text-2xl font-medium tracking-tight text-ink sm:text-[1.875rem]">
                     {t(`about.sections.${section}.title`)}
                   </h2>
                 </div>
-                <p className="max-w-2xl text-base leading-relaxed text-muted sm:text-[1.0625rem] md:pt-1.5">
+                <p className="max-w-2xl text-base leading-relaxed text-muted sm:text-[1.0625rem] md:pt-1.5 tabp:pt-0">
                   {t(`about.sections.${section}.text`)}
                 </p>
               </article>

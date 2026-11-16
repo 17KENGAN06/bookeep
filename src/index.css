@@ -2,6 +2,9 @@
 
 @custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
 
+/* Tablets held upright (iPad mini to iPad Pro 13): tall and roomy, so two cramped columns become one wide one. */
+@custom-variant tabp (@media (min-width: 44rem) and (max-width: 79.99rem) and (orientation: portrait));
+
 @theme {
   --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
   --font-display: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
@@ -1916,6 +1919,10 @@
 }
 @media (min-width: 1280px) {
   html:lang(ru) .hero-title { font-size: 4.6rem; }
+}
+/* Upright tablets get the full-width hero, so the title can grow with it. */
+@media (min-width: 44rem) and (max-width: 79.99rem) and (orientation: portrait) {
+  html:lang(ru) .hero-title { font-size: min(4.6rem, calc((100vw - 3rem) / 8.4)); }
 }
 
 /* Large and 4K-class monitors: scale the whole rem-based layout up instead of

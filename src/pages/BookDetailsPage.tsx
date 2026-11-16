@@ -132,7 +132,7 @@ export function BookDetailsPage() {
           <span className="btn-label">{t('book.backToCatalog')}</span>
         </Link>
 
-        <div className="mt-6 grid items-center gap-10 sm:mt-8 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] md:gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] lg:gap-20">
+        <div className="mt-6 grid items-center gap-10 sm:mt-8 tabp:items-start md:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] md:gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] lg:gap-20">
           <Reveal direction="left">
             <div className="relative mx-auto aspect-[4/5] w-full max-w-[26rem] md:max-w-none">
               <div aria-hidden className="showcase-niche !inset-x-[4%]" />
