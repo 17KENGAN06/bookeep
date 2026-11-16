@@ -60,12 +60,12 @@ export function GoalComposer({
   return (
     <section
       id="goal-composer"
-      className="lux-panel scroll-mt-28 rounded-[1.75rem] p-5 sm:p-7 lg:sticky lg:top-28"
+      className="lux-panel scroll-mt-28 rounded-card p-5 sm:p-7 lg:sticky lg:top-28"
     >
       <div className="md:grid md:grid-cols-2 md:gap-8 lg:block">
         <div>
           <p className="eyebrow">{t('goals.readingGoal')}</p>
-          <h2 className="mt-4 font-display text-2xl font-medium tracking-tight text-ink">{t('goals.composerTitle')}</h2>
+          <h2 className="mt-4 font-display text-2xl font-semibold tracking-tight text-ink">{t('goals.composerTitle')}</h2>
           <p className="mt-2 text-sm text-muted">{t('goals.composerLead')}</p>
 
           <label className="mt-5 block">
@@ -99,7 +99,7 @@ export function GoalComposer({
               max={999}
               value={value}
               onChange={(event) => setValue(Math.min(999, Math.max(1, Number(event.target.value) || 1)))}
-              className="field-control !w-28 !rounded-2xl text-center font-display !text-3xl font-medium tabular-nums"
+              className="field-control !w-28 !rounded-2xl text-center font-display !text-3xl font-semibold tabular-nums"
               aria-label={t('goals.targetPages')}
             />
             <button

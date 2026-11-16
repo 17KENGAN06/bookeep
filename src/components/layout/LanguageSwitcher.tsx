@@ -86,7 +86,7 @@ function LanguageMenu({ className }: { className?: string }) {
         aria-controls={listId}
         onClick={() => setOpen((value) => !value)}
       >
-        <Languages className="h-4 w-4 text-accent" aria-hidden />
+        <Languages className="h-4 w-4 text-muted" aria-hidden />
         <span className="text-xs font-bold tracking-[0.08em]">{active.short}</span>
         <ChevronDown className={cn('h-3.5 w-3.5 text-muted transition-transform', open && 'rotate-180')} aria-hidden />
       </button>

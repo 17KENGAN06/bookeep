@@ -49,7 +49,7 @@ export function BookDetailsPage() {
       <Container className="py-10 sm:py-14">
         <DocumentTitle title={t('book.loading')} />
         <div className="grid gap-10 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] lg:gap-20">
-          <Skeleton className="mx-auto aspect-[4/5] w-full max-w-[26rem] rounded-[2rem] md:max-w-none" />
+          <Skeleton className="mx-auto aspect-[4/5] w-full max-w-[26rem] rounded-sheet md:max-w-none" />
           <div className="space-y-4">
             <Skeleton className="h-5 w-24" />
             <Skeleton className="h-12 w-3/4" />
@@ -164,7 +164,7 @@ export function BookDetailsPage() {
               <h1 className="display-title mt-6 break-words">{title}</h1>
 
               {book.title_original !== title ? (
-                <p className="mt-3 font-display text-xl text-muted italic">{book.title_original}</p>
+                <p className="mt-3 font-display font-semibold text-xl text-muted">{book.title_original}</p>
               ) : null}
 
               <p className="lead mt-6 max-w-2xl">{description}</p>
@@ -173,7 +173,7 @@ export function BookDetailsPage() {
                 {facts.map((fact) => (
                   <div key={fact.label} className="min-w-0 py-3">
                     <dt className="text-[10px] font-bold tracking-[0.14em] text-muted uppercase sm:text-[11px] sm:tracking-[0.2em]">{fact.label}</dt>
-                    <dd className="mt-1.5 font-display text-[15px] font-medium break-words text-ink sm:text-xl">{fact.value}</dd>
+                    <dd className="mt-1.5 font-display text-[15px] font-semibold break-words text-ink sm:text-xl">{fact.value}</dd>
                   </div>
                 ))}
               </dl>
@@ -192,7 +192,7 @@ export function BookDetailsPage() {
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                 <ButtonLink
                   to={access.isGuest ? authPathFor(`/read/${book.slug}`, 'read') : `/read/${book.slug}`}
-                  className="w-full !min-h-14 !px-7 sm:w-auto"
+                  className="w-full sm:w-auto"
                 >
                   {access.isGuest
                     ? t('book.signUpToRead')
@@ -204,8 +204,8 @@ export function BookDetailsPage() {
                   <ButtonArrow />
                 </ButtonLink>
                 {isDemoReader ? (
-                  <Link to="/subscribe" className="btn btn-secondary w-full !min-h-14 sm:w-auto">
-                    <Lock className="h-4 w-4 text-accent" aria-hidden />
+                  <Link to="/subscribe" className="btn btn-secondary w-full !min-h-12 sm:w-auto">
+                    <Lock className="h-4 w-4 text-muted" aria-hidden />
                     {t('demo.fullWithSubscription')}
                   </Link>
                 ) : null}
@@ -213,12 +213,12 @@ export function BookDetailsPage() {
                   <Button
                     type="button"
                     variant="secondary"
-                    className="w-full !min-h-14 sm:w-auto"
+                    className="w-full !min-h-12 sm:w-auto"
                     isLoading={downloading}
                     loadingText={t('book.downloading')}
                     onClick={() => void downloadPdf()}
                   >
-                    <Download className="h-4 w-4 text-accent" aria-hidden />
+                    <Download className="h-4 w-4 text-muted" aria-hidden />
                     {t('book.download')}
                   </Button>
                 ) : null}

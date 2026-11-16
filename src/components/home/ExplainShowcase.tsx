@@ -270,7 +270,7 @@ export function ExplainShowcase() {
 
             <Reveal delay={360}>
               <div className="mt-9 flex flex-col gap-4 min-[480px]:flex-row min-[480px]:items-center">
-                <ButtonLink to={ctaTo} className="hero-cta w-full !min-h-13 !px-7 min-[480px]:w-auto">
+                <ButtonLink to={ctaTo} className="hero-cta w-full min-[480px]:w-auto">
                   {t('home.explain.cta')}
                   <ButtonArrow />
                 </ButtonLink>

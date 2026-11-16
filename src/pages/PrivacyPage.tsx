@@ -35,8 +35,8 @@ export function PrivacyPage() {
           <div className="max-w-3xl space-y-4">
             {SECTIONS.map((section, index) => (
               <Reveal key={section} delay={index * 50}>
-                <section id={`privacy-${section}`} className="lux-card scroll-mt-28 rounded-[1.5rem] p-6 sm:p-8">
-                  <h2 className="font-display text-xl font-medium tracking-tight text-ink sm:text-2xl">
+                <section id={`privacy-${section}`} className="lux-card scroll-mt-28 rounded-card p-6 sm:p-8">
+                  <h2 className="font-display text-xl font-semibold tracking-tight text-ink sm:text-2xl">
                     {t(`privacy.sections.${section}.title`)}
                   </h2>
                   <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted sm:text-base">

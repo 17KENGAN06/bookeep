@@ -50,7 +50,7 @@ export function AdminDashboardPage() {
       <DocumentTitle title={t('admin.dashboard.title')} noindex />
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="font-display text-xs tracking-[0.2em] text-accent uppercase">{t('admin.eyebrow')}</p>
+          <p className="text-xs font-semibold tracking-[0.12em] text-muted uppercase">{t('admin.eyebrow')}</p>
           <h1 className="font-display mt-2 text-3xl font-semibold text-ink">{t('admin.dashboard.title')}</h1>
         </div>
         <ButtonLink to="/admin/books/new">

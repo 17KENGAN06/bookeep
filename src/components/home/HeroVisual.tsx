@@ -98,7 +98,7 @@ export function HeroVisual() {
                   <span aria-hidden className="showcase-light" />
                 </div>
                 <span className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] rounded-b-[6px] bg-gradient-to-t from-black/80 via-black/40 to-transparent px-3 pt-10 pb-3 opacity-0 transition duration-500 group-hover:opacity-100 group-focus-visible:opacity-100">
-                  <span className="line-clamp-2 font-display text-xs leading-tight font-medium text-white sm:text-sm">{title}</span>
+                  <span className="line-clamp-2 font-display text-xs leading-tight font-semibold text-white sm:text-sm">{title}</span>
                   <span className="mt-0.5 block text-[10px] font-semibold tracking-[0.14em] text-white/70 uppercase">
                     {t(`languages.${book.language}`)} · {book.level}
                   </span>

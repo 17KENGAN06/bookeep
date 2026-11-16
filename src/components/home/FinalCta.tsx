@@ -14,7 +14,7 @@ export function FinalCta() {
     <section className="relative pt-6 pb-16 sm:pb-24">
       <Container>
         <Reveal direction="scale">
-          <div className="final-cta relative isolate overflow-hidden rounded-[2rem] border border-line px-6 py-14 text-center shadow-[var(--app-shadow-lg)] sm:rounded-[2.5rem] sm:px-12 sm:py-20">
+          <div className="final-cta relative isolate overflow-hidden rounded-sheet border border-line px-6 py-14 text-center shadow-[var(--app-shadow-lg)] sm:rounded-sheet sm:px-12 sm:py-20">
             <Scene name="room" shade="center" />
             <div aria-hidden className="final-cta-glow" />
             <div className="relative mx-auto max-w-2xl">
@@ -22,7 +22,7 @@ export function FinalCta() {
               <h2 className="display-title mt-6">{t('home.final.title')}</h2>
               <p className="lead mx-auto mt-5 max-w-xl">{t('home.final.lead')}</p>
               <div className="mt-9 flex flex-col items-center gap-4">
-                <ButtonLink to={authPathFor('/books')} className="hero-cta w-full !min-h-14 !px-8 !text-base min-[480px]:w-auto">
+                <ButtonLink to={authPathFor('/books')} className="hero-cta w-full min-[480px]:w-auto">
                   {t('home.final.cta')}
                   <ButtonArrow />
                 </ButtonLink>

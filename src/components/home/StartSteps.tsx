@@ -32,14 +32,14 @@ export function StartSteps() {
             const Icon = step.icon;
             return (
               <Reveal as="li" key={step.key} delay={index * 110}>
-                <article className="lux-card lift start-step h-full rounded-[1.5rem] p-6 sm:p-7">
+                <article className="lux-card lift start-step h-full rounded-card p-6 sm:p-7">
                   <div className="flex items-center justify-between">
-                    <span className="grid h-12 w-12 place-items-center rounded-full bg-accent-soft text-accent shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--app-accent)_28%,transparent)]">
+                    <span className="grid h-12 w-12 place-items-center rounded-[var(--radius-control)] border border-line bg-surface-2 text-ink">
                       <Icon className="h-5 w-5" aria-hidden />
                     </span>
                     <span aria-hidden className="start-step-num">0{index + 1}</span>
                   </div>
-                  <h3 className="mt-6 font-display text-[1.375rem] font-medium tracking-tight text-ink sm:text-2xl">
+                  <h3 className="mt-6 font-display text-[1.375rem] font-semibold tracking-tight text-ink sm:text-2xl">
                     {t(`home.start.${step.key}.title`)}
                   </h3>
                   <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-muted">{t(`home.start.${step.key}.text`)}</p>
@@ -63,7 +63,7 @@ export function StartSteps() {
 
         <Reveal delay={200}>
           <div className="mt-10 flex justify-center">
-            <ButtonLink to={authPathFor('/books')} className="hero-cta w-full !min-h-14 !px-8 !text-base min-[480px]:w-auto">
+            <ButtonLink to={authPathFor('/books')} className="hero-cta w-full min-[480px]:w-auto">
               {t('home.start.cta')}
               <ButtonArrow />
             </ButtonLink>

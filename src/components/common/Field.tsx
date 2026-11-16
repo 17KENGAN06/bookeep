@@ -82,9 +82,9 @@ export function ConfirmDialog({
         aria-modal="true"
         aria-labelledby="confirm-title"
         aria-describedby="confirm-desc"
-        className="lux-panel dialog-in relative w-full max-w-md rounded-[1.75rem] p-6 sm:p-8"
+        className="lux-panel dialog-in relative w-full max-w-md rounded-card p-6 sm:p-8"
       >
-        <h2 id="confirm-title" className="font-display text-2xl font-medium tracking-tight text-ink">
+        <h2 id="confirm-title" className="font-display text-2xl font-semibold tracking-tight text-ink">
           {title}
         </h2>
         <p id="confirm-desc" className="mt-3 text-sm leading-relaxed text-muted">

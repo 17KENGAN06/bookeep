@@ -10,7 +10,7 @@ export function Skeleton({ className }: SkeletonProps) {
 
 export function BookCardSkeleton() {
   return (
-    <div className="lux-card flex gap-4 rounded-[1.5rem] p-3.5 sm:rounded-[1.75rem] sm:p-4" aria-hidden>
+    <div className="lux-card flex gap-4 rounded-card p-3.5 sm:rounded-card sm:p-4" aria-hidden>
       <Skeleton className="aspect-[2/3] w-[34%] max-w-[9.5rem] shrink-0 rounded-[3px_6px_6px_3px] bg-elevated" />
       <div className="flex flex-1 flex-col gap-2.5 pt-1">
         <Skeleton className="h-5 w-3/4" />

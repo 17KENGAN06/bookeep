@@ -15,12 +15,12 @@ export function NotFoundPage() {
       <Container className="relative flex min-h-[72vh] flex-col items-center justify-center py-16 text-center">
         <Reveal>
           <p className="eyebrow">{t('notFound.eyebrow')}</p>
-          <p className="mt-6 font-display text-[7rem] leading-none font-medium tracking-tight text-ink/90 italic [text-shadow:0_0_60px_var(--app-glow)] sm:text-[10rem]">
+          <p className="mt-6 font-display text-[7rem] leading-none font-semibold tracking-tight text-ink/90 sm:text-[10rem]">
             404
           </p>
         </Reveal>
         <Reveal delay={80}>
-          <h1 className="mt-6 font-display text-3xl font-medium text-ink sm:text-4xl">{t('notFound.title')}</h1>
+          <h1 className="mt-6 font-display text-3xl font-semibold text-ink sm:text-4xl">{t('notFound.title')}</h1>
         </Reveal>
         <Reveal delay={140}>
           <p className="mt-4 max-w-md text-sm leading-relaxed text-muted sm:text-base">{t('notFound.subtitle')}</p>

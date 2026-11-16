@@ -27,7 +27,7 @@ export function ReadingPlanTeaser() {
     <section className="relative py-10 sm:py-16">
       <Container>
         <Reveal direction="scale">
-          <div className="relative isolate overflow-hidden rounded-[2rem] border border-line shadow-[var(--app-shadow-lg)] sm:rounded-[2.5rem]">
+          <div className="relative isolate overflow-hidden rounded-sheet border border-line shadow-[var(--app-shadow-lg)] sm:rounded-sheet">
             <Scene name="library" shade="left" />
             <div className="relative grid items-center gap-10 p-6 sm:p-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16 lg:p-16 tabp:grid-cols-[minmax(0,1fr)] tabp:gap-10 tabp:p-12">
               <div>
@@ -41,9 +41,9 @@ export function ReadingPlanTeaser() {
                 </ButtonLink>
               </div>
 
-              <div aria-hidden className="glass-card rounded-[1.5rem] p-3 sm:p-5">
+              <div aria-hidden className="glass-card rounded-card p-3 sm:p-5">
                 <div className="mb-3 flex items-baseline justify-between px-1">
-                  <span className="font-display text-lg font-medium tracking-tight text-ink capitalize">
+                  <span className="font-display text-lg font-semibold tracking-tight text-ink capitalize">
                     {new Intl.DateTimeFormat(language, { month: 'long' }).format(new Date())}
                   </span>
                   <span className="text-[11px] font-bold tracking-[0.18em] text-accent uppercase tabular-nums">10 / 10</span>

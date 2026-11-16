@@ -83,7 +83,7 @@ export function LibraryPage() {
         lead={t('library.hello', { name })}
         actions={
           <ButtonLink to="/goals" variant="secondary" className="w-full sm:w-auto">
-            <Target className="h-4 w-4 shrink-0 text-accent" aria-hidden />
+            <Target className="h-4 w-4 shrink-0 text-muted" aria-hidden />
             {t('library.toGoals')}
           </ButtonLink>
         }
@@ -94,11 +94,11 @@ export function LibraryPage() {
               return (
                 <div
                   key={item.label}
-                  className="glass-card flex min-w-0 items-center gap-3 rounded-[1.25rem] px-4 py-3 sm:block sm:p-5 lg:flex lg:px-5 lg:py-3.5 xl:block xl:p-5"
+                  className="glass-card flex min-w-0 items-center gap-3 rounded-card px-4 py-3 sm:block sm:p-5 lg:flex lg:px-5 lg:py-3.5 xl:block xl:p-5"
                 >
-                  <Icon className="h-4 w-4 shrink-0 text-accent" aria-hidden />
+                  <Icon className="h-4 w-4 shrink-0 text-muted" aria-hidden />
                   <dt className="min-w-0 flex-1 text-sm leading-snug font-semibold break-words text-muted sm:mt-4 sm:text-[0.8125rem] lg:mt-0 xl:mt-4">{item.label}</dt>
-                  <dd className="font-display text-2xl font-medium text-ink tabular-nums sm:mt-1 sm:text-4xl lg:mt-0 lg:text-3xl xl:mt-1 xl:text-4xl">{loading ? '—' : item.value}</dd>
+                  <dd className="font-display text-2xl font-semibold text-ink tabular-nums sm:mt-1 sm:text-4xl lg:mt-0 lg:text-3xl xl:mt-1 xl:text-4xl">{loading ? '—' : item.value}</dd>
                 </div>
               );
             })}
@@ -133,10 +133,10 @@ function Shelf({
   return (
     <section className="mt-12 first:mt-4 sm:mt-16">
       <div className="mb-6 flex items-center gap-3 border-b border-line pb-4">
-        <span aria-hidden className="grid h-9 w-9 place-items-center rounded-full bg-accent-soft text-accent">
+        <span aria-hidden className="grid h-9 w-9 place-items-center rounded-[var(--radius-control)] border border-line bg-surface-2 text-ink">
           {icon}
         </span>
-        <h2 className="font-display text-2xl font-medium tracking-tight text-ink sm:text-[1.75rem]">{title}</h2>
+        <h2 className="font-display text-2xl font-semibold tracking-tight text-ink sm:text-[1.75rem]">{title}</h2>
         {!loading ? <span className="pill ml-auto">{books.length}</span> : null}
       </div>
       {loading ? (
@@ -144,7 +144,7 @@ function Shelf({
       ) : books.length > 0 ? (
         <BookGrid books={books} />
       ) : (
-        <div className="rounded-[1.5rem] border border-dashed border-line-strong px-5 py-8 text-center text-sm text-muted sm:py-10">
+        <div className="rounded-card border border-dashed border-line-strong px-5 py-8 text-center text-sm text-muted sm:py-10">
           {empty}{' '}
           <Link to="/books" className="text-link">
             {t('library.toCatalog')}

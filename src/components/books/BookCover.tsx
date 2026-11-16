@@ -75,7 +75,7 @@ export function BookCover({ book, className, labeled = true, variant = 'full', c
       {labeled ? (
         <p
           className={cn(
-            'relative line-clamp-4 font-display leading-[1.12] font-medium',
+            'relative line-clamp-4 font-display leading-[1.12] font-semibold',
             compact ? 'text-[clamp(0.7rem,2.6vw,1rem)]' : 'text-xl sm:text-2xl',
           )}
         >

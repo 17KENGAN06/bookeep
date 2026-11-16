@@ -9,7 +9,7 @@ import { scrollToPageTop } from '@/utils/scroll';
 
 const STUDIO_URL = 'http://weisezahoy.com/';
 
-const linkClass = 'focus-ring rounded-md text-ink/80 transition hover:text-accent';
+const linkClass = 'focus-ring rounded-md text-muted transition-colors duration-200 hover:text-ink';
 
 export function Footer() {
   const { t } = useTranslation();
@@ -25,7 +25,7 @@ export function Footer() {
         <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-md tabp:max-w-xl">
             <BrandLockup to="/" size="md" />
-            <p className="mt-6 font-display text-[1.75rem] leading-snug font-normal tracking-tight text-ink/90 italic sm:text-[2rem]">
+            <p className="mt-6 font-display text-[1.75rem] leading-snug font-semibold tracking-tight text-ink/90 sm:text-[2rem]">
               {t('footer.tagline')}
             </p>
           </div>
@@ -56,7 +56,7 @@ export function Footer() {
             </nav>
 
             <div>
-              <p className="text-[11px] font-bold tracking-[0.24em] text-accent uppercase">{t('nav.contact')}</p>
+              <p className="text-[11px] font-semibold tracking-[0.12em] text-muted uppercase">{t('nav.contact')}</p>
               <ul className="mt-4 space-y-4 text-sm">
                 <li>
                   <p className="text-xs text-muted">{t('contact.channels.support.title')}</p>

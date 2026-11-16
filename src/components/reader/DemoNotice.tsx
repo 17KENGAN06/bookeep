@@ -25,7 +25,7 @@ export function DemoNotice({ demoPages, fullPages, isGuest, atEnd }: DemoNoticeP
   return (
     <>
       <div className="demo-strip">
-        <Lock className="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden />
+        <Lock className="h-3.5 w-3.5 shrink-0 text-muted" aria-hidden />
         <p className="min-w-0 truncate">{summary}</p>
         <Link to="/subscribe" className="demo-strip-link">
           {t('subscribe.ctaShort')}
@@ -43,7 +43,7 @@ export function DemoNotice({ demoPages, fullPages, isGuest, atEnd }: DemoNoticeP
           >
             <X className="h-4 w-4" aria-hidden />
           </button>
-          <p className="pr-10 font-display text-lg font-medium text-ink sm:text-xl">{t('demo.endTitle')}</p>
+          <p className="pr-10 font-display text-lg font-semibold text-ink sm:text-xl">{t('demo.endTitle')}</p>
           <p className="mt-1.5 text-sm text-muted">{t('demo.endBody')}</p>
           <div className="mt-4 flex flex-wrap items-center gap-3">
             <ButtonLink to="/subscribe" className="!min-h-11">

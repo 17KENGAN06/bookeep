@@ -50,7 +50,7 @@ export function AdminLoginPage() {
         <LanguageSwitcher />
       </div>
 
-      <div className="lux-panel relative z-10 w-full max-w-md rounded-[2rem] p-6 sm:p-8">
+      <div className="lux-panel relative z-10 w-full max-w-md rounded-sheet p-6 sm:p-8">
         <BrandLockup to="/" size="md" />
         <h1 className="font-display mt-6 text-2xl font-semibold text-ink">{t('admin.login.title')}</h1>
         <p className="mt-2 text-sm leading-relaxed text-muted">{t('admin.login.subtitle')}</p>
@@ -97,7 +97,7 @@ export function AdminLoginPage() {
                 onChange={(event) => setPassword(event.target.value)}
               />
             </Field>
-            {error ? <p role="alert" className="text-sm text-accent">{error}</p> : null}
+            {error ? <p role="alert" className="text-sm text-danger">{error}</p> : null}
             <Button type="submit" className="w-full" isLoading={submitting}>
               {t('admin.login.submit')}
             </Button>

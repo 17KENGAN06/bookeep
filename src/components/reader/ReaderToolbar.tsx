@@ -65,7 +65,7 @@ export function ReaderToolbar({
           </Link>
 
           <div className="min-w-0 flex-1">
-            <p className="truncate font-display text-base font-medium tracking-tight text-ink sm:text-lg">{title}</p>
+            <p className="truncate font-display text-base font-semibold tracking-tight text-ink sm:text-lg">{title}</p>
             <p className="text-[11px] font-semibold tracking-[0.18em] text-muted uppercase tabular-nums md:hidden" aria-hidden>
               {pageLabel}
             </p>
@@ -133,7 +133,7 @@ export function ReaderToolbar({
         aria-label={t('reader.pages')}
         className="fixed inset-x-0 bottom-0 z-30 flex justify-center px-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:hidden"
       >
-        <div className="glass-card flex items-center gap-1 rounded-full bg-[var(--app-glass-strong)] p-1.5">
+        <div className="glass-card flex items-center gap-1 rounded-[0.875rem] bg-[var(--app-glass-strong)] p-1">
           <ToolButton label={t('reader.prev')} disabled={!canPrev} onClick={onPrev} large>
             <ChevronLeft className="h-5 w-5" />
           </ToolButton>
@@ -144,7 +144,7 @@ export function ReaderToolbar({
             aria-label={t('reader.thumbs.open')}
             aria-haspopup="dialog"
             aria-expanded={pagesOpen}
-            className="reader-pages-btn flex h-12 min-w-24 items-center justify-center gap-1.5 rounded-full px-3 text-sm font-semibold tabular-nums text-ink"
+            className="reader-pages-btn flex h-11 min-w-24 items-center justify-center gap-1.5 rounded-[0.625rem] px-3 text-sm font-semibold tabular-nums text-ink"
           >
             <LayoutGrid className="h-4 w-4 shrink-0 text-muted" aria-hidden />
             <span>

@@ -6,8 +6,9 @@
 @custom-variant tabp (@media (min-width: 44rem) and (max-width: 79.99rem) and (orientation: portrait));
 
 @theme {
-  --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
+  --font-sans: 'Manrope', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* One typeface across the product: headings are Manrope too, set tighter and heavier. */
+  --font-display: 'Manrope', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --color-bg: var(--app-bg);
   --color-bg-2: var(--app-bg-2);
@@ -24,101 +25,116 @@
   --color-accent-soft: var(--app-accent-soft);
   --color-on-accent: var(--app-on-accent);
   --color-danger: var(--app-danger);
+  --color-success: var(--app-success);
+  --color-warning: var(--app-warning);
+  --color-info: var(--app-info);
+
+  /* Radii: controls, cards, sheets. */
+  --radius-control: 0.6875rem;
+  --radius-card: 1rem;
+  --radius-sheet: 1.125rem;
 
   --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /*
- * Design tokens. Dark is the house look: near-black with a green undertone, mint light.
- * Light is a misty sage variant of the same system.
+ * Design tokens — Premium Dark.
+ * Deep aubergine background, graphite surfaces, one acid-lime accent used sparingly.
+ * Light is an opt-in variant of the same system (pale lilac paper, olive accent).
  */
+:root {
+  --dur: 200ms;
+  --dur-slow: 320ms;
+  --ease: ease;
+  --ring: 0 0 0 2px var(--app-bg), 0 0 0 4px color-mix(in oklab, var(--app-accent) 70%, transparent);
+}
+
 :root,
 [data-theme='dark'] {
   color-scheme: dark;
-  --app-bg: #0b1113;
-  --app-bg-2: #0d1617;
-  --app-surface: #111c1d;
-  --app-surface-2: #152324;
-  --app-elevated: #1a2a2b;
-  --app-ink: #f3f5f2;
-  --app-muted: #98a9a6;
-  --app-faint: #6f817e;
-  --app-line: rgba(180, 225, 210, 0.12);
-  --app-line-strong: rgba(180, 225, 210, 0.2);
-  --app-accent: #9be5c4;
-  --app-accent-strong: #75cda8;
-  --app-accent-soft: rgba(155, 229, 196, 0.11);
-  --app-on-accent: #072219;
-  --app-danger: #f0a090;
-  --app-glass: rgba(14, 24, 25, 0.58);
-  --app-glass-strong: rgba(14, 24, 25, 0.82);
-  --app-highlight: rgba(220, 255, 240, 0.07);
-  --app-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 20px 44px -26px rgba(0, 0, 0, 0.8);
-  --app-shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.35), 0 50px 90px -40px rgba(0, 0, 0, 0.9);
-  --app-glow: rgba(117, 205, 168, 0.32);
-  --app-grain-opacity: 0.05;
-  --scene-opacity: 1;
-  --scene-blend: normal;
+  --app-bg: #171322;
+  --app-bg-2: #1e1a29;
+  --app-surface: #302c3a;
+  --app-surface-2: #252130;
+  --app-elevated: #3a3645;
+  --app-ink: #f3eff9;
+  --app-muted: #918d99;
+  --app-faint: #6f6b7a;
+  --app-line: #383342;
+  --app-line-strong: #4a4555;
+  --app-accent: #b7f34d;
+  --app-accent-strong: #c8ff65;
+  --app-accent-press: #a5e03a;
+  --app-accent-soft: rgba(183, 243, 77, 0.1);
+  --app-on-accent: #171322;
+  --app-danger: #ef7474;
+  --app-success: #8bd66b;
+  --app-warning: #e9bc67;
+  --app-info: #83a8e8;
+  --app-glass: rgba(23, 19, 34, 0.82);
+  --app-glass-strong: rgba(23, 19, 34, 0.94);
+  --app-highlight: rgba(255, 255, 255, 0.03);
+  --app-shadow: 0 1px 2px rgba(6, 4, 12, 0.4);
+  --app-shadow-lg: 0 1px 2px rgba(6, 4, 12, 0.4), 0 24px 48px -24px rgba(6, 4, 12, 0.75);
+  --app-glow: transparent;
 
-  --btn-bg: #edf2ee;
-  --btn-bg-hover: #ffffff;
-  --btn-ink: #0b1113;
-  --btn-edge: rgba(255, 255, 255, 0.7);
+  --btn-bg: var(--app-accent);
+  --btn-bg-hover: var(--app-accent-strong);
+  --btn-bg-press: var(--app-accent-press);
+  --btn-ink: #171322;
+  --btn-edge: transparent;
 
-  --scrollbar-thumb: rgba(155, 229, 196, 0.42);
-  --scrollbar-thumb-a: rgba(155, 229, 196, 0.62);
-  --scrollbar-thumb-b: rgba(117, 205, 168, 0.42);
-  --scrollbar-thumb-hover-a: rgba(155, 229, 196, 0.85);
-  --scrollbar-thumb-hover-b: rgba(117, 205, 168, 0.6);
+  --scrollbar-thumb: #3f3a4a;
+  --scrollbar-thumb-hover: #5a5466;
 }
 
 [data-theme='light'] {
   color-scheme: light;
-  --app-bg: #edf1ee;
-  --app-bg-2: #e6ece8;
-  --app-surface: #f8faf8;
-  --app-surface-2: #e9efeb;
-  --app-elevated: #dce6e0;
-  --app-ink: #0e1b1b;
-  --app-muted: #566a66;
-  --app-faint: #7d8f8b;
-  --app-line: rgba(16, 60, 48, 0.12);
-  --app-line-strong: rgba(16, 60, 48, 0.2);
-  --app-accent: #237a5b;
-  --app-accent-strong: #1a6349;
-  --app-accent-soft: rgba(35, 122, 91, 0.1);
-  --app-on-accent: #f3fbf7;
-  --app-danger: #b5513d;
-  --app-glass: rgba(248, 250, 248, 0.66);
-  --app-glass-strong: rgba(248, 250, 248, 0.9);
-  --app-highlight: rgba(255, 255, 255, 0.85);
-  --app-shadow: 0 1px 2px rgba(14, 40, 32, 0.06), 0 18px 40px -24px rgba(14, 40, 32, 0.3);
-  --app-shadow-lg: 0 2px 4px rgba(14, 40, 32, 0.05), 0 40px 80px -40px rgba(14, 40, 32, 0.42);
-  --app-glow: rgba(35, 122, 91, 0.28);
-  --app-grain-opacity: 0.035;
-  --scene-opacity: 0.16;
-  --scene-blend: luminosity;
+  --app-bg: #f6f4f9;
+  --app-bg-2: #efecf4;
+  --app-surface: #ffffff;
+  --app-surface-2: #f1eef5;
+  --app-elevated: #e8e4ee;
+  --app-ink: #171322;
+  --app-muted: #5f5a69;
+  --app-faint: #8b8696;
+  --app-line: #e2dee9;
+  --app-line-strong: #cdc8d6;
+  --app-accent: #4c7a0e;
+  --app-accent-strong: #3f6809;
+  --app-accent-press: #355806;
+  --app-accent-soft: rgba(76, 122, 14, 0.09);
+  --app-on-accent: #ffffff;
+  --app-danger: #c24545;
+  --app-success: #3f8a2a;
+  --app-warning: #a8741a;
+  --app-info: #3c66b4;
+  --app-glass: rgba(246, 244, 249, 0.86);
+  --app-glass-strong: rgba(246, 244, 249, 0.96);
+  --app-highlight: rgba(255, 255, 255, 0.7);
+  --app-shadow: 0 1px 2px rgba(23, 19, 34, 0.05);
+  --app-shadow-lg: 0 1px 2px rgba(23, 19, 34, 0.05), 0 24px 48px -28px rgba(23, 19, 34, 0.25);
+  --app-glow: transparent;
 
-  --btn-bg: #12231f;
-  --btn-bg-hover: #1b3730;
-  --btn-ink: #f3f5f2;
-  --btn-edge: rgba(255, 255, 255, 0.12);
+  /* The lime stays the primary action on paper too: dark text on lime reads well on both. */
+  --btn-bg: #b7f34d;
+  --btn-bg-hover: #c8ff65;
+  --btn-bg-press: #a5e03a;
+  --btn-ink: #171322;
+  --btn-edge: transparent;
 
-  --scrollbar-thumb: rgba(35, 122, 91, 0.45);
-  --scrollbar-thumb-a: rgba(35, 122, 91, 0.5);
-  --scrollbar-thumb-b: rgba(26, 99, 73, 0.34);
-  --scrollbar-thumb-hover-a: rgba(35, 122, 91, 0.85);
-  --scrollbar-thumb-hover-b: rgba(26, 99, 73, 0.65);
+  --scrollbar-thumb: #cdc8d6;
+  --scrollbar-thumb-hover: #aaa4b5;
 }
 
 @layer base {
   :root {
-    --header-space: 4.25rem;
+    --header-space: 4rem;
   }
 
   @media (min-width: 640px) {
     :root {
-      --header-space: 5rem;
+      --header-space: 4.5rem;
     }
   }
 
@@ -135,18 +151,9 @@
 
   body {
     @apply relative m-0 min-h-dvh overflow-x-hidden bg-bg font-sans text-ink;
-    font-feature-settings: 'ss01', 'cv11';
-  }
-
-  body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: 60;
-    pointer-events: none;
-    opacity: var(--app-grain-opacity);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    mix-blend-mode: overlay;
+    font-size: 1rem;
+    line-height: 1.6;
+    letter-spacing: 0;
   }
 
   #root {
@@ -159,15 +166,16 @@
 
   h1,
   h2,
-  h3 {
+  h3,
+  h4 {
     text-wrap: balance;
+    font-weight: 600;
   }
 
-  /* Playfair defaults to old-style figures; numbers in headings and stats read better lining. */
   .font-display,
   .display-title,
   .section-title {
-    font-feature-settings: 'lnum' 1;
+    font-feature-settings: 'lnum' 1, 'tnum' 0;
   }
 
   p {
@@ -175,15 +183,10 @@
   }
 
   ::selection {
-    background: color-mix(in oklab, var(--app-accent) 32%, transparent);
+    background: color-mix(in oklab, var(--app-accent) 30%, transparent);
   }
 
-  /*
-   * Scrollbars: a slim mint "pill" floating on the page tone. Chromium/Safari get the gradient thumb via
-   * ::-webkit-scrollbar; Firefox (no pseudo-elements) gets the same colours through scrollbar-color.
-   * The standard properties are kept away from Chromium on purpose: once scrollbar-color is set there,
-   * it ignores ::-webkit-scrollbar and falls back to a flat bar.
-   */
+  /* Scrollbars: a slim neutral pill on the page tone. */
   @supports not selector(::-webkit-scrollbar) {
     * {
       scrollbar-width: thin;
@@ -209,21 +212,15 @@
     min-height: 48px;
     border: 3px solid transparent;
     border-radius: 999px;
-    background: linear-gradient(180deg, var(--scrollbar-thumb-a), var(--scrollbar-thumb-b)) padding-box;
+    background: var(--scrollbar-thumb) padding-box;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    border-width: 2px;
-    background: linear-gradient(180deg, var(--scrollbar-thumb-hover-a), var(--scrollbar-thumb-hover-b)) padding-box;
-  }
-
-  ::-webkit-scrollbar-thumb:active {
-    background: var(--app-accent) padding-box;
+    background: var(--scrollbar-thumb-hover) padding-box;
   }
 
   ::-webkit-scrollbar-thumb:horizontal {
     min-width: 48px;
-    background: linear-gradient(90deg, var(--scrollbar-thumb-a), var(--scrollbar-thumb-b)) padding-box;
   }
 
   html::-webkit-scrollbar-track {
@@ -232,7 +229,7 @@
 
   select {
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2398a9a6' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23918d99' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 0.9rem center;
     padding-right: 2.25rem !important;
@@ -246,205 +243,81 @@
 
 @layer components {
   /* ── Surfaces ─────────────────────────────────────────── */
+  /* Sticky bars: page tone, lightly frosted so content passing under stays legible. */
   .glass-card {
     background: var(--app-glass);
     border: 1px solid var(--app-line);
-    box-shadow: inset 0 1px 0 var(--app-highlight), var(--app-shadow);
-    backdrop-filter: blur(20px) saturate(1.25);
-    -webkit-backdrop-filter: blur(20px) saturate(1.25);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
   }
 
+  /* Primary card: graphite surface, hairline border. */
   .lux-card {
     position: relative;
-    background:
-      linear-gradient(180deg, color-mix(in oklab, var(--app-surface) 92%, transparent), color-mix(in oklab, var(--app-bg-2) 92%, transparent)) padding-box,
-      linear-gradient(180deg, var(--app-line-strong), var(--app-line) 50%, color-mix(in oklab, var(--app-line) 50%, transparent)) border-box;
-    border: 1px solid transparent;
-    box-shadow: inset 0 1px 0 var(--app-highlight), var(--app-shadow);
+    background: var(--app-surface);
+    border: 1px solid var(--app-line);
+    border-radius: var(--radius-card);
   }
 
+  /* Secondary container: one step above the page, so controls inside it still stand out. */
   .lux-panel {
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    background:
-      radial-gradient(120% 90% at 100% 0%, color-mix(in oklab, var(--app-accent) 9%, transparent), transparent 55%),
-      radial-gradient(90% 80% at 0% 100%, color-mix(in oklab, var(--app-accent-strong) 6%, transparent), transparent 60%),
-      color-mix(in oklab, var(--app-surface) 88%, transparent);
+    background: var(--app-bg-2);
     border: 1px solid var(--app-line);
-    box-shadow: inset 0 1px 0 var(--app-highlight), var(--app-shadow-lg);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    border-radius: var(--radius-sheet);
   }
 
   .hairline {
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--app-line-strong) 20%, var(--app-line-strong) 80%, transparent);
-  }
-
-  /* ── Atmospheric scenes ───────────────────────────────── */
-  .scene {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    overflow: hidden;
-    pointer-events: none;
-  }
-
-  .scene[data-under-header] {
-    top: calc(-1 * var(--header-space));
-  }
-
-  .scene-img {
-    position: absolute;
-    inset: -2%;
-    background-color: var(--app-bg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: var(--scene-pos, center);
-    opacity: var(--scene-opacity);
-    mix-blend-mode: var(--scene-blend);
-    transform-origin: 60% 40%;
-    animation: scene-in 1.6s var(--ease-lux) both, scene-breathe 38s ease-in-out 1.6s infinite alternate;
-  }
-
-  .scene[data-scene='room'] .scene-img {
-    background-image: url('./assets/scenes/room-sm.webp');
-    --scene-pos: 68% 30%;
-  }
-
-  .scene[data-scene='library'] .scene-img {
-    background-image: url('./assets/scenes/library-sm.webp');
-    --scene-pos: 50% 20%;
-  }
-
-  .scene[data-scene='botanical'] .scene-img {
-    background-image: url('./assets/scenes/botanical-sm.webp');
-    --scene-pos: 80% 60%;
-  }
-
-  @media (min-width: 900px) {
-    .scene[data-scene='room'] .scene-img {
-      background-image: url('./assets/scenes/room-lg.webp');
-      --scene-pos: 50% 35%;
-    }
-    .scene[data-scene='library'] .scene-img {
-      background-image: url('./assets/scenes/library-lg.webp');
-    }
-    .scene[data-scene='botanical'] .scene-img {
-      background-image: url('./assets/scenes/botanical-lg.webp');
-      --scene-pos: 60% 55%;
-    }
-  }
-
-  .scene-cover .scene-img {
-    background-image: var(--scene-cover);
-    background-position: center 30%;
-    filter: blur(60px) saturate(1.1) brightness(0.55);
-    inset: -12%;
-    opacity: calc(var(--scene-opacity) * 0.9);
-  }
-
-  /* Readability shade + soft hand-off into the page background. */
-  .scene-shade {
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(90deg, color-mix(in oklab, var(--app-bg) 88%, transparent) 0%, color-mix(in oklab, var(--app-bg) 55%, transparent) 38%, transparent 70%),
-      linear-gradient(180deg, color-mix(in oklab, var(--app-bg) 35%, transparent) 0%, transparent 22%, transparent 62%, var(--app-bg) 100%);
-  }
-
-  .scene[data-shade='center'] .scene-shade {
-    background:
-      radial-gradient(70% 70% at 50% 45%, color-mix(in oklab, var(--app-bg) 72%, transparent), color-mix(in oklab, var(--app-bg) 30%, transparent) 70%, transparent),
-      linear-gradient(180deg, color-mix(in oklab, var(--app-bg) 40%, transparent) 0%, transparent 25%, transparent 60%, var(--app-bg) 100%);
-  }
-
-  .scene[data-shade='soft'] .scene-shade {
-    background:
-      linear-gradient(180deg, var(--app-bg) 0%, transparent 22%, transparent 70%, var(--app-bg) 100%),
-      linear-gradient(90deg, color-mix(in oklab, var(--app-bg) 70%, transparent), transparent 60%);
-  }
-
-  @media (max-width: 899px) {
-    .scene-shade,
-    .scene[data-shade] .scene-shade {
-      background:
-        linear-gradient(180deg, color-mix(in oklab, var(--app-bg) 45%, transparent) 0%, color-mix(in oklab, var(--app-bg) 62%, transparent) 45%, var(--app-bg) 100%);
-    }
-  }
-
-  /* Static ambient glow for pages without a scene. */
-  .ambient-glow {
-    background:
-      radial-gradient(60vmax 40vmax at 8% -6%, color-mix(in oklab, var(--app-accent) 7%, transparent), transparent 70%),
-      radial-gradient(50vmax 40vmax at 100% 38%, color-mix(in oklab, var(--app-accent-strong) 5%, transparent), transparent 70%),
-      radial-gradient(60vmax 50vmax at 30% 110%, color-mix(in oklab, var(--app-accent) 5%, transparent), transparent 70%);
-  }
-
-  /* Dark marble ledge that books stand on. */
-  .stone-ledge {
-    position: absolute;
-    background:
-      linear-gradient(180deg, rgba(220, 255, 240, 0.16) 0, rgba(220, 255, 240, 0.04) 2px, transparent 3px),
-      linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.55) 100%),
-      url('./assets/scenes/stone.webp') center / cover,
-      #121a1a;
-    box-shadow:
-      0 -1px 0 rgba(200, 245, 225, 0.12),
-      0 30px 60px -20px rgba(0, 0, 0, 0.9);
-    border-radius: 4px 4px 0 0;
-  }
-
-  [data-theme='light'] .stone-ledge {
-    filter: brightness(1.9) saturate(0.7);
-  }
-
-  [data-theme='light'] .ledge-front {
-    opacity: 0.4;
+    background: var(--app-line);
   }
 
   /* ── Type ─────────────────────────────────────────────── */
+  /* Small label above a heading: muted caps with a single lime tick. */
   .eyebrow {
     display: inline-flex;
     align-items: center;
-    gap: 0.85rem;
+    gap: 0.625rem;
     font-family: var(--font-sans);
-    font-size: 0.6875rem;
-    font-weight: 700;
-    letter-spacing: 0.28em;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--app-accent);
+    color: var(--app-muted);
   }
 
   .eyebrow::before {
     content: '';
-    width: 2.25rem;
-    height: 1px;
-    background: currentColor;
-    opacity: 0.75;
+    flex-shrink: 0;
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 2px;
+    background: var(--app-accent);
   }
 
   .display-title {
     font-family: var(--font-display);
-    font-weight: 500;
-    letter-spacing: -0.015em;
-    line-height: 1.04;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.08;
     color: var(--app-ink);
-    font-size: clamp(2.25rem, 1.5rem + 3.2vw, 4rem);
+    font-size: clamp(2.125rem, 1.7rem + 1.7vw, 2.75rem);
   }
 
   .section-title {
     font-family: var(--font-display);
-    font-weight: 500;
-    letter-spacing: -0.012em;
-    line-height: 1.1;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
     color: var(--app-ink);
-    font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.6rem);
+    font-size: clamp(1.625rem, 1.4rem + 0.9vw, 2rem);
   }
 
   .lead {
-    font-size: clamp(1rem, 0.95rem + 0.3vw, 1.1875rem);
+    font-size: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
     line-height: 1.65;
     color: var(--app-muted);
   }
@@ -453,84 +326,90 @@
     font-weight: 600;
     color: var(--app-ink);
     text-decoration: underline;
-    text-decoration-color: color-mix(in oklab, var(--app-accent) 55%, transparent);
+    text-decoration-color: var(--app-line-strong);
+    text-decoration-thickness: 1px;
     text-underline-offset: 4px;
-    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+    transition: color var(--dur) var(--ease), text-decoration-color var(--dur) var(--ease);
   }
 
   .text-link:hover {
-    color: var(--app-accent);
-    text-decoration-color: currentColor;
+    text-decoration-color: var(--app-accent);
   }
 
   /* ── Buttons ──────────────────────────────────────────── */
   .btn {
-    --btn-h: 3.125rem;
+    --btn-h: 2.875rem;
     position: relative;
     isolation: isolate;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.65rem;
+    gap: 0.5rem;
     min-height: var(--btn-h);
-    padding: 0 1.5rem;
-    border-radius: 0.875rem;
+    padding: 0 1.375rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-control);
     font-family: var(--font-sans);
     font-size: 0.9375rem;
     font-weight: 600;
-    line-height: 1;
-    letter-spacing: 0.01em;
-    white-space: nowrap;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-align: center;
     cursor: pointer;
     user-select: none;
     transition:
-      transform 0.35s var(--ease-lux),
-      box-shadow 0.35s var(--ease-lux),
-      background-color 0.3s ease,
-      border-color 0.3s ease,
-      color 0.2s ease,
-      opacity 0.2s ease;
+      transform var(--dur) var(--ease),
+      background-color var(--dur) var(--ease),
+      border-color var(--dur) var(--ease),
+      color var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease),
+      opacity var(--dur) var(--ease);
+  }
+
+  .btn svg {
+    flex-shrink: 0;
   }
 
   .btn:focus-visible {
     outline: none;
-    box-shadow:
-      0 0 0 2px var(--app-bg),
-      0 0 0 4px var(--app-accent) !important;
+    box-shadow: var(--ring) !important;
   }
 
-  .btn:disabled {
+  .btn:disabled,
+  .btn[aria-disabled='true'] {
     cursor: not-allowed;
-    opacity: 0.5;
+    opacity: 0.45;
     transform: none !important;
   }
 
-  .btn:active:not(:disabled) {
-    transform: translateY(0) scale(0.985);
-    transition-duration: 0.08s;
+  .btn[aria-busy='true'] {
+    cursor: progress;
+    opacity: 0.8;
   }
 
-  /* Solid, flat and quiet: ivory on the dark theme, deep green on the light one. */
+  .btn:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
   .btn-primary {
     color: var(--btn-ink);
     background-color: var(--btn-bg);
-    box-shadow:
-      inset 0 1px 0 var(--btn-edge),
-      0 1px 2px rgba(0, 0, 0, 0.28),
-      0 10px 24px -14px rgba(0, 0, 0, 0.7);
   }
 
-  .btn-primary svg {
-    color: currentColor;
+  .btn-primary:active:not(:disabled) {
+    background-color: var(--btn-bg-press);
   }
 
-  .btn-secondary,
+  .btn-secondary {
+    color: var(--app-ink);
+    background-color: var(--app-surface);
+    border-color: var(--app-line);
+  }
+
   .btn-outline {
     color: var(--app-ink);
-    border: 1px solid var(--app-line-strong);
-    background-color: color-mix(in oklab, var(--app-bg) 35%, transparent);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background-color: transparent;
+    border-color: var(--app-line-strong);
   }
 
   .btn-ghost {
@@ -540,8 +419,8 @@
 
   .btn-quiet {
     --btn-h: 2.75rem;
-    padding: 0 0.25rem;
-    border-radius: 0.5rem;
+    padding: 0 0.125rem;
+    border-radius: 0.375rem;
     color: var(--app-ink);
     background: transparent;
   }
@@ -549,108 +428,91 @@
   .btn-quiet .btn-label {
     padding-bottom: 2px;
     background: linear-gradient(currentColor, currentColor) 0 100% / 0% 1px no-repeat;
-    transition: background-size 0.45s var(--ease-lux);
+    transition: background-size var(--dur-slow) var(--ease-lux);
   }
 
   .btn-quiet svg {
-    color: var(--app-accent);
-    transition: transform 0.4s var(--ease-lux);
-  }
-
-  .btn-outline {
-    --btn-h: 2.875rem;
-    padding: 0 1.25rem;
-  }
-
-  .btn-outline svg {
-    transition: transform 0.4s var(--ease-lux);
+    color: var(--app-muted);
+    transition: transform var(--dur) var(--ease), color var(--dur) var(--ease);
   }
 
   .btn-sm {
     --btn-h: 2.5rem;
     padding: 0 1rem;
-    border-radius: 0.75rem;
     font-size: 0.875rem;
   }
 
-  /* Trailing arrow: just the glyph, it slides on hover. */
+  .btn-lg {
+    --btn-h: 3rem;
+    padding: 0 1.5rem;
+  }
+
+  /* Trailing arrow: just the glyph, it nudges on hover. */
   .btn-knob {
     display: inline-grid;
     place-items: center;
-    margin-right: -0.2rem;
-    opacity: 0.8;
-    transition:
-      transform 0.45s var(--ease-lux),
-      opacity 0.3s ease;
+    margin-right: -0.125rem;
+    transition: transform var(--dur) var(--ease);
   }
 
   @media (hover: hover) {
     .btn-primary:hover:not(:disabled) {
-      transform: translateY(-1px);
       background-color: var(--btn-bg-hover);
-      box-shadow:
-        inset 0 1px 0 var(--btn-edge),
-        0 2px 4px rgba(0, 0, 0, 0.25),
-        0 16px 32px -16px rgba(0, 0, 0, 0.75);
     }
     .btn:hover .btn-knob {
-      transform: translateX(3px);
-      opacity: 1;
+      transform: translateX(2px);
     }
-    .btn-secondary:hover:not(:disabled),
+    .btn-secondary:hover:not(:disabled) {
+      background-color: var(--app-elevated);
+      border-color: var(--app-line-strong);
+    }
     .btn-outline:hover:not(:disabled) {
-      border-color: color-mix(in oklab, var(--app-accent) 50%, transparent);
-      background-color: color-mix(in oklab, var(--app-accent) 7%, color-mix(in oklab, var(--app-bg) 35%, transparent));
-    }
-    .btn-outline:hover svg {
-      transform: translateX(3px);
+      background-color: var(--app-surface);
     }
     .btn-ghost:hover:not(:disabled) {
       color: var(--app-ink);
-      background: color-mix(in oklab, var(--app-surface-2) 70%, transparent);
+      background: var(--app-surface-2);
     }
     .btn-quiet:hover .btn-label {
       background-size: 100% 1px;
     }
     .btn-quiet:hover svg {
-      transform: translateX(4px);
+      color: var(--app-ink);
+      transform: translateX(2px);
     }
   }
 
-  /* ── Round icon buttons ───────────────────────────────── */
+  /* ── Icon buttons ─────────────────────────────────────── */
   .icon-btn {
     display: inline-grid;
     place-items: center;
     flex-shrink: 0;
     width: 2.75rem;
     height: 2.75rem;
-    border-radius: 999px;
+    border-radius: var(--radius-control);
     color: var(--app-ink);
-    background: color-mix(in oklab, var(--app-surface) 60%, transparent);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow:
-      inset 0 1px 0 var(--app-highlight),
-      0 0 0 1px var(--app-line-strong),
-      0 6px 16px -10px rgba(0, 0, 0, 0.6);
+    background: transparent;
+    border: 1px solid var(--app-line);
     transition:
-      transform 0.35s var(--ease-lux),
-      color 0.2s ease,
-      background 0.3s ease,
-      box-shadow 0.35s var(--ease-lux),
-      opacity 0.2s ease;
+      transform var(--dur) var(--ease),
+      color var(--dur) var(--ease),
+      background-color var(--dur) var(--ease),
+      border-color var(--dur) var(--ease),
+      opacity var(--dur) var(--ease);
   }
 
   .icon-btn-sm {
-    width: 2.375rem;
-    height: 2.375rem;
+    width: 2.5rem;
+    height: 2.5rem;
   }
 
   .icon-btn:focus-visible {
     outline: none;
-    box-shadow:
-      0 0 0 2px var(--app-bg),
-      0 0 0 4px var(--app-accent);
+    box-shadow: var(--ring);
+  }
+
+  .icon-btn:active:not(:disabled) {
+    transform: scale(0.96);
   }
 
   .icon-btn:disabled {
@@ -661,41 +523,28 @@
   .icon-btn[aria-pressed='true']:not([data-plain]),
   .icon-btn.is-on {
     color: var(--app-accent);
-    background: color-mix(in oklab, var(--app-accent) 12%, color-mix(in oklab, var(--app-surface) 60%, transparent));
-    box-shadow:
-      inset 0 1px 0 var(--app-highlight),
-      0 0 0 1px color-mix(in oklab, var(--app-accent) 50%, transparent),
-      0 8px 20px -10px var(--app-glow);
-  }
-
-  .icon-btn[aria-pressed='true']:not([data-plain]) svg {
-    animation: pop 0.45s var(--ease-lux);
+    background: var(--app-accent-soft);
+    border-color: color-mix(in oklab, var(--app-accent) 35%, var(--app-line));
   }
 
   @media (hover: hover) {
     .icon-btn:hover:not(:disabled) {
-      transform: translateY(-1px);
-      color: var(--app-accent);
-      box-shadow:
-        inset 0 1px 0 var(--app-highlight),
-        0 0 0 1px color-mix(in oklab, var(--app-accent) 40%, transparent),
-        0 8px 20px -10px rgba(0, 0, 0, 0.6);
+      background-color: var(--app-surface-2);
+      border-color: var(--app-line-strong);
     }
   }
 
-  /* ── Segmented capsule ────────────────────────────────── */
+  /* ── Segmented control ────────────────────────────────── */
   .seg {
     display: inline-flex;
     max-width: 100%;
     gap: 2px;
-    padding: 4px;
-    border-radius: 999px;
+    padding: 3px;
+    border-radius: 0.75rem;
     overflow-x: auto;
     scrollbar-width: none;
-    background: color-mix(in oklab, var(--app-bg) 55%, transparent);
-    box-shadow:
-      inset 0 1px 2px rgba(0, 0, 0, 0.2),
-      0 0 0 1px var(--app-line);
+    background: var(--app-bg-2);
+    border: 1px solid var(--app-line);
   }
 
   .seg::-webkit-scrollbar {
@@ -704,17 +553,17 @@
 
   .seg-item {
     flex-shrink: 0;
-    min-height: 2.5rem;
-    padding: 0 1.05rem;
-    border-radius: 999px;
+    min-height: 2.375rem;
+    padding: 0 1rem;
+    border-radius: 0.5625rem;
     font-size: 0.875rem;
     font-weight: 600;
+    letter-spacing: -0.01em;
     white-space: nowrap;
     color: var(--app-muted);
     transition:
-      color 0.2s ease,
-      background 0.3s var(--ease-lux),
-      box-shadow 0.3s var(--ease-lux);
+      color var(--dur) var(--ease),
+      background-color var(--dur) var(--ease);
   }
 
   .seg-item:hover {
@@ -725,16 +574,13 @@
   .seg-item[aria-pressed='true'],
   .seg-item.is-active {
     color: var(--app-ink);
-    background: var(--app-elevated);
-    box-shadow:
-      inset 0 1px 0 var(--app-highlight),
-      0 0 0 1px var(--app-line-strong),
-      0 4px 10px -4px rgba(0, 0, 0, 0.45);
+    background: var(--app-surface);
+    box-shadow: inset 0 0 0 1px var(--app-line-strong);
   }
 
   .seg-item:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px var(--app-accent);
+    box-shadow: inset 0 0 0 2px color-mix(in oklab, var(--app-accent) 70%, transparent);
   }
 
   /* ── Reading goals button (header) ─────────────────────── */
@@ -742,43 +588,30 @@
     position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.5rem;
     height: 2.75rem;
-    padding: 0 1rem 0 0.3125rem;
-    border-radius: 999px;
+    padding: 0 0.875rem 0 0.3125rem;
+    border-radius: var(--radius-control);
     color: var(--app-ink);
-    background:
-      radial-gradient(120% 140% at 0% 50%, color-mix(in oklab, var(--app-accent) 16%, transparent) 0%, transparent 55%),
-      color-mix(in oklab, var(--app-surface) 62%, transparent);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow:
-      inset 0 1px 0 var(--app-highlight),
-      0 0 0 1px var(--app-line-strong),
-      0 8px 20px -12px rgba(0, 0, 0, 0.7);
+    background: transparent;
+    border: 1px solid var(--app-line);
     transition:
-      box-shadow 0.3s var(--ease-lux),
-      transform 0.3s var(--ease-lux);
+      background-color var(--dur) var(--ease),
+      border-color var(--dur) var(--ease);
   }
 
   .goals-btn:hover {
-    transform: translateY(-1px);
-    box-shadow:
-      inset 0 1px 0 var(--app-highlight),
-      0 0 0 1px color-mix(in oklab, var(--app-accent) 55%, var(--app-line-strong)),
-      0 10px 26px -12px color-mix(in oklab, var(--app-accent) 45%, transparent);
+    background-color: var(--app-surface-2);
+    border-color: var(--app-line-strong);
   }
 
   .goals-btn.is-active {
-    box-shadow:
-      inset 0 1px 0 var(--app-highlight),
-      0 0 0 1px var(--app-accent),
-      0 0 22px -6px var(--app-glow);
+    border-color: color-mix(in oklab, var(--app-accent) 45%, var(--app-line));
   }
 
   .goals-btn:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px var(--app-accent);
+    box-shadow: var(--ring);
   }
 
   .goals-ring {
@@ -786,17 +619,16 @@
     display: inline-grid;
     place-items: center;
     flex-shrink: 0;
-    width: 2.125rem;
-    height: 2.125rem;
+    width: 2rem;
+    height: 2rem;
     border-radius: 999px;
     color: var(--app-accent);
-    background: color-mix(in oklab, var(--app-accent) 12%, var(--app-bg));
-    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--app-accent) 22%, transparent);
+    background: transparent;
   }
 
   .goals-ring-track {
     fill: none;
-    stroke: color-mix(in oklab, var(--app-accent) 18%, transparent);
+    stroke: var(--app-line-strong);
     stroke-width: 2;
   }
 
@@ -805,8 +637,7 @@
     stroke: var(--app-accent);
     stroke-width: 2.25;
     stroke-linecap: round;
-    transition: stroke-dashoffset 0.8s var(--ease-lux);
-    filter: drop-shadow(0 0 3px var(--app-glow));
+    transition: stroke-dashoffset 0.6s var(--ease-lux);
   }
 
   .goals-ring.is-done {
@@ -817,21 +648,21 @@
   .goals-btn-text {
     display: inline-flex;
     align-items: baseline;
-    gap: 0.45rem;
+    gap: 0.4rem;
     white-space: nowrap;
   }
 
   .goals-btn-label {
     font-size: 0.875rem;
     font-weight: 600;
-    letter-spacing: 0.005em;
+    letter-spacing: -0.01em;
   }
 
   .goals-btn-meta {
     font-size: 0.75rem;
-    font-weight: 700;
+    font-weight: 600;
     font-variant-numeric: tabular-nums;
-    color: var(--app-accent);
+    color: var(--app-muted);
   }
 
   /* Phones: just the ring. */
@@ -850,32 +681,27 @@
   .lang-trigger {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.375rem;
     height: 2.75rem;
-    padding: 0 0.85rem 0 0.8rem;
-    border-radius: 999px;
+    padding: 0 0.75rem;
+    border-radius: var(--radius-control);
     color: var(--app-ink);
-    background: color-mix(in oklab, var(--app-surface) 60%, transparent);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow:
-      inset 0 1px 0 var(--app-highlight),
-      0 0 0 1px var(--app-line-strong),
-      0 6px 16px -10px rgba(0, 0, 0, 0.6);
-    transition: box-shadow 0.25s var(--ease-lux), color 0.2s ease;
+    background: transparent;
+    border: 1px solid var(--app-line);
+    transition:
+      background-color var(--dur) var(--ease),
+      border-color var(--dur) var(--ease);
   }
 
   .lang-trigger:hover,
   .lang-trigger[aria-expanded='true'] {
-    box-shadow:
-      inset 0 1px 0 var(--app-highlight),
-      0 0 0 1px var(--app-accent),
-      0 6px 16px -10px rgba(0, 0, 0, 0.6);
+    background-color: var(--app-surface-2);
+    border-color: var(--app-line-strong);
   }
 
   .lang-trigger:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px var(--app-accent);
+    box-shadow: var(--ring);
   }
 
   .lang-menu {
@@ -889,22 +715,18 @@
     max-height: min(32rem, calc(100dvh - 6rem));
     overflow-y: auto;
     padding: 0.375rem;
-    border-radius: 1.25rem;
-    background: color-mix(in oklab, var(--app-elevated) 97%, transparent);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    box-shadow:
-      inset 0 1px 0 var(--app-highlight),
-      0 0 0 1px var(--app-line-strong),
-      0 24px 48px -20px rgba(0, 0, 0, 0.7);
-    animation: lang-menu-in 0.18s var(--ease-lux);
+    border-radius: 0.875rem;
+    background: var(--app-bg-2);
+    border: 1px solid var(--app-line);
+    box-shadow: var(--app-shadow-lg);
+    animation: lang-menu-in var(--dur) var(--ease-lux);
     transform-origin: top right;
   }
 
   @keyframes lang-menu-in {
     from {
       opacity: 0;
-      transform: translateY(-4px) scale(0.98);
+      transform: translateY(-4px);
     }
   }
 
@@ -914,41 +736,40 @@
     gap: 0.25rem;
     width: 100%;
     padding: 0.375rem;
-    border-radius: 1.25rem;
-    background: color-mix(in oklab, var(--app-bg) 45%, transparent);
-    box-shadow: 0 0 0 1px var(--app-line);
+    border-radius: 0.875rem;
+    background: var(--app-bg);
+    border: 1px solid var(--app-line);
   }
 
   .lang-option {
     display: flex;
     align-items: center;
-    gap: 0.65rem;
+    gap: 0.625rem;
     min-height: 2.75rem;
     width: 100%;
     min-width: 0;
-    padding: 0 0.75rem;
-    border-radius: 0.9rem;
+    padding: 0 0.625rem;
+    border-radius: 0.5625rem;
     text-align: left;
     font-size: 0.875rem;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--app-muted);
-    transition: background 0.2s ease, color 0.2s ease;
+    transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
   }
 
   .lang-option:hover {
     color: var(--app-ink);
-    background: color-mix(in oklab, var(--app-ink) 6%, transparent);
+    background: var(--app-surface-2);
   }
 
   .lang-option.is-active {
     color: var(--app-ink);
-    background: color-mix(in oklab, var(--app-accent) 16%, transparent);
-    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--app-accent) 45%, transparent);
+    background: var(--app-surface);
   }
 
   .lang-option:focus-visible {
     outline: none;
-    box-shadow: inset 0 0 0 2px var(--app-accent);
+    box-shadow: inset 0 0 0 2px color-mix(in oklab, var(--app-accent) 70%, transparent);
   }
 
   .lang-code {
@@ -957,10 +778,10 @@
     flex-shrink: 0;
     width: 2rem;
     height: 1.5rem;
-    border-radius: 999px;
+    border-radius: 0.375rem;
     font-size: 0.6875rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    font-weight: 600;
+    letter-spacing: 0.06em;
     color: var(--app-muted);
     box-shadow: inset 0 0 0 1px var(--app-line-strong);
   }
@@ -976,27 +797,23 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 1.75rem;
-    min-width: 2.25rem;
-    padding: 0 0.6rem;
-    border-radius: 999px;
-    font-size: 0.75rem;
-    font-weight: 700;
+    min-height: 1.5rem;
+    min-width: 2rem;
+    padding: 0 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
     letter-spacing: 0.04em;
     color: var(--app-ink);
     background: var(--app-glass-strong);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow:
-      inset 0 0 0 1px var(--app-line-strong),
-      0 4px 12px -6px rgba(0, 0, 0, 0.6);
+    box-shadow: inset 0 0 0 1px var(--app-line-strong);
     white-space: nowrap;
   }
 
   .pill-accent {
     color: var(--app-accent);
     background: var(--app-accent-soft);
-    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--app-accent) 35%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--app-accent) 28%, transparent);
   }
 
   /* ── Progress ─────────────────────────────────────────── */
@@ -1004,54 +821,60 @@
     height: 4px;
     overflow: hidden;
     border-radius: 999px;
-    background: color-mix(in oklab, var(--app-ink) 9%, transparent);
+    background: var(--app-line);
   }
 
   .meter-fill {
     height: 100%;
     border-radius: inherit;
-    background: linear-gradient(90deg, var(--app-accent-strong), var(--app-accent));
-    box-shadow: 0 0 12px var(--app-glow);
-    transition: width 0.8s var(--ease-lux);
+    background: var(--app-accent);
+    transition: width 0.6s var(--ease-lux);
   }
 
   /* ── Form fields ──────────────────────────────────────── */
   .field-control {
     width: 100%;
-    min-height: 3.125rem;
-    border-radius: 1rem;
-    border: 1px solid var(--app-line-strong);
-    background: color-mix(in oklab, var(--app-bg) 60%, transparent);
-    padding: 0.75rem 1rem;
+    min-height: 3rem;
+    border-radius: var(--radius-control);
+    border: 1px solid var(--app-line);
+    background: var(--app-surface);
+    padding: 0.75rem 0.9375rem;
     font-size: 0.9375rem;
+    line-height: 1.4;
     color: var(--app-ink);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12);
     transition:
-      border-color 0.2s ease,
-      background 0.2s ease,
-      box-shadow 0.25s var(--ease-lux);
+      border-color var(--dur) var(--ease),
+      background-color var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease);
   }
 
   .field-control::placeholder {
-    color: var(--app-faint);
+    color: var(--app-muted);
+    opacity: 1;
   }
 
-  .field-control:hover {
-    border-color: color-mix(in oklab, var(--app-accent) 30%, var(--app-line-strong));
+  .field-control:hover:not(:disabled) {
+    border-color: var(--app-line-strong);
   }
 
   .field-control:focus,
   .field-control:focus-visible {
     outline: none;
-    border-color: color-mix(in oklab, var(--app-accent) 70%, transparent);
-    background: color-mix(in oklab, var(--app-bg) 75%, transparent);
-    box-shadow:
-      inset 0 1px 2px rgba(0, 0, 0, 0.12),
-      0 0 0 4px var(--app-accent-soft);
+    border-color: color-mix(in oklab, var(--app-accent) 42%, var(--app-line-strong));
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--app-accent) 9%, transparent);
+  }
+
+  .field-control:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  .field-control[aria-invalid='true'] {
+    border-color: color-mix(in oklab, var(--app-danger) 70%, transparent);
   }
 
   .field-control[type='date']::-webkit-calendar-picker-indicator {
-    filter: invert(0.7) sepia(0.4) hue-rotate(110deg);
+    filter: invert(0.62);
     cursor: pointer;
   }
 
@@ -1066,22 +889,22 @@
     flex-shrink: 0;
     width: 1.25rem;
     height: 1.25rem;
-    border-radius: 0.4rem;
+    border-radius: 0.3125rem;
     border: 1px solid var(--app-line-strong);
-    background: color-mix(in oklab, var(--app-bg) 60%, transparent);
-    transition: background 0.2s ease, border-color 0.2s ease;
+    background: var(--app-surface);
+    transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease);
     cursor: pointer;
   }
 
   .check::after {
     content: '';
-    width: 0.65rem;
-    height: 0.35rem;
-    margin-top: -0.12rem;
+    width: 0.625rem;
+    height: 0.3125rem;
+    margin-top: -0.125rem;
     border-left: 2px solid var(--app-on-accent);
     border-bottom: 2px solid var(--app-on-accent);
     transform: rotate(-45deg) scale(0);
-    transition: transform 0.25s var(--ease-lux);
+    transition: transform var(--dur) var(--ease-lux);
   }
 
   .check:checked {
@@ -1095,32 +918,29 @@
 
   .check:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 3px var(--app-accent-soft), 0 0 0 1px var(--app-accent);
+    box-shadow: var(--ring);
   }
 
   /* ── Books as objects ─────────────────────────────────── */
   .book-object {
     position: relative;
     overflow: hidden;
-    border-radius: 3px 6px 6px 3px;
+    border-radius: 3px 5px 5px 3px;
     background: var(--app-elevated);
     box-shadow:
-      0 1px 1px rgba(0, 0, 0, 0.25),
-      0 12px 20px -10px rgba(0, 0, 0, 0.6),
-      0 34px 50px -26px rgba(0, 0, 0, 0.75);
+      0 1px 2px rgba(6, 4, 12, 0.35),
+      0 16px 28px -16px rgba(6, 4, 12, 0.7);
   }
 
-  /* Light spine crease over the artwork; the image itself is untouched. */
+  /* Faint spine crease over the artwork; the image itself is untouched. */
   .book-object::after {
     content: '';
     position: absolute;
     inset: 0;
     pointer-events: none;
     border-radius: inherit;
-    background:
-      linear-gradient(90deg, rgba(0, 0, 0, 0.3) 0, rgba(255, 255, 255, 0.12) 1.6%, rgba(0, 0, 0, 0.1) 3.6%, transparent 7%),
-      linear-gradient(160deg, rgba(255, 255, 255, 0.08), transparent 35%);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.22) 0, rgba(255, 255, 255, 0.08) 1.6%, transparent 5%);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
   }
 
   /* Soft contact shadow under a standing book. */
@@ -1128,16 +948,20 @@
     position: absolute;
     left: 6%;
     right: 2%;
-    bottom: -6px;
-    height: 18px;
+    bottom: -4px;
+    height: 12px;
     border-radius: 50%;
-    background: radial-gradient(closest-side, rgba(0, 0, 0, 0.85), transparent);
-    filter: blur(4px);
+    background: radial-gradient(closest-side, rgba(6, 4, 12, 0.7), transparent);
+    filter: blur(3px);
     pointer-events: none;
   }
 
   .focus-ring {
-    @apply outline-none focus-visible:ring-2 focus-visible:ring-accent/80 focus-visible:ring-offset-2 focus-visible:ring-offset-bg;
+    @apply outline-none;
+  }
+
+  .focus-ring:focus-visible {
+    box-shadow: var(--ring);
   }
 
   .skip-link {
@@ -1145,36 +969,33 @@
     top: -100px;
     left: 12px;
     z-index: 80;
-    border-radius: 999px;
+    border-radius: var(--radius-control);
     background: var(--app-surface);
+    border: 1px solid var(--app-line);
     padding: 0.5rem 0.95rem;
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--app-ink);
-    box-shadow: var(--app-shadow);
   }
 
   .skip-link:focus {
     top: 12px;
     outline: none;
-    box-shadow:
-      var(--app-shadow),
-      0 0 0 2px var(--app-bg),
-      0 0 0 4px var(--app-accent);
+    box-shadow: var(--ring);
   }
 
-  /* Card hover lift, shared by book cards and tiles. */
+  /* Interactive cards: a quiet border and tone change, at most a 2px lift. */
   .lift {
     transition:
-      transform 0.55s var(--ease-lux),
-      box-shadow 0.55s var(--ease-lux),
-      border-color 0.3s ease;
+      transform var(--dur-slow) var(--ease-lux),
+      background-color var(--dur) var(--ease),
+      border-color var(--dur) var(--ease);
   }
 
   @media (hover: hover) {
     .lift:hover {
-      transform: translateY(-4px);
-      box-shadow: inset 0 1px 0 var(--app-highlight), var(--app-shadow-lg);
+      transform: translateY(-2px);
+      border-color: var(--app-line-strong);
     }
   }
 }
@@ -1182,62 +1003,56 @@
 @layer utilities {
   .font-display {
     font-family: var(--font-display);
+    letter-spacing: -0.025em;
   }
 
   .animate-rise {
-    animation: rise-in 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: rise-in 420ms var(--ease-lux) both;
   }
 
   .reveal {
     opacity: 0;
-    transform: translate3d(0, 24px, 0);
-    filter: blur(6px);
+    transform: translate3d(0, 12px, 0);
     transition:
-      opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-      filter 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+      opacity 0.5s var(--ease-lux),
+      transform 0.5s var(--ease-lux);
   }
 
   .reveal-left {
-    transform: translate3d(-28px, 8px, 0);
+    transform: translate3d(-12px, 0, 0);
   }
 
   .reveal-right {
-    transform: translate3d(28px, 8px, 0);
+    transform: translate3d(12px, 0, 0);
   }
 
   .reveal-scale {
-    transform: translate3d(0, 20px, 0) scale(0.97);
+    transform: translate3d(0, 12px, 0);
   }
 
   .reveal.is-in {
     opacity: 1;
     transform: none;
-    filter: none;
   }
 }
 
-/* ── Hero stage: covers standing on a ledge ─────────────── */
+/* ── Hero stage: covers standing on a plinth ─────────────── */
 .hero-stage {
   --px: 0;
   --py: 0;
-  perspective: 1400px;
 }
 
 .hero-layer {
-  transition: transform 1.2s var(--ease-lux);
-  transform: translate3d(calc(var(--px) * var(--depth, 0) * 1px), calc(var(--py) * var(--depth, 0) * 1px), 0);
+  transform: none;
 }
 
 .hero-book {
-  transition:
-    transform 0.7s var(--ease-lux),
-    filter 0.5s ease;
+  transition: transform var(--dur-slow) var(--ease-lux);
 }
 
 @media (hover: hover) {
   .hero-book:hover {
-    transform: translateY(-10px) rotate(0deg) !important;
+    transform: translateY(-4px) rotate(0deg) !important;
   }
 }
 
@@ -1264,10 +1079,11 @@
   --reader-stage: var(--app-bg);
   --reader-page: #ffffff;
   --reader-chrome: color-mix(in oklab, var(--app-bg) 80%, transparent);
-  background:
-    radial-gradient(80% 50% at 50% 0%, color-mix(in oklab, var(--app-accent) 6%, transparent), transparent 70%),
-    var(--reader-stage);
-  transition: background-color 0.5s var(--ease-lux);
+  --color-success: var(--app-success);
+  --color-warning: var(--app-warning);
+  --color-info: var(--app-info);
+  background: var(--reader-stage);
+  transition: background-color var(--dur-slow) var(--ease);
 }
 
 .reader-shell[data-paper='sepia'] {
@@ -1280,9 +1096,12 @@
   --app-muted: #7a6a55;
   --app-line: rgba(58, 44, 29, 0.14);
   --app-line-strong: rgba(58, 44, 29, 0.22);
-  --app-accent: #3d7a63;
-  --app-accent-strong: #2f6652;
-  --app-accent-soft: rgba(61, 122, 99, 0.12);
+  --app-accent: #56701f;
+  --app-accent-strong: #4a6219;
+  --app-accent-press: #3f5414;
+  --app-accent-soft: rgba(86, 112, 31, 0.12);
+  --app-on-accent: #fbf6ea;
+  --app-faint: #9a8a73;
   --app-glass: rgba(236, 226, 205, 0.7);
   --app-glass-strong: rgba(236, 226, 205, 0.9);
   --app-highlight: rgba(255, 255, 255, 0.6);
@@ -1292,20 +1111,20 @@
 }
 
 .reader-shell[data-paper='night'] {
-  --app-bg: #090c0c;
-  --app-bg-2: #0d1111;
-  --app-surface: #161b1a;
-  --app-surface-2: #121716;
-  --app-elevated: #1c2321;
-  --app-ink: #e9ebe4;
-  --app-muted: #949e98;
-  --app-line: rgba(220, 245, 232, 0.09);
-  --app-line-strong: rgba(220, 245, 232, 0.16);
-  --app-highlight: rgba(255, 255, 255, 0.05);
-  --reader-stage: #090c0c;
+  --app-bg: #0f0c16;
+  --app-bg-2: #15121d;
+  --app-surface: #221e2b;
+  --app-surface-2: #1a1723;
+  --app-elevated: #2a2634;
+  --app-ink: #ebe7f1;
+  --app-muted: #8f8b97;
+  --app-line: #2a2633;
+  --app-line-strong: #3a3544;
+  --app-highlight: rgba(255, 255, 255, 0.03);
+  --reader-stage: #0f0c16;
   /* Same as the night filter's paper colour, so no stripe shows where the canvas ends. */
   --reader-page: #171614;
-  --reader-chrome: rgba(12, 16, 16, 0.86);
+  --reader-chrome: rgba(15, 12, 22, 0.9);
 }
 
 .reader-stage {
@@ -1543,22 +1362,21 @@
   align-items: center;
   gap: 0.45rem;
   height: 2.25rem;
-  padding: 0 0.95rem 0 0.8rem;
-  border-radius: 999px;
+  padding: 0 0.875rem 0 0.75rem;
+  border-radius: 0.625rem;
   white-space: nowrap;
   font-size: 0.8125rem;
   font-weight: 600;
-  color: var(--app-on-accent);
-  background: var(--app-accent);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 10px 28px -12px rgba(0, 0, 0, 0.7);
+  letter-spacing: -0.01em;
+  color: var(--btn-ink);
+  background: var(--btn-bg);
+  box-shadow: 0 8px 24px -10px rgba(6, 4, 12, 0.6);
   animation: explain-in 180ms var(--ease-lux) both;
   -webkit-tap-highlight-color: transparent;
 }
 
 .explain-chip:hover {
-  background: var(--app-accent-strong);
+  background: var(--btn-bg-hover);
 }
 
 .explain-chip:focus-visible {
@@ -1573,20 +1391,16 @@
   z-index: 50;
   padding: 1rem 1.1rem 1.05rem;
   color: var(--app-ink);
-  background:
-    radial-gradient(120% 90% at 100% 0%, color-mix(in oklab, var(--app-accent) 10%, transparent), transparent 55%),
-    var(--app-glass-strong);
-  border: 1px solid var(--app-line-strong);
-  box-shadow: inset 0 1px 0 var(--app-highlight), var(--app-shadow-lg);
-  backdrop-filter: blur(22px) saturate(1.3);
-  -webkit-backdrop-filter: blur(22px) saturate(1.3);
+  background: var(--app-bg-2);
+  border: 1px solid var(--app-line);
+  box-shadow: 0 1px 2px rgba(6, 4, 12, 0.3), 0 24px 48px -20px rgba(6, 4, 12, 0.6);
 }
 
 .explain-card--pop {
   width: min(22.5rem, calc(100vw - 2rem));
   max-height: calc(100dvh - 2rem);
   overflow-y: auto;
-  border-radius: 1.125rem;
+  border-radius: var(--radius-card);
   animation: explain-in 200ms var(--ease-lux) both;
 }
 
@@ -1595,22 +1409,24 @@
   bottom: max(0.75rem, env(safe-area-inset-bottom));
   max-height: 60dvh;
   overflow-y: auto;
-  border-radius: 1.25rem;
+  border-radius: var(--radius-sheet);
   animation: explain-up 260ms var(--ease-lux) both;
 }
 
 .explain-eyebrow {
-  font-size: 0.625rem;
-  font-weight: 700;
-  letter-spacing: 0.22em;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--app-accent);
+  color: var(--app-muted);
 }
 
 .explain-phrase {
   padding-top: 0.2rem;
   font-family: var(--font-display);
   font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   line-height: 1.3;
   color: var(--app-ink);
   overflow-wrap: anywhere;
@@ -1622,9 +1438,11 @@
 
 .explain-translation {
   font-family: var(--font-display);
-  font-size: 1.3125rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   line-height: 1.3;
-  color: var(--app-accent);
+  color: var(--app-ink);
   overflow-wrap: anywhere;
 }
 
@@ -1632,20 +1450,20 @@
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  height: 2.125rem;
-  padding: 0 0.9rem;
-  border-radius: 999px;
-  border: 1px solid var(--app-line-strong);
+  height: 2.25rem;
+  padding: 0 0.875rem;
+  border-radius: 0.625rem;
+  border: 1px solid var(--app-line);
   font-size: 0.8125rem;
   font-weight: 600;
   color: var(--app-ink);
-  background: color-mix(in oklab, var(--app-bg) 35%, transparent);
-  transition: border-color 0.2s, color 0.2s;
+  background: var(--app-surface);
+  transition: border-color var(--dur) var(--ease), background-color var(--dur) var(--ease);
 }
 
 .explain-reveal:hover {
-  border-color: var(--app-accent);
-  color: var(--app-accent);
+  border-color: var(--app-line-strong);
+  background: var(--app-elevated);
 }
 
 .explain-reveal:focus-visible {
@@ -1657,18 +1475,18 @@
   display: inline-flex;
   gap: 0.25rem;
   padding: 0.1875rem;
-  border-radius: 999px;
+  border-radius: 0.625rem;
   border: 1px solid var(--app-line);
-  background: color-mix(in oklab, var(--app-bg) 40%, transparent);
+  background: var(--app-bg);
 }
 
 .explain-lang {
   min-width: 2.25rem;
   height: 1.75rem;
   padding: 0 0.6rem;
-  border-radius: 999px;
+  border-radius: 0.4375rem;
   font-size: 0.6875rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.08em;
   color: var(--app-muted);
   transition: color 0.2s, background-color 0.2s;
@@ -1679,8 +1497,9 @@
 }
 
 .explain-lang.is-active {
-  color: var(--app-on-accent);
-  background: var(--app-accent);
+  color: var(--app-ink);
+  background: var(--app-surface);
+  box-shadow: inset 0 0 0 1px var(--app-line-strong);
 }
 
 .explain-lang:focus-visible {
@@ -1742,22 +1561,20 @@
 }
 
 .toast-in {
-  animation: goal-toast-in 420ms var(--ease-lux) both;
+  animation: goal-toast-in 280ms var(--ease-lux) both;
 }
 
 .menu-sheet {
-  background: color-mix(in oklab, var(--app-bg) 70%, transparent);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  animation: sheet-in 420ms var(--ease-lux) both;
+  background: color-mix(in oklab, var(--app-bg) 92%, transparent);
+  animation: sheet-in 240ms var(--ease-lux) both;
 }
 
 .dialog-in {
-  animation: dialog-in 380ms var(--ease-lux) both;
+  animation: dialog-in 220ms var(--ease-lux) both;
 }
 
 .page-enter {
-  animation: page-enter 700ms var(--ease-lux) both;
+  animation: page-enter 320ms var(--ease-lux) both;
 }
 
 @keyframes goal-toast-in {
@@ -1826,26 +1643,6 @@
   }
 }
 
-@keyframes scene-in {
-  from {
-    opacity: 0;
-    transform: scale(1.06);
-  }
-  to {
-    opacity: var(--scene-opacity);
-    transform: scale(1);
-  }
-}
-
-@keyframes scene-breathe {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.045) translate3d(-0.6%, 0.4%, 0);
-  }
-}
-
 @keyframes pop {
   0% {
     transform: scale(1);
@@ -1870,13 +1667,9 @@
   .menu-sheet,
   .dialog-in,
   .page-enter,
-  .scene-img,
-  .icon-btn[aria-pressed='true'] svg {
+  .explain-chip,
+  .explain-card {
     animation: none !important;
-  }
-
-  .scene-img {
-    opacity: var(--scene-opacity);
   }
 
   .btn,
@@ -1907,22 +1700,22 @@
   }
 }
 
-/* "Адаптированные" is one long word: keep it on one line on tablet/desktop. */
+/* "Адаптированные" is one long word: keep it on one line at every width. */
 @media (max-width: 767px) {
-  html:lang(ru) .hero-title { font-size: min(3.1rem, calc((100vw - 2rem) / 8.4)); }
+  html:lang(ru) .hero-title { font-size: min(2.5rem, calc((100vw - 2rem) / 9.2)); }
 }
 @media (min-width: 768px) {
-  html:lang(ru) .hero-title { font-size: 2.6rem; }
+  html:lang(ru) .hero-title { font-size: 2.4rem; }
 }
 @media (min-width: 1024px) {
-  html:lang(ru) .hero-title { font-size: 3.6rem; }
+  html:lang(ru) .hero-title { font-size: 3rem; }
 }
 @media (min-width: 1280px) {
-  html:lang(ru) .hero-title { font-size: 4.6rem; }
+  html:lang(ru) .hero-title { font-size: 3.6rem; }
 }
 /* Upright tablets get the full-width hero, so the title can grow with it. */
 @media (min-width: 44rem) and (max-width: 79.99rem) and (orientation: portrait) {
-  html:lang(ru) .hero-title { font-size: min(4.6rem, calc((100vw - 3rem) / 8.4)); }
+  html:lang(ru) .hero-title { font-size: min(4rem, calc((100vw - 3rem) / 9.2)); }
 }
 
 /* Large and 4K-class monitors: scale the whole rem-based layout up instead of
@@ -1941,114 +1734,61 @@
   .seg-item { padding: 0 0.7rem; font-size: 0.8125rem; }
 }
 
-/* ── Hero showcase: an arched niche, a stone shelf, books under a spotlight ── */
+/* ── Hero showcase: covers on a quiet graphite plinth ────────────── */
 .showcase-niche {
   position: absolute;
-  inset: 0 4% 12% 6%;
-  border-radius: 999px 999px 1.25rem 1.25rem;
+  inset: 0 3% 12% 3%;
+  border-radius: var(--radius-sheet);
   overflow: hidden;
-  background:
-    radial-gradient(70% 45% at 50% 0%, rgba(235, 250, 242, 0.16), transparent 70%),
-    radial-gradient(90% 60% at 50% 100%, rgba(0, 0, 0, 0.45), transparent 70%),
-    linear-gradient(180deg, color-mix(in oklab, var(--app-surface-2) 85%, #000) 0%, color-mix(in oklab, var(--app-bg) 80%, #000) 100%);
-  box-shadow:
-    inset 0 0 0 1px rgba(200, 240, 222, 0.08),
-    inset 0 30px 60px -30px rgba(0, 0, 0, 0.7),
-    inset 0 -40px 60px -30px rgba(0, 0, 0, 0.8),
-    0 40px 80px -40px rgba(0, 0, 0, 0.9);
+  background: var(--app-bg-2);
+  border: 1px solid var(--app-line);
 }
 
-/* thin rim light on the arch edge */
+/* A precise 48px grid, barely there: structure, not decoration. */
 .showcase-niche::before {
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(180deg, rgba(190, 240, 215, 0.35), rgba(190, 240, 215, 0.04) 45%, transparent 70%);
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
+  background-image:
+    linear-gradient(var(--app-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--app-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: -1px -1px;
+  opacity: 0.45;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 85%);
+  mask-image: linear-gradient(180deg, #000 0%, transparent 85%);
 }
 
-/* soft cone of light from the top of the niche */
 .showcase-niche::after {
-  content: '';
-  position: absolute;
-  top: -5%;
-  left: 18%;
-  right: 18%;
-  height: 95%;
-  background: linear-gradient(180deg, rgba(240, 252, 245, 0.1), rgba(240, 252, 245, 0.025) 60%, transparent 92%);
-  clip-path: polygon(40% 0, 60% 0, 100% 100%, 0 100%);
-  filter: blur(26px);
+  content: none;
 }
 
 .showcase-shelf {
   position: absolute;
-  left: -2%;
-  right: -4%;
+  left: 3%;
+  right: 3%;
   bottom: 0;
   height: 13%;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
 }
 
 .showcase-shelf-top {
   position: absolute;
   inset: 0 0 auto 0;
   height: 30%;
-  background:
-    radial-gradient(42% 160% at 50% 0%, rgba(235, 252, 244, 0.3), transparent 72%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(255, 255, 255, 0.06) 70%, rgba(255, 255, 255, 0.1)),
-    url('./assets/scenes/stone.webp') center / cover,
-    #2a3634;
+  border-radius: 4px 4px 0 0;
+  background: var(--app-surface);
+  border: 1px solid var(--app-line-strong);
+  border-bottom: 0;
 }
 
 .showcase-shelf-front {
   position: absolute;
   inset: 30% 0 0 0;
-  background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.75)),
-    url('./assets/scenes/stone.webp') center 70% / cover,
-    #0f1716;
-  box-shadow:
-    inset 0 1px 0 rgba(215, 250, 232, 0.35),
-    inset 0 2px 6px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(180deg, var(--app-surface-2), transparent);
 }
 
 .showcase-shelf-front::after {
-  content: '';
-  position: absolute;
-  inset: auto 0 -1px 0;
-  height: 60%;
-  background: linear-gradient(180deg, transparent, var(--app-bg));
-}
-
-[data-theme='light'] .showcase-niche {
-  background:
-    radial-gradient(70% 45% at 50% 0%, rgba(255, 255, 255, 0.7), transparent 70%),
-    linear-gradient(180deg, #dfe8e3 0%, #cbd8d1 100%);
-  box-shadow:
-    inset 0 0 0 1px rgba(16, 60, 48, 0.08),
-    inset 0 30px 60px -30px rgba(16, 40, 32, 0.25),
-    inset 0 -40px 60px -30px rgba(16, 40, 32, 0.3),
-    0 40px 80px -40px rgba(16, 40, 32, 0.4);
-}
-
-[data-theme='light'] .showcase-shelf-top {
-  background:
-    radial-gradient(42% 160% at 50% 0%, rgba(255, 255, 255, 0.9), transparent 72%),
-    linear-gradient(180deg, #cfdbd4, #e4ece7);
-}
-
-[data-theme='light'] .showcase-shelf-front {
-  background: linear-gradient(180deg, #bccbc3, #d6e0da);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.8),
-    inset 0 2px 6px rgba(16, 40, 32, 0.15);
+  content: none;
 }
 
 .showcase-book {
@@ -2061,45 +1801,35 @@
   position: absolute;
   top: 1.2%;
   bottom: 0.6%;
-  right: -2.4%;
-  width: 4%;
+  right: -2.2%;
+  width: 3.6%;
   z-index: -1;
   border-radius: 0 3px 3px 0;
   background:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.45), transparent 60%),
-    repeating-linear-gradient(90deg, #e6e2d4 0 1px, #bdb8a8 1px 2px);
-  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.5);
+    linear-gradient(90deg, rgba(0, 0, 0, 0.4), transparent 60%),
+    repeating-linear-gradient(90deg, #e4e0ea 0 1px, #b9b4c2 1px 2px);
 }
 
-/* the book's shadow cast back onto the niche wall */
 .showcase-cast {
   position: absolute;
-  inset: 6% -10% 2% 10%;
+  inset: 8% -6% 2% 8%;
   z-index: -2;
   border-radius: 6px;
-  background: rgba(0, 0, 0, 0.6);
-  filter: blur(18px);
+  background: rgba(6, 4, 12, 0.5);
+  filter: blur(16px);
   pointer-events: none;
 }
 
 [data-theme='light'] .showcase-cast {
-  background: rgba(16, 40, 32, 0.35);
+  background: rgba(23, 19, 34, 0.18);
 }
 
 .showcase-face {
-  -webkit-box-reflect: below 2px linear-gradient(transparent 88%, rgba(255, 255, 255, 0.2));
+  -webkit-box-reflect: none;
 }
 
-/* spotlight falling on the cover from above: light at the top, shade near the shelf */
 .showcase-light {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  pointer-events: none;
-  border-radius: 3px 6px 6px 3px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 35%, transparent 70%, rgba(0, 0, 0, 0.28));
-  mix-blend-mode: soft-light;
+  display: none;
 }
 
 /* Demo mode in the reader: a thin strip under the toolbar and the end-of-demo card. */
@@ -2110,16 +1840,17 @@
   gap: 0.5rem;
   padding: 0.45rem 1rem;
   border-bottom: 1px solid var(--app-line);
-  background: color-mix(in oklab, var(--app-accent) 9%, var(--reader-chrome, var(--app-bg)));
+  background: var(--app-bg-2);
   font-size: 0.8125rem;
   color: var(--app-muted);
 }
 
 .demo-strip-link {
   flex-shrink: 0;
-  font-weight: 700;
-  color: var(--app-accent);
+  font-weight: 600;
+  color: var(--app-ink);
   text-decoration: underline;
+  text-decoration-color: var(--app-accent);
   text-underline-offset: 3px;
 }
 
@@ -2131,11 +1862,10 @@
   width: min(34rem, calc(100vw - 2rem));
   transform: translateX(-50%);
   padding: 1.25rem 1.35rem;
-  border-radius: 1.5rem;
-  background: color-mix(in oklab, var(--app-bg) 94%, transparent);
-  -webkit-backdrop-filter: blur(18px) saturate(1.2);
-  backdrop-filter: blur(18px) saturate(1.2);
-  box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.55);
+  border-radius: var(--radius-sheet);
+  background: var(--app-bg-2);
+  border: 1px solid var(--app-line);
+  box-shadow: 0 24px 48px -20px rgba(6, 4, 12, 0.55);
 }
 
 /* Above the round page buttons on phones. */
@@ -2145,27 +1875,22 @@
   }
 }
 
-/* ── Welcome page & sign-in prompts (2026-11-02) ─────────── */
+/* ── Welcome page & sign-in prompts ─────────── */
 @layer components {
-  /* The main "start reading" button gets a soft mint halo so it is the obvious next step. */
   .hero-cta {
-    box-shadow:
-      inset 0 1px 0 var(--btn-edge),
-      0 1px 2px rgba(0, 0, 0, 0.28),
-      0 0 0 1px color-mix(in oklab, var(--app-accent) 22%, transparent),
-      0 14px 40px -12px var(--app-glow);
+    --btn-h: 3rem;
+    padding: 0 1.5rem;
   }
 
   .auth-read-notice {
     display: flex;
     align-items: center;
-    gap: 0.85rem;
-    padding: 0.85rem 1rem;
-    border-radius: 1.1rem;
-    border: 1px solid color-mix(in oklab, var(--app-accent) 32%, transparent);
-    background: color-mix(in oklab, var(--app-accent) 8%, transparent);
+    gap: 0.75rem;
+    padding: 0.875rem 1rem;
+    border-radius: var(--radius-control);
+    border: 1px solid var(--app-line);
+    background: var(--app-surface-2);
   }
-
 
   .start-step {
     display: flex;
@@ -2173,13 +1898,13 @@
   }
 
   .start-step-num {
-    font-family: var(--font-display);
-    font-size: 2.75rem;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
     line-height: 1;
-    font-weight: 500;
-    color: transparent;
-    -webkit-text-stroke: 1px color-mix(in oklab, var(--app-accent) 45%, transparent);
-    font-feature-settings: 'lnum' 1;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--app-faint);
+    font-variant-numeric: tabular-nums;
   }
 
   .start-explain {
@@ -2188,9 +1913,9 @@
   }
 
   .start-mark {
-    color: var(--app-ink);
-    background: color-mix(in oklab, var(--app-accent) 26%, transparent);
-    border-radius: 0.3rem;
+    color: var(--app-on-accent);
+    background: var(--app-accent);
+    border-radius: 0.25rem;
     padding: 0.05rem 0.25rem;
   }
 
@@ -2199,23 +1924,38 @@
     align-items: flex-start;
     gap: 0.5rem;
     margin-top: 0.75rem;
-    padding: 0.65rem 0.8rem;
-    border-radius: 0.9rem;
+    padding: 0.625rem 0.75rem;
+    border-radius: var(--radius-control);
     font-size: 0.8125rem;
     line-height: 1.45;
     color: var(--app-ink);
-    background: var(--app-glass);
+    background: var(--app-bg-2);
     border: 1px solid var(--app-line);
-    box-shadow: inset 0 1px 0 var(--app-highlight), var(--app-shadow);
   }
 
   .final-cta-glow {
-    position: absolute;
-    inset: auto 10% -40% 10%;
-    height: 80%;
-    z-index: 0;
-    pointer-events: none;
-    background: radial-gradient(50% 50% at 50% 50%, var(--app-glow), transparent 70%);
-    filter: blur(20px);
+    display: none;
+  }
+}
+
+/* Controls sitting on a graphite card step up one tone so they never melt into it. */
+@layer components {
+  .lux-card .btn-secondary {
+    background-color: var(--app-elevated);
+    border-color: var(--app-line-strong);
+  }
+
+  @media (hover: hover) {
+    .lux-card .btn-secondary:hover:not(:disabled) {
+      background-color: color-mix(in oklab, var(--app-elevated) 82%, var(--app-ink));
+    }
+  }
+
+  .lux-card .field-control {
+    background: var(--app-bg-2);
+  }
+
+  .lux-card .icon-btn {
+    border-color: var(--app-line-strong);
   }
 }

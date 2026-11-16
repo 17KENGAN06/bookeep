@@ -1,3 +1,4 @@
+/** Kept for layout compatibility: the page ground is a flat colour, nothing is painted behind it. */
 export function AmbientBackdrop() {
-  return <div aria-hidden className="ambient-glow pointer-events-none fixed inset-0 z-0" />;
+  return null;
 }

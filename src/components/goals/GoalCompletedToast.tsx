@@ -29,11 +29,11 @@ export function GoalCompletedToast() {
         role="status"
         className={`goal-toast lux-panel pointer-events-auto flex w-full max-w-sm items-center gap-3.5 rounded-full py-2.5 pr-6 pl-2.5 ${leaving ? 'is-leaving' : ''}`}
       >
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent-soft text-accent shadow-[0_0_24px_var(--app-glow)]">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[var(--radius-control)] border border-line bg-surface-2 text-ink">
           <BookGoalMark />
         </span>
         <div className="min-w-0">
-          <p className="font-display text-[0.9375rem] font-medium text-ink">{t('goals.completedToast')}</p>
+          <p className="font-display text-[0.9375rem] font-semibold text-ink">{t('goals.completedToast')}</p>
           <p className="mt-0.5 text-xs text-muted">{t('goals.completedToastHint', { pages: detail.pages, target: detail.target })}</p>
         </div>
       </div>

@@ -226,7 +226,7 @@ export function PageThumbnails({ open, store, totalPages, currentPage, onSelect,
       >
         <div className="mx-auto mt-2 h-1 w-10 rounded-full bg-line-strong md:hidden" aria-hidden />
         <div className="flex items-center gap-3 border-b border-line px-4 py-3">
-          <h2 id="page-thumbs-title" className="font-display text-lg font-medium text-ink">
+          <h2 id="page-thumbs-title" className="font-display text-lg font-semibold text-ink">
             {t('reader.thumbs.title')}
           </h2>
           <form onSubmit={go} className="ml-auto flex items-center gap-1.5">
@@ -243,13 +243,13 @@ export function PageThumbnails({ open, store, totalPages, currentPage, onSelect,
               value={target}
               placeholder={String(currentPage)}
               onChange={(event) => setTarget(event.target.value)}
-              className="page-thumbs-input h-9 w-20 rounded-full border border-line-strong bg-bg px-3 text-center text-base tabular-nums text-ink outline-none focus:border-accent"
+              className="page-thumbs-input h-9 w-20 rounded-[0.625rem] border border-line-strong bg-bg px-3 text-center text-base tabular-nums text-ink outline-none focus:border-accent"
             />
             <span className="text-sm whitespace-nowrap tabular-nums text-muted">/ {totalPages}</span>
             <button
               type="submit"
               disabled={!target}
-              className="h-9 rounded-full bg-accent px-3.5 text-sm font-semibold text-on-accent transition-opacity disabled:opacity-40"
+              className="h-9 rounded-[0.625rem] bg-accent px-3.5 text-sm font-semibold text-on-accent transition-opacity disabled:opacity-40"
             >
               {t('reader.thumbs.go')}
             </button>

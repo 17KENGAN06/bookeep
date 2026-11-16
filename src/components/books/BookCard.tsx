@@ -27,7 +27,7 @@ export function BookCard({ book }: BookCardProps) {
   const detailsTo = `/books/${book.slug}`;
 
   return (
-    <article className="group lux-card lift @container relative flex h-full flex-col rounded-[1.5rem] p-3.5 hover:border-transparent sm:rounded-[1.75rem] sm:p-4">
+    <article className="group lux-card lift @container relative flex h-full flex-col rounded-card p-3.5 sm:p-4">
       <div className="flex flex-1 gap-4 @[25rem]:gap-5">
         <Link
           to={detailsTo}
@@ -35,7 +35,7 @@ export function BookCard({ book }: BookCardProps) {
           aria-hidden
           className="relative w-[34%] max-w-[9.5rem] shrink-0 self-start @[25rem]:w-[38%] @[25rem]:max-w-[10.5rem]"
         >
-          <div className="book-object aspect-[2/3] w-full transition duration-700 ease-[var(--ease-lux)] motion-safe:group-hover:-translate-y-1 motion-safe:group-hover:rotate-[-1deg]">
+          <div className="book-object aspect-[2/3] w-full transition duration-300 ease-[var(--ease-lux)] motion-safe:group-hover:-translate-y-0.5">
             <BookCover book={book} labeled variant="card" compact />
           </div>
           <LevelBadge level={book.level} className="absolute -top-1.5 -left-1.5 z-[5]" />
@@ -49,8 +49,8 @@ export function BookCard({ book }: BookCardProps) {
         <div className="flex min-w-0 flex-1 flex-col">
           <div className="flex flex-col gap-2 @[22rem]:flex-row @[22rem]:items-start @[22rem]:justify-between">
             <div className="min-w-0 pt-1">
-              <h3 className="font-display text-[1.0625rem] leading-snug font-medium tracking-tight break-words text-ink @[25rem]:text-[1.25rem]">
-                <Link to={detailsTo} className="focus-ring rounded-sm transition hover:text-accent">
+              <h3 className="font-display text-[1.0625rem] leading-snug font-semibold tracking-tight break-words text-ink @[25rem]:text-[1.25rem]">
+                <Link to={detailsTo} className="focus-ring rounded-sm decoration-line-strong underline-offset-4 hover:underline">
                   {title}
                 </Link>
               </h3>
@@ -81,12 +81,12 @@ function CardActions({ className, detailsTo, readTo, started }: { className: str
   const { t } = useTranslation();
   return (
     <div className={`${className} flex-col gap-2`}>
-      <Link to={readTo} className="btn btn-primary btn-sm w-full !min-h-11">
+      <Link to={readTo} className={`btn ${started ? 'btn-primary' : 'btn-secondary'} btn-sm w-full !min-h-11`}>
         {started ? t('books.continueReading') : t('books.startReading')}
         <ArrowRight className="h-4 w-4" aria-hidden />
       </Link>
-      <Link to={detailsTo} className="btn btn-secondary btn-sm w-full !min-h-11">
-        <BookOpen className="h-4 w-4 text-accent" aria-hidden />
+      <Link to={detailsTo} className="btn btn-ghost btn-sm w-full !min-h-11">
+        <BookOpen className="h-4 w-4 text-muted" aria-hidden />
         {t('books.openBook')}
       </Link>
     </div>

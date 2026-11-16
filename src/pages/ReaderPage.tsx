@@ -171,7 +171,7 @@ function ReaderPageInner() {
     return (
       <div className="min-h-dvh bg-bg p-6">
         <Skeleton className="h-14 w-full rounded-2xl" />
-        <Skeleton className="mx-auto mt-8 h-[70vh] max-w-3xl rounded-3xl" />
+        <Skeleton className="mx-auto mt-8 h-[70vh] max-w-3xl rounded-sheet" />
       </div>
     );
   }

@@ -75,13 +75,13 @@ function DayCard({
             ? 'border-line bg-surface/70 hover:border-accent/40'
             : 'border-transparent bg-surface-2/40 hover:border-accent/30',
         isToday && 'shadow-[inset_0_0_0_1px_var(--app-accent)]',
-        isSelected && 'border-accent/70 bg-accent-soft shadow-[0_0_0_1px_var(--app-accent),0_10px_30px_-12px_var(--app-glow)]',
+        isSelected && 'border-accent/70 bg-accent-soft shadow-[0_0_0_1px_var(--app-accent)]',
       )}
       aria-current={isToday ? 'date' : undefined}
       aria-pressed={isSelected}
     >
       <span className="flex items-center justify-between gap-1">
-        <span className="font-display text-sm font-medium text-ink tabular-nums sm:text-base">{Number(day.date.slice(-2))}</span>
+        <span className="font-display text-sm font-semibold text-ink tabular-nums sm:text-base">{Number(day.date.slice(-2))}</span>
         {day.completed ? <Check className="h-3.5 w-3.5 text-accent" aria-hidden /> : null}
       </span>
         {isToday ? (

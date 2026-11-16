@@ -11,7 +11,7 @@ export function AdminLayout() {
   const { signOut, user } = useAuth();
 
   return (
-    <div className="ambient-glow min-h-dvh bg-bg">
+    <div className="min-h-dvh bg-bg">
       <header className="sticky top-0 z-30 border-b border-line bg-[var(--app-glass-strong)] backdrop-blur-xl">
         <div className="mx-auto flex max-w-[85rem] flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
           <BrandLockup to="/admin" size="sm" />

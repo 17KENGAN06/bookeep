@@ -113,7 +113,7 @@ export function ReadingGoalsPage() {
       />
 
       <Container>
-      <p className="font-display text-xl font-medium tracking-tight text-ink capitalize sm:text-2xl">{monthTitle(year, month, i18n.resolvedLanguage ?? 'en')}</p>
+      <p className="font-display text-xl font-semibold tracking-tight text-ink capitalize sm:text-2xl">{monthTitle(year, month, i18n.resolvedLanguage ?? 'en')}</p>
       <p className="mt-2 text-sm text-muted">{t('goals.calendarHint')}</p>
       <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-4">
         <SummaryCard icon={CalendarCheck} label={t('goals.readingDays')} value={String(summary.readingDays)} />
@@ -123,9 +123,9 @@ export function ReadingGoalsPage() {
       </div>
 
       <div className="mt-8 grid items-start gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(18rem,0.75fr)]">
-        <div className="lux-card order-2 rounded-[1.75rem] p-2.5 sm:p-5 lg:order-1">
+        <div className="lux-card order-2 rounded-card p-2.5 sm:p-5 lg:order-1">
           {status === 'loading' ? (
-            <Skeleton className="h-[28rem] w-full rounded-3xl" />
+            <Skeleton className="h-[28rem] w-full rounded-sheet" />
           ) : status === 'error' ? (
             <ErrorState onRetry={() => void reload()} />
           ) : (
@@ -163,12 +163,12 @@ export function ReadingGoalsPage() {
 
 function SummaryCard({ icon: Icon, label, value, accent = false }: { icon: LucideIcon; label: string; value: string; accent?: boolean }) {
   return (
-    <div className="lux-card lift flex flex-col justify-between rounded-[1.25rem] px-4 py-4 sm:px-5 sm:py-5">
+    <div className="lux-card lift flex flex-col justify-between rounded-card px-4 py-4 sm:px-5 sm:py-5">
       <div className="flex items-start justify-between gap-2">
         <p className="text-[10px] leading-snug font-bold tracking-[0.18em] break-words text-muted uppercase sm:text-[11px]">{label}</p>
-        <Icon className={accent ? 'h-4 w-4 shrink-0 text-accent drop-shadow-[0_0_8px_var(--app-glow)]' : 'h-4 w-4 shrink-0 text-faint'} aria-hidden />
+        <Icon className={accent ? 'h-4 w-4 shrink-0 text-accent' : 'h-4 w-4 shrink-0 text-faint'} aria-hidden />
       </div>
-      <p className="mt-4 font-display text-2xl font-medium tracking-tight text-ink tabular-nums sm:text-[2rem]">{value}</p>
+      <p className="mt-4 font-display text-2xl font-semibold tracking-tight text-ink tabular-nums sm:text-[2rem]">{value}</p>
     </div>
   );
 }

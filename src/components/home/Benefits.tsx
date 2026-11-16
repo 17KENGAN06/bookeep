@@ -30,15 +30,15 @@ export function Benefits() {
               const Icon = item.icon;
               return (
                 <Reveal as="li" key={item.key} delay={index * 90}>
-                  <article className="lux-card lift group grid grid-cols-[auto_minmax(0,1fr)] gap-5 rounded-[1.5rem] p-6 sm:gap-7 sm:p-8">
+                  <article className="lux-card lift group grid grid-cols-[auto_minmax(0,1fr)] gap-5 rounded-card p-6 sm:gap-7 sm:p-8">
                     <div className="flex flex-col items-center gap-4">
-                      <span className="grid h-12 w-12 place-items-center rounded-full bg-accent-soft text-accent shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--app-accent)_28%,transparent)] transition duration-500 group-hover:shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--app-accent)_50%,transparent),0_0_30px_var(--app-glow)]">
+                      <span className="grid h-12 w-12 place-items-center rounded-[var(--radius-control)] border border-line bg-surface-2 text-ink">
                         <Icon className="h-5 w-5" aria-hidden />
                       </span>
-                      <span aria-hidden className="font-display text-sm text-faint tabular-nums">0{index + 1}</span>
+                      <span aria-hidden className="font-display font-semibold text-sm text-faint tabular-nums">0{index + 1}</span>
                     </div>
                     <div className="min-w-0 pt-1.5">
-                      <h3 className="font-display text-[1.375rem] font-medium tracking-tight text-ink sm:text-2xl">
+                      <h3 className="font-display text-[1.375rem] font-semibold tracking-tight text-ink sm:text-2xl">
                         {t(`home.moods.${item.key}.title`)}
                       </h3>
                       <p className="mt-2.5 max-w-md text-[0.9375rem] leading-relaxed text-muted">{t(`home.moods.${item.key}.text`)}</p>

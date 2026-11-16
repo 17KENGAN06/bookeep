@@ -64,17 +64,17 @@ export function Header() {
 
   const goalsTo = user ? '/goals' : '/login?next=/goals';
   const accountClassName =
-    'focus-ring hidden min-h-10 items-center rounded-full px-3.5 text-sm font-semibold whitespace-nowrap text-muted transition hover:text-ink xl:inline-flex';
+    'focus-ring hidden min-h-11 items-center rounded-[var(--radius-control)] px-3.5 text-sm font-semibold whitespace-nowrap text-ink transition-colors duration-200 hover:bg-surface-2 xl:inline-flex';
 
   return (
-    <header className="sticky top-0 z-40 pt-[max(0.5rem,env(safe-area-inset-top))] sm:pt-3">
+    <header
+      className={cn(
+        'sticky top-0 z-40 border-b pt-[env(safe-area-inset-top)] backdrop-blur-[14px] transition-[background-color,border-color] duration-200',
+        scrolled ? 'border-line bg-[var(--app-glass-strong)]' : 'border-transparent bg-[var(--app-glass)]',
+      )}
+    >
       <Container>
-        <div
-          className={cn(
-            'glass-card flex h-14 items-center justify-between gap-3 rounded-full pr-1.5 pl-4 transition-[background-color,box-shadow] duration-500 sm:h-16 sm:pr-2 sm:pl-6',
-            scrolled && 'bg-[var(--app-glass-strong)]',
-          )}
-        >
+        <div className="flex h-16 items-center justify-between gap-3 sm:h-[4.5rem]">
           <BrandLockup size="md" className="shrink-0" />
 
           <nav className="hidden min-w-0 items-center gap-1 xl:flex" aria-label={t('nav.primary')}>
@@ -88,10 +88,10 @@ export function Header() {
                 }}
                 className={({ isActive }) =>
                   cn(
-                    'focus-ring relative inline-flex min-h-10 items-center rounded-full px-3.5 text-sm font-semibold whitespace-nowrap transition',
+                    'focus-ring relative inline-flex min-h-10 items-center rounded-[0.5625rem] px-3 text-sm font-medium tracking-[-0.01em] whitespace-nowrap transition-colors duration-200',
                     isActive
-                      ? 'text-ink after:absolute after:inset-x-3.5 after:bottom-1 after:h-[2px] after:rounded-full after:bg-accent after:shadow-[0_0_10px_var(--app-glow)]'
-                      : 'text-muted hover:text-ink',
+                      ? 'text-ink after:absolute after:bottom-[-1rem] after:left-3 after:right-3 after:h-[2px] after:rounded-full after:bg-accent'
+                      : 'text-muted hover:bg-surface-2/60 hover:text-ink',
                   )
                 }
               >
@@ -136,9 +136,9 @@ export function Header() {
           ref={panelRef}
           id="mobile-nav"
           data-lenis-prevent
-          className="menu-sheet fixed inset-x-0 top-[calc(max(0.5rem,env(safe-area-inset-top))+4rem)] bottom-0 z-40 overflow-y-auto px-4 pt-2 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:top-[5.25rem] xl:hidden"
+          className="menu-sheet fixed inset-x-0 top-[calc(env(safe-area-inset-top)+4rem)] bottom-0 z-40 overflow-y-auto px-4 pt-3 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:top-[calc(env(safe-area-inset-top)+4.5rem)] xl:hidden"
         >
-          <div className="lux-panel mx-auto max-w-xl rounded-[2rem] p-3 sm:p-4">
+          <div className="lux-panel mx-auto max-w-xl p-2 sm:p-3">
             <nav className="flex flex-col" aria-label={t('nav.primary')}>
               {links.map((link) => {
                 const active = link.to === '/' ? location.pathname === '/' : location.pathname.startsWith(link.to);
@@ -152,12 +152,12 @@ export function Header() {
                     }}
                     aria-current={active ? 'page' : undefined}
                     className={cn(
-                      'focus-ring flex items-center justify-between rounded-2xl px-4 py-3.5 font-display text-[1.5rem] font-medium tracking-tight transition',
-                      active ? 'bg-surface-2 text-ink' : 'text-ink/85 hover:bg-surface-2/70',
+                      'focus-ring flex min-h-14 items-center justify-between rounded-[var(--radius-control)] px-4 font-display text-[1.25rem] font-semibold tracking-[-0.025em] transition-colors duration-200',
+                      active ? 'bg-surface text-ink' : 'text-ink/80 hover:bg-surface-2',
                     )}
                   >
                     {t(link.key)}
-                    {active ? <span className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_10px_var(--app-glow)]" aria-hidden /> : null}
+                    {active ? <span className="h-1.5 w-1.5 rounded-[2px] bg-accent" aria-hidden /> : null}
                   </Link>
                 );
               })}

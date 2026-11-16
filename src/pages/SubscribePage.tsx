@@ -128,7 +128,7 @@ export function SubscribePage() {
   } else if (!user) {
     action = (
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <ButtonLink to="/register?next=/subscribe" className="w-full !min-h-14 sm:w-auto">
+        <ButtonLink to="/register?next=/subscribe" className="w-full !min-h-12 sm:w-auto">
           {canTrial ? t('subscribe.startTrial', { count: trialDays }) : t('subscribe.cta')}
           <ButtonArrow />
         </ButtonLink>
@@ -139,13 +139,13 @@ export function SubscribePage() {
     );
   } else if (active) {
     action = paid && sub?.stripe_customer_id ? (
-      <Button variant="secondary" className="w-full !min-h-14 sm:w-auto" isLoading={busy} onClick={() => void run(openBillingPortal)}>
+      <Button variant="secondary" className="w-full !min-h-12 sm:w-auto" isLoading={busy} onClick={() => void run(openBillingPortal)}>
         {t('subscribe.manage')}
       </Button>
     ) : null;
   } else {
     action = (
-      <Button className="w-full !min-h-14 sm:w-auto" isLoading={busy} onClick={() => void run(startCheckout)}>
+      <Button className="w-full !min-h-12 sm:w-auto" isLoading={busy} onClick={() => void run(startCheckout)}>
         {canTrial ? t('subscribe.startTrial', { count: trialDays }) : t('subscribe.cta')}
         <ButtonArrow />
       </Button>
@@ -160,7 +160,7 @@ export function SubscribePage() {
       <Container className="pb-20">
         {checkout === 'success' ? (
           <div className="lux-card mb-8 rounded-2xl p-5" role="status">
-            <p className="font-display text-lg text-ink">
+            <p className="font-display font-semibold text-lg text-ink">
               {waiting ? t('subscribe.checkoutWaiting') : active ? t('subscribe.checkoutDone') : t('subscribe.checkoutLate')}
             </p>
             {!waiting && active ? (
@@ -181,13 +181,13 @@ export function SubscribePage() {
 
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
           <Reveal>
-            <article className="lux-panel rounded-[1.75rem] p-6 sm:p-9">
+            <article className="lux-card rounded-card border-line-strong p-6 sm:p-9">
               <div className="flex flex-wrap items-center gap-2.5">
                 <span className="pill pill-accent">{t('subscribe.planName')}</span>
                 {canTrial && !active ? <span className="pill">{t('subscribe.trialBadge', { count: trialDays })}</span> : null}
               </div>
               {price ? (
-                <p className="mt-6 font-display text-4xl font-medium text-ink sm:text-5xl">
+                <p className="mt-6 font-display text-4xl font-semibold text-ink sm:text-5xl">
                   {price}
                   <span className="ml-2 text-base text-muted">
                     {plan?.interval ? t(`subscribe.per.${plan.interval}`, { defaultValue: '' }) : ''}
@@ -219,7 +219,7 @@ export function SubscribePage() {
           </Reveal>
 
           <Reveal delay={100}>
-            <article className="lux-card h-full rounded-[1.75rem] p-6 sm:p-9">
+            <article className="lux-panel h-full rounded-card p-6 sm:p-9">
               <p className="pill">{t('subscribe.freeName')}</p>
               <ul className="mt-6 space-y-3 text-[0.9375rem] text-muted">
                 <li className="flex gap-3">

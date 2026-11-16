@@ -8,7 +8,7 @@ export function PublicLayout() {
   const { t } = useTranslation();
 
   return (
-    <div className="relative flex min-h-dvh flex-col overflow-x-hidden">
+    <div className="relative flex min-h-dvh flex-col overflow-x-clip">
       <AmbientBackdrop />
       <a href="#main-content" className="skip-link">
         {t('common.skipToContent')}

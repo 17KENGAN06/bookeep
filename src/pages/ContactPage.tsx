@@ -103,7 +103,7 @@ export function ContactPage() {
           </div>
 
           <Reveal delay={120}>
-          <form className="lux-panel space-y-5 rounded-[2rem] p-5 sm:p-8 lg:p-10" onSubmit={(event) => void onSubmit(event)} noValidate>
+          <form className="lux-panel space-y-5 rounded-sheet p-5 sm:p-8 lg:p-10" onSubmit={(event) => void onSubmit(event)} noValidate>
             <Field label={t('contact.form.topic')} hint={t('contact.form.topicHint', { email: destination })}>
               <select
                 className={fieldControlClass}
@@ -212,11 +212,11 @@ export function ContactPage() {
 function EmailCard({ icon, title, text, email }: { icon: ReactNode; title: string; text: string; email: string }) {
   return (
     <Reveal>
-      <div className="lux-card lift h-full rounded-[1.5rem] p-6">
-        <span aria-hidden className="grid h-11 w-11 place-items-center rounded-full bg-accent-soft text-accent">
+      <div className="lux-card lift h-full rounded-card p-6">
+        <span aria-hidden className="grid h-11 w-11 place-items-center rounded-[var(--radius-control)] border border-line bg-surface-2 text-ink">
           {icon}
         </span>
-        <h2 className="mt-5 font-display text-xl font-medium text-ink">{title}</h2>
+        <h2 className="mt-5 font-display text-xl font-semibold text-ink">{title}</h2>
         <p className="mt-2 text-sm leading-relaxed text-muted">{text}</p>
         <a href={`mailto:${email}`} className="focus-ring mt-4 inline-flex items-center gap-2 rounded-md text-sm font-semibold break-all text-accent hover:text-ink">
           <Mail className="h-4 w-4 shrink-0" aria-hidden />

@@ -47,37 +47,37 @@ export function Hero() {
               <p className="eyebrow">{t('home.eyebrow')}</p>
             </Reveal>
 
-            <h1 className="hero-title mt-7 font-display text-[2.75rem] leading-[0.98] font-medium tracking-[-0.02em] break-words text-ink min-[400px]:text-[3.1rem] sm:text-[4rem] md:text-[3.4rem] lg:text-[3.9rem] xl:text-[4.9rem] 2xl:text-[5.4rem] tabp:text-[4.6rem]">
+            <h1 className="hero-title mt-6 font-display text-[2.5rem] leading-[1.04] font-semibold tracking-[-0.035em] break-words text-ink min-[400px]:text-[2.75rem] sm:text-[3.25rem] md:text-[2.75rem] lg:text-[3.25rem] xl:text-[3.75rem] 2xl:text-[4rem] tabp:text-[3.75rem]">
               <Reveal as="span" delay={80} className="block">
                 {t('home.line1')}
               </Reveal>
               <Reveal as="span" delay={160} className="block">
                 {t('home.line2')}{' '}
-                <em className="font-normal text-accent italic [text-shadow:0_0_40px_var(--app-glow)]">{t('home.line3')}</em>
+                <span className="text-muted">{t('home.line3')}</span>
               </Reveal>
             </h1>
 
             <Reveal delay={260}>
-              <p className="lead mt-7 max-w-[34rem] tabp:max-w-[40rem]">{t('home.subtitle')}</p>
+              <p className="lead mt-6 max-w-[34rem] tabp:max-w-[40rem]">{t('home.subtitle')}</p>
             </Reveal>
 
             <Reveal delay={340}>
               {isGuest ? (
                 <>
                   <div className="mt-9 flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
-                    <ButtonLink to={authPathFor('/books')} className="hero-cta w-full !min-h-14 !px-7 !text-base min-[480px]:w-auto">
+                    <ButtonLink to={authPathFor('/books')} className="hero-cta btn-lg w-full min-[480px]:w-auto">
                       <BookOpen className="h-[18px] w-[18px]" aria-hidden />
                       {t('home.ctaStart')}
                       <ButtonArrow />
                     </ButtonLink>
-                    <ButtonLink to="/books" variant="secondary" className="w-full !min-h-14 !px-7 !text-base min-[480px]:w-auto">
+                    <ButtonLink to="/books" variant="secondary" className="btn-lg w-full min-[480px]:w-auto">
                       {t('home.ctaPrimary')}
                     </ButtonLink>
                   </div>
                   <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-[0.8125rem] text-muted">
                     {(['free', 'demo', 'trial'] as const).map((key) => (
                       <li key={key} className="inline-flex items-center gap-1.5">
-                        <Check className="h-3.5 w-3.5 text-accent" strokeWidth={2.6} aria-hidden />
+                        <Check className="h-3.5 w-3.5 text-muted" strokeWidth={2.2} aria-hidden />
                         {t(`home.trust.${key}`)}
                       </li>
                     ))}
@@ -86,7 +86,7 @@ export function Hero() {
               ) : (
                 <div className="mt-9 flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
                   {resume ? (
-                    <ButtonLink to={`/read/${resume.book.slug}`} className="hero-cta w-full !min-h-14 !px-7 !text-base min-[480px]:w-auto">
+                    <ButtonLink to={`/read/${resume.book.slug}`} className="hero-cta btn-lg w-full min-[480px]:w-auto">
                       <BookOpen className="h-[18px] w-[18px]" aria-hidden />
                       <span className="min-w-0 truncate">
                         {t('home.ctaResume', { title: getLocalizedTitle(resume.book, i18n.resolvedLanguage ?? 'en') })}
@@ -97,14 +97,14 @@ export function Hero() {
                   <ButtonLink
                     to="/books"
                     variant={resume ? 'secondary' : 'primary'}
-                    className="w-full !min-h-14 !px-7 !text-base min-[480px]:w-auto"
+                    className="btn-lg w-full min-[480px]:w-auto"
                   >
                     {t('home.ctaPrimary')}
                     {resume ? null : <ButtonArrow />}
                   </ButtonLink>
                   {resume ? null : (
-                    <ButtonLink to={goalsTo} variant="secondary" className="w-full !min-h-14 !px-7 !text-base min-[480px]:w-auto">
-                      <Target className="h-[18px] w-[18px] text-accent" aria-hidden />
+                    <ButtonLink to={goalsTo} variant="secondary" className="btn-lg w-full min-[480px]:w-auto">
+                      <Target className="h-[18px] w-[18px] text-muted" aria-hidden />
                       {t('home.ctaGoals')}
                     </ButtonLink>
                   )}
@@ -130,10 +130,10 @@ export function Hero() {
                   const Icon = item.icon;
                   return (
                     <div key={item.value} className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-start">
-                      <Icon className="h-7 w-7 shrink-0 text-accent/90 sm:h-8 sm:w-8" />
+                      <Icon className="h-5 w-5 shrink-0 text-muted sm:mt-0.5" strokeWidth={1.75} />
                       <div className="min-w-0">
                         <dt className="sr-only">{item.label}</dt>
-                        <dd className="font-display text-lg leading-tight font-medium tracking-tight text-ink sm:text-xl">{item.value}</dd>
+                        <dd className="font-display text-lg leading-tight font-semibold tracking-tight text-ink sm:text-xl">{item.value}</dd>
                         <dd className="mt-1 text-xs leading-snug text-muted">{item.label}</dd>
                       </div>
                     </div>

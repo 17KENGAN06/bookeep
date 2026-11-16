@@ -63,7 +63,7 @@ export function FileDropzone({
       className={cn(
         'flex h-full flex-col rounded-2xl border bg-surface p-4',
         dragOver ? 'border-accent' : 'border-line',
-        shownError ? 'border-accent' : '',
+        shownError ? 'border-danger' : '',
       )}
     >
       <p className="text-sm font-semibold text-ink">{label}</p>
@@ -123,7 +123,7 @@ export function FileDropzone({
           <span className="mt-1 text-center text-xs text-muted">{currentName}</span>
         ) : null}
       </label>
-      {shownError ? <p className="mt-2 text-xs text-accent">{shownError}</p> : null}
+      {shownError ? <p className="mt-2 text-xs text-danger">{shownError}</p> : null}
       {file && !shownError ? <p className="mt-2 text-center text-xs text-muted">{t('admin.upload.ready')}</p> : null}
     </div>
   );

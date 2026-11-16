@@ -39,7 +39,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
           >
             <span
               aria-hidden
-              className={`h-2 w-2 shrink-0 rounded-full ${toast.tone === 'error' ? 'bg-danger' : 'bg-accent shadow-[0_0_10px_var(--app-glow)]'}`}
+              className={`h-2 w-2 shrink-0 rounded-full ${toast.tone === 'error' ? 'bg-danger' : 'bg-accent'}`}
             />
             {toast.message}
           </p>

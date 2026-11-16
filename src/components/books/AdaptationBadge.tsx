@@ -30,7 +30,7 @@ export function AdaptationBadge({ complete, variant = 'badge', compact = false, 
           aria-hidden
         />
         <div>
-          <p className="font-display text-[0.9375rem] font-medium text-ink sm:text-base">
+          <p className="font-display text-[0.9375rem] font-semibold text-ink sm:text-base">
             {title}
           </p>
           <p className="mt-1 text-sm leading-relaxed text-muted">{hint}</p>

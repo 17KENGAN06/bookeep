@@ -258,7 +258,7 @@ export function BookForm({ book, isSaving, onSubmit }: BookFormProps) {
         ))}
       </div>
 
-      {formError ? <p className="text-sm text-accent">{formError}</p> : null}
+      {formError ? <p className="text-sm text-danger">{formError}</p> : null}
 
       <Button type="submit" isLoading={isSaving}>
         {isEdit ? t('admin.form.save') : t('admin.form.create')}

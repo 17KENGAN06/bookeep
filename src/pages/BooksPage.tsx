@@ -72,7 +72,7 @@ export function BooksPage() {
 
       <Container className="relative">
         <Reveal delay={80}>
-          <div className="glass-card flex flex-col gap-5 rounded-[1.75rem] p-4 sm:p-5 md:flex-row md:items-end md:justify-between">
+          <div className="glass-card flex flex-col gap-5 rounded-card p-4 sm:p-5 md:flex-row md:items-end md:justify-between">
             <BookFilters
               language={language}
               level={level}
@@ -117,7 +117,7 @@ function HeroStat({ value, label }: { value: number; label: string }) {
   return (
     <div>
       <dt className="sr-only">{label}</dt>
-      <dd className="font-display text-4xl font-medium tracking-tight text-ink tabular-nums sm:text-5xl">{value}</dd>
+      <dd className="font-display text-4xl font-semibold tracking-tight text-ink tabular-nums sm:text-5xl">{value}</dd>
       <dd className="mt-1 text-xs font-semibold tracking-[0.16em] text-muted uppercase">{label}</dd>
     </div>
   );
