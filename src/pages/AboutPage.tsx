@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import { ButtonArrow, ButtonLink } from '@/components/common/Button';
 import { Container } from '@/components/common/Container';
 import { DocumentTitle } from '@/components/common/DocumentTitle';
 import { Reveal } from '@/components/common/Reveal';
@@ -34,15 +33,6 @@ export function AboutPage() {
           ))}
         </ol>
 
-        <Reveal delay={120}>
-          <div className="feature-panel mt-14 flex flex-col items-start gap-6 p-8 sm:mt-20 sm:flex-row sm:items-center sm:justify-between sm:p-12">
-            <p className="max-w-xl font-display font-semibold text-[1.75rem] leading-[1.15] tracking-[-0.03em] text-ink sm:text-[2.25rem]">{t('footer.tagline')}</p>
-            <ButtonLink to="/books" className="w-full shrink-0 sm:w-auto">
-              {t('about.cta')}
-              <ButtonArrow />
-            </ButtonLink>
-          </div>
-        </Reveal>
       </Container>
     </>
   );

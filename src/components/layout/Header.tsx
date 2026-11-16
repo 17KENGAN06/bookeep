@@ -90,7 +90,7 @@ export function Header() {
                   cn(
                     'focus-ring relative inline-flex min-h-10 items-center rounded-[0.5625rem] px-3 text-sm font-medium tracking-[-0.01em] whitespace-nowrap transition-colors duration-200',
                     isActive
-                      ? 'text-ink after:absolute after:bottom-[-1rem] after:left-3 after:right-3 after:h-[2px] after:rounded-full after:bg-accent'
+                      ? 'text-ink after:absolute after:bottom-1 after:left-3 after:right-3 after:h-[2px] after:rounded-full after:bg-accent'
                       : 'text-muted hover:bg-surface-2/60 hover:text-ink',
                   )
                 }
