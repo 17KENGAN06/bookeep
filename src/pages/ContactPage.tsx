@@ -213,7 +213,7 @@ function EmailCard({ icon, title, text, email }: { icon: ReactNode; title: strin
   return (
     <Reveal>
       <div className="lux-card lift h-full rounded-card p-6">
-        <span aria-hidden className="grid h-11 w-11 place-items-center rounded-[var(--radius-control)] border border-line bg-surface-2 text-ink">
+        <span aria-hidden className="icon-tile">
           {icon}
         </span>
         <h2 className="mt-5 font-display text-xl font-semibold text-ink">{title}</h2>

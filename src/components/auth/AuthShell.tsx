@@ -28,7 +28,7 @@ export function AuthShell({ title, lead, children }: { title: string; lead: stri
                 const Icon = note.icon;
                 return (
                   <li key={note.key} className="flex gap-4 tabp:flex-col tabp:items-center tabp:gap-3">
-                    <span aria-hidden className="grid h-10 w-10 shrink-0 place-items-center rounded-[var(--radius-control)] border border-line bg-surface-2 text-ink">
+                    <span aria-hidden className="icon-tile">
                       <Icon className="h-[18px] w-[18px]" />
                     </span>
                     <span>

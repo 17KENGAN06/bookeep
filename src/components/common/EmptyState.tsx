@@ -16,7 +16,7 @@ export function EmptyState({ title, description, action, icon, className, role =
       {icon ? (
         <span
           aria-hidden
-          className="mx-auto mb-6 grid h-14 w-14 place-items-center rounded-[var(--radius-control)] border border-line bg-surface-2 text-ink"
+          className="mx-auto mb-6 icon-tile"
         >
           {icon}
         </span>

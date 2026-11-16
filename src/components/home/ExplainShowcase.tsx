@@ -270,7 +270,7 @@ export function ExplainShowcase() {
 
             <Reveal delay={360}>
               <div className="mt-9 flex flex-col gap-4 min-[480px]:flex-row min-[480px]:items-center">
-                <ButtonLink to={ctaTo} className="hero-cta w-full min-[480px]:w-auto">
+                <ButtonLink to={ctaTo} className="hero-cta w-full shrink-0 min-[480px]:w-auto">
                   {t('home.explain.cta')}
                   <ButtonArrow />
                 </ButtonLink>
@@ -280,13 +280,13 @@ export function ExplainShowcase() {
           </div>
         </div>
 
-        <ul className="mt-14 grid gap-3 sm:mt-16 sm:grid-cols-3 sm:gap-4">
+        <ul className="mt-14 grid sm:mt-16 sm:grid-cols-3 sm:gap-x-8">
           {PERKS.map((perk, index) => {
             const Icon = perk.icon;
             return (
               <Reveal as="li" key={perk.key} delay={index * 90}>
                 <div className="xs-perk">
-                  <Icon className="h-4 w-4 shrink-0 text-accent" aria-hidden />
+                  <Icon className="h-4 w-4 shrink-0" aria-hidden />
                   <span>{t(`home.explain.perks.${perk.key}`)}</span>
                 </div>
               </Reveal>

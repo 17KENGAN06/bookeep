@@ -25,17 +25,17 @@ export function Benefits() {
             </div>
           </Reveal>
 
-          <ol className="relative grid gap-4 sm:gap-5">
+          <ol className="relative grid border-b border-line">
             {items.map((item, index) => {
               const Icon = item.icon;
               return (
                 <Reveal as="li" key={item.key} delay={index * 90}>
-                  <article className="lux-card lift group grid grid-cols-[auto_minmax(0,1fr)] gap-5 rounded-card p-6 sm:gap-7 sm:p-8">
+                  <article className="group grid grid-cols-[auto_minmax(0,1fr)] gap-5 border-t border-line py-7 sm:gap-8 sm:py-9">
                     <div className="flex flex-col items-center gap-4">
-                      <span className="grid h-12 w-12 place-items-center rounded-[var(--radius-control)] border border-line bg-surface-2 text-ink">
-                        <Icon className="h-5 w-5" aria-hidden />
+                      <span className="icon-tile">
+                        <Icon aria-hidden />
                       </span>
-                      <span aria-hidden className="font-display font-semibold text-sm text-faint tabular-nums">0{index + 1}</span>
+                      <span aria-hidden className="text-xs font-semibold tracking-[0.08em] text-faint tabular-nums">0{index + 1}</span>
                     </div>
                     <div className="min-w-0 pt-1.5">
                       <h3 className="font-display text-[1.375rem] font-semibold tracking-tight text-ink sm:text-2xl">

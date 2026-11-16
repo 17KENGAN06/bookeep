@@ -14,7 +14,7 @@ export function FinalCta() {
     <section className="relative pt-6 pb-16 sm:pb-24">
       <Container>
         <Reveal direction="scale">
-          <div className="final-cta relative isolate overflow-hidden rounded-sheet border border-line px-6 py-14 text-center shadow-[var(--app-shadow-lg)] sm:rounded-sheet sm:px-12 sm:py-20">
+          <div className="final-cta feature-panel px-6 py-14 text-center sm:px-12 sm:py-24">
             <Scene name="room" shade="center" />
             <div aria-hidden className="final-cta-glow" />
             <div className="relative mx-auto max-w-2xl">

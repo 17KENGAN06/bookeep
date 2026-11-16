@@ -78,6 +78,11 @@
   --app-shadow-lg: 0 1px 2px rgba(6, 4, 12, 0.4), 0 24px 48px -24px rgba(6, 4, 12, 0.75);
   --app-glow: transparent;
 
+  --card-fill: linear-gradient(180deg, #35313f 0%, #2d2937 100%);
+  --panel-fill: linear-gradient(180deg, #211d2c 0%, #1b1725 100%);
+  --card-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 1px 2px rgba(6, 4, 12, 0.35), 0 18px 40px -26px rgba(6, 4, 12, 0.8);
+  --edge-highlight: rgba(255, 255, 255, 0.05);
+
   --btn-bg: var(--app-accent);
   --btn-bg-hover: var(--app-accent-strong);
   --btn-bg-press: var(--app-accent-press);
@@ -115,6 +120,11 @@
   --app-shadow: 0 1px 2px rgba(23, 19, 34, 0.05);
   --app-shadow-lg: 0 1px 2px rgba(23, 19, 34, 0.05), 0 24px 48px -28px rgba(23, 19, 34, 0.25);
   --app-glow: transparent;
+
+  --card-fill: linear-gradient(180deg, #ffffff 0%, #fcfbfe 100%);
+  --panel-fill: linear-gradient(180deg, #f1eef6 0%, #ece8f2 100%);
+  --card-shadow: inset 0 1px 0 #ffffff, 0 1px 2px rgba(23, 19, 34, 0.05), 0 18px 40px -28px rgba(23, 19, 34, 0.22);
+  --edge-highlight: rgba(255, 255, 255, 0.8);
 
   /* The lime stays the primary action on paper too: dark text on lime reads well on both. */
   --btn-bg: #b7f34d;
@@ -254,9 +264,10 @@
   /* Primary card: graphite surface, hairline border. */
   .lux-card {
     position: relative;
-    background: var(--app-surface);
+    background: var(--card-fill);
     border: 1px solid var(--app-line);
     border-radius: var(--radius-card);
+    box-shadow: var(--card-shadow);
   }
 
   /* Secondary container: one step above the page, so controls inside it still stand out. */
@@ -264,9 +275,68 @@
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    background: var(--app-bg-2);
+    background: var(--panel-fill);
     border: 1px solid var(--app-line);
     border-radius: var(--radius-sheet);
+    box-shadow: inset 0 1px 0 var(--edge-highlight);
+  }
+
+  /* Large feature band: panel tone with a faint 48px grid fading out from one corner. */
+  .feature-panel {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: var(--panel-fill);
+    border: 1px solid var(--app-line);
+    border-radius: var(--radius-sheet);
+    box-shadow: var(--card-shadow);
+  }
+
+  .feature-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(var(--app-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--app-line) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-position: -1px -1px;
+    opacity: 0.45;
+    -webkit-mask-image: radial-gradient(80% 90% at 100% 0%, #000, transparent 70%);
+    mask-image: radial-gradient(80% 90% at 100% 0%, #000, transparent 70%);
+  }
+
+  /* Icon in a small machined tile. */
+  .icon-tile {
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radius-control);
+    color: var(--app-ink);
+    background: linear-gradient(180deg, var(--app-elevated), var(--app-surface-2));
+    border: 1px solid var(--app-line-strong);
+    box-shadow: inset 0 1px 0 var(--edge-highlight), 0 1px 2px rgba(6, 4, 12, 0.3);
+  }
+
+  .icon-tile svg {
+    width: 1.125rem;
+    height: 1.125rem;
+    stroke-width: 1.75;
+  }
+
+  .icon-tile-sm {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.5625rem;
+  }
+
+  .icon-tile-sm svg {
+    width: 1rem;
+    height: 1rem;
   }
 
   .hairline {
@@ -394,6 +464,10 @@
   .btn-primary {
     color: var(--btn-ink);
     background-color: var(--btn-bg);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.45),
+      inset 0 -1px 0 rgba(23, 19, 34, 0.14),
+      0 1px 2px rgba(6, 4, 12, 0.35);
   }
 
   .btn-primary:active:not(:disabled) {
@@ -404,6 +478,7 @@
     color: var(--app-ink);
     background-color: var(--app-surface);
     border-color: var(--app-line);
+    box-shadow: inset 0 1px 0 var(--edge-highlight), 0 1px 2px rgba(6, 4, 12, 0.25);
   }
 
   .btn-outline {
@@ -588,9 +663,9 @@
     position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.625rem;
     height: 2.75rem;
-    padding: 0 0.875rem 0 0.3125rem;
+    padding: 0 0.875rem;
     border-radius: var(--radius-control);
     color: var(--app-ink);
     background: transparent;
@@ -606,7 +681,8 @@
   }
 
   .goals-btn.is-active {
-    border-color: color-mix(in oklab, var(--app-accent) 45%, var(--app-line));
+    border-color: var(--app-line-strong);
+    background-color: var(--app-surface-2);
   }
 
   .goals-btn:focus-visible {
@@ -614,41 +690,17 @@
     box-shadow: var(--ring);
   }
 
-  .goals-ring {
-    position: relative;
-    display: inline-grid;
-    place-items: center;
+  .goals-btn-icon {
+    width: 1.125rem;
+    height: 1.125rem;
     flex-shrink: 0;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 999px;
-    color: var(--app-accent);
-    background: transparent;
-  }
-
-  .goals-ring-track {
-    fill: none;
-    stroke: var(--app-line-strong);
-    stroke-width: 2;
-  }
-
-  .goals-ring-value {
-    fill: none;
-    stroke: var(--app-accent);
-    stroke-width: 2.25;
-    stroke-linecap: round;
-    transition: stroke-dashoffset 0.6s var(--ease-lux);
-  }
-
-  .goals-ring.is-done {
-    color: var(--app-on-accent);
-    background: var(--app-accent);
+    color: var(--app-muted);
   }
 
   .goals-btn-text {
     display: inline-flex;
-    align-items: baseline;
-    gap: 0.4rem;
+    align-items: center;
+    gap: 0.625rem;
     white-space: nowrap;
   }
 
@@ -659,13 +711,44 @@
   }
 
   .goals-btn-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     font-size: 0.75rem;
     font-weight: 600;
     font-variant-numeric: tabular-nums;
     color: var(--app-muted);
   }
 
-  /* Phones: just the ring. */
+  .goals-track {
+    position: relative;
+    width: 2rem;
+    height: 3px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--app-line-strong);
+  }
+
+  .goals-track > span {
+    position: absolute;
+    inset: 0 auto 0 0;
+    border-radius: inherit;
+    background: var(--app-accent);
+    transition: width 0.6s var(--ease-lux);
+  }
+
+  /* A goal met today: one small lime mark, nothing louder. */
+  .goals-dot {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 2px;
+    background: var(--app-accent);
+  }
+
+  /* Phones and narrow tablets: the plain target icon only. */
   @media (max-width: 639px) {
     .goals-btn {
       width: 2.75rem;
@@ -673,6 +756,15 @@
       justify-content: center;
     }
     .goals-btn-text {
+      display: none;
+    }
+  }
+
+  @media (min-width: 640px) {
+    .goals-btn-icon {
+      display: none;
+    }
+    .goals-dot {
       display: none;
     }
   }
@@ -996,6 +1088,10 @@
     .lift:hover {
       transform: translateY(-2px);
       border-color: var(--app-line-strong);
+    }
+
+    .lux-card.lift:hover {
+      box-shadow: inset 0 1px 0 var(--edge-highlight), 0 1px 2px rgba(6, 4, 12, 0.35), 0 26px 50px -28px rgba(6, 4, 12, 0.9);
     }
   }
 }
@@ -1740,8 +1836,11 @@
   inset: 0 3% 12% 3%;
   border-radius: var(--radius-sheet);
   overflow: hidden;
-  background: var(--app-bg-2);
+  background:
+    radial-gradient(55% 45% at 50% 0%, var(--edge-highlight), transparent 70%),
+    var(--panel-fill);
   border: 1px solid var(--app-line);
+  box-shadow: var(--card-shadow);
 }
 
 /* A precise 48px grid, barely there: structure, not decoration. */

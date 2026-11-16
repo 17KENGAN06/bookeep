@@ -6,7 +6,7 @@ export function AuthReadNotice() {
   const { t } = useTranslation();
   return (
     <div className="auth-read-notice mt-6" role="status">
-      <span aria-hidden className="grid h-9 w-9 shrink-0 place-items-center rounded-[var(--radius-control)] border border-line bg-surface-2 text-ink">
+      <span aria-hidden className="icon-tile icon-tile-sm">
         <BookOpen className="h-4 w-4" />
       </span>
       <p className="min-w-0 text-sm leading-relaxed text-ink">{t('auth.readNotice')}</p>
@@ -23,7 +23,7 @@ export function AuthPerks() {
     <ul className="mt-6 grid gap-2.5">
       {perks.map((key) => (
         <li key={key} className="flex items-start gap-3 text-sm leading-snug text-ink">
-          <span aria-hidden className="mt-px grid h-5 w-5 shrink-0 place-items-center rounded-[var(--radius-control)] border border-line bg-surface-2 text-ink">
+          <span aria-hidden className="mt-px grid h-5 w-5 shrink-0 place-items-center rounded-[0.3125rem] bg-surface-2 text-muted">
             <Check className="h-3 w-3" strokeWidth={2.6} />
           </span>
           {t(`auth.perks.${key}`)}

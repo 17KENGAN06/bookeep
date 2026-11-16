@@ -27,19 +27,25 @@ export function StartSteps() {
           </div>
         </Reveal>
 
-        <ol className="start-steps mt-12 grid gap-4 sm:mt-14 md:grid-cols-3 md:gap-5">
-          {steps.map((step, index) => {
-            const Icon = step.icon;
-            return (
-              <Reveal as="li" key={step.key} delay={index * 110}>
-                <article className="lux-card lift start-step h-full rounded-card p-6 sm:p-7">
+        <Reveal>
+          <ol className="start-steps lux-card mt-12 grid overflow-hidden rounded-sheet sm:mt-14 md:grid-cols-3">
+            {steps.map((step, index) => {
+              const Icon = step.icon;
+              return (
+                <li
+                  key={step.key}
+                  className="start-step border-line p-6 not-first:border-t sm:p-8 md:not-first:border-t-0 md:not-first:border-l"
+                >
                   <div className="flex items-center justify-between">
-                    <span className="grid h-12 w-12 place-items-center rounded-[var(--radius-control)] border border-line bg-surface-2 text-ink">
-                      <Icon className="h-5 w-5" aria-hidden />
+                    <span className="icon-tile">
+                      <Icon aria-hidden />
                     </span>
-                    <span aria-hidden className="start-step-num">0{index + 1}</span>
+                    <span aria-hidden className="start-step-num">
+                      0{index + 1}
+                      <span className="text-faint/60"> / 03</span>
+                    </span>
                   </div>
-                  <h3 className="mt-6 font-display text-[1.375rem] font-semibold tracking-tight text-ink sm:text-2xl">
+                  <h3 className="mt-8 font-display text-[1.25rem] font-semibold tracking-[-0.025em] text-ink sm:text-[1.375rem]">
                     {t(`home.start.${step.key}.title`)}
                   </h3>
                   <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-muted">{t(`home.start.${step.key}.text`)}</p>
@@ -55,11 +61,11 @@ export function StartSteps() {
                       </div>
                     </div>
                   ) : null}
-                </article>
-              </Reveal>
-            );
-          })}
-        </ol>
+                </li>
+              );
+            })}
+          </ol>
+        </Reveal>
 
         <Reveal delay={200}>
           <div className="mt-10 flex justify-center">

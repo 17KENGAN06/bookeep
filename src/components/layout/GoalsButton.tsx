@@ -6,10 +6,7 @@ import { useReadingGoals } from '@/hooks/useReadingGoals';
 import { localDateISO } from '@/utils/dates';
 import { cn } from '@/utils/cn';
 
-const RADIUS = 13;
-const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
-
-/** Today's goal as a ring: how many of the planned pages are read. */
+/** Today's goal: how many of the planned pages are read. */
 function useTodayGoal() {
   const { user } = useAuth();
   const now = new Date();
@@ -20,25 +17,11 @@ function useTodayGoal() {
   return { read: Math.min(today.pagesRead, today.targetPages), target: today.targetPages, done: today.completed };
 }
 
-function GoalRing({ progress, done }: { progress: number; done: boolean }) {
-  return (
-    <span className={cn('goals-ring', done && 'is-done')} aria-hidden>
-      <svg viewBox="0 0 32 32" className="absolute inset-0 h-full w-full -rotate-90">
-        <circle cx="16" cy="16" r={RADIUS} className="goals-ring-track" />
-        <circle
-          cx="16"
-          cy="16"
-          r={RADIUS}
-          className="goals-ring-value"
-          strokeDasharray={CIRCUMFERENCE}
-          strokeDashoffset={CIRCUMFERENCE * (1 - progress)}
-        />
-      </svg>
-      <Target className="relative h-[15px] w-[15px]" strokeWidth={2.2} />
-    </span>
-  );
-}
-
+/**
+ * Header link to reading goals. Wide screens: the label, plus a hairline progress track and
+ * "read/target" when a goal is set for today. Phones: a plain target icon (a small lime mark
+ * once today's goal is met).
+ */
 export function GoalsButton({ to }: { to: string }) {
   const { t } = useTranslation();
   const today = useTodayGoal();
@@ -47,11 +30,15 @@ export function GoalsButton({ to }: { to: string }) {
 
   return (
     <NavLink to={to} aria-label={label} title={label} className={({ isActive }) => cn('goals-btn', isActive && 'is-active')}>
-      <GoalRing progress={progress} done={Boolean(today?.done)} />
+      <Target className="goals-btn-icon" strokeWidth={1.75} aria-hidden />
+      {today?.done ? <span className="goals-dot" aria-hidden /> : null}
       <span className="goals-btn-text">
         <span className="goals-btn-label">{t('nav.goals')}</span>
         {today ? (
           <span className="goals-btn-meta">
+            <span className="goals-track" aria-hidden>
+              <span style={{ width: `${Math.round(progress * 100)}%` }} />
+            </span>
             {today.read}/{today.target}
           </span>
         ) : null}

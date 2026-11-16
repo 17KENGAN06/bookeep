@@ -27,7 +27,7 @@ export function ReadingPlanTeaser() {
     <section className="relative py-10 sm:py-16">
       <Container>
         <Reveal direction="scale">
-          <div className="relative isolate overflow-hidden rounded-sheet border border-line shadow-[var(--app-shadow-lg)] sm:rounded-sheet">
+          <div className="feature-panel">
             <Scene name="library" shade="left" />
             <div className="relative grid items-center gap-10 p-6 sm:p-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16 lg:p-16 tabp:grid-cols-[minmax(0,1fr)] tabp:gap-10 tabp:p-12">
               <div>
@@ -41,12 +41,12 @@ export function ReadingPlanTeaser() {
                 </ButtonLink>
               </div>
 
-              <div aria-hidden className="glass-card rounded-card p-3 sm:p-5">
+              <div aria-hidden className="lux-card p-3 sm:p-5">
                 <div className="mb-3 flex items-baseline justify-between px-1">
                   <span className="font-display text-lg font-semibold tracking-tight text-ink capitalize">
                     {new Intl.DateTimeFormat(language, { month: 'long' }).format(new Date())}
                   </span>
-                  <span className="text-[11px] font-bold tracking-[0.18em] text-accent uppercase tabular-nums">10 / 10</span>
+                  <span className="text-[11px] font-semibold tracking-[0.08em] text-muted uppercase tabular-nums">10 / 10</span>
                 </div>
                 <div className="grid grid-cols-7 gap-1 sm:gap-1.5">
                   {labels.map((label) => (
@@ -62,14 +62,14 @@ export function ReadingPlanTeaser() {
                       <span
                         key={index}
                         className={cn(
-                          'flex aspect-square flex-col tabp:aspect-[3/2] justify-between rounded-lg p-1 text-[10px] font-semibold tabular-nums sm:rounded-xl sm:p-1.5 sm:text-xs',
-                          done ? 'bg-accent-soft text-ink' : pages > 0 ? 'bg-surface-2/80 text-ink' : 'bg-surface-2/40 text-muted',
+                          'flex aspect-square flex-col tabp:aspect-[3/2] justify-between rounded-md p-1 text-[10px] font-semibold tabular-nums sm:rounded-lg sm:p-1.5 sm:text-xs',
+                          done ? 'bg-elevated text-ink' : pages > 0 ? 'bg-surface-2 text-ink' : 'bg-bg-2 text-faint',
                           index === 23 && 'shadow-[inset_0_0_0_1px_var(--app-accent)]',
                         )}
                       >
                         {index + 1}
                         <span className="meter !h-0.5">
-                          <span className="meter-fill block" style={{ width: `${ratio * 100}%` }} />
+                          <span className={cn('meter-fill block', !done && '!bg-faint')} style={{ width: `${ratio * 100}%` }} />
                         </span>
                       </span>
                     );

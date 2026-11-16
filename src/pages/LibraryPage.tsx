@@ -133,7 +133,7 @@ function Shelf({
   return (
     <section className="mt-12 first:mt-4 sm:mt-16">
       <div className="mb-6 flex items-center gap-3 border-b border-line pb-4">
-        <span aria-hidden className="grid h-9 w-9 place-items-center rounded-[var(--radius-control)] border border-line bg-surface-2 text-ink">
+        <span aria-hidden className="icon-tile icon-tile-sm">
           {icon}
         </span>
         <h2 className="font-display text-2xl font-semibold tracking-tight text-ink sm:text-[1.75rem]">{title}</h2>
