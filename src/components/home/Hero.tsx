@@ -74,9 +74,9 @@ export function Hero() {
                       {t('home.ctaPrimary')}
                     </ButtonLink>
                   </div>
-                  <ul className="mt-6 flex flex-wrap items-center gap-y-2 text-[0.8125rem] leading-none tracking-[-0.005em] text-muted">
+                  <ul className="mt-6 flex flex-col gap-2.5 text-[0.8125rem] leading-none tracking-[-0.005em] text-muted lg:flex-row lg:flex-wrap lg:items-center lg:gap-y-2 tabp:flex-row tabp:items-center">
                     {(['free', 'demo', 'trial'] as const).map((key) => (
-                      <li key={key} className="border-line pr-4 not-first:border-l not-first:pl-4 last:pr-0">
+                      <li key={key} className="border-line lg:pr-4 lg:not-first:border-l lg:not-first:pl-4 lg:last:pr-0 tabp:pr-4 tabp:not-first:border-l tabp:not-first:pl-4 tabp:last:pr-0">
                         {t(`home.trust.${key}`)}
                       </li>
                     ))}

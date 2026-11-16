@@ -14,10 +14,10 @@ type Pose = { className: string; depth: number };
 // Books stand on the shelf (its top edge sits 12% above the bottom of the stage).
 // Books further back stand a little higher and smaller, which reads as depth.
 const poses: Record<1 | 2 | 3, Pose[]> = {
-  1: [{ className: 'left-[29%] bottom-[11.4%] w-[42%] z-20', depth: 12 }],
+  1: [{ className: 'left-[26%] bottom-[11.4%] w-[48%] z-20', depth: 12 }],
   2: [
-    { className: 'left-[18%] bottom-[11.2%] w-[35%] -rotate-[1.5deg] z-20', depth: 14 },
-    { className: 'left-[49%] bottom-[12.6%] w-[32%] rotate-[1.5deg] z-10', depth: 8 },
+    { className: 'left-[13%] bottom-[11.2%] w-[40%] -rotate-[1.5deg] z-20', depth: 14 },
+    { className: 'left-[49%] bottom-[12.6%] w-[37%] rotate-[1.5deg] z-10', depth: 8 },
   ],
   3: [
     { className: 'left-[33%] bottom-[11.2%] w-[34%] z-30', depth: 15 },
@@ -120,6 +120,24 @@ export function HeroVisual() {
           );
         })
       )}
+
+      {pile[0] ? (
+        <>
+          <span aria-hidden className="hero-label">
+            <span className="hero-label-dot" />
+            {pile[0].level} · {t(`languages.${pile[0].language}`)}
+          </span>
+          <div aria-hidden className="hero-progress">
+            <span className="hero-progress-row">
+              <span>{t('books.progress')}</span>
+              <span className="hero-progress-value">34%</span>
+            </span>
+            <span className="hero-progress-track">
+              <span style={{ width: '34%' }} />
+            </span>
+          </div>
+        </>
+      ) : null}
 
       {pile.length > 0 ? (
         <div aria-hidden className="hero-explain">
