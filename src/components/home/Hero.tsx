@@ -38,7 +38,7 @@ export function Hero() {
   ];
 
   return (
-    <section className="relative isolate overflow-x-clip">
+    <section className="home-hero relative isolate overflow-x-clip">
       <Scene name="room" underHeader />
       <Container className="relative pt-10 pb-16 sm:pt-16 sm:pb-24 lg:pt-20 lg:pb-28">
         <div className="grid grid-cols-[minmax(0,1fr)] items-center gap-x-6 gap-y-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:grid-rows-[auto_auto] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-x-10 tabp:grid-cols-[minmax(0,1fr)] tabp:grid-rows-none tabp:gap-y-12">
@@ -47,7 +47,7 @@ export function Hero() {
               <p className="eyebrow">{t('home.eyebrow')}</p>
             </Reveal>
 
-            <h1 className="hero-title mt-6 font-display text-[2.5rem] leading-[1.04] font-semibold tracking-[-0.035em] break-words text-ink min-[400px]:text-[2.75rem] sm:text-[3.25rem] md:text-[2.75rem] lg:text-[3.25rem] xl:text-[3.75rem] 2xl:text-[4rem] tabp:text-[3.75rem]">
+            <h1 className="hero-title mt-6 font-display text-[2.5rem] leading-[1.04] font-semibold tracking-[-0.035em] break-words text-ink min-[400px]:text-[2.75rem] sm:text-[3.25rem] md:text-[2.75rem] lg:text-[3.5rem] xl:text-[4rem] 2xl:text-[4.25rem] tabp:text-[3.75rem]">
               <Reveal as="span" delay={80} className="block">
                 {t('home.line1')}
               </Reveal>
@@ -125,16 +125,16 @@ export function Hero() {
 
           <div className="md:col-start-1 md:row-start-2 md:self-start tabp:col-start-auto tabp:row-start-auto">
             <Reveal delay={420}>
-              <dl className="grid max-w-xl grid-cols-3 gap-3 border-t border-line pt-7 sm:gap-6 tabp:max-w-none">
+              <dl className="grid max-w-xl grid-cols-3 border-y border-line tabp:max-w-none">
                 {stats.map((item) => {
                   const Icon = item.icon;
                   return (
-                    <div key={item.value} className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-start">
-                      <Icon className="h-5 w-5 shrink-0 text-muted sm:mt-0.5" strokeWidth={1.75} />
+                    <div key={item.value} className="flex min-w-0 flex-col gap-3 border-line py-5 pl-4 first:pl-0 not-first:border-l sm:flex-row sm:items-start sm:py-6 sm:pl-6">
+                      <Icon className="h-[18px] w-[18px] shrink-0 text-faint sm:mt-1" strokeWidth={1.75} />
                       <div className="min-w-0">
                         <dt className="sr-only">{item.label}</dt>
-                        <dd className="font-display text-lg leading-tight font-semibold tracking-tight text-ink sm:text-xl">{item.value}</dd>
-                        <dd className="mt-1 text-xs leading-snug text-muted">{item.label}</dd>
+                        <dd className="font-display text-xl leading-tight font-semibold tracking-[-0.03em] text-ink sm:text-[1.625rem]">{item.value}</dd>
+                        <dd className="mt-1.5 text-[0.75rem] leading-snug text-muted">{item.label}</dd>
                       </div>
                     </div>
                   );

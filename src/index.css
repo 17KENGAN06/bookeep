@@ -1838,6 +1838,7 @@
   overflow: hidden;
   background:
     radial-gradient(55% 40% at 50% 0%, var(--edge-highlight), transparent 70%),
+    radial-gradient(42% 46% at 50% 52%, color-mix(in oklab, var(--app-ink) 5%, transparent), transparent 72%),
     var(--panel-fill);
   border: 1px solid var(--app-line);
   box-shadow: var(--card-shadow);
@@ -2102,5 +2103,95 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--app-faint);
+  }
+}
+
+/* ── Home hero ─────────────────────────────────────────── */
+@layer components {
+  /* A faint 64px grid fading out from behind the showcase, and a hairline floor. */
+  .home-hero {
+    border-bottom: 1px solid var(--app-line);
+  }
+
+  .home-hero::before {
+    content: '';
+    position: absolute;
+    inset: calc(-1 * var(--header-space)) 0 0 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(var(--app-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--app-line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    background-position: center top;
+    opacity: 0.3;
+    -webkit-mask-image: radial-gradient(60% 75% at 78% 45%, #000, transparent 75%);
+    mask-image: radial-gradient(60% 75% at 78% 45%, #000, transparent 75%);
+  }
+
+  /* A real Explain card resting over the covers: what the product does, shown not told. */
+  .hero-explain {
+    position: absolute;
+    z-index: 40;
+    left: 0;
+    bottom: 7%;
+    width: min(17.5rem, 58%);
+    padding: 0.875rem 1rem 0.95rem;
+    border-radius: var(--radius-card);
+    background: var(--app-bg-2);
+    border: 1px solid var(--app-line-strong);
+    box-shadow:
+      inset 0 1px 0 var(--edge-highlight),
+      0 1px 2px rgba(6, 4, 12, 0.4),
+      0 24px 48px -20px rgba(6, 4, 12, 0.85);
+    transform: rotate(-1.5deg);
+    animation: hero-explain-in 0.6s var(--ease-lux) 0.9s both;
+  }
+
+  .hero-explain-head {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--app-muted);
+  }
+
+  .hero-explain-head svg {
+    color: var(--app-accent);
+  }
+
+  .hero-explain-text {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--app-ink);
+  }
+
+  @keyframes hero-explain-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px) rotate(-1.5deg);
+    }
+  }
+
+  @media (max-width: 479px) {
+    .hero-explain {
+      left: 7%;
+      width: 76%;
+      bottom: -7%;
+      padding: 0.7rem 0.8rem;
+    }
+    .hero-explain-text {
+      font-size: 0.8125rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-explain {
+      animation: none;
+    }
   }
 }

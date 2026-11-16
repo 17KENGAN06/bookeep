@@ -1,4 +1,5 @@
 import { useEffect, useRef, type CSSProperties } from 'react';
+import { Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { BookCover } from '@/components/books/BookCover';
@@ -109,6 +110,19 @@ export function HeroVisual() {
           );
         })
       )}
+
+      {pile.length > 0 ? (
+        <div aria-hidden className="hero-explain">
+          <span className="hero-explain-head">
+            <Sparkles className="h-3.5 w-3.5" strokeWidth={2} />
+            {t('home.explain.eyebrow')}
+          </span>
+          <p className="hero-explain-text">
+            <mark className="start-mark">{t('home.start.sampleWord')}</mark>
+            {t('home.start.sampleExplain').slice(t('home.start.sampleWord').length)}
+          </p>
+        </div>
+      ) : null}
     </div>
   );
 }
