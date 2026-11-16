@@ -1833,11 +1833,11 @@
 /* ── Hero showcase: covers on a quiet graphite plinth ────────────── */
 .showcase-niche {
   position: absolute;
-  inset: 0 3% 12% 3%;
+  inset: 0 3%;
   border-radius: var(--radius-sheet);
   overflow: hidden;
   background:
-    radial-gradient(55% 45% at 50% 0%, var(--edge-highlight), transparent 70%),
+    radial-gradient(55% 40% at 50% 0%, var(--edge-highlight), transparent 70%),
     var(--panel-fill);
   border: 1px solid var(--app-line);
   box-shadow: var(--card-shadow);
@@ -1862,28 +1862,29 @@
   content: none;
 }
 
+/* The ledge lives inside the panel: a lit top edge, then a face fading into the panel floor. */
 .showcase-shelf {
   position: absolute;
-  left: 3%;
-  right: 3%;
-  bottom: 0;
+  left: calc(3% + 1px);
+  right: calc(3% + 1px);
+  bottom: 1px;
   height: 13%;
+  overflow: hidden;
+  border-radius: 0 0 calc(var(--radius-sheet) - 1px) calc(var(--radius-sheet) - 1px);
 }
 
 .showcase-shelf-top {
   position: absolute;
   inset: 0 0 auto 0;
-  height: 30%;
-  border-radius: 4px 4px 0 0;
-  background: var(--app-surface);
-  border: 1px solid var(--app-line-strong);
-  border-bottom: 0;
+  height: 26%;
+  background: linear-gradient(180deg, var(--app-elevated), var(--app-surface));
+  box-shadow: inset 0 1px 0 var(--edge-highlight), 0 1px 0 var(--app-line-strong);
 }
 
 .showcase-shelf-front {
   position: absolute;
-  inset: 30% 0 0 0;
-  background: linear-gradient(180deg, var(--app-surface-2), transparent);
+  inset: 26% 0 0 0;
+  background: linear-gradient(180deg, color-mix(in oklab, var(--app-surface-2) 90%, #000), var(--app-bg-2));
 }
 
 .showcase-shelf-front::after {
