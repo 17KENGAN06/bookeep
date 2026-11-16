@@ -12,7 +12,7 @@ type EmptyStateProps = {
 
 export function EmptyState({ title, description, action, icon, className, role = 'status' }: EmptyStateProps) {
   return (
-    <div role={role} className={cn('lux-panel rounded-card px-6 py-14 text-center sm:py-16', className)}>
+    <div role={role} className={cn('feature-panel px-6 py-14 text-center sm:py-20', className)}>
       {icon ? (
         <span
           aria-hidden

@@ -32,10 +32,10 @@ export function PrivacyPage() {
             </ol>
           </nav>
 
-          <div className="max-w-3xl space-y-4">
+          <div className="max-w-3xl">
             {SECTIONS.map((section, index) => (
               <Reveal key={section} delay={index * 50}>
-                <section id={`privacy-${section}`} className="lux-card scroll-mt-28 rounded-card p-6 sm:p-8">
+                <section id={`privacy-${section}`} className="scroll-mt-28 border-b border-line py-8 sm:py-10">
                   <h2 className="font-display text-xl font-semibold tracking-tight text-ink sm:text-2xl">
                     {t(`privacy.sections.${section}.title`)}
                   </h2>

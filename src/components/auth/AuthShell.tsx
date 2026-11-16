@@ -19,15 +19,18 @@ export function AuthShell({ title, lead, children }: { title: string; lead: stri
     <section className="relative isolate">
       <Scene name="botanical" underHeader shade="soft" />
       <Container className="relative py-10 sm:py-16 lg:py-20">
-        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)] lg:gap-20 tabp:grid-cols-[minmax(0,1fr)] tabp:gap-14">
-          <Reveal direction="left" className="hidden lg:block tabp:order-last tabp:block tabp:text-center">
+        <div className="grid items-stretch gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)] lg:gap-6 tabp:grid-cols-[minmax(0,1fr)] tabp:gap-6">
+          <Reveal direction="left" className="hidden lg:block tabp:order-last tabp:block">
+            <div className="feature-panel flex h-full flex-col justify-between gap-12 p-10 xl:p-14 tabp:p-10">
+            <div>
             <p className="eyebrow">{t('common.appName')}</p>
-            <p className="mt-6 max-w-lg font-display font-semibold text-[2.75rem] tabp:mx-auto tabp:text-[2.25rem] leading-[1.1] text-ink">{t('footer.tagline')}</p>
-            <ul className="mt-10 max-w-md space-y-5 tabp:grid tabp:max-w-none tabp:grid-cols-3 tabp:gap-6 tabp:space-y-0">
+            <p className="mt-6 max-w-lg font-display font-semibold text-[2.75rem] tracking-[-0.035em] tabp:text-[2.25rem] leading-[1.08] text-ink">{t('footer.tagline')}</p>
+            </div>
+            <ul className="grid max-w-none gap-0 border-t border-line tabp:grid-cols-3">
               {notes.map((note) => {
                 const Icon = note.icon;
                 return (
-                  <li key={note.key} className="flex gap-4 tabp:flex-col tabp:items-center tabp:gap-3">
+                  <li key={note.key} className="flex gap-4 border-b border-line py-5 last:border-b-0 last:pb-0 tabp:flex-col tabp:gap-3 tabp:border-b-0 tabp:pr-6">
                     <span aria-hidden className="icon-tile">
                       <Icon className="h-[18px] w-[18px]" />
                     </span>
@@ -39,10 +42,11 @@ export function AuthShell({ title, lead, children }: { title: string; lead: stri
                 );
               })}
             </ul>
+            </div>
           </Reveal>
 
-          <Reveal direction="scale" className="mx-auto w-full max-w-[30rem] tabp:max-w-[34rem]">
-            <div className="lux-panel rounded-sheet px-5 py-8 sm:px-9 sm:py-10">
+          <Reveal direction="scale" className="mx-auto w-full max-w-[30rem] lg:h-full tabp:max-w-[34rem]">
+            <div className="lux-card h-full rounded-sheet px-5 py-8 sm:px-9 sm:py-10">
               <span aria-hidden className="mb-6 block h-px w-12 bg-line-strong" />
               <h1 className="font-display text-[2.1rem] leading-tight font-semibold tracking-tight text-ink sm:text-[2.5rem]">{title}</h1>
               <p className="mt-3 text-sm leading-relaxed text-muted sm:text-[0.9375rem]">{lead}</p>

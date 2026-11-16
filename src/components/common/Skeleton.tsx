@@ -16,8 +16,8 @@ export function BookCardSkeleton() {
         <Skeleton className="h-5 w-3/4" />
         <Skeleton className="h-3 w-1/3" />
         <Skeleton className="mt-3 h-1 w-full" />
-        <Skeleton className="mt-auto h-10 w-full rounded-full" />
-        <Skeleton className="h-10 w-full rounded-full" />
+        <Skeleton className="mt-auto h-10 w-full rounded-[var(--radius-control)]" />
+        <Skeleton className="h-10 w-full rounded-[var(--radius-control)]" />
       </div>
     </div>
   );

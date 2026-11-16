@@ -12,10 +12,11 @@ export function NotFoundPage() {
     <section className="relative isolate">
       <DocumentTitle title={t('notFound.title')} noindex />
       <Scene name="botanical" underHeader shade="center" />
-      <Container className="relative flex min-h-[72vh] flex-col items-center justify-center py-16 text-center">
+      <Container className="relative py-12 sm:py-16">
+        <div className="feature-panel flex min-h-[60vh] flex-col items-center justify-center px-6 py-16 text-center">
         <Reveal>
           <p className="eyebrow">{t('notFound.eyebrow')}</p>
-          <p className="mt-6 font-display text-[7rem] leading-none font-semibold tracking-tight text-ink/90 sm:text-[10rem]">
+          <p className="mt-6 font-display text-[7rem] leading-none font-semibold tracking-[-0.06em] text-ink sm:text-[10rem]">
             404
           </p>
         </Reveal>
@@ -36,6 +37,7 @@ export function NotFoundPage() {
             </ButtonLink>
           </div>
         </Reveal>
+        </div>
       </Container>
     </section>
   );

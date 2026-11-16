@@ -72,7 +72,7 @@ export function BooksPage() {
 
       <Container className="relative">
         <Reveal delay={80}>
-          <div className="glass-card flex flex-col gap-5 rounded-card p-4 sm:p-5 md:flex-row md:items-end md:justify-between">
+          <div className="lux-panel flex flex-col gap-5 rounded-card p-4 sm:p-5 md:flex-row md:items-end md:justify-between">
             <BookFilters
               language={language}
               level={level}

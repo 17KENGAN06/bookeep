@@ -27,7 +27,7 @@ export function GoalCompletedToast() {
     <div className="pointer-events-none fixed inset-x-0 bottom-5 z-[90] flex justify-center px-4 sm:bottom-8">
       <div
         role="status"
-        className={`goal-toast lux-panel pointer-events-auto flex w-full max-w-sm items-center gap-3.5 rounded-full py-2.5 pr-6 pl-2.5 ${leaving ? 'is-leaving' : ''}`}
+        className={`goal-toast lux-panel pointer-events-auto flex w-full max-w-sm items-center gap-3.5 rounded-card py-2.5 pr-6 pl-2.5 ${leaving ? 'is-leaving' : ''}`}
       >
         <span className="icon-tile">
           <BookGoalMark />

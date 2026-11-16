@@ -42,7 +42,7 @@ export function AdaptationBadge({ complete, variant = 'badge', compact = false, 
   return (
     <span
       className={cn(
-        'inline-flex min-h-7 items-center gap-1.5 rounded-full bg-black/60 px-2.5 text-[11px] font-semibold text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)] backdrop-blur-md',
+        'inline-flex min-h-7 items-center gap-1.5 rounded-md bg-black/60 px-2.5 text-[11px] font-semibold text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)] backdrop-blur-md',
         compact && 'min-w-7 justify-center px-0',
         className,
       )}

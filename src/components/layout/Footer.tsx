@@ -18,20 +18,21 @@ export function Footer() {
   const goalsTo = user ? '/goals' : '/login?next=/goals';
 
   return (
-    <footer className="relative isolate z-10 mt-20 overflow-hidden pb-[env(safe-area-inset-bottom)]">
+    <footer className="site-footer relative isolate z-10 mt-24 overflow-hidden pb-[env(safe-area-inset-bottom)]">
       <Scene name="botanical" shade="soft" className="opacity-70" />
-      <Container className="relative pt-4 pb-10 sm:pb-14">
-        <div className="hairline mb-12 sm:mb-16" />
+      <Container className="relative pt-14 pb-10 sm:pt-20 sm:pb-12">
         <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-md tabp:max-w-xl">
             <BrandLockup to="/" size="md" />
-            <p className="mt-6 font-display text-[1.75rem] leading-snug font-semibold tracking-tight text-ink/90 sm:text-[2rem]">
+            <p className="mt-8 font-display text-[1.75rem] leading-[1.15] font-semibold tracking-[-0.03em] text-ink sm:text-[2.25rem]">
               {t('footer.tagline')}
             </p>
           </div>
 
           <div className="flex flex-col gap-10 md:flex-row md:gap-12 lg:gap-16 tabp:justify-between">
-            <nav className="grid grid-cols-2 gap-x-6 gap-y-3.5 text-sm font-medium sm:grid-cols-3 md:grid-cols-2 lg:flex lg:flex-col lg:gap-2.5 tabp:grid tabp:flex-1 tabp:content-start tabp:grid-cols-3 tabp:gap-x-10 tabp:gap-y-3.5">
+            <div className="min-w-0 tabp:flex-1">
+            <p className="footer-label">{t('common.appName')}</p>
+            <nav aria-label={t('nav.primary')} className="mt-5 grid grid-cols-2 gap-x-6 gap-y-3 text-sm font-medium sm:grid-cols-3 md:grid-cols-2 lg:flex lg:flex-col lg:gap-3 tabp:grid tabp:content-start tabp:grid-cols-3 tabp:gap-x-10 tabp:gap-y-3">
               <Link to="/" onClick={() => scrollToPageTop()} className={linkClass}>
                 {t('nav.home')}
               </Link>
@@ -54,10 +55,11 @@ export function Footer() {
                 {t('nav.privacy')}
               </Link>
             </nav>
+            </div>
 
             <div>
-              <p className="text-[11px] font-semibold tracking-[0.12em] text-muted uppercase">{t('nav.contact')}</p>
-              <ul className="mt-4 space-y-4 text-sm">
+              <p className="footer-label">{t('nav.contact')}</p>
+              <ul className="mt-5 space-y-4 text-sm">
                 <li>
                   <p className="text-xs text-muted">{t('contact.channels.support.title')}</p>
                   <a className={`${linkClass} mt-0.5 inline-flex font-semibold`} href={`mailto:${CONTACT_EMAIL}`}>
@@ -75,7 +77,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-2 border-t border-line pt-6 text-xs leading-relaxed text-muted sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-16 flex flex-col gap-2 border-t border-line pt-6 text-xs leading-relaxed text-muted sm:flex-row sm:items-center sm:justify-between">
           <p>© {year} {t('common.appName')}</p>
           <p>
             <Trans

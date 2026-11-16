@@ -34,7 +34,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
         {toasts.map((toast) => (
           <p
             key={toast.id}
-            className="glass-card toast-in pointer-events-auto flex items-center gap-3 rounded-full bg-[var(--app-glass-strong)] px-5 py-3.5 text-sm font-medium text-ink"
+            className="glass-card toast-in pointer-events-auto flex items-center gap-3 rounded-[0.875rem] bg-[var(--app-glass-strong)] px-5 py-3.5 text-sm font-medium text-ink"
             role="status"
           >
             <span

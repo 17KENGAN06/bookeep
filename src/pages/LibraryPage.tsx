@@ -94,7 +94,7 @@ export function LibraryPage() {
               return (
                 <div
                   key={item.label}
-                  className="glass-card flex min-w-0 items-center gap-3 rounded-card px-4 py-3 sm:block sm:p-5 lg:flex lg:px-5 lg:py-3.5 xl:block xl:p-5"
+                  className="lux-card flex min-w-0 items-center gap-3 rounded-card px-4 py-3 sm:block sm:p-5 lg:flex lg:px-5 lg:py-3.5 xl:block xl:p-5"
                 >
                   <Icon className="h-4 w-4 shrink-0 text-muted" aria-hidden />
                   <dt className="min-w-0 flex-1 text-sm leading-snug font-semibold break-words text-muted sm:mt-4 sm:text-[0.8125rem] lg:mt-0 xl:mt-4">{item.label}</dt>

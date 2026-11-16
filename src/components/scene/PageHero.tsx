@@ -22,9 +22,9 @@ type PageHeroProps = {
 export function PageHero({ scene, eyebrow, title, lead, actions, aside, align = 'left', className, children }: PageHeroProps) {
   const centered = align === 'center';
   return (
-    <section className={cn('relative isolate', className)}>
+    <section className={cn('page-hero relative isolate', className)}>
       <Scene name={scene} underHeader shade={centered ? 'center' : 'left'} />
-      <Container className="relative pt-12 pb-12 sm:pt-20 sm:pb-16 lg:pt-24 lg:pb-20">
+      <Container className="relative pt-14 pb-12 sm:pt-20 sm:pb-16 lg:pt-24 lg:pb-20">
         <div
           className={cn(
             'grid gap-10',

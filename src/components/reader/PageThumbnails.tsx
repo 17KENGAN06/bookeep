@@ -292,7 +292,7 @@ export function PageThumbnails({ open, store, totalPages, currentPage, onSelect,
                 </span>
                 <span
                   className={cn(
-                    'rounded-full px-2 text-xs font-semibold tabular-nums',
+                    'rounded-md px-2 text-xs font-semibold tabular-nums',
                     current ? 'bg-accent text-on-accent' : 'text-muted',
                   )}
                 >

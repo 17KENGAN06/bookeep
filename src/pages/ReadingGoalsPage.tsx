@@ -77,12 +77,12 @@ export function ReadingGoalsPage() {
         title={t('goals.title')}
         lead={t('goals.lead')}
         aside={
-        <div className="glass-card flex w-full items-center gap-2 rounded-full p-1.5 lg:ml-auto lg:w-auto">
+        <div className="lux-panel flex w-full items-center gap-2 rounded-[0.875rem] p-1 lg:ml-auto lg:w-auto">
           <button type="button" className="icon-btn" onClick={() => move(-1)} aria-label={t('goals.prevMonth')}>
             <ChevronLeft className="h-5 w-5" />
           </button>
           <select
-            className="field-control !min-h-11 min-w-0 flex-1 !rounded-full !border-transparent !bg-transparent !py-0 font-semibold capitalize !shadow-none sm:w-44 sm:flex-none"
+            className="field-control !min-h-11 min-w-0 flex-1 !rounded-[0.625rem] !border-transparent !bg-transparent !py-0 font-semibold capitalize !shadow-none sm:w-44 sm:flex-none"
             value={month}
             aria-label={t('goals.month')}
             onChange={(event) => setMonth(Number(event.target.value))}
@@ -94,7 +94,7 @@ export function ReadingGoalsPage() {
             ))}
           </select>
           <select
-            className="field-control !min-h-11 !w-28 shrink-0 !rounded-full !border-transparent !bg-transparent !py-0 font-semibold !shadow-none"
+            className="field-control !min-h-11 !w-28 shrink-0 !rounded-[0.625rem] !border-transparent !bg-transparent !py-0 font-semibold !shadow-none"
             value={year}
             aria-label={t('goals.year')}
             onChange={(event) => setYear(Number(event.target.value))}
