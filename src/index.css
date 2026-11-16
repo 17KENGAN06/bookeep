@@ -1184,45 +1184,17 @@
   transition: background-color var(--dur-slow) var(--ease);
 }
 
+/* Paper modes colour the page only. The interface around it (toolbar, buttons, the Explain
+   card, the stage) follows the site's light/dark theme, so both controls always do something. */
 .reader-shell[data-paper='sepia'] {
-  --app-bg: #e4d8c0;
-  --app-bg-2: #ddd0b6;
-  --app-surface: #f4ead7;
-  --app-surface-2: #e9dcc2;
-  --app-elevated: #e2d3b6;
-  --app-ink: #3a2c1d;
-  --app-muted: #7a6a55;
-  --app-line: rgba(58, 44, 29, 0.14);
-  --app-line-strong: rgba(58, 44, 29, 0.22);
-  --app-accent: #56701f;
-  --app-accent-strong: #4a6219;
-  --app-accent-press: #3f5414;
-  --app-accent-soft: rgba(86, 112, 31, 0.12);
-  --app-on-accent: #fbf6ea;
-  --app-faint: #9a8a73;
-  --app-glass: rgba(236, 226, 205, 0.7);
-  --app-glass-strong: rgba(236, 226, 205, 0.9);
-  --app-highlight: rgba(255, 255, 255, 0.6);
-  --reader-stage: #e4d8c0;
   --reader-page: #f4ead7;
-  --reader-chrome: rgba(236, 226, 205, 0.86);
+  --reader-stage: color-mix(in oklab, var(--app-bg) 88%, #c9b48a);
 }
 
 .reader-shell[data-paper='night'] {
-  --app-bg: #0f0c16;
-  --app-bg-2: #15121d;
-  --app-surface: #221e2b;
-  --app-surface-2: #1a1723;
-  --app-elevated: #2a2634;
-  --app-ink: #ebe7f1;
-  --app-muted: #8f8b97;
-  --app-line: #2a2633;
-  --app-line-strong: #3a3544;
-  --app-highlight: rgba(255, 255, 255, 0.03);
-  --reader-stage: #0f0c16;
   /* Same as the night filter's paper colour, so no stripe shows where the canvas ends. */
   --reader-page: #171614;
-  --reader-chrome: rgba(15, 12, 22, 0.9);
+  --reader-stage: color-mix(in oklab, var(--app-bg) 92%, #000);
 }
 
 .reader-stage {

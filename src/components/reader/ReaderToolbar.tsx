@@ -123,9 +123,7 @@ export function ReaderToolbar({
             ))}
           </div>
 
-          <div className="hidden sm:block">
-            <ThemeToggle />
-          </div>
+          <ThemeToggle />
         </div>
       </header>
 
