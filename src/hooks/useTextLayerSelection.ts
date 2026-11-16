@@ -13,99 +13,13 @@ import '@/utils/readableStreamIterator';
  * pdf.js's own viewer fixes this with an `.endOfContent` block that covers the gaps
  * while selecting, and that it moves right next to the selection's moving end, so a
  * gap resolves to "here" instead of "end of page". react-pdf adds the block but not
- * this logic. This is the viewer's logic, run for every browser and pointer type;
- * the selection itself stays the browser's native one.
+ * this logic. This is the viewer's logic, for the mouse only: a finger's selection
+ * (long press, handles, system menu) is left entirely to the browser, as on any page.
  */
-const WORD_CHAR = /[\p{L}\p{N}\p{M}'’-]/u;
-
-type Press = { x: number; y: number; layer: HTMLElement };
-
 const textSpans = (layer: HTMLElement) =>
   Array.from(layer.querySelectorAll<HTMLElement>('span[role="presentation"]')).filter((span) =>
     span.textContent?.trim(),
   );
-
-/**
- * A long press with a finger often lands between two lines. Phones then select the whole
- * block under the finger, which here is the whole page. When the first selection of a
- * press runs over more than one line, or out of the page, it is replaced with the word
- * nearest the finger, as if the press had landed on it. Dragging the handles afterwards
- * stays native.
- */
-function narrowToWord(selection: Selection, press: Press) {
-  const range = selection.getRangeAt(0);
-  const spans = textSpans(press.layer);
-  const hit = spans.filter((span) => range.intersectsNode(span)).map((span) => span.getBoundingClientRect());
-  const top = Math.min(...hit.map((r) => r.top));
-  const oneLine = hit.every((r) => r.top < top + r.height / 2);
-  // iPhone: a press between lines starts at the end of the text layer and runs on into
-  // the page counter below it, so the selection may hold no words of the page at all.
-  const inLayer = press.layer.contains(range.startContainer) && press.layer.contains(range.endContainer);
-  if (inLayer && hit.length > 0 && oneLine) return false;
-
-  const word = wordAt(press.layer, press.x, press.y);
-  if (!word) return false;
-  selection.setBaseAndExtent(word.node, word.start, word.node, word.end);
-  return true;
-}
-
-export type WordAt = { node: Text; start: number; end: number };
-
-/**
- * The word of the text layer at a point, or the nearest one. With `reach`, only a word
- * at most that many pixels away counts, so a tap on empty paper finds nothing.
- */
-export function wordAt(layer: HTMLElement, px: number, py: number, reach = Infinity): WordAt | null {
-  const spans = textSpans(layer);
-  let best: HTMLElement | null = null;
-  let bestDistance = Infinity;
-  for (const span of spans) {
-    const r = span.getBoundingClientRect();
-    const dx = Math.max(r.left - px, 0, px - r.right);
-    const dy = Math.max(r.top - py, 0, py - r.bottom);
-    if (dx > reach || dy > reach) continue;
-    // Lines are close together and long: being off by a line counts more than along it.
-    const distance = dx * dx + 4 * dy * dy;
-    if (distance < bestDistance) {
-      bestDistance = distance;
-      best = span;
-    }
-  }
-  const node = best?.firstChild;
-  if (!best || !node || node.nodeType !== Node.TEXT_NODE) return null;
-  const data = (node as Text).data;
-
-  const r = best.getBoundingClientRect();
-  const x = Math.min(Math.max(px, r.left + 1), r.right - 1);
-  const y = (r.top + r.bottom) / 2;
-  let offset = Math.round(((x - r.left) / (r.width || 1)) * data.length);
-  const caret = document.caretRangeFromPoint?.(x, y);
-  if (caret && caret.startContainer === node) offset = caret.startOffset;
-  offset = Math.min(Math.max(offset, 0), data.length);
-
-  // On a space or a comma, take the word just before it (or after it at the line's start).
-  if (!WORD_CHAR.test(data[offset] ?? '') && !WORD_CHAR.test(data[offset - 1] ?? '')) {
-    let left = offset;
-    while (left > 0 && !WORD_CHAR.test(data[left - 1])) left -= 1;
-    let right = offset;
-    while (right < data.length && !WORD_CHAR.test(data[right])) right += 1;
-    offset = left > 0 && offset - left <= right - offset ? left : right;
-  }
-  let start = offset;
-  let end = offset;
-  while (start > 0 && WORD_CHAR.test(data[start - 1])) start -= 1;
-  while (end < data.length && WORD_CHAR.test(data[end])) end += 1;
-  if (start === end) return null;
-  return { node: node as Text, start, end };
-}
-
-
-let ownSelection = false;
-
-/** The next selection change is the site's own (a tapped word): leave it as it is. */
-export function markOwnSelection() {
-  ownSelection = true;
-}
 
 export function useTextLayerSelection(stageRef: RefObject<HTMLElement | null>) {
   useEffect(() => {
@@ -126,8 +40,8 @@ export function useTextLayerSelection(stageRef: RefObject<HTMLElement | null>) {
 
     let pointerDown = false;
     let prevRange: Range | null = null;
-    // A finger's press, until the first selection it makes has been checked.
-    let touchPress: Press | null = null;
+    // The last press was a finger or a pen: the selection is the browser's alone.
+    let touch = false;
 
     // A press on empty space beside the text starts the selection inside a `.pressStart`
     // block: an empty block that lies under the text and covers the whole layer. On the
@@ -178,17 +92,16 @@ export function useTextLayerSelection(stageRef: RefObject<HTMLElement | null>) {
     const onPointerDown = (event: PointerEvent) => {
       pointerDown = true;
       prevRange = null;
-      touchPress = null;
+      touch = event.pointerType !== 'mouse';
       layers().forEach(reset);
+      if (touch) {
+        stageRef.current?.querySelectorAll('.textLayer .pressStart').forEach((cover) => cover.remove());
+        return;
+      }
       if (!(event.target instanceof Element)) return;
       const layer = event.target.closest<HTMLElement>('.textLayer');
       if (!layer) return;
       layer.classList.add('selecting');
-      if (event.pointerType !== 'mouse') {
-        layer.querySelector('.pressStart')?.remove();
-        touchPress = { x: event.clientX, y: event.clientY, layer };
-        return;
-      }
       const cover = pressCover(layer);
       const end = layer.querySelector<HTMLElement>('.endOfContent');
       const onEnd = end != null && event.target === end;
@@ -229,17 +142,8 @@ export function useTextLayerSelection(stageRef: RefObject<HTMLElement | null>) {
     };
 
     const onSelectionChange = () => {
+      if (touch) return;
       const selection = document.getSelection();
-      if (ownSelection) {
-        ownSelection = false;
-        touchPress = null;
-      }
-      if (touchPress && selection && selection.rangeCount > 0 && !selection.isCollapsed) {
-        const press = touchPress;
-        touchPress = null;
-        // The change this makes comes back here as a new selection change.
-        if (stageRef.current?.contains(press.layer) && narrowToWord(selection, press)) return;
-      }
       const all = layers();
       // A bare caret left after a click is no selection: drop the cover so the next
       // press starts from a clean layer.

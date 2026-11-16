@@ -7,18 +7,12 @@ import { supportedLanguages } from '@/i18n';
 import { explainSelection, ExplainError, type ExplainErrorCode, type ExplainResult } from '@/services/explain';
 import type { BookLanguage, CefrLevel, UiLanguage } from '@/types/book';
 import { contextAround } from '@/utils/selectionContext';
-import { markOwnSelection, wordAt, type WordAt } from '@/hooks/useTextLayerSelection';
 import { cn } from '@/utils/cn';
 
 const MAX_SELECTION = 400;
 const CARD_WIDTH = 360;
 const GAP = 10;
 const TOUCH_SETTLE_MS = 650;
-/** A finger that moved less than this and lifted within TAP_MS tapped, not swiped. */
-const TAP_SLOP = 10;
-const TAP_MS = 350;
-/** How far from a word a tap may land and still pick it. */
-const TAP_REACH = 8;
 
 type Picked = {
   text: string;
@@ -55,9 +49,12 @@ const LANGUAGE_LABEL: Record<BookLanguage, string> = {
 
 const WORD_CHAR = /[\p{L}\p{N}\p{M}'’-]/u;
 
-/** Grows the selection to whole words, so half a word is never sent (or shown) on its own. */
-function snapToWords(selection: Selection) {
-  const range = selection.getRangeAt(0);
+/**
+ * The selection grown to whole words, so half a word is never sent (or shown) on its own.
+ * Only a mouse selection is changed to match; a finger's selection is left exactly as the
+ * browser made it, and only the words read from it are whole.
+ */
+function wholeWords(range: Range) {
   let { startContainer, startOffset, endContainer, endOffset } = range;
 
   if (startContainer.nodeType === Node.TEXT_NODE) {
@@ -71,26 +68,24 @@ function snapToWords(selection: Selection) {
     while (endOffset > 0 && /\s/.test(data[endOffset - 1])) endOffset -= 1;
     while (endOffset < data.length && WORD_CHAR.test(data[endOffset])) endOffset += 1;
   }
-
-  const changed =
-    startContainer !== range.startContainer ||
-    startOffset !== range.startOffset ||
-    endContainer !== range.endContainer ||
-    endOffset !== range.endOffset;
-  if (!changed) return;
-  if (startContainer === endContainer && startOffset >= endOffset) return;
-  selection.setBaseAndExtent(startContainer, startOffset, endContainer, endOffset);
+  if (startContainer === endContainer && startOffset >= endOffset) return range;
+  const words = document.createRange();
+  words.setStart(startContainer, startOffset);
+  words.setEnd(endContainer, endOffset);
+  return words;
 }
 
-function readSelection(stage: HTMLElement | null): Omit<Picked, 'context'> | null {
+function readSelection(stage: HTMLElement | null, snap: boolean): Omit<Picked, 'context'> | null {
   const selection = window.getSelection();
   if (!stage || !selection || selection.isCollapsed || selection.rangeCount === 0) return null;
   if (!stage.contains(selection.getRangeAt(0).commonAncestorContainer)) return null;
 
-  snapToWords(selection);
-  const range = selection.getRangeAt(0);
+  const range = wholeWords(selection.getRangeAt(0));
+  if (snap && range !== selection.getRangeAt(0)) {
+    selection.setBaseAndExtent(range.startContainer, range.startOffset, range.endContainer, range.endOffset);
+  }
 
-  const text = selection.toString().replace(/\s+/g, ' ').trim();
+  const text = range.toString().replace(/\s+/g, ' ').trim();
   if (!text || text.length > MAX_SELECTION || !/\p{L}/u.test(text)) return null;
 
   const box = range.getBoundingClientRect();
@@ -113,27 +108,6 @@ function saveTargetChoice(value: UiLanguage) {
   } catch {
     // Private mode: the choice lasts until the page is closed.
   }
-}
-
-const PICK_HIGHLIGHT = 'reader-pick';
-
-/**
- * Touch screens: once the card is open, the browser's selection gives way to our own
- * highlight of the same words. While a selection stays, iPhone and iPad keep their system
- * menu over it, where Chrome adds its own Google Translate; no page can remove that item.
- * The finger still selects natively; only the selection left behind is swapped.
- * Browsers without CSS highlights keep the selection (and the menu).
- */
-function holdPickAsHighlight() {
-  if (typeof CSS === 'undefined' || !CSS.highlights || typeof Highlight === 'undefined') return;
-  const selection = window.getSelection();
-  if (!selection || selection.rangeCount === 0 || selection.isCollapsed) return;
-  CSS.highlights.set(PICK_HIGHLIGHT, new Highlight(selection.getRangeAt(0).cloneRange()));
-  selection.removeAllRanges();
-}
-
-function dropPickHighlight() {
-  if (typeof CSS !== 'undefined') CSS.highlights?.delete(PICK_HIGHLIGHT);
 }
 
 type View = { scale: number; left: number; top: number; width: number; height: number };
@@ -217,12 +191,8 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
   const openRef = useRef(open);
   openRef.current = open;
   const openItemRef = useRef<(item: Picked) => void>(() => {});
-  // The word a tap picked, while its card is open: a tap on a second word makes a phrase.
-  const tapAnchorRef = useRef<(WordAt & { layer: HTMLElement }) | null>(null);
 
   const close = useCallback(() => {
-    dropPickHighlight();
-    tapAnchorRef.current = null;
     abortRef.current?.abort();
     translateAbortRef.current?.abort();
     setOpen(null);
@@ -245,10 +215,9 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
     [],
   );
 
-  // Show the "Explain" chip once the selection settles (handles drag on phones too).
-  // While the mouse button is held the reader is still choosing, so nothing snaps yet.
-  // On touch screens (iPad, phones) the card opens by itself: the system menu with its
-  // own translate buttons sits right over the selection, and our chip got lost beside it.
+  // Show the "Explain" chip once the selection settles. While the mouse button is held the
+  // reader is still choosing, so nothing snaps yet. A finger's selection is never touched:
+  // it stays the browser's own, handles and menu included, and the chip waits below it.
   useEffect(() => {
     let timer = 0;
     let mouseDown = false;
@@ -262,12 +231,7 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
       const byTouch = lastPointer === 'touch' || lastPointer === 'pen';
       timer = window.setTimeout(
         () => {
-          const next = readSelection(stageRef.current);
-          if (next && byTouch) {
-            if (next.text !== openRef.current?.text) openItemRef.current({ ...next, context: '' });
-            holdPickAsHighlight();
-            return;
-          }
+          const next = readSelection(stageRef.current, !byTouch);
           setPicked(next ? { ...next, context: '' } : null);
         },
         // Waits a little longer on touch, while the reader may still drag the handles.
@@ -384,41 +348,6 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
     if (picked) openItem(picked);
   };
 
-  const tapWord = (word: WordAt, layer: HTMLElement) => {
-    const anchor = tapAnchorRef.current;
-    const sameWord = anchor != null && anchor.node === word.node && anchor.start === word.start;
-    if (anchor && open && sameWord) {
-      // The same word again: put it away.
-      window.getSelection()?.removeAllRanges();
-      close();
-      return;
-    }
-    let from: WordAt = word;
-    let to: WordAt = word;
-    if (anchor && open && anchor.layer === layer) {
-      const anchorFirst =
-        anchor.node === word.node
-          ? anchor.start < word.start
-          : Boolean(anchor.node.compareDocumentPosition(word.node) & Node.DOCUMENT_POSITION_FOLLOWING);
-      if (anchorFirst) from = anchor;
-      else to = anchor;
-    }
-    const range = document.createRange();
-    range.setStart(from.node, from.start);
-    range.setEnd(to.node, to.end);
-    const text = range.toString().replace(/\s+/g, ' ').trim();
-    if (!text || text.length > MAX_SELECTION) return;
-    // A phrase ends the pick; the next tap starts a new word.
-    tapAnchorRef.current = from === to ? { ...word, layer } : null;
-    markOwnSelection();
-    window.getSelection()?.setBaseAndExtent(from.node, from.start, to.node, to.end);
-    const box = range.getBoundingClientRect();
-    openItem({ text, context: '', rect: { top: box.top, bottom: box.bottom, left: box.left, right: box.right } });
-    holdPickAsHighlight();
-  };
-  const tapWordRef = useRef(tapWord);
-  tapWordRef.current = tapWord;
-
   const revealTranslation = () => {
     if (!open) return;
     setShowTranslation(true);
@@ -439,9 +368,6 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
     };
     const onDown = (event: PointerEvent) => {
       if (cardRef.current && event.target instanceof Node && cardRef.current.contains(event.target)) return;
-      // A finger on the book's text may be tapping the next word of a phrase: the tap
-      // handler below decides once the finger lifts.
-      if (event.pointerType !== 'mouse' && onBookText(event.target, stageRef.current)) return;
       close();
     };
     window.addEventListener('keydown', onKey);
@@ -450,41 +376,7 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
       window.removeEventListener('keydown', onKey);
       window.removeEventListener('pointerdown', onDown);
     };
-  }, [open, close, stageRef]);
-
-  // Touch screens: a tap on a word picks it and opens the card; with the card open, a tap
-  // on another word stretches the pick into the phrase between them. Phones decide on
-  // their own what a long press selects (an iPhone often took the whole page), while a
-  // tap lands where the finger is.
-  useEffect(() => {
-    let down: { x: number; y: number; time: number } | null = null;
-    const onDown = (event: PointerEvent) => {
-      down = event.pointerType === 'mouse' ? null : { x: event.clientX, y: event.clientY, time: event.timeStamp };
-    };
-    const onUp = (event: PointerEvent) => {
-      const start = down;
-      down = null;
-      if (!start || event.pointerType === 'mouse') return;
-      const moved = Math.hypot(event.clientX - start.x, event.clientY - start.y);
-      if (moved > TAP_SLOP || event.timeStamp - start.time > TAP_MS) return;
-      if (!onBookText(event.target, stageRef.current)) return;
-      const layer = (event.target as Element).closest<HTMLElement>('.textLayer');
-      const word = layer ? wordAt(layer, event.clientX, event.clientY, TAP_REACH) : null;
-      if (!layer || !word) {
-        // Empty paper: the same as a tap anywhere else outside the card.
-        if (openRef.current) close();
-        return;
-      }
-      // After the browser has finished with the tap, which may clear a selection.
-      window.setTimeout(() => tapWordRef.current(word, layer), 40);
-    };
-    document.addEventListener('pointerdown', onDown);
-    document.addEventListener('pointerup', onUp);
-    return () => {
-      document.removeEventListener('pointerdown', onDown);
-      document.removeEventListener('pointerup', onUp);
-    };
-  }, [stageRef, close]);
+  }, [open, close]);
 
   // Desktop: a popover beside the selection. Narrow screens: a sheet above the bottom bar.
   useLayoutEffect(() => {
@@ -672,11 +564,6 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
       ) : null}
     </div>
   );
-}
-
-/** Whether an event target is the book's text layer on the reader stage. */
-function onBookText(target: EventTarget | null, stage: HTMLElement | null) {
-  return target instanceof Element && stage != null && stage.contains(target) && target.closest('.textLayer') != null;
 }
 
 /** Above the selection with a mouse; below it on touch, where the system menu sits above. */

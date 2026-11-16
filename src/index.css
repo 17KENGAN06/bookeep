@@ -1503,17 +1503,10 @@
   color: rgb(0 0 0 / 0.01);
 }
 
-/* The words the open card explains on a touch screen (see holdPickAsHighlight). */
-::highlight(reader-pick) {
-  background-color: color-mix(in oklab, var(--app-accent) 38%, transparent);
-}
-
-.reader-page .react-pdf__Page__textContent ::selection {
-  background: color-mix(in oklab, var(--app-accent) 38%, transparent);
-}
+/* Selection colour: pdf.js's own (the system accent colour), as on any page. */
 
 /* Line breaks and the empty blocks of the text layer must not paint selection strips
-   at the page's left edge (pdf.js hides these too; the rule above would bring them back). */
+   at the page's left edge (pdf.js hides line breaks too). */
 .reader-page .react-pdf__Page__textContent br::selection,
 .reader-page .react-pdf__Page__textContent .endOfContent::selection,
 .reader-page .react-pdf__Page__textContent .pressStart::selection {
