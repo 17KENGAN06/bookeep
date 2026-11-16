@@ -228,7 +228,8 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
         setPicked(null);
         return;
       }
-      const byTouch = lastPointer === 'touch' || lastPointer === 'pen';
+      // No pointer seen yet (some phones send none for a long press): go by the screen.
+      const byTouch = lastPointer === 'touch' || lastPointer === 'pen' || (!lastPointer && isCoarsePointer());
       timer = window.setTimeout(
         () => {
           const next = readSelection(stageRef.current, !byTouch);
@@ -260,17 +261,33 @@ export function SelectionExplainer({ stageRef, pageText, resetKey, book, canTran
     };
   }, [stageRef]);
 
-  // Scrolling moves the selection; hide the chip rather than leave it floating elsewhere.
+  // Scrolling moves the selection: the chip moves with it. Phones scroll and resize on their
+  // own while a finger selects (the browser's bars slide in and out), so hiding the chip
+  // there meant it never showed at all.
+  const pickedShown = picked != null;
   useEffect(() => {
-    if (!picked) return;
-    const hide = () => setPicked(null);
-    window.addEventListener('scroll', hide, { passive: true, capture: true });
-    window.addEventListener('resize', hide);
-    return () => {
-      window.removeEventListener('scroll', hide, { capture: true });
-      window.removeEventListener('resize', hide);
+    if (!pickedShown) return;
+    let frame = 0;
+    const follow = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0 || selection.isCollapsed) return;
+        const box = selection.getRangeAt(0).getBoundingClientRect();
+        if (box.width === 0 && box.height === 0) return;
+        setPicked((current) =>
+          current ? { ...current, rect: { top: box.top, bottom: box.bottom, left: box.left, right: box.right } } : current,
+        );
+      });
     };
-  }, [picked]);
+    window.addEventListener('scroll', follow, { passive: true, capture: true });
+    window.addEventListener('resize', follow);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', follow, { capture: true });
+      window.removeEventListener('resize', follow);
+    };
+  }, [pickedShown]);
 
   const translationKey = (lang: UiLanguage, item: Picked) => JSON.stringify([lang, item.text, item.context]);
 
@@ -572,9 +589,10 @@ function chipPosition(rect: Picked['rect'], screen: { width: number; height: num
   const chipWidth = 132;
   const center = (rect.left + rect.right) / 2;
   const left = Math.min(Math.max(12, center - chipWidth / 2), screen.width - chipWidth - 12);
-  const preferBelow = isCoarsePointer() || rect.top - chipHeight - GAP < 72;
-  const top = preferBelow
-    ? Math.min(rect.bottom + GAP, screen.height - chipHeight - 12)
-    : rect.top - chipHeight - GAP;
-  return { top, left };
+  // Phones keep the page buttons in a bar at the bottom: the chip stays above it.
+  const floor = screen.height - chipHeight - (screen.width < 768 ? 104 : 12);
+  const roomBelow = rect.bottom + GAP <= floor;
+  const preferBelow = (isCoarsePointer() && roomBelow) || rect.top - chipHeight - GAP < 72;
+  const top = preferBelow ? Math.min(rect.bottom + GAP, floor) : rect.top - chipHeight - GAP;
+  return { top: Math.max(12, top), left };
 }
