@@ -1,4 +1,4 @@
-import { BookOpen, Check, FileText, Globe, Target } from 'lucide-react';
+import { BookOpen, FileText, Globe, Target } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ButtonArrow, ButtonLink } from '@/components/common/Button';
 import { Container } from '@/components/common/Container';
@@ -74,10 +74,9 @@ export function Hero() {
                       {t('home.ctaPrimary')}
                     </ButtonLink>
                   </div>
-                  <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-[0.8125rem] text-muted">
+                  <ul className="mt-6 flex flex-wrap items-center gap-y-2 text-[0.8125rem] leading-none tracking-[-0.005em] text-muted">
                     {(['free', 'demo', 'trial'] as const).map((key) => (
-                      <li key={key} className="inline-flex items-center gap-1.5">
-                        <Check className="h-3.5 w-3.5 text-muted" strokeWidth={2.2} aria-hidden />
+                      <li key={key} className="border-line pr-4 not-first:border-l not-first:pl-4 last:pr-0">
                         {t(`home.trust.${key}`)}
                       </li>
                     ))}
