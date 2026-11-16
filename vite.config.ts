@@ -4,15 +4,9 @@ import { copyFileSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
 import { defineConfig, loadEnv, type Plugin } from 'vite';
+import { applyHomeHead, loadBooks, robotsTxt, sitemapXml, writePrerenderedPages } from './scripts/seo.ts';
 
 const pdfjsLegacy = fileURLToPath(new URL('./node_modules/pdfjs-dist/legacy/build/pdf.mjs', import.meta.url));
-
-function applySiteUrl(source: string, origin: string) {
-  if (origin) return source.replaceAll('__SITE_URL__', origin);
-  return source
-    .replace(/^Sitemap: __SITE_URL__\/sitemap\.xml\r?\n/m, '')
-    .replaceAll('__SITE_URL__', '');
-}
 
 function copyPdfWorker(destDir: string) {
   copyFileSync(
@@ -52,19 +46,22 @@ function apiConfigPreloadPlugin(apiUrl: string): Plugin {
   };
 }
 
-function seoSiteUrlPlugin(origin: string): Plugin {
+// Page heads, prerendered pages for link previews and crawlers, sitemap.xml and robots.txt (see scripts/seo.ts).
+function seoPlugin(origin: string, apiUrl: string): Plugin {
   return {
-    name: 'bookeep-seo-site-url',
+    name: 'bookeep-seo',
     transformIndexHtml(html) {
-      return applySiteUrl(html, origin);
+      return applyHomeHead(html, origin);
     },
-    closeBundle() {
-      const publicDir = resolve(fileURLToPath(new URL('./public', import.meta.url)));
+    async closeBundle() {
       const outDir = resolve(fileURLToPath(new URL('./dist', import.meta.url)));
-      for (const fileName of ['robots.txt', 'sitemap.xml']) {
-        const source = readFileSync(resolve(publicDir, fileName), 'utf8');
-        writeFileSync(resolve(outDir, fileName), applySiteUrl(source, origin));
-      }
+      writeFileSync(resolve(outDir, 'robots.txt'), robotsTxt(origin));
+      if (!origin) return;
+      const books = await loadBooks(apiUrl);
+      const builtIndex = readFileSync(resolve(outDir, 'index.html'), 'utf8');
+      writePrerenderedPages(outDir, builtIndex, origin, books);
+      writeFileSync(resolve(outDir, 'sitemap.xml'), sitemapXml(origin, books, new Date().toISOString().slice(0, 10)));
+      console.log(`[seo] prerendered ${books.length} book pages, sitemap and robots.txt written`);
     },
   };
 }
@@ -75,7 +72,7 @@ export default defineConfig(({ mode }) => {
   const apiUrl = (env.VITE_API_URL ?? '').trim().replace(/\/$/, '');
 
   return {
-    plugins: [react(), tailwindcss(), pdfWorkerPlugin(), seoSiteUrlPlugin(siteUrl), apiConfigPreloadPlugin(apiUrl)],
+    plugins: [react(), tailwindcss(), pdfWorkerPlugin(), seoPlugin(siteUrl, apiUrl), apiConfigPreloadPlugin(apiUrl)],
     resolve: {
       alias: [
         { find: '@', replacement: fileURLToPath(new URL('./src', import.meta.url)) },

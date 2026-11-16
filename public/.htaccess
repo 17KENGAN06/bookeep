@@ -1,12 +1,23 @@
+Options -MultiViews
+
 <IfModule mod_mime.c>
   AddType application/javascript .mjs
   AddType application/wasm .wasm
+  AddType application/manifest+json .webmanifest
+  AddType image/svg+xml .svg
 </IfModule>
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
   RewriteRule ^index\.html$ - [L]
+
+  # Public pages and books have a prerendered copy with their own title, description and
+  # link-preview tags (built by scripts/seo.ts). The app takes over once it loads.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{DOCUMENT_ROOT}/prerender/$1.html -f
+  RewriteRule ^(.+?)/?$ /prerender/$1.html [L]
+
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule . /index.html [L]

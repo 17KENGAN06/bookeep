@@ -1,23 +1,19 @@
 {
-  "name": "Bookeep",
+  "name": "Bookeep — adapted English & Finnish books",
   "short_name": "Bookeep",
-  "description": "Adapted English and Finnish books for language learners.",
+  "description": "Adapted English and Finnish books for A2–B1 language learners.",
+  "id": "/",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#171322",
   "theme_color": "#171322",
   "lang": "en",
+  "categories": ["books", "education"],
   "icons": [
-    {
-      "src": "/favicon.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/apple-touch-icon.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
   ]
 }

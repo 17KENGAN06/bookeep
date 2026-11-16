@@ -59,7 +59,9 @@ void i18n
       escapeValue: false,
     },
     detection: {
-      order: ['localStorage', 'navigator'],
+      // ?lang=fi links (hreflang, shared links) win over the saved choice.
+      order: ['querystring', 'localStorage', 'navigator'],
+      lookupQuerystring: 'lang',
       caches: ['localStorage'],
       lookupLocalStorage: LANGUAGE_STORAGE_KEY,
     },
@@ -68,6 +70,18 @@ void i18n
     syncDocumentLang(i18n.resolvedLanguage);
   });
 
-i18n.on('languageChanged', syncDocumentLang);
+// A ?lang= link keeps pointing at the language on screen after the reader switches.
+function syncLangParam(language?: string) {
+  if (typeof window === 'undefined' || !language) return;
+  const url = new URL(window.location.href);
+  if (!url.searchParams.has('lang') || url.searchParams.get('lang') === language) return;
+  url.searchParams.set('lang', language);
+  window.history.replaceState(window.history.state, '', url);
+}
+
+i18n.on('languageChanged', (language) => {
+  syncDocumentLang(language);
+  syncLangParam(language);
+});
 
 export default i18n;

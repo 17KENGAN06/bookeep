@@ -124,7 +124,21 @@ export function BookDetailsPage() {
 
   return (
     <section className="relative isolate">
-      <DocumentTitle title={title} description={description} image={book.cover_path} />
+      <DocumentTitle
+        title={title}
+        description={description}
+        image={book.cover_path}
+        book={{
+          slug: book.slug,
+          title,
+          description,
+          language: book.language,
+          level: book.level,
+          cover: book.cover_path,
+          pageCount: book.page_count,
+          updatedAt: book.updated_at,
+        }}
+      />
       {backdrop ? <CoverScene src={backdrop} underHeader /> : <Scene name="library" underHeader shade="soft" />}
       <Container className="relative py-8 sm:py-12 lg:py-16">
         <Link to="/books" className="btn btn-quiet -ml-1 text-muted hover:text-ink">
