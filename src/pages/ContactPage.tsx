@@ -218,7 +218,7 @@ function EmailCard({ icon, title, text, email }: { icon: ReactNode; title: strin
         </span>
         <h2 className="mt-5 font-display text-xl font-semibold text-ink">{title}</h2>
         <p className="mt-2 text-sm leading-relaxed text-muted">{text}</p>
-        <a href={`mailto:${email}`} className="focus-ring mt-4 inline-flex items-center gap-2 rounded-md text-sm font-semibold break-all text-accent hover:text-ink">
+        <a href={`mailto:${email}`} className="focus-ring mt-4 inline-flex items-center gap-2 rounded-md text-sm font-semibold break-all text-ink underline decoration-line-strong underline-offset-4 hover:decoration-accent">
           <Mail className="h-4 w-4 shrink-0" aria-hidden />
           {email}
         </a>
