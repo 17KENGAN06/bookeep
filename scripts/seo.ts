@@ -159,7 +159,7 @@ export async function loadBooks(apiUrl: string): Promise<SeoBook[]> {
     if (!base || !key) return [];
     const select = 'slug,title_original,title_en,description_en,description_fi,language,level,cover_path,page_count,updated_at';
     const rows = await fetchJson<BookRow[]>(
-      `${base}/rest/v1/books?select=${select}&published=eq.true&order=created_at.desc`,
+      `${base}/rest/v1/books?select=${select}&published=eq.true&language=eq.en&order=created_at.desc`,
       { apikey: key, Authorization: `Bearer ${key}` },
     );
     return rows

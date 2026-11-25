@@ -11,9 +11,9 @@
     "skipToContent": "Vai al contenuto"
   },
   "seo": {
-    "title": "Bookeep — libri adattati in inglese e finlandese",
-    "description": "Un catalogo di libri adattati in inglese e finlandese. I titoli sono riscritti per lettori di livello A2–B1, mentre la storia resta intatta.",
-    "keywords": "Bookeep, libri adattati, inglese, finlandese, A2, B1, lettura in lingua"
+    "title": "Bookeep — libri adattati in inglese",
+    "description": "Un catalogo di libri adattati in inglese. I titoli sono riscritti per lettori di livello A2–B1, mentre la storia resta intatta.",
+    "keywords": "Bookeep, libri adattati, inglese, A2, B1, leggere in inglese"
   },
   "nav": {
     "primary": "Navigazione principale",
@@ -28,15 +28,15 @@
     "subscribe": "Abbonamento"
   },
   "home": {
-    "eyebrow": "Adattamenti · Inglese · Finlandese",
-    "line1": "Libri adattati",
-    "line2": "in inglese",
-    "line3": "& finlandese",
-    "subtitle": "Bookeep è un catalogo di libri in inglese e finlandese preparati per chi studia le lingue. La trama resta, la lingua diventa più chiara.",
+    "eyebrow": "Adattamenti · Inglese · A2–B1",
+    "line1": "Libri",
+    "line2": "adattati",
+    "line3": "in inglese",
+    "subtitle": "Bookeep è un catalogo di libri in inglese preparati per chi studia la lingua. La trama resta, la lingua diventa più chiara.",
     "ctaPrimary": "Apri il catalogo",
     "ctaGoals": "Piano di lettura",
     "featuredTitle": "Nel catalogo",
-    "featuredSubtitle": "Libri adattati in inglese e finlandese. Filtra per lingua e livello, se vuoi.",
+    "featuredSubtitle": "Libri adattati in inglese. Filtra per livello, se vuoi.",
     "viewAll": "Tutti i libri",
     "planTitle": "Un piano di lettura tranquillo",
     "planLead": "Scegli quante pagine leggere ogni giorno. Il calendario conta le pagine di tutti i libri, e contano solo le pagine nuove.",
@@ -47,8 +47,8 @@
         "text": "Il testo viene riscritto in modo più semplice, senza perdere la trama né la struttura del libro."
       },
       "languages": {
-        "title": "Due lingue",
-        "text": "Il catalogo è solo in inglese e finlandese — due sezioni in un unico posto."
+        "title": "Solo inglese",
+        "text": "Tutti i libri del catalogo sono in inglese — una lingua, uno scaffale tranquillo."
       },
       "levels": {
         "title": "Livelli A2–B1",
@@ -57,7 +57,7 @@
     },
     "stats": {
       "levels": "livelli",
-      "languages": "due lingue",
+      "languages": "lingua dei libri",
       "reader": "lettore nel browser"
     },
     "features": {
@@ -83,7 +83,7 @@
       },
       "choose": {
         "title": "Scegli un libro",
-        "text": "Inglese o finlandese, livelli A2–B1. La stessa storia in una lingua più chiara."
+        "text": "Libri in inglese, livelli A2–B1. La stessa storia in una lingua più chiara."
       },
       "read": {
         "title": "Leggi e capisci",
@@ -131,14 +131,11 @@
   },
   "books": {
     "title": "Libri",
-    "subtitle": "Libri adattati in inglese e finlandese. Filtra per lingua e livello.",
+    "subtitle": "Libri adattati in inglese. Filtra per livello.",
     "all": "Tutti",
     "allLevels": "Tutti",
-    "language": "Lingua",
     "level": "Livello",
     "empty": "Nessun libro trovato",
-    "emptyFi": "Nessun libro in finlandese trovato",
-    "emptyEn": "Nessun libro in inglese trovato",
     "emptyLevel": "Nessun libro trovato per questo livello",
     "showAll": "Mostra tutti",
     "loading": "Caricamento dei libri...",
@@ -184,7 +181,7 @@
   "about": {
     "eyebrow": "Chi siamo",
     "title": "Il progetto",
-    "lead": "Bookeep è un catalogo di libri adattati in inglese e finlandese. Qui non ci sono lezioni né esercizi: apri un libro e lo leggi nel browser.",
+    "lead": "Bookeep è un catalogo di libri adattati in inglese. Qui non ci sono lezioni né esercizi: apri un libro e lo leggi nel browser.",
     "cta": "Apri il catalogo",
     "sections": {
       "purpose": {
@@ -196,8 +193,8 @@
         "text": "Non è un breve riassunto né una raccolta di dialoghi. È l’opera completa, in cui grammatica densa, parole rare e periodi lunghi vengono portati a un livello QCER scelto. Trama, personaggi e struttura restano. Ciò che cambia per primo è la lingua."
       },
       "languages": {
-        "title": "Inglese e finlandese",
-        "text": "I libri del catalogo sono solo in inglese e finlandese. Sono le lingue dei testi. L’interfaccia è disponibile in nove lingue, dal finlandese e dall’inglese al polacco, tedesco, francese, italiano e spagnolo: cambiano le scritte del sito, il libro resta nella lingua dell’adattamento."
+        "title": "Libri in inglese",
+        "text": "Tutti i libri del catalogo sono in inglese: è la lingua dei testi. L’interfaccia è disponibile in nove lingue: cambiano le scritte del sito, il libro resta in inglese."
       },
       "levels": {
         "title": "Livelli A2 e B1",
@@ -345,7 +342,7 @@
     }
   },
   "footer": {
-    "tagline": "Libri adattati in inglese e finlandese.",
+    "tagline": "Libri adattati in inglese.",
     "credit": "Il sito è sviluppato e gestito da <studio>WEISEZAHOY</studio>."
   },
   "admin": {
@@ -366,8 +363,6 @@
       "title": "Libri",
       "add": "Aggiungi libro",
       "total": "Libri totali",
-      "finnish": "Libri in finlandese",
-      "english": "Libri in inglese",
       "empty": "Ancora nessun libro"
     },
     "hero": {
@@ -403,7 +398,6 @@
       "editTitle": "Modifica libro",
       "titleOriginal": "Titolo originale",
       "slug": "Slug",
-      "language": "Lingua del libro",
       "level": "Livello",
       "published": "Pubblicato",
       "complete": "Il libro è completo",

@@ -51,7 +51,7 @@ app.get('/api/config', (_req, res) => {
   });
 });
 
-// Explains a selected word or phrase from a book, in simple English or Finnish.
+// Explains a selected word or phrase from a book, in simple English.
 app.post('/api/explain', (req, res) => {
   void explainHandler(req, res);
 });

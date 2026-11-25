@@ -4,8 +4,8 @@ import { contentLanguages } from '@/i18n';
 import { FileDropzone } from '@/components/admin/FileDropzone';
 import { Button } from '@/components/common/Button';
 import { Field, fieldControlClass } from '@/components/common/Field';
-import type { Book, BookLanguage, CefrLevel } from '@/types/book';
-import { BOOK_LANGUAGES, CEFR_LEVELS } from '@/types/book';
+import type { Book, CefrLevel } from '@/types/book';
+import { CEFR_LEVELS } from '@/types/book';
 import type { BookDraft } from '@/services/books';
 import { DEFAULT_DEMO_PAGES } from '@/services/demoPages';
 import { isCoverFile, isPdfFile } from '@/utils/files';
@@ -27,7 +27,7 @@ const emptyDraft: BookDraft = {
   description_fi: null,
   description_uk: null,
   description_ru: null,
-  language: 'fi',
+  language: 'en',
   level: 'A2',
   published: true,
   complete: false,
@@ -162,21 +162,6 @@ export function BookForm({ book, isSaving, onSubmit }: BookFormProps) {
             onChange={(event) => setDraft((current) => ({ ...current, slug: event.target.value }))}
             placeholder={generatedSlug}
           />
-        </Field>
-        <Field label={t('admin.form.language')}>
-          <select
-            className={fieldControlClass}
-            value={draft.language}
-            onChange={(event) =>
-              setDraft((current) => ({ ...current, language: event.target.value as BookLanguage }))
-            }
-          >
-            {BOOK_LANGUAGES.map((code) => (
-              <option key={code} value={code}>
-                {t(`languages.${code}`)}
-              </option>
-            ))}
-          </select>
         </Field>
         <Field label={t('admin.form.level')}>
           <select

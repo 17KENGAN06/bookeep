@@ -84,15 +84,15 @@ const COPY: Record<AuthMailKind, Record<MailLocale, Copy>> = {
 };
 
 const META: Record<MailLocale, { linkFallback: string; tagline: string; eyebrow: string }> = {
-  en: { linkFallback: "If the button does not work, open this link:", tagline: "Adapted books in English and Finnish.", eyebrow: "Account" },
-  fi: { linkFallback: "Jos painike ei toimi, avaa tämä linkki:", tagline: "Mukautettuja kirjoja englanniksi ja suomeksi.", eyebrow: "Tili" },
-  uk: { linkFallback: "Якщо кнопка не працює, відкрийте це посилання:", tagline: "Адаптовані книги англійською та фінською.", eyebrow: "Акаунт" },
-  ru: { linkFallback: "Если кнопка не работает, откройте эту ссылку:", tagline: "Адаптированные книги на английском и финском.", eyebrow: "Аккаунт" },
-  pl: { linkFallback: "Jeśli przycisk nie działa, otwórz ten link:", tagline: "Adaptowane książki po angielsku i fińsku.", eyebrow: "Konto" },
-  de: { linkFallback: "Falls der Button nicht funktioniert, öffne diesen Link:", tagline: "Vereinfachte Bücher auf Englisch und Finnisch.", eyebrow: "Konto" },
-  fr: { linkFallback: "Si le bouton ne fonctionne pas, ouvrez ce lien :", tagline: "Livres adaptés en anglais et en finnois.", eyebrow: "Compte" },
-  it: { linkFallback: "Se il pulsante non funziona, apri questo link:", tagline: "Libri adattati in inglese e finlandese.", eyebrow: "Account" },
-  es: { linkFallback: "Si el botón no funciona, abre este enlace:", tagline: "Libros adaptados en inglés y finés.", eyebrow: "Cuenta" },
+  en: { linkFallback: "If the button does not work, open this link:", tagline: "Adapted English books.", eyebrow: "Account" },
+  fi: { linkFallback: "Jos painike ei toimi, avaa tämä linkki:", tagline: "Mukautettuja englanninkielisiä kirjoja.", eyebrow: "Tili" },
+  uk: { linkFallback: "Якщо кнопка не працює, відкрийте це посилання:", tagline: "Адаптовані книги англійською.", eyebrow: "Акаунт" },
+  ru: { linkFallback: "Если кнопка не работает, откройте эту ссылку:", tagline: "Адаптированные книги на английском.", eyebrow: "Аккаунт" },
+  pl: { linkFallback: "Jeśli przycisk nie działa, otwórz ten link:", tagline: "Adaptowane książki po angielsku.", eyebrow: "Konto" },
+  de: { linkFallback: "Falls der Button nicht funktioniert, öffne diesen Link:", tagline: "Vereinfachte Bücher auf Englisch.", eyebrow: "Konto" },
+  fr: { linkFallback: "Si le bouton ne fonctionne pas, ouvrez ce lien :", tagline: "Livres adaptés en anglais.", eyebrow: "Compte" },
+  it: { linkFallback: "Se il pulsante non funziona, apri questo link:", tagline: "Libri adattati in inglese.", eyebrow: "Account" },
+  es: { linkFallback: "Si el botón no funciona, abre este enlace:", tagline: "Libros adaptados en inglés.", eyebrow: "Cuenta" },
 };
 
 export type AuthMail = { subject: string; text: string; html: string };

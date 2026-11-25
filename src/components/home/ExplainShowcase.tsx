@@ -18,7 +18,7 @@ import './ExplainShowcase.css';
  */
 
 type Stage = 0 | 1 | 2;
-type SampleKey = 'en' | 'fi';
+type SampleKey = 'en';
 
 type Sample = {
   label: string;
@@ -56,27 +56,6 @@ const SAMPLES: Record<SampleKey, Sample> = {
       es: 'se quedó sin palabras',
     },
   },
-  fi: {
-    label: 'Suomi',
-    eyebrow: 'Selkosuomi',
-    chapter: 'Luku 3',
-    lead: 'Matti korjasi vanhaa venettä koko kesän. Joka ilta hän meni rantaan ja teki töitä pimeään asti.',
-    before: 'Syyskuussa vene vuoti yhä. Lopulta Matti',
-    phrase: 'heitti hanskat tiskiin',
-    after: '.',
-    tail: 'Hän istui laiturilla, katsoi järveä ja nauroi itselleen.',
-    explanation: 'Hän lopetti yrittämisen. Työ oli liian vaikea, joten hän luovutti.',
-    translations: {
-      en: 'threw in the towel',
-      uk: 'опустив руки',
-      ru: 'опустил руки',
-      pl: 'dał za wygraną',
-      de: 'warf das Handtuch',
-      fr: 'a jeté l’éponge',
-      it: 'ha gettato la spugna',
-      es: 'tiró la toalla',
-    },
-  },
 };
 
 const STEPS = [
@@ -98,7 +77,7 @@ const LOADING_MS = 700;
 function defaultTarget(book: SampleKey, site: string): AppLanguage {
   const siteLang = supportedLanguages.find((item) => item.code === site)?.code;
   if (siteLang && siteLang !== book) return siteLang;
-  return book === 'en' ? 'fi' : 'en';
+  return 'ru';
 }
 
 function prefersReducedMotion() {
@@ -110,7 +89,7 @@ export function ExplainShowcase() {
   const { user } = useAuth();
   const siteLang = (i18n.resolvedLanguage || i18n.language || 'en').slice(0, 2);
 
-  const [sampleKey, setSampleKey] = useState<SampleKey>('en');
+  const sampleKey: SampleKey = 'en';
   const [stage, setStage] = useState<Stage>(() => (prefersReducedMotion() ? 2 : 0));
   const [loading, setLoading] = useState(false);
   const [autoplay, setAutoplay] = useState(() => !prefersReducedMotion());
@@ -134,14 +113,13 @@ export function ExplainShowcase() {
     return () => observer.disconnect();
   }, []);
 
-  // Autoplay: select → explain → translate, then the other book.
+  // Autoplay: select → explain → translate, then again from the start.
   useEffect(() => {
     if (!autoplay || !inView) return;
     const timer = window.setTimeout(() => {
       if (stage < 2) {
         setStage((stage + 1) as Stage);
       } else {
-        setSampleKey((key) => (key === 'en' ? 'fi' : 'en'));
         setStage(0);
       }
     }, STAGE_MS[stage]);
@@ -161,12 +139,6 @@ export function ExplainShowcase() {
   const goTo = (next: Stage) => {
     takeOver();
     setStage(next);
-  };
-
-  const pickSample = (key: SampleKey) => {
-    takeOver();
-    setSampleKey(key);
-    setStage(2);
   };
 
   const pickTarget = (code: AppLanguage) => {
@@ -196,17 +168,7 @@ export function ExplainShowcase() {
             <div className="xs-stage">
               <div className="xs-stage-bar">
                 <div className="xs-tabs" role="group" aria-label={t('home.explain.sampleLabel')}>
-                  {(Object.keys(SAMPLES) as SampleKey[]).map((key) => (
-                    <button
-                      key={key}
-                      type="button"
-                      aria-pressed={sampleKey === key}
-                      className={cn('xs-tab', sampleKey === key && 'is-active')}
-                      onClick={() => pickSample(key)}
-                    >
-                      {SAMPLES[key].label}
-                    </button>
-                  ))}
+                  <span className={cn('xs-tab', 'is-active')}>{sample.label}</span>
                 </div>
                 <span className="xs-stage-hint">{t('home.explain.sampleLabel')}</span>
               </div>

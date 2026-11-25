@@ -11,9 +11,9 @@
     "skipToContent": "Saltar al contenido"
   },
   "seo": {
-    "title": "Bookeep — libros adaptados en inglés y finés",
-    "description": "Un catálogo de libros adaptados en inglés y finés. Los títulos se reescriben para lectores de nivel A2–B1 y la historia se mantiene intacta.",
-    "keywords": "Bookeep, libros adaptados, inglés, finés, A2, B1, lectura en idiomas"
+    "title": "Bookeep — libros adaptados en inglés",
+    "description": "Un catálogo de libros adaptados en inglés. Los títulos se reescriben para lectores de nivel A2–B1 y la historia se mantiene intacta.",
+    "keywords": "Bookeep, libros adaptados, inglés, A2, B1, leer en inglés"
   },
   "nav": {
     "primary": "Navegación principal",
@@ -28,15 +28,15 @@
     "subscribe": "Suscripción"
   },
   "home": {
-    "eyebrow": "Adaptaciones · Inglés · Finés",
-    "line1": "Libros adaptados",
-    "line2": "en inglés",
-    "line3": "y finés",
-    "subtitle": "Bookeep es un catálogo de libros en inglés y finés preparados para quienes aprenden idiomas. La trama se mantiene; el idioma se vuelve más claro.",
+    "eyebrow": "Adaptaciones · Inglés · A2–B1",
+    "line1": "Libros",
+    "line2": "adaptados",
+    "line3": "en inglés",
+    "subtitle": "Bookeep es un catálogo de libros en inglés preparados para quienes aprenden el idioma. La trama se mantiene; el idioma se vuelve más claro.",
     "ctaPrimary": "Abrir el catálogo",
     "ctaGoals": "Plan de lectura",
     "featuredTitle": "En el catálogo",
-    "featuredSubtitle": "Libros adaptados en inglés y finés. Filtra por idioma y nivel si quieres.",
+    "featuredSubtitle": "Libros adaptados en inglés. Filtra por nivel si quieres.",
     "viewAll": "Todos los libros",
     "planTitle": "Un plan de lectura tranquilo",
     "planLead": "Elige cuántas páginas quieres leer cada día. El calendario lleva la cuenta de todos los libros, y solo cuentan las páginas nuevas.",
@@ -47,8 +47,8 @@
         "text": "El texto se reescribe de forma más sencilla, sin perder la trama ni la estructura del libro."
       },
       "languages": {
-        "title": "Dos idiomas",
-        "text": "El catálogo es solo en inglés y finés — dos secciones en un mismo lugar."
+        "title": "Solo inglés",
+        "text": "Todos los libros del catálogo están en inglés — un idioma, una estantería tranquila."
       },
       "levels": {
         "title": "Niveles A2–B1",
@@ -57,7 +57,7 @@
     },
     "stats": {
       "levels": "niveles",
-      "languages": "dos idiomas",
+      "languages": "idioma de los libros",
       "reader": "lector en el navegador"
     },
     "features": {
@@ -83,7 +83,7 @@
       },
       "choose": {
         "title": "Elige un libro",
-        "text": "Inglés o finés, niveles A2–B1. La misma historia en un idioma más claro."
+        "text": "Libros en inglés, niveles A2–B1. La misma historia en un idioma más claro."
       },
       "read": {
         "title": "Lee y entiende",
@@ -131,14 +131,11 @@
   },
   "books": {
     "title": "Libros",
-    "subtitle": "Libros adaptados en inglés y finés. Filtra por idioma y nivel.",
+    "subtitle": "Libros adaptados en inglés. Filtra por nivel.",
     "all": "Todos",
     "allLevels": "Todos",
-    "language": "Idioma",
     "level": "Nivel",
     "empty": "No se encontraron libros",
-    "emptyFi": "No se encontraron libros en finés",
-    "emptyEn": "No se encontraron libros en inglés",
     "emptyLevel": "No se encontraron libros de este nivel",
     "showAll": "Mostrar todos",
     "loading": "Cargando libros...",
@@ -184,7 +181,7 @@
   "about": {
     "eyebrow": "Acerca de",
     "title": "Sobre el proyecto",
-    "lead": "Bookeep es un catálogo de libros adaptados en inglés y finés. Aquí no hay lecciones ni ejercicios: abres un libro y lo lees en el navegador.",
+    "lead": "Bookeep es un catálogo de libros adaptados en inglés. Aquí no hay lecciones ni ejercicios: abres un libro y lo lees en el navegador.",
     "cta": "Abrir el catálogo",
     "sections": {
       "purpose": {
@@ -196,8 +193,8 @@
         "text": "No es un resumen corto ni una serie de diálogos. Es la obra completa, con la gramática densa, las palabras raras y los periodos largos llevados a un nivel del MCER elegido. La trama, los personajes y la estructura se mantienen. Lo primero que cambia es el idioma."
       },
       "languages": {
-        "title": "Inglés y finés",
-        "text": "Los libros del catálogo son solo en inglés y finés. Esos son los idiomas de los textos. La interfaz está disponible en nueve idiomas, del finés y el inglés al polaco, alemán, francés, italiano y español: cambian los textos del sitio, el libro sigue en el idioma de la adaptación."
+        "title": "Libros en inglés",
+        "text": "Todos los libros del catálogo están en inglés: ese es el idioma de los textos. La interfaz está disponible en nueve idiomas: cambian los textos del sitio, el libro sigue en inglés."
       },
       "levels": {
         "title": "Niveles A2 y B1",
@@ -345,7 +342,7 @@
     }
   },
   "footer": {
-    "tagline": "Libros adaptados en inglés y finés.",
+    "tagline": "Libros adaptados en inglés.",
     "credit": "El sitio lo desarrolla y mantiene <studio>WEISEZAHOY</studio>."
   },
   "admin": {
@@ -366,8 +363,6 @@
       "title": "Libros",
       "add": "Añadir libro",
       "total": "Total de libros",
-      "finnish": "Libros en finés",
-      "english": "Libros en inglés",
       "empty": "Aún no hay libros"
     },
     "hero": {
@@ -403,7 +398,6 @@
       "editTitle": "Editar libro",
       "titleOriginal": "Título original",
       "slug": "Slug",
-      "language": "Idioma del libro",
       "level": "Nivel",
       "published": "Publicado",
       "complete": "El libro está completo",

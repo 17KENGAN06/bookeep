@@ -40,12 +40,12 @@ export const SEO_PAGES: { path: string; key: SeoPageKey; changefreq: string; pri
 ];
 
 type PageCopy = { title: string; description: string };
-type BookLang = 'en' | 'fi';
+type BookLang = 'en';
 
 type SeoCopy = {
   pages: Record<SeoPageKey, PageCopy>;
   keywords: string;
-  /** "English" / "Finnish" as it fits into the book title and description templates. */
+  /** "English" as it fits into the book title and description templates. */
   bookLanguage: Record<BookLang, string>;
   bookTitle: (title: string, language: string, level: string) => string;
   bookDescription: (title: string, language: string, level: string) => string;
@@ -57,24 +57,24 @@ export const SEO_COPY: Record<SeoLanguage, SeoCopy> = {
   en: {
     pages: {
       home: {
-        title: 'Bookeep — adapted English & Finnish books for A2–B1',
+        title: 'Bookeep — adapted English books for A2–B1 readers',
         description:
-          'Read adapted books in English and Finnish. Stories rewritten for A2–B1 learners: the plot stays, the language gets clearer. Read online in your browser.',
+          'Read adapted English books. Stories rewritten for A2–B1 learners: the plot stays, the language gets clearer. Read online in your browser.',
       },
       books: {
-        title: 'Adapted books catalog — English & Finnish, A2–B1 · Bookeep',
+        title: 'Adapted English books catalog, A2–B1 · Bookeep',
         description:
-          'Browse adapted books in English and Finnish. Filter by language and CEFR level (A2, B1), open a free preview and read right in the browser.',
+          'Browse adapted English books. Filter by CEFR level (A2, B1), open a free preview and read right in the browser.',
       },
       about: {
         title: 'How Bookeep adapts books for language learners',
         description:
-          'How Bookeep rewrites English and Finnish books for A2–B1 readers: simpler language, the same story and structure, and a calm reader in the browser.',
+          'How Bookeep rewrites English books for A2–B1 readers: simpler language, the same story and structure, and a calm reader in the browser.',
       },
       contact: {
         title: 'Contact Bookeep — partnerships and support',
         description:
-          'A question, a bug or a partnership idea? Write to the Bookeep team about adapted books in English and Finnish.',
+          'A question, a bug or a partnership idea? Write to the Bookeep team about adapted English books.',
       },
       privacy: {
         title: 'Privacy policy · Bookeep',
@@ -84,12 +84,12 @@ export const SEO_COPY: Record<SeoLanguage, SeoCopy> = {
       subscribe: {
         title: 'Subscription — full access to adapted books · Bookeep',
         description:
-          'Full access to every adapted English and Finnish book on Bookeep. Read whole books online at A2–B1 level, with reading goals and progress.',
+          'Full access to every adapted English book on Bookeep. Read whole books online at A2–B1 level, with reading goals and progress.',
       },
     },
     keywords:
-      'adapted books, graded readers, English books for learners, Finnish books for learners, selkokirjat, A2, B1, read online, Bookeep',
-    bookLanguage: { en: 'English', fi: 'Finnish' },
+      'adapted books, graded readers, English books for learners, learn English by reading, A2, B1, read online, Bookeep',
+    bookLanguage: { en: 'English' },
     bookTitle: (title, language, level) => `${title} — adapted ${language} book (${level}) · Bookeep`,
     bookDescription: (title, language, level) =>
       `${title}: an adapted ${language} edition for ${level} learners. Read a free preview online on Bookeep.`,
@@ -98,24 +98,24 @@ export const SEO_COPY: Record<SeoLanguage, SeoCopy> = {
   fi: {
     pages: {
       home: {
-        title: 'Bookeep — mukautetut kirjat englanniksi ja suomeksi, A2–B1',
+        title: 'Bookeep — mukautetut englanninkieliset kirjat, A2–B1',
         description:
-          'Lue mukautettuja kirjoja englanniksi ja suomeksi. Tarinat on kirjoitettu uudelleen A2–B1-tason lukijoille: juoni säilyy, kieli selkenee. Lue verkossa.',
+          'Lue mukautettuja englanninkielisiä kirjoja. Tarinat on kirjoitettu uudelleen A2–B1-tason lukijoille: juoni säilyy, kieli selkenee. Lue verkossa.',
       },
       books: {
-        title: 'Mukautettujen kirjojen luettelo — englanti ja suomi · Bookeep',
+        title: 'Mukautettujen englanninkielisten kirjojen luettelo · Bookeep',
         description:
-          'Selaa mukautettuja kirjoja englanniksi ja suomeksi. Suodata kielen ja tason (A2, B1) mukaan, avaa ilmainen näyte ja lue suoraan selaimessa.',
+          'Selaa mukautettuja englanninkielisiä kirjoja. Suodata tason (A2, B1) mukaan, avaa ilmainen näyte ja lue suoraan selaimessa.',
       },
       about: {
         title: 'Miten Bookeep mukauttaa kirjoja kielenoppijoille',
         description:
-          'Näin Bookeep kirjoittaa englannin- ja suomenkielisiä kirjoja uudelleen A2–B1-lukijoille: selkeämpi kieli, sama tarina ja rauhallinen lukunäkymä selaimessa.',
+          'Näin Bookeep kirjoittaa englanninkielisiä kirjoja uudelleen A2–B1-lukijoille: selkeämpi kieli, sama tarina ja rauhallinen lukunäkymä selaimessa.',
       },
       contact: {
         title: 'Ota yhteyttä Bookeepiin — yhteistyö ja tuki',
         description:
-          'Kysyttävää, virhe tai yhteistyöidea? Kirjoita Bookeepin tiimille mukautetuista englannin- ja suomenkielisistä kirjoista.',
+          'Kysyttävää, virhe tai yhteistyöidea? Kirjoita Bookeepin tiimille mukautetuista englanninkielisistä kirjoista.',
       },
       privacy: {
         title: 'Tietosuojaseloste · Bookeep',
@@ -125,12 +125,12 @@ export const SEO_COPY: Record<SeoLanguage, SeoCopy> = {
       subscribe: {
         title: 'Tilaus — kaikki mukautetut kirjat · Bookeep',
         description:
-          'Kaikki Bookeepin mukautetut englannin- ja suomenkieliset kirjat. Lue kokonaisia kirjoja verkossa A2–B1-tasolla lukutavoitteiden ja edistymisen kanssa.',
+          'Kaikki Bookeepin mukautetut englanninkieliset kirjat. Lue kokonaisia kirjoja verkossa A2–B1-tasolla lukutavoitteiden ja edistymisen kanssa.',
       },
     },
     keywords:
-      'mukautetut kirjat, selkokirjat, selkosuomi, suomen kielen oppiminen, englanninkieliset kirjat, A2, B1, lue verkossa, Bookeep',
-    bookLanguage: { en: 'englanninkielinen', fi: 'suomenkielinen' },
+      'mukautetut kirjat, englanninkieliset kirjat, englannin kielen oppiminen, helppolukuiset kirjat, A2, B1, lue verkossa, Bookeep',
+    bookLanguage: { en: 'englanninkielinen' },
     bookTitle: (title, language, level) => `${title} — mukautettu ${language} kirja (${level}) · Bookeep`,
     bookDescription: (title, language, level) =>
       `${title}: mukautettu ${language} laitos ${level}-tason lukijoille. Lue ilmainen näyte verkossa Bookeepissa.`,
@@ -139,24 +139,24 @@ export const SEO_COPY: Record<SeoLanguage, SeoCopy> = {
   uk: {
     pages: {
       home: {
-        title: 'Bookeep — адаптовані книги англійською та фінською A2–B1',
+        title: 'Bookeep — адаптовані книги англійською A2–B1',
         description:
-          'Читайте адаптовані книги англійською та фінською. Історії переписані для рівнів A2–B1: сюжет зберігається, мова стає зрозумілішою. Читання онлайн.',
+          'Читайте адаптовані книги англійською. Історії переписані для рівнів A2–B1: сюжет зберігається, мова стає зрозумілішою. Читання онлайн.',
       },
       books: {
-        title: 'Каталог адаптованих книг англійською та фінською · Bookeep',
+        title: 'Каталог адаптованих книг англійською · Bookeep',
         description:
-          'Адаптовані книги англійською та фінською. Фільтр за мовою та рівнем (A2, B1), безкоштовний уривок і читання прямо в браузері.',
+          'Адаптовані книги англійською. Фільтр за рівнем (A2, B1), безкоштовний уривок і читання прямо в браузері.',
       },
       about: {
         title: 'Як Bookeep адаптує книги для вивчення мов',
         description:
-          'Як Bookeep переписує англійські та фінські книги для читачів рівня A2–B1: простіша мова, той самий сюжет і спокійна читалка в браузері.',
+          'Як Bookeep переписує англійські книги для читачів рівня A2–B1: простіша мова, той самий сюжет і спокійна читалка в браузері.',
       },
       contact: {
         title: 'Контакти Bookeep — співпраця та підтримка',
         description:
-          'Питання, помилка чи ідея для співпраці? Напишіть команді Bookeep про адаптовані книги англійською та фінською.',
+          'Питання, помилка чи ідея для співпраці? Напишіть команді Bookeep про адаптовані книги англійською.',
       },
       privacy: {
         title: 'Політика конфіденційності · Bookeep',
@@ -166,12 +166,12 @@ export const SEO_COPY: Record<SeoLanguage, SeoCopy> = {
       subscribe: {
         title: 'Підписка — повний доступ до адаптованих книг · Bookeep',
         description:
-          'Повний доступ до всіх адаптованих книг англійською та фінською на Bookeep. Читайте книги повністю онлайн на рівні A2–B1 з цілями читання.',
+          'Повний доступ до всіх адаптованих книг англійською на Bookeep. Читайте книги повністю онлайн на рівні A2–B1 з цілями читання.',
       },
     },
     keywords:
-      'адаптовані книги, книги англійською для початківців, фінська мова, книги фінською, A2, B1, читати онлайн, Bookeep',
-    bookLanguage: { en: 'англійською', fi: 'фінською' },
+      'адаптовані книги, книги англійською для початківців, англійська мова, читання англійською, A2, B1, читати онлайн, Bookeep',
+    bookLanguage: { en: 'англійською' },
     bookTitle: (title, language, level) => `${title} — адаптована книга ${language} (${level}) · Bookeep`,
     bookDescription: (title, language, level) =>
       `${title}: адаптоване видання ${language} для рівня ${level}. Безкоштовний уривок онлайн на Bookeep.`,
@@ -180,24 +180,24 @@ export const SEO_COPY: Record<SeoLanguage, SeoCopy> = {
   ru: {
     pages: {
       home: {
-        title: 'Bookeep — адаптированные книги на английском и финском A2–B1',
+        title: 'Bookeep — адаптированные книги на английском A2–B1',
         description:
-          'Читайте адаптированные книги на английском и финском. Истории переписаны для уровней A2–B1: сюжет сохраняется, язык становится понятнее. Чтение онлайн.',
+          'Читайте адаптированные книги на английском. Истории переписаны для уровней A2–B1: сюжет сохраняется, язык становится понятнее. Чтение онлайн.',
       },
       books: {
-        title: 'Каталог адаптированных книг на английском и финском · Bookeep',
+        title: 'Каталог адаптированных книг на английском · Bookeep',
         description:
-          'Адаптированные книги на английском и финском. Фильтр по языку и уровню (A2, B1), бесплатный отрывок и чтение прямо в браузере.',
+          'Адаптированные книги на английском. Фильтр по уровню (A2, B1), бесплатный отрывок и чтение прямо в браузере.',
       },
       about: {
         title: 'Как Bookeep адаптирует книги для изучения языков',
         description:
-          'Как Bookeep переписывает английские и финские книги для читателей уровня A2–B1: проще язык, тот же сюжет и спокойная читалка в браузере.',
+          'Как Bookeep переписывает английские книги для читателей уровня A2–B1: проще язык, тот же сюжет и спокойная читалка в браузере.',
       },
       contact: {
         title: 'Контакты Bookeep — сотрудничество и поддержка',
         description:
-          'Вопрос, ошибка или идея для сотрудничества? Напишите команде Bookeep об адаптированных книгах на английском и финском.',
+          'Вопрос, ошибка или идея для сотрудничества? Напишите команде Bookeep об адаптированных книгах на английском.',
       },
       privacy: {
         title: 'Политика конфиденциальности · Bookeep',
@@ -207,12 +207,12 @@ export const SEO_COPY: Record<SeoLanguage, SeoCopy> = {
       subscribe: {
         title: 'Подписка — полный доступ к адаптированным книгам · Bookeep',
         description:
-          'Полный доступ ко всем адаптированным книгам на английском и финском в Bookeep. Читайте книги целиком онлайн на уровне A2–B1 с целями чтения.',
+          'Полный доступ ко всем адаптированным книгам на английском в Bookeep. Читайте книги целиком онлайн на уровне A2–B1 с целями чтения.',
       },
     },
     keywords:
-      'адаптированные книги, книги на английском для начинающих, финский язык, книги на финском, A2, B1, читать онлайн, Bookeep',
-    bookLanguage: { en: 'английском', fi: 'финском' },
+      'адаптированные книги, книги на английском для начинающих, английский язык, чтение на английском, A2, B1, читать онлайн, Bookeep',
+    bookLanguage: { en: 'английском' },
     bookTitle: (title, language, level) => `${title} — адаптированная книга на ${language} (${level}) · Bookeep`,
     bookDescription: (title, language, level) =>
       `${title}: адаптированное издание на ${language} для уровня ${level}. Бесплатный отрывок онлайн на Bookeep.`,
@@ -221,24 +221,24 @@ export const SEO_COPY: Record<SeoLanguage, SeoCopy> = {
   pl: {
     pages: {
       home: {
-        title: 'Bookeep — adaptowane książki po angielsku i fińsku A2–B1',
+        title: 'Bookeep — adaptowane książki po angielsku A2–B1',
         description:
-          'Czytaj adaptowane książki po angielsku i fińsku. Historie przepisane dla poziomu A2–B1: fabuła zostaje, język staje się jaśniejszy. Czytanie online.',
+          'Czytaj adaptowane książki po angielsku. Historie przepisane dla poziomu A2–B1: fabuła zostaje, język staje się jaśniejszy. Czytanie online.',
       },
       books: {
-        title: 'Katalog adaptowanych książek — angielski i fiński · Bookeep',
+        title: 'Katalog adaptowanych książek po angielsku · Bookeep',
         description:
-          'Adaptowane książki po angielsku i fińsku. Filtruj według języka i poziomu (A2, B1), otwórz darmowy fragment i czytaj w przeglądarce.',
+          'Adaptowane książki po angielsku. Filtruj według poziomu (A2, B1), otwórz darmowy fragment i czytaj w przeglądarce.',
       },
       about: {
         title: 'Jak Bookeep adaptuje książki do nauki języków',
         description:
-          'Jak Bookeep przepisuje angielskie i fińskie książki dla czytelników A2–B1: prostszy język, ta sama fabuła i spokojny czytnik w przeglądarce.',
+          'Jak Bookeep przepisuje angielskie książki dla czytelników A2–B1: prostszy język, ta sama fabuła i spokojny czytnik w przeglądarce.',
       },
       contact: {
         title: 'Kontakt z Bookeep — współpraca i wsparcie',
         description:
-          'Pytanie, błąd lub pomysł na współpracę? Napisz do zespołu Bookeep w sprawie adaptowanych książek po angielsku i fińsku.',
+          'Pytanie, błąd lub pomysł na współpracę? Napisz do zespołu Bookeep w sprawie adaptowanych książek po angielsku.',
       },
       privacy: {
         title: 'Polityka prywatności · Bookeep',
@@ -248,12 +248,12 @@ export const SEO_COPY: Record<SeoLanguage, SeoCopy> = {
       subscribe: {
         title: 'Subskrypcja — pełny dostęp do adaptowanych książek · Bookeep',
         description:
-          'Pełny dostęp do wszystkich adaptowanych książek po angielsku i fińsku w Bookeep. Czytaj całe książki online na poziomie A2–B1 z celami czytelniczymi.',
+          'Pełny dostęp do wszystkich adaptowanych książek po angielsku w Bookeep. Czytaj całe książki online na poziomie A2–B1 z celami czytelniczymi.',
       },
     },
     keywords:
-      'adaptowane książki, książki po angielsku dla początkujących, język fiński, książki po fińsku, A2, B1, czytaj online, Bookeep',
-    bookLanguage: { en: 'po angielsku', fi: 'po fińsku' },
+      'adaptowane książki, książki po angielsku dla początkujących, nauka angielskiego, czytanie po angielsku, A2, B1, czytaj online, Bookeep',
+    bookLanguage: { en: 'po angielsku' },
     bookTitle: (title, language, level) => `${title} — adaptowana książka ${language} (${level}) · Bookeep`,
     bookDescription: (title, language, level) =>
       `${title}: adaptowane wydanie ${language} dla poziomu ${level}. Darmowy fragment online w Bookeep.`,
@@ -262,24 +262,24 @@ export const SEO_COPY: Record<SeoLanguage, SeoCopy> = {
   de: {
     pages: {
       home: {
-        title: 'Bookeep — vereinfachte Bücher auf Englisch & Finnisch, A2–B1',
+        title: 'Bookeep — vereinfachte englische Bücher, A2–B1',
         description:
-          'Lies vereinfachte Bücher auf Englisch und Finnisch. Geschichten neu geschrieben für A2–B1: Die Handlung bleibt, die Sprache wird klarer. Online lesen.',
+          'Lies vereinfachte Bücher auf Englisch. Geschichten neu geschrieben für A2–B1: Die Handlung bleibt, die Sprache wird klarer. Online lesen.',
       },
       books: {
-        title: 'Katalog vereinfachter Bücher — Englisch & Finnisch · Bookeep',
+        title: 'Katalog vereinfachter englischer Bücher · Bookeep',
         description:
-          'Vereinfachte Bücher auf Englisch und Finnisch. Nach Sprache und Niveau (A2, B1) filtern, kostenlose Leseprobe öffnen und im Browser lesen.',
+          'Vereinfachte Bücher auf Englisch. Nach Niveau (A2, B1) filtern, kostenlose Leseprobe öffnen und im Browser lesen.',
       },
       about: {
         title: 'Wie Bookeep Bücher für Sprachlernende vereinfacht',
         description:
-          'Wie Bookeep englische und finnische Bücher für A2–B1 neu schreibt: einfachere Sprache, dieselbe Geschichte und ein ruhiger Reader im Browser.',
+          'Wie Bookeep englische Bücher für A2–B1 neu schreibt: einfachere Sprache, dieselbe Geschichte und ein ruhiger Reader im Browser.',
       },
       contact: {
         title: 'Kontakt zu Bookeep — Partnerschaften und Support',
         description:
-          'Eine Frage, ein Fehler oder eine Idee für eine Zusammenarbeit? Schreib dem Bookeep-Team zu vereinfachten Büchern auf Englisch und Finnisch.',
+          'Eine Frage, ein Fehler oder eine Idee für eine Zusammenarbeit? Schreib dem Bookeep-Team zu vereinfachten Büchern auf Englisch.',
       },
       privacy: {
         title: 'Datenschutzerklärung · Bookeep',
@@ -289,12 +289,12 @@ export const SEO_COPY: Record<SeoLanguage, SeoCopy> = {
       subscribe: {
         title: 'Abo — voller Zugang zu vereinfachten Büchern · Bookeep',
         description:
-          'Voller Zugang zu allen vereinfachten Büchern auf Englisch und Finnisch bei Bookeep. Ganze Bücher online lesen auf Niveau A2–B1, mit Lesezielen.',
+          'Voller Zugang zu allen vereinfachten Büchern auf Englisch bei Bookeep. Ganze Bücher online lesen auf Niveau A2–B1, mit Lesezielen.',
       },
     },
     keywords:
-      'vereinfachte Bücher, Lektüre für Sprachlernende, Englisch lesen, Finnisch lernen, finnische Bücher, A2, B1, online lesen, Bookeep',
-    bookLanguage: { en: 'Englisch', fi: 'Finnisch' },
+      'vereinfachte Bücher, Lektüre für Sprachlernende, Englisch lesen, Englisch lernen, englische Bücher, A2, B1, online lesen, Bookeep',
+    bookLanguage: { en: 'Englisch' },
     bookTitle: (title, language, level) => `${title} — vereinfachtes Buch auf ${language} (${level}) · Bookeep`,
     bookDescription: (title, language, level) =>
       `${title}: vereinfachte Ausgabe auf ${language} für Niveau ${level}. Kostenlose Leseprobe online bei Bookeep.`,
@@ -303,24 +303,24 @@ export const SEO_COPY: Record<SeoLanguage, SeoCopy> = {
   fr: {
     pages: {
       home: {
-        title: 'Bookeep — livres adaptés en anglais et finnois, A2–B1',
+        title: 'Bookeep — livres adaptés en anglais, A2–B1',
         description:
-          'Lisez des livres adaptés en anglais et en finnois. Des histoires réécrites pour le niveau A2–B1 : l’intrigue reste, la langue devient plus claire. Lecture en ligne.',
+          'Lisez des livres adaptés en anglais. Des histoires réécrites pour le niveau A2–B1 : l’intrigue reste, la langue devient plus claire. Lecture en ligne.',
       },
       books: {
-        title: 'Catalogue de livres adaptés — anglais et finnois · Bookeep',
+        title: 'Catalogue de livres adaptés en anglais · Bookeep',
         description:
-          'Livres adaptés en anglais et en finnois. Filtrez par langue et niveau (A2, B1), ouvrez un extrait gratuit et lisez dans le navigateur.',
+          'Livres adaptés en anglais. Filtrez par niveau (A2, B1), ouvrez un extrait gratuit et lisez dans le navigateur.',
       },
       about: {
         title: 'Comment Bookeep adapte les livres pour apprendre une langue',
         description:
-          'Comment Bookeep réécrit des livres anglais et finnois pour les lecteurs A2–B1 : une langue plus simple, la même histoire et une liseuse calme dans le navigateur.',
+          'Comment Bookeep réécrit des livres anglais pour les lecteurs A2–B1 : une langue plus simple, la même histoire et une liseuse calme dans le navigateur.',
       },
       contact: {
         title: 'Contacter Bookeep — partenariats et assistance',
         description:
-          'Une question, un bug ou une idée de partenariat ? Écrivez à l’équipe Bookeep au sujet des livres adaptés en anglais et en finnois.',
+          'Une question, un bug ou une idée de partenariat ? Écrivez à l’équipe Bookeep au sujet des livres adaptés en anglais.',
       },
       privacy: {
         title: 'Politique de confidentialité · Bookeep',
@@ -330,12 +330,12 @@ export const SEO_COPY: Record<SeoLanguage, SeoCopy> = {
       subscribe: {
         title: 'Abonnement — accès complet aux livres adaptés · Bookeep',
         description:
-          'Accès complet à tous les livres adaptés en anglais et en finnois sur Bookeep. Lisez des livres entiers en ligne au niveau A2–B1, avec des objectifs de lecture.',
+          'Accès complet à tous les livres adaptés en anglais sur Bookeep. Lisez des livres entiers en ligne au niveau A2–B1, avec des objectifs de lecture.',
       },
     },
     keywords:
-      'livres adaptés, lectures graduées, livres en anglais pour débutants, apprendre le finnois, livres en finnois, A2, B1, lire en ligne, Bookeep',
-    bookLanguage: { en: 'anglais', fi: 'finnois' },
+      'livres adaptés, lectures graduées, livres en anglais pour débutants, apprendre l’anglais, lire en anglais, A2, B1, lire en ligne, Bookeep',
+    bookLanguage: { en: 'anglais' },
     bookTitle: (title, language, level) => `${title} — livre adapté en ${language} (${level}) · Bookeep`,
     bookDescription: (title, language, level) =>
       `${title} : édition adaptée en ${language} pour le niveau ${level}. Extrait gratuit en ligne sur Bookeep.`,
@@ -344,24 +344,24 @@ export const SEO_COPY: Record<SeoLanguage, SeoCopy> = {
   it: {
     pages: {
       home: {
-        title: 'Bookeep — libri adattati in inglese e finlandese, A2–B1',
+        title: 'Bookeep — libri adattati in inglese, A2–B1',
         description:
-          'Leggi libri adattati in inglese e finlandese. Storie riscritte per il livello A2–B1: la trama resta, la lingua diventa più chiara. Lettura online.',
+          'Leggi libri adattati in inglese. Storie riscritte per il livello A2–B1: la trama resta, la lingua diventa più chiara. Lettura online.',
       },
       books: {
-        title: 'Catalogo di libri adattati — inglese e finlandese · Bookeep',
+        title: 'Catalogo di libri adattati in inglese · Bookeep',
         description:
-          'Libri adattati in inglese e finlandese. Filtra per lingua e livello (A2, B1), apri un’anteprima gratuita e leggi nel browser.',
+          'Libri adattati in inglese. Filtra per livello (A2, B1), apri un’anteprima gratuita e leggi nel browser.',
       },
       about: {
         title: 'Come Bookeep adatta i libri per chi studia le lingue',
         description:
-          'Come Bookeep riscrive libri inglesi e finlandesi per lettori A2–B1: lingua più semplice, la stessa storia e un lettore tranquillo nel browser.',
+          'Come Bookeep riscrive libri inglesi per lettori A2–B1: lingua più semplice, la stessa storia e un lettore tranquillo nel browser.',
       },
       contact: {
         title: 'Contatta Bookeep — collaborazioni e supporto',
         description:
-          'Una domanda, un bug o un’idea di collaborazione? Scrivi al team di Bookeep sui libri adattati in inglese e finlandese.',
+          'Una domanda, un bug o un’idea di collaborazione? Scrivi al team di Bookeep sui libri adattati in inglese.',
       },
       privacy: {
         title: 'Informativa sulla privacy · Bookeep',
@@ -371,12 +371,12 @@ export const SEO_COPY: Record<SeoLanguage, SeoCopy> = {
       subscribe: {
         title: 'Abbonamento — accesso completo ai libri adattati · Bookeep',
         description:
-          'Accesso completo a tutti i libri adattati in inglese e finlandese su Bookeep. Leggi libri interi online al livello A2–B1, con obiettivi di lettura.',
+          'Accesso completo a tutti i libri adattati in inglese su Bookeep. Leggi libri interi online al livello A2–B1, con obiettivi di lettura.',
       },
     },
     keywords:
-      'libri adattati, letture graduate, libri in inglese per principianti, imparare il finlandese, libri in finlandese, A2, B1, leggere online, Bookeep',
-    bookLanguage: { en: 'inglese', fi: 'finlandese' },
+      'libri adattati, letture graduate, libri in inglese per principianti, imparare l’inglese, leggere in inglese, A2, B1, leggere online, Bookeep',
+    bookLanguage: { en: 'inglese' },
     bookTitle: (title, language, level) => `${title} — libro adattato in ${language} (${level}) · Bookeep`,
     bookDescription: (title, language, level) =>
       `${title}: edizione adattata in ${language} per il livello ${level}. Anteprima gratuita online su Bookeep.`,
@@ -385,24 +385,24 @@ export const SEO_COPY: Record<SeoLanguage, SeoCopy> = {
   es: {
     pages: {
       home: {
-        title: 'Bookeep — libros adaptados en inglés y finés, A2–B1',
+        title: 'Bookeep — libros adaptados en inglés, A2–B1',
         description:
-          'Lee libros adaptados en inglés y finés. Historias reescritas para el nivel A2–B1: la trama se mantiene y el idioma se vuelve más claro. Lectura online.',
+          'Lee libros adaptados en inglés. Historias reescritas para el nivel A2–B1: la trama se mantiene y el idioma se vuelve más claro. Lectura online.',
       },
       books: {
-        title: 'Catálogo de libros adaptados — inglés y finés · Bookeep',
+        title: 'Catálogo de libros adaptados en inglés · Bookeep',
         description:
-          'Libros adaptados en inglés y finés. Filtra por idioma y nivel (A2, B1), abre un fragmento gratuito y lee en el navegador.',
+          'Libros adaptados en inglés. Filtra por nivel (A2, B1), abre un fragmento gratuito y lee en el navegador.',
       },
       about: {
         title: 'Cómo Bookeep adapta libros para aprender idiomas',
         description:
-          'Cómo Bookeep reescribe libros en inglés y finés para lectores A2–B1: un idioma más sencillo, la misma historia y un lector tranquilo en el navegador.',
+          'Cómo Bookeep reescribe libros en inglés para lectores A2–B1: un idioma más sencillo, la misma historia y un lector tranquilo en el navegador.',
       },
       contact: {
         title: 'Contacto con Bookeep — colaboraciones y soporte',
         description:
-          '¿Una pregunta, un error o una idea de colaboración? Escribe al equipo de Bookeep sobre libros adaptados en inglés y finés.',
+          '¿Una pregunta, un error o una idea de colaboración? Escribe al equipo de Bookeep sobre libros adaptados en inglés.',
       },
       privacy: {
         title: 'Política de privacidad · Bookeep',
@@ -412,12 +412,12 @@ export const SEO_COPY: Record<SeoLanguage, SeoCopy> = {
       subscribe: {
         title: 'Suscripción — acceso completo a libros adaptados · Bookeep',
         description:
-          'Acceso completo a todos los libros adaptados en inglés y finés de Bookeep. Lee libros completos online en nivel A2–B1, con objetivos de lectura.',
+          'Acceso completo a todos los libros adaptados en inglés de Bookeep. Lee libros completos online en nivel A2–B1, con objetivos de lectura.',
       },
     },
     keywords:
-      'libros adaptados, lecturas graduadas, libros en inglés para principiantes, aprender finés, libros en finés, A2, B1, leer online, Bookeep',
-    bookLanguage: { en: 'inglés', fi: 'finés' },
+      'libros adaptados, lecturas graduadas, libros en inglés para principiantes, aprender inglés, leer en inglés, A2, B1, leer online, Bookeep',
+    bookLanguage: { en: 'inglés' },
     bookTitle: (title, language, level) => `${title} — libro adaptado en ${language} (${level}) · Bookeep`,
     bookDescription: (title, language, level) =>
       `${title}: edición adaptada en ${language} para el nivel ${level}. Fragmento gratuito online en Bookeep.`,
@@ -467,7 +467,7 @@ export type SeoBook = {
 
 export function bookSeoText(book: Pick<SeoBook, 'title' | 'description' | 'language' | 'level'>, language: SeoLanguage) {
   const copy = SEO_COPY[language];
-  const languageName = copy.bookLanguage[book.language === 'fi' ? 'fi' : 'en'];
+  const languageName = copy.bookLanguage.en;
   return {
     title: copy.bookTitle(book.title, languageName, book.level),
     description: truncateMeta(book.description || copy.bookDescription(book.title, languageName, book.level)),

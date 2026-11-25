@@ -75,7 +75,8 @@ function getClient() {
   return client;
 }
 
-type Language = 'en' | 'fi';
+/** Bookeep publishes English books only. */
+type Language = 'en';
 type Target = 'en' | 'fi' | 'ru' | 'uk' | 'pl' | 'de' | 'fr' | 'it' | 'es';
 
 const TARGETS: Target[] = ['en', 'fi', 'ru', 'uk', 'pl', 'de', 'fr', 'it', 'es'];
@@ -149,18 +150,13 @@ function explanationLevel(level: Cefr): Cefr {
   return CEFR[Math.min(2, Math.max(0, index - 1))];
 }
 
-// How to write at each level, per book language. "Level" = the reader's level, so the text must be
+// How to write at each level. "Level" = the reader's level, so the text must be
 // easy enough for them: one step below what they just found hard.
 const STYLE: Record<Language, Record<'A1' | 'A2' | 'B1', string>> = {
   en: {
     A1: 'A1: only the most basic words (like "big", "go", "happy", "not"), one tiny sentence, present tense, under 12 words. A simple synonym is fine, e.g. "very sad".',
     A2: 'A2: very simple everyday English, one short sentence (two at most), under 20 words. No idioms, no grammar terms.',
     B1: 'B1: clear everyday English, one or two sentences, under 25 words. Say the idea in plain words; no rare words, idioms or grammar terms.',
-  },
-  fi: {
-    A1: 'A1: vain kaikkein yleisimmät sanat (esim. "iso", "mennä", "iloinen", "ei"), yksi lyhyt päälause preesensissä, alle 10 sanaa. Pelkkä helppo synonyymi käy, esim. "hyvin surullinen".',
-    A2: 'A2: selkosuomi, yksi lyhyt lause (korkeintaan kaksi), alle 16 sanaa. Ei idiomeja, ei kielioppitermejä.',
-    B1: 'B1: selkeää yleiskieltä, yksi tai kaksi lausetta, alle 22 sanaa. Kerro asia tavallisin sanoin; ei harvinaisia sanoja, idiomeja tai kielioppitermejä.',
   },
 };
 
@@ -174,7 +170,6 @@ function explainRules(language: Language) {
     style.A2,
     style.A1,
     `Keep it as short as possible. Say only what the words mean in this place in the story, no examples. Do not reuse the selected word itself to explain it.`,
-    language === 'fi' ? 'If a word is inflected, you may add its base form in brackets, for example "(talo)".' : '',
   ]
     .filter(Boolean)
     .join('\n');
@@ -247,7 +242,7 @@ export async function explainHandler(req: Request, res: Response) {
   const context = text(body.context, MAX_CONTEXT);
   const title = text(body.title, MAX_TITLE);
   const level = body.level === 'A2' || body.level === 'B1' ? body.level : '';
-  const language: Language = body.language === 'fi' ? 'fi' : 'en';
+  const language: Language = 'en';
   // No translation into the book's own language: the explanation already covers it.
   const wanted =
     TARGETS.includes(body.target as Target) && body.target !== language ? (body.target as Target) : null;

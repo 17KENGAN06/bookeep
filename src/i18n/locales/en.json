@@ -11,9 +11,9 @@
     "skipToContent": "Skip to content"
   },
   "seo": {
-    "title": "Bookeep — adapted books in English and Finnish",
-    "description": "A catalog of adapted books in English and Finnish. Titles are rewritten for A2–B1 readers while the story stays intact.",
-    "keywords": "Bookeep, adapted books, English, Finnish, A2, B1, language reading"
+    "title": "Bookeep — adapted English books",
+    "description": "A catalog of adapted English books. Titles are rewritten for A2–B1 readers while the story stays intact.",
+    "keywords": "Bookeep, adapted books, English, graded readers, A2, B1, learn English by reading"
   },
   "nav": {
     "primary": "Primary navigation",
@@ -28,15 +28,15 @@
     "subscribe": "Subscription"
   },
   "home": {
-    "eyebrow": "Adaptations · English · Finnish",
+    "eyebrow": "Adaptations · English · A2–B1",
     "line1": "Adapted",
     "line2": "English",
-    "line3": "& Finnish",
-    "subtitle": "Bookeep is a catalog of English and Finnish books prepared for language learners. The plot stays; the language becomes clearer.",
+    "line3": "books",
+    "subtitle": "Bookeep is a catalog of English books prepared for language learners. The plot stays; the language becomes clearer.",
     "ctaPrimary": "Open the catalog",
     "ctaGoals": "Reading plan",
     "featuredTitle": "In the catalog",
-    "featuredSubtitle": "Adapted books in English and Finnish. Filter by language and level if you want.",
+    "featuredSubtitle": "Adapted English books. Filter by level if you want.",
     "viewAll": "All books",
     "planTitle": "A quiet reading plan",
     "planLead": "Set how many pages you want to read each day. The calendar keeps the count across every book, and only new pages count.",
@@ -47,8 +47,8 @@
         "text": "The text is rewritten more simply, without dropping the plot or the book’s structure."
       },
       "languages": {
-        "title": "Two languages",
-        "text": "The catalog is English and Finnish only — two sections in one place."
+        "title": "English only",
+        "text": "Every book in the catalog is in English — one language, one quiet shelf."
       },
       "levels": {
         "title": "Levels A2–B1",
@@ -57,7 +57,7 @@
     },
     "stats": {
       "levels": "levels",
-      "languages": "two languages",
+      "languages": "book language",
       "reader": "reader in the browser"
     },
     "features": {
@@ -83,7 +83,7 @@
       },
       "choose": {
         "title": "Pick a book",
-        "text": "English or Finnish, levels A2–B1. The same story in clearer language."
+        "text": "English books, levels A2–B1. The same story in clearer language."
       },
       "read": {
         "title": "Read and understand",
@@ -131,14 +131,11 @@
   },
   "books": {
     "title": "Books",
-    "subtitle": "Adapted books in English and Finnish. Filter by language and level.",
+    "subtitle": "Adapted English books. Filter by level.",
     "all": "All",
     "allLevels": "Any",
-    "language": "Language",
     "level": "Level",
     "empty": "No books found",
-    "emptyFi": "No Finnish books found",
-    "emptyEn": "No English books found",
     "emptyLevel": "No books found for this level",
     "showAll": "Show all",
     "loading": "Loading books...",
@@ -184,7 +181,7 @@
   "about": {
     "eyebrow": "About",
     "title": "About the project",
-    "lead": "Bookeep is a catalog of adapted books in English and Finnish. There are no lessons or exercises here: you open a book and read it in the browser.",
+    "lead": "Bookeep is a catalog of adapted English books. There are no lessons or exercises here: you open a book and read it in the browser.",
     "cta": "Open the catalog",
     "sections": {
       "purpose": {
@@ -196,8 +193,8 @@
         "text": "It is not a short retelling and not a set of dialogues. It is the full work, with denser grammar, rarer words and long periods brought to a chosen CEFR level. Plot, characters and structure stay. What changes first is the language."
       },
       "languages": {
-        "title": "English and Finnish",
-        "text": "Books in the catalog are English and Finnish only. Those are the languages of the texts. The interface is available in nine languages, from Finnish and English to Polish, German, French, Italian and Spanish: site labels change, the book stays in the language of the adaptation."
+        "title": "English books",
+        "text": "Every book in the catalog is in English: that is the language of the texts. The interface is available in nine languages: site labels change, the book stays in English."
       },
       "levels": {
         "title": "Levels A2 and B1",
@@ -345,7 +342,7 @@
     }
   },
   "footer": {
-    "tagline": "Adapted books in English and Finnish.",
+    "tagline": "Adapted English books.",
     "credit": "The site is developed and maintained by <studio>WEISEZAHOY</studio>."
   },
   "admin": {
@@ -366,8 +363,6 @@
       "title": "Books",
       "add": "Add book",
       "total": "Total books",
-      "finnish": "Finnish books",
-      "english": "English books",
       "empty": "No books yet"
     },
     "hero": {
@@ -403,7 +398,6 @@
       "editTitle": "Edit book",
       "titleOriginal": "Original title",
       "slug": "Slug",
-      "language": "Book language",
       "level": "Level",
       "published": "Published",
       "complete": "Book is complete",

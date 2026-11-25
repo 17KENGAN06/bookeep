@@ -33,7 +33,7 @@ export function Hero() {
 
   const stats = [
     { value: 'A2–B1', label: t('home.stats.levels'), icon: LevelsIcon },
-    { value: 'EN · FI', label: t('home.stats.languages'), icon: Globe },
+    { value: 'EN', label: t('home.stats.languages'), icon: Globe },
     { value: 'PDF', label: t('home.stats.reader'), icon: FileText },
   ];
 

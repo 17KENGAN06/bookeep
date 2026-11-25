@@ -11,9 +11,9 @@
     "skipToContent": "Przejdź do treści"
   },
   "seo": {
-    "title": "Bookeep — adaptowane książki po angielsku i fińsku",
-    "description": "Katalog adaptowanych książek po angielsku i fińsku. Tytuły są przepisane dla czytelników na poziomie A2–B1, a fabuła pozostaje nienaruszona.",
-    "keywords": "Bookeep, adaptowane książki, angielski, fiński, A2, B1, czytanie w języku obcym"
+    "title": "Bookeep — adaptowane książki po angielsku",
+    "description": "Katalog adaptowanych książek po angielsku. Tytuły są przepisane dla czytelników na poziomie A2–B1, a fabuła pozostaje nienaruszona.",
+    "keywords": "Bookeep, adaptowane książki, angielski, A2, B1, czytanie po angielsku"
   },
   "nav": {
     "primary": "Główna nawigacja",
@@ -28,15 +28,15 @@
     "subscribe": "Subskrypcja"
   },
   "home": {
-    "eyebrow": "Adaptacje · Angielski · Fiński",
+    "eyebrow": "Adaptacje · Angielski · A2–B1",
     "line1": "Adaptowane",
-    "line2": "po angielsku",
-    "line3": "i fińsku",
-    "subtitle": "Bookeep to katalog angielskich i fińskich książek przygotowanych dla osób uczących się języków. Fabuła zostaje, język staje się jaśniejszy.",
+    "line2": "książki",
+    "line3": "po angielsku",
+    "subtitle": "Bookeep to katalog angielskich książek przygotowanych dla osób uczących się języka. Fabuła zostaje, język staje się jaśniejszy.",
     "ctaPrimary": "Otwórz katalog",
     "ctaGoals": "Plan czytania",
     "featuredTitle": "W katalogu",
-    "featuredSubtitle": "Adaptowane książki po angielsku i fińsku. Jeśli chcesz, filtruj według języka i poziomu.",
+    "featuredSubtitle": "Adaptowane książki po angielsku. Jeśli chcesz, filtruj według poziomu.",
     "viewAll": "Wszystkie książki",
     "planTitle": "Spokojny plan czytania",
     "planLead": "Ustal, ile stron chcesz czytać każdego dnia. Kalendarz liczy strony ze wszystkich książek, a liczą się tylko nowe strony.",
@@ -47,8 +47,8 @@
         "text": "Tekst jest napisany prościej, bez utraty fabuły i struktury książki."
       },
       "languages": {
-        "title": "Dwa języki",
-        "text": "Katalog obejmuje tylko angielski i fiński — dwa działy w jednym miejscu."
+        "title": "Tylko angielski",
+        "text": "Wszystkie książki w katalogu są po angielsku — jeden język, jedna spokojna półka."
       },
       "levels": {
         "title": "Poziomy A2–B1",
@@ -57,7 +57,7 @@
     },
     "stats": {
       "levels": "poziomy",
-      "languages": "dwa języki",
+      "languages": "język książek",
       "reader": "czytnik w przeglądarce"
     },
     "features": {
@@ -83,7 +83,7 @@
       },
       "choose": {
         "title": "Wybierz książkę",
-        "text": "Angielski lub fiński, poziomy A2–B1. Ta sama historia w jaśniejszym języku."
+        "text": "Książki po angielsku, poziomy A2–B1. Ta sama historia w jaśniejszym języku."
       },
       "read": {
         "title": "Czytaj i rozumiej",
@@ -131,14 +131,11 @@
   },
   "books": {
     "title": "Książki",
-    "subtitle": "Adaptowane książki po angielsku i fińsku. Filtruj według języka i poziomu.",
+    "subtitle": "Adaptowane książki po angielsku. Filtruj według poziomu.",
     "all": "Wszystkie",
     "allLevels": "Dowolny",
-    "language": "Język",
     "level": "Poziom",
     "empty": "Nie znaleziono książek",
-    "emptyFi": "Nie znaleziono fińskich książek",
-    "emptyEn": "Nie znaleziono angielskich książek",
     "emptyLevel": "Nie znaleziono książek na tym poziomie",
     "showAll": "Pokaż wszystkie",
     "loading": "Ładowanie książek...",
@@ -186,7 +183,7 @@
   "about": {
     "eyebrow": "O nas",
     "title": "O projekcie",
-    "lead": "Bookeep to katalog adaptowanych książek po angielsku i fińsku. Nie ma tu lekcji ani ćwiczeń: otwierasz książkę i czytasz ją w przeglądarce.",
+    "lead": "Bookeep to katalog adaptowanych książek po angielsku. Nie ma tu lekcji ani ćwiczeń: otwierasz książkę i czytasz ją w przeglądarce.",
     "cta": "Otwórz katalog",
     "sections": {
       "purpose": {
@@ -198,8 +195,8 @@
         "text": "To nie krótkie streszczenie ani zbiór dialogów. To całe dzieło, w którym gęsta gramatyka, rzadkie słowa i długie okresy zdaniowe zostały sprowadzone do wybranego poziomu CEFR. Fabuła, bohaterowie i struktura zostają. Najpierw zmienia się język."
       },
       "languages": {
-        "title": "Angielski i fiński",
-        "text": "Książki w katalogu są tylko po angielsku i fińsku. To języki samych tekstów. Interfejs jest dostępny w dziewięciu językach, od fińskiego i angielskiego po polski, niemiecki, francuski, włoski i hiszpański: zmieniają się napisy na stronie, książka zostaje w języku adaptacji."
+        "title": "Książki po angielsku",
+        "text": "Wszystkie książki w katalogu są po angielsku: to język samych tekstów. Interfejs jest dostępny w dziewięciu językach: zmieniają się napisy na stronie, książka zostaje po angielsku."
       },
       "levels": {
         "title": "Poziomy A2 i B1",
@@ -347,7 +344,7 @@
     }
   },
   "footer": {
-    "tagline": "Adaptowane książki po angielsku i fińsku.",
+    "tagline": "Adaptowane książki po angielsku.",
     "credit": "Stronę tworzy i utrzymuje <studio>WEISEZAHOY</studio>."
   },
   "admin": {
@@ -368,8 +365,6 @@
       "title": "Książki",
       "add": "Dodaj książkę",
       "total": "Wszystkie książki",
-      "finnish": "Książki fińskie",
-      "english": "Książki angielskie",
       "empty": "Na razie brak książek"
     },
     "hero": {
@@ -405,7 +400,6 @@
       "editTitle": "Edytuj książkę",
       "titleOriginal": "Tytuł oryginalny",
       "slug": "Slug",
-      "language": "Język książki",
       "level": "Poziom",
       "published": "Opublikowana",
       "complete": "Książka jest gotowa",

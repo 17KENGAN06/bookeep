@@ -1,40 +1,21 @@
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { BOOK_LANGUAGES, CEFR_LEVELS, type BookLanguage, type CefrLevel } from '@/types/book';
+import { CEFR_LEVELS, type CefrLevel } from '@/types/book';
 import { cn } from '@/utils/cn';
 
 type BookFiltersProps = {
-  language: BookLanguage | 'all';
   level: CefrLevel | 'all';
-  onLanguageChange: (value: BookLanguage | 'all') => void;
   onLevelChange: (value: CefrLevel | 'all') => void;
 };
 
 export function BookFilters({
-  language,
   level,
-  onLanguageChange,
   onLevelChange,
 }: BookFiltersProps) {
   const { t } = useTranslation();
 
   return (
     <div className="flex flex-col gap-5 md:flex-row md:flex-wrap md:items-end md:gap-8">
-      <FilterRow label={t('books.language')}>
-        <FilterChip active={language === 'all'} onClick={() => onLanguageChange('all')}>
-          {t('books.all')}
-        </FilterChip>
-        {BOOK_LANGUAGES.map((code) => (
-          <FilterChip
-            key={code}
-            active={language === code}
-            onClick={() => onLanguageChange(code)}
-          >
-            {t(`languages.${code}`)}
-          </FilterChip>
-        ))}
-      </FilterRow>
-
       <FilterRow label={t('books.level')}>
         <FilterChip active={level === 'all'} onClick={() => onLevelChange('all')}>
           {t('books.allLevels')}

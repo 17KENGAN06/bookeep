@@ -90,6 +90,7 @@ async function fetchPublishedFromSupabase(): Promise<Book[]> {
     .from('books')
     .select('*')
     .eq('published', true)
+    .eq('language', 'en')
     .order('created_at', { ascending: false });
 
   if (error) throw error;
@@ -99,7 +100,7 @@ async function fetchPublishedFromSupabase(): Promise<Book[]> {
 async function fetchPublishedFromMocks(): Promise<Book[]> {
   await wait(220);
   return mockBooks
-    .filter((book) => book.published)
+    .filter((book) => book.published && book.language === 'en')
     .slice()
     .sort((a, b) => b.created_at.localeCompare(a.created_at));
 }
@@ -137,6 +138,7 @@ export async function fetchBookBySlug(slug: string): Promise<Book | null> {
       .select('*')
       .eq('slug', slug)
       .eq('published', true)
+      .eq('language', 'en')
       .maybeSingle();
 
     if (error) throw error;

@@ -11,9 +11,9 @@
     "skipToContent": "Zum Inhalt springen"
   },
   "seo": {
-    "title": "Bookeep — vereinfachte Bücher auf Englisch und Finnisch",
-    "description": "Ein Katalog vereinfachter Bücher auf Englisch und Finnisch. Die Titel sind für Lesende auf Niveau A2–B1 umgeschrieben, die Geschichte bleibt erhalten.",
-    "keywords": "Bookeep, vereinfachte Bücher, Englisch, Finnisch, A2, B1, Lesen in der Fremdsprache"
+    "title": "Bookeep — vereinfachte Bücher auf Englisch",
+    "description": "Ein Katalog vereinfachter Bücher auf Englisch. Die Titel sind für Lesende auf Niveau A2–B1 umgeschrieben, die Geschichte bleibt erhalten.",
+    "keywords": "Bookeep, vereinfachte Bücher, Englisch, A2, B1, Englisch lesen"
   },
   "nav": {
     "primary": "Hauptnavigation",
@@ -28,15 +28,15 @@
     "subscribe": "Abo"
   },
   "home": {
-    "eyebrow": "Vereinfacht · Englisch · Finnisch",
-    "line1": "Vereinfachtes",
-    "line2": "Englisch",
-    "line3": "& Finnisch",
-    "subtitle": "Bookeep ist ein Katalog englischer und finnischer Bücher, aufbereitet für Sprachlernende. Die Handlung bleibt, die Sprache wird klarer.",
+    "eyebrow": "Vereinfacht · Englisch · A2–B1",
+    "line1": "Vereinfachte",
+    "line2": "englische",
+    "line3": "Bücher",
+    "subtitle": "Bookeep ist ein Katalog englischer Bücher, aufbereitet für Sprachlernende. Die Handlung bleibt, die Sprache wird klarer.",
     "ctaPrimary": "Katalog öffnen",
     "ctaGoals": "Leseplan",
     "featuredTitle": "Im Katalog",
-    "featuredSubtitle": "Vereinfachte Bücher auf Englisch und Finnisch. Filtere nach Sprache und Niveau, wenn du möchtest.",
+    "featuredSubtitle": "Vereinfachte Bücher auf Englisch. Filtere nach Niveau, wenn du möchtest.",
     "viewAll": "Alle Bücher",
     "planTitle": "Ein ruhiger Leseplan",
     "planLead": "Lege fest, wie viele Seiten du pro Tag lesen möchtest. Der Kalender zählt über alle Bücher hinweg, und nur neue Seiten zählen.",
@@ -47,8 +47,8 @@
         "text": "Der Text wird einfacher geschrieben, ohne Handlung oder Aufbau des Buches zu verlieren."
       },
       "languages": {
-        "title": "Zwei Sprachen",
-        "text": "Der Katalog umfasst nur Englisch und Finnisch — zwei Bereiche an einem Ort."
+        "title": "Nur Englisch",
+        "text": "Alle Bücher im Katalog sind auf Englisch — eine Sprache, ein ruhiges Regal."
       },
       "levels": {
         "title": "Niveau A2–B1",
@@ -57,7 +57,7 @@
     },
     "stats": {
       "levels": "Niveaus",
-      "languages": "zwei Sprachen",
+      "languages": "Sprache der Bücher",
       "reader": "Reader im Browser"
     },
     "features": {
@@ -83,7 +83,7 @@
       },
       "choose": {
         "title": "Buch auswählen",
-        "text": "Englisch oder Finnisch, Niveau A2–B1. Dieselbe Geschichte in klarerer Sprache."
+        "text": "Englische Bücher, Niveau A2–B1. Dieselbe Geschichte in klarerer Sprache."
       },
       "read": {
         "title": "Lesen und verstehen",
@@ -131,14 +131,11 @@
   },
   "books": {
     "title": "Bücher",
-    "subtitle": "Vereinfachte Bücher auf Englisch und Finnisch. Filtere nach Sprache und Niveau.",
+    "subtitle": "Vereinfachte Bücher auf Englisch. Filtere nach Niveau.",
     "all": "Alle",
     "allLevels": "Alle",
-    "language": "Sprache",
     "level": "Niveau",
     "empty": "Keine Bücher gefunden",
-    "emptyFi": "Keine finnischen Bücher gefunden",
-    "emptyEn": "Keine englischen Bücher gefunden",
     "emptyLevel": "Keine Bücher für dieses Niveau gefunden",
     "showAll": "Alle anzeigen",
     "loading": "Bücher werden geladen...",
@@ -184,7 +181,7 @@
   "about": {
     "eyebrow": "Über uns",
     "title": "Über das Projekt",
-    "lead": "Bookeep ist ein Katalog vereinfachter Bücher auf Englisch und Finnisch. Hier gibt es keine Lektionen oder Übungen: Du öffnest ein Buch und liest es im Browser.",
+    "lead": "Bookeep ist ein Katalog vereinfachter Bücher auf Englisch. Hier gibt es keine Lektionen oder Übungen: Du öffnest ein Buch und liest es im Browser.",
     "cta": "Katalog öffnen",
     "sections": {
       "purpose": {
@@ -196,8 +193,8 @@
         "text": "Es ist keine kurze Nacherzählung und keine Sammlung von Dialogen. Es ist das ganze Werk, bei dem dichte Grammatik, seltene Wörter und lange Satzperioden auf ein gewähltes GER-Niveau gebracht werden. Handlung, Figuren und Aufbau bleiben. Was sich zuerst ändert, ist die Sprache."
       },
       "languages": {
-        "title": "Englisch und Finnisch",
-        "text": "Die Bücher im Katalog gibt es nur auf Englisch und Finnisch. Das sind die Sprachen der Texte. Die Oberfläche ist in neun Sprachen verfügbar, von Finnisch und Englisch bis Polnisch, Deutsch, Französisch, Italienisch und Spanisch: Die Beschriftungen der Seite ändern sich, das Buch bleibt in der Sprache der Bearbeitung."
+        "title": "Englische Bücher",
+        "text": "Alle Bücher im Katalog sind auf Englisch: Das ist die Sprache der Texte. Die Oberfläche ist in neun Sprachen verfügbar: Die Beschriftungen der Seite ändern sich, das Buch bleibt auf Englisch."
       },
       "levels": {
         "title": "Niveau A2 und B1",
@@ -345,7 +342,7 @@
     }
   },
   "footer": {
-    "tagline": "Vereinfachte Bücher auf Englisch und Finnisch.",
+    "tagline": "Vereinfachte Bücher auf Englisch.",
     "credit": "Die Website wird von <studio>WEISEZAHOY</studio> entwickelt und betreut."
   },
   "admin": {
@@ -366,8 +363,6 @@
       "title": "Bücher",
       "add": "Buch hinzufügen",
       "total": "Bücher gesamt",
-      "finnish": "Finnische Bücher",
-      "english": "Englische Bücher",
       "empty": "Noch keine Bücher"
     },
     "hero": {
@@ -403,7 +398,6 @@
       "editTitle": "Buch bearbeiten",
       "titleOriginal": "Originaltitel",
       "slug": "Slug",
-      "language": "Sprache des Buches",
       "level": "Niveau",
       "published": "Veröffentlicht",
       "complete": "Buch ist fertig",

@@ -11,9 +11,9 @@
     "skipToContent": "Siirry sisältöön"
   },
   "seo": {
-    "title": "Bookeep — mukautettuja kirjoja englanniksi ja suomeksi",
-    "description": "Luettelo mukautetuista kirjoista englanniksi ja suomeksi. Teokset on valmisteltu A2–B1-lukijoille, juoni säilyy.",
-    "keywords": "Bookeep, mukautetut kirjat, englanti, suomi, A2, B1, kielenoppiminen"
+    "title": "Bookeep — mukautettuja englanninkielisiä kirjoja",
+    "description": "Luettelo mukautetuista englanninkielisistä kirjoista. Teokset on valmisteltu A2–B1-lukijoille, juoni säilyy.",
+    "keywords": "Bookeep, mukautetut kirjat, englanti, A2, B1, englannin kielen oppiminen"
   },
   "nav": {
     "primary": "Päävalikko",
@@ -28,15 +28,15 @@
     "subscribe": "Tilaus"
   },
   "home": {
-    "eyebrow": "Mukautukset · English · Suomi",
+    "eyebrow": "Mukautukset · English · A2–B1",
     "line1": "Mukautettuja",
     "line2": "kirjoja",
-    "line3": "EN ja FI",
-    "subtitle": "Bookeep on luettelo englannin- ja suomenkielisistä teoksista kielenoppijoille. Juoni säilyy, kieli selkenee.",
+    "line3": "englanniksi",
+    "subtitle": "Bookeep on luettelo englanninkielisistä teoksista kielenoppijoille. Juoni säilyy, kieli selkenee.",
     "ctaPrimary": "Avaa luettelo",
     "ctaGoals": "Lukusuunnitelma",
     "featuredTitle": "Luettelossa",
-    "featuredSubtitle": "Mukautettuja kirjoja englanniksi ja suomeksi. Voit suodattaa kielen ja tason.",
+    "featuredSubtitle": "Mukautettuja englanninkielisiä kirjoja. Voit suodattaa tason mukaan.",
     "viewAll": "Kaikki kirjat",
     "planTitle": "Rauhallinen lukusuunnitelma",
     "planLead": "Aseta, montako sivua haluat lukea kunkin päivän aikana. Kalenteri laskee kaikki kirjat yhteen, ja vain uudet sivut merkitään.",
@@ -47,8 +47,8 @@
         "text": "Teksti on kirjoitettu selkeämmäksi ilman, että juoni tai kirjan rakenne katoaa."
       },
       "languages": {
-        "title": "Kaksi kieltä",
-        "text": "Luettelossa on vain englanti ja suomi — kaksi hyllyä samassa paikassa."
+        "title": "Vain englanti",
+        "text": "Kaikki luettelon kirjat ovat englanniksi — yksi kieli, yksi rauhallinen hylly."
       },
       "levels": {
         "title": "Tasot A2–B1",
@@ -57,7 +57,7 @@
     },
     "stats": {
       "levels": "tasot",
-      "languages": "kaksi kieltä",
+      "languages": "kirjojen kieli",
       "reader": "lukija selaimessa"
     },
     "features": {
@@ -83,7 +83,7 @@
       },
       "choose": {
         "title": "Valitse kirja",
-        "text": "Englanti tai suomi, tasot A2–B1. Sama tarina selkeämmällä kielellä."
+        "text": "Englanninkieliset kirjat, tasot A2–B1. Sama tarina selkeämmällä kielellä."
       },
       "read": {
         "title": "Lue ja ymmärrä",
@@ -131,14 +131,11 @@
   },
   "books": {
     "title": "Kirjat",
-    "subtitle": "Mukautettuja kirjoja englanniksi ja suomeksi. Suodata kielen ja tason mukaan.",
+    "subtitle": "Mukautettuja englanninkielisiä kirjoja. Suodata tason mukaan.",
     "all": "Kaikki",
     "allLevels": "Mikä vain",
-    "language": "Kieli",
     "level": "Taso",
     "empty": "Kirjoja ei löytynyt",
-    "emptyFi": "Suomenkielisiä kirjoja ei löytynyt",
-    "emptyEn": "Englanninkielisiä kirjoja ei löytynyt",
     "emptyLevel": "Tälle tasolle ei löytynyt kirjoja",
     "showAll": "Näytä kaikki",
     "loading": "Ladataan kirjoja...",
@@ -184,7 +181,7 @@
   "about": {
     "eyebrow": "Tietoa",
     "title": "Tietoa hankkeesta",
-    "lead": "Bookeep on luettelo mukautetuista kirjoista englanniksi ja suomeksi. Täällä ei ole oppitunteja eikä harjoituksia: avaat kirjan ja luet sen selaimessa.",
+    "lead": "Bookeep on luettelo mukautetuista englanninkielisistä kirjoista. Täällä ei ole oppitunteja eikä harjoituksia: avaat kirjan ja luet sen selaimessa.",
     "cta": "Avaa luettelo",
     "sections": {
       "purpose": {
@@ -196,8 +193,8 @@
         "text": "Se ei ole lyhyt juonitiivistelmä eikä dialogikokoelma. Se on teoksen koko teksti, jossa tiheämpi kielioppi, harvinaisempi sanasto ja pitkät jaksot on tuotu valitulle CEFR-tasolle. Juoni, henkilöt ja rakenne pysyvät. Ensin muuttuu kieli."
       },
       "languages": {
-        "title": "Englanti ja suomi",
-        "text": "Luettelon kirjat ovat vain englanniksi ja suomeksi. Ne ovat itse tekstien kieliä. Käyttöliittymä on saatavilla yhdeksällä kielellä, suomesta ja englannista puolaan, saksaan, ranskaan, italiaan ja espanjaan: sivuston tekstit vaihtuvat, kirja pysyy mukautuksen kielellä."
+        "title": "Englanninkieliset kirjat",
+        "text": "Kaikki luettelon kirjat ovat englanniksi: se on itse tekstien kieli. Käyttöliittymä on saatavilla yhdeksällä kielellä: sivuston tekstit vaihtuvat, kirja pysyy englanniksi."
       },
       "levels": {
         "title": "Tasot A2 ja B1",
@@ -345,7 +342,7 @@
     }
   },
   "footer": {
-    "tagline": "Mukautettuja kirjoja englanniksi ja suomeksi.",
+    "tagline": "Mukautettuja englanninkielisiä kirjoja.",
     "credit": "Sivuston on kehittänyt ja sitä ylläpitää studio <studio>WEISEZAHOY</studio>."
   },
   "admin": {
@@ -366,8 +363,6 @@
       "title": "Kirjat",
       "add": "Lisää kirja",
       "total": "Kirjoja yhteensä",
-      "finnish": "Suomenkieliset",
-      "english": "Englanninkieliset",
       "empty": "Kirjoja ei ole vielä"
     },
     "hero": {
@@ -403,7 +398,6 @@
       "editTitle": "Muokkaa kirjaa",
       "titleOriginal": "Alkuperäinen nimi",
       "slug": "Slug",
-      "language": "Kirjan kieli",
       "level": "Taso",
       "published": "Julkaistu",
       "complete": "Kirja on valmis",
@@ -580,7 +574,7 @@
   "subscribe": {
     "eyebrow": "Tilaus",
     "title": "Lue kirjat kokonaan",
-    "lead": "Koko selkokirjojen valikoima, valitun tekstin käännös ja PDF-lataus. Ensimmäiset päivät ilmaiseksi.",
+    "lead": "Koko mukautettujen kirjojen valikoima, valitun tekstin käännös ja PDF-lataus. Ensimmäiset päivät ilmaiseksi.",
     "planName": "Bookeep Premium",
     "trialBadge": "{{count}} päivää ilmaiseksi",
     "per": {

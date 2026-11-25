@@ -11,9 +11,9 @@
     "skipToContent": "Aller au contenu"
   },
   "seo": {
-    "title": "Bookeep — livres adaptés en anglais et en finnois",
-    "description": "Un catalogue de livres adaptés en anglais et en finnois. Les titres sont réécrits pour les lecteurs de niveau A2–B1, l’histoire reste intacte.",
-    "keywords": "Bookeep, livres adaptés, anglais, finnois, A2, B1, lecture en langue étrangère"
+    "title": "Bookeep — livres adaptés en anglais",
+    "description": "Un catalogue de livres adaptés en anglais. Les titres sont réécrits pour les lecteurs de niveau A2–B1, l’histoire reste intacte.",
+    "keywords": "Bookeep, livres adaptés, anglais, A2, B1, lire en anglais"
   },
   "nav": {
     "primary": "Navigation principale",
@@ -28,15 +28,15 @@
     "subscribe": "Abonnement"
   },
   "home": {
-    "eyebrow": "Adaptations · Anglais · Finnois",
-    "line1": "Livres adaptés",
-    "line2": "en anglais",
-    "line3": "& finnois",
-    "subtitle": "Bookeep est un catalogue de livres en anglais et en finnois préparés pour ceux qui apprennent ces langues. L’intrigue reste, la langue devient plus claire.",
+    "eyebrow": "Adaptations · Anglais · A2–B1",
+    "line1": "Livres",
+    "line2": "adaptés",
+    "line3": "en anglais",
+    "subtitle": "Bookeep est un catalogue de livres en anglais préparés pour ceux qui apprennent la langue. L’intrigue reste, la langue devient plus claire.",
     "ctaPrimary": "Ouvrir le catalogue",
     "ctaGoals": "Plan de lecture",
     "featuredTitle": "Dans le catalogue",
-    "featuredSubtitle": "Livres adaptés en anglais et en finnois. Filtrez par langue et par niveau si vous le souhaitez.",
+    "featuredSubtitle": "Livres adaptés en anglais. Filtrez par niveau si vous le souhaitez.",
     "viewAll": "Tous les livres",
     "planTitle": "Un plan de lecture tranquille",
     "planLead": "Choisissez combien de pages lire chaque jour. Le calendrier compte toutes les pages de tous les livres, et seules les nouvelles pages comptent.",
@@ -47,8 +47,8 @@
         "text": "Le texte est réécrit plus simplement, sans perdre l’intrigue ni la structure du livre."
       },
       "languages": {
-        "title": "Deux langues",
-        "text": "Le catalogue ne contient que de l’anglais et du finnois — deux rayons au même endroit."
+        "title": "Uniquement l’anglais",
+        "text": "Tous les livres du catalogue sont en anglais — une seule langue, un rayon paisible."
       },
       "levels": {
         "title": "Niveaux A2–B1",
@@ -57,7 +57,7 @@
     },
     "stats": {
       "levels": "niveaux",
-      "languages": "deux langues",
+      "languages": "langue des livres",
       "reader": "liseuse dans le navigateur"
     },
     "features": {
@@ -83,7 +83,7 @@
       },
       "choose": {
         "title": "Choisir un livre",
-        "text": "Anglais ou finnois, niveaux A2–B1. La même histoire dans une langue plus claire."
+        "text": "Livres en anglais, niveaux A2–B1. La même histoire dans une langue plus claire."
       },
       "read": {
         "title": "Lire et comprendre",
@@ -131,14 +131,11 @@
   },
   "books": {
     "title": "Livres",
-    "subtitle": "Livres adaptés en anglais et en finnois. Filtrez par langue et par niveau.",
+    "subtitle": "Livres adaptés en anglais. Filtrez par niveau.",
     "all": "Tous",
     "allLevels": "Tous",
-    "language": "Langue",
     "level": "Niveau",
     "empty": "Aucun livre trouvé",
-    "emptyFi": "Aucun livre en finnois trouvé",
-    "emptyEn": "Aucun livre en anglais trouvé",
     "emptyLevel": "Aucun livre trouvé pour ce niveau",
     "showAll": "Tout afficher",
     "loading": "Chargement des livres...",
@@ -184,7 +181,7 @@
   "about": {
     "eyebrow": "À propos",
     "title": "À propos du projet",
-    "lead": "Bookeep est un catalogue de livres adaptés en anglais et en finnois. Pas de leçons ni d’exercices : vous ouvrez un livre et le lisez dans le navigateur.",
+    "lead": "Bookeep est un catalogue de livres adaptés en anglais. Pas de leçons ni d’exercices : vous ouvrez un livre et le lisez dans le navigateur.",
     "cta": "Ouvrir le catalogue",
     "sections": {
       "purpose": {
@@ -196,8 +193,8 @@
         "text": "Ce n’est ni un court résumé ni une série de dialogues. C’est l’œuvre complète, dont la grammaire dense, les mots rares et les longues périodes sont ramenés à un niveau du CECR choisi. L’intrigue, les personnages et la structure restent. C’est d’abord la langue qui change."
       },
       "languages": {
-        "title": "Anglais et finnois",
-        "text": "Les livres du catalogue sont uniquement en anglais et en finnois. Ce sont les langues des textes. L’interface est disponible en neuf langues, du finnois et de l’anglais au polonais, à l’allemand, au français, à l’italien et à l’espagnol : les libellés du site changent, le livre reste dans la langue de l’adaptation."
+        "title": "Des livres en anglais",
+        "text": "Tous les livres du catalogue sont en anglais : c’est la langue des textes. L’interface est disponible en neuf langues : les libellés du site changent, le livre reste en anglais."
       },
       "levels": {
         "title": "Niveaux A2 et B1",
@@ -345,7 +342,7 @@
     }
   },
   "footer": {
-    "tagline": "Livres adaptés en anglais et en finnois.",
+    "tagline": "Livres adaptés en anglais.",
     "credit": "Le site est développé et maintenu par <studio>WEISEZAHOY</studio>."
   },
   "admin": {
@@ -366,8 +363,6 @@
       "title": "Livres",
       "add": "Ajouter un livre",
       "total": "Total des livres",
-      "finnish": "Livres en finnois",
-      "english": "Livres en anglais",
       "empty": "Aucun livre pour l’instant"
     },
     "hero": {
@@ -403,7 +398,6 @@
       "editTitle": "Modifier le livre",
       "titleOriginal": "Titre original",
       "slug": "Slug",
-      "language": "Langue du livre",
       "level": "Niveau",
       "published": "Publié",
       "complete": "Le livre est terminé",

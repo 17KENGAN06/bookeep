@@ -42,8 +42,8 @@ export function AdminDashboardPage() {
     void reload();
   }
 
-  const finnish = books.filter((book) => book.language === 'fi').length;
-  const english = books.filter((book) => book.language === 'en').length;
+  const a2 = books.filter((book) => book.level === 'A2').length;
+  const b1 = books.filter((book) => book.level === 'B1').length;
 
   return (
     <div>
@@ -61,8 +61,8 @@ export function AdminDashboardPage() {
 
       <div className="mt-8 grid gap-4 sm:grid-cols-3">
         <Stat label={t('admin.dashboard.total')} value={books.length} />
-        <Stat label={t('admin.dashboard.finnish')} value={finnish} />
-        <Stat label={t('admin.dashboard.english')} value={english} />
+        <Stat label="A2" value={a2} />
+        <Stat label="B1" value={b1} />
       </div>
 
       {status === 'success' && books.length > 0 ? <AdminHeroBooks books={books} onSaved={reload} /> : null}

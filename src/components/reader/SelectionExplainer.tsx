@@ -44,7 +44,6 @@ type SelectionExplainerProps = {
 
 const LANGUAGE_LABEL: Record<BookLanguage, string> = {
   en: 'Simple English',
-  fi: 'Selkosuomi',
 };
 
 const WORD_CHAR = /[\p{L}\p{N}\p{M}'’-]/u;

@@ -12,11 +12,7 @@ import { ErrorState } from '@/components/common/ErrorState';
 import { Reveal } from '@/components/common/Reveal';
 import { PageHero } from '@/components/scene/PageHero';
 import { useBooks } from '@/hooks/useBooks';
-import { BOOK_LANGUAGES, CEFR_LEVELS, type BookLanguage, type CefrLevel } from '@/types/book';
-
-function parseLanguage(value: string | null): BookLanguage | 'all' {
-  return BOOK_LANGUAGES.includes(value as BookLanguage) ? (value as BookLanguage) : 'all';
-}
+import { CEFR_LEVELS, type CefrLevel } from '@/types/book';
 
 function parseLevel(value: string | null): CefrLevel | 'all' {
   return CEFR_LEVELS.includes(value as CefrLevel) ? (value as CefrLevel) : 'all';
@@ -26,25 +22,18 @@ export function BooksPage() {
   const { t } = useTranslation();
   const { books, status, reload } = useBooks();
   const [params, setParams] = useSearchParams();
-  const language = parseLanguage(params.get('lang'));
   const level = parseLevel(params.get('level'));
 
   const filtered = useMemo(() => {
-    return books.filter((book) => {
-      const languageMatch = language === 'all' || book.language === language;
-      const levelMatch = level === 'all' || book.level === level;
-      return languageMatch && levelMatch;
-    });
-  }, [books, language, level]);
+    return books.filter((book) => level === 'all' || book.level === level);
+  }, [books, level]);
 
   const emptyMessage = (() => {
-    if (language === 'fi') return t('books.emptyFi');
-    if (language === 'en') return t('books.emptyEn');
     if (level !== 'all') return t('books.emptyLevel');
     return t('books.empty');
   })();
 
-  const setFilter = (key: 'lang' | 'level', value: string) => {
+  const setFilter = (key: 'level', value: string) => {
     const next = new URLSearchParams(params);
     if (value === 'all') next.delete(key);
     else next.set(key, value);
@@ -63,8 +52,9 @@ export function BooksPage() {
           status === 'success' ? (
             <dl className="flex gap-8 lg:justify-end">
               <HeroStat value={books.length} label={t('books.statTitles')} />
-              <HeroStat value={books.filter((book) => book.language === 'en').length} label={t('languages.en')} />
-              <HeroStat value={books.filter((book) => book.language === 'fi').length} label={t('languages.fi')} />
+              {CEFR_LEVELS.map((code) => (
+                <HeroStat key={code} value={books.filter((book) => book.level === code).length} label={code} />
+              ))}
             </dl>
           ) : null
         }
@@ -74,9 +64,7 @@ export function BooksPage() {
         <Reveal delay={80}>
           <div className="lux-panel flex flex-col gap-5 rounded-card p-4 sm:p-5 md:flex-row md:items-end md:justify-between">
             <BookFilters
-              language={language}
               level={level}
-              onLanguageChange={(value) => setFilter('lang', value)}
               onLevelChange={(value) => setFilter('level', value)}
             />
             {status === 'success' ? (
@@ -97,7 +85,7 @@ export function BooksPage() {
               icon={<SearchX className="h-6 w-6" />}
               title={emptyMessage}
               action={
-                language !== 'all' || level !== 'all' ? (
+                level !== 'all' ? (
                   <Button type="button" variant="secondary" onClick={() => setParams({}, { replace: true })}>
                     {t('books.showAll')}
                   </Button>

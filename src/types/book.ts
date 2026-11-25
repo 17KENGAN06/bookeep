@@ -1,4 +1,5 @@
-export type BookLanguage = 'fi' | 'en';
+/** Bookeep publishes English books only. */
+export type BookLanguage = 'en';
 export type CefrLevel = 'A2' | 'B1';
 export type UiLanguage = 'fi' | 'en' | 'uk' | 'ru' | 'pl' | 'de' | 'fr' | 'it' | 'es';
 /** Languages a book's title and description columns exist for. */
@@ -33,5 +34,5 @@ export type Book = {
   updated_at: string;
 };
 
-export const BOOK_LANGUAGES: BookLanguage[] = ['fi', 'en'];
+export const BOOK_LANGUAGES: BookLanguage[] = ['en'];
 export const CEFR_LEVELS: CefrLevel[] = ['A2', 'B1'];
